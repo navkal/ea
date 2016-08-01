@@ -1,7 +1,7 @@
 <?php
   if ( file_exists( "out.csv" ) )
   {
-    echo( "found out.csv" );
+    echo( "Your download is ready" );
   }
   else
   {
