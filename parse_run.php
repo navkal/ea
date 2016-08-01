@@ -23,6 +23,8 @@
     }
   }
 
+  include( "filenames.php" );
+
   if ( empty( $message ) )
   {
     // Set up Python command
@@ -30,14 +32,21 @@
     $summarize = $_POST["startTime"] ? "-s" : "";
     $start = $summarize ? "--start " . str_replace( ' ', '', $_POST["startTime"] ) : "";
     $end = $_POST["endTime"] ? "--end " . str_replace( ' ', '', $_POST["endTime"] ) : "";
-    $command = $python . " parse.py -i " . $metasysFile["tmp_name"] . " -o out.csv " . $summarize . " " . $start . " " . $end;
+    $command = $python . " parse.py -i " . $metasysFile["tmp_name"] . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end;
 
     // Execute Python script
-    unlink( "out.csv" );
+    if ( file_exists( $readyFilename ) )
+    {
+      unlink( $readyFilename );
+    }
+    if ( file_exists( $resultsFilename ) )
+    {
+      unlink( $resultsFilename );
+    }
     exec( $command, $output, $status );
 
     // Check whether script generated an output file
-    if ( ! file_exists( "out.csv" ) )
+    if ( ! file_exists( $resultsFilename ) )
     {
       $message = "Metasys Data Analysis script failed to generate output file.<br/>";
       foreach ( $output as $line )
@@ -50,8 +59,18 @@
   // Completion
   if ( empty( $message ) )
   {
-    // Normal: download file
-    downloadFile( "out.csv" );
+    // Normal: Process results
+
+    // Tell poller that results are ready
+    $readyFile = fopen( $readyFilename, "w" ) or die( "Unable to open file: " . $readyFilename );
+    $txt = "Mickey Mouse\n";
+    fwrite($readyFile, $txt);
+    $txt = "Minnie Mouse\n";
+    fwrite($readyFile, $txt);
+    fclose($readyFile);
+
+    // Download results
+    downloadFile( $resultsFilename );
   }
   else
   {

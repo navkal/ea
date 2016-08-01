@@ -97,7 +97,8 @@
     // Update visual feedback
     if ( messages.length == 0 )
     {
-      setTimeout( pollResults, 1000 );
+      $( "body" ).css( "cursor", "progress" );
+      setTimeout( isItReadyYet, 1000 );
     }
     else
     {
@@ -111,10 +112,10 @@
     return ( messages.length == 0 );
   }
 
-  function pollResults()
+  function isItReadyYet()
   {
     $.ajax(
-      "poll.php",
+      "isItReadyYet.php",
       {
         type: "GET",
         cache: false,
@@ -131,7 +132,7 @@
     console.log( "=========> poll response=<" + rsp + ">" );
     if ( rsp == "" )
     {
-      setTimeout( pollResults, 1000 );
+      setTimeout( isItReadyYet, 1000 );
     }
     else
     {
@@ -158,6 +159,9 @@
       // Hide input block and show output block
       $( "#input" ).css( "display", "none" );
       $( "#output" ).css( "display", "block" );
+      
+      // Restore default cursor
+      $( "body" ).css( "cursor", "default" );
     }
   }
 
