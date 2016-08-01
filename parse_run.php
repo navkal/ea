@@ -1,5 +1,18 @@
 <?php
   require_once "../common/util.php";
+  require_once "filenames.php" ;
+  
+  // Pre-cleanup output files
+  if ( file_exists( $readyFilename ) )
+  {
+    error_log( "===> pre-clean " . $readyFilename );
+    unlink( $readyFilename );
+  }
+  if ( file_exists( $resultsFilename ) )
+  {
+    error_log( "===> pre-clean " . $resultsFilename );
+    unlink( $resultsFilename );
+  }
 
   // Check uploaded file for errors
   $metasysFile = $_FILES["metasysFile"];
@@ -23,7 +36,6 @@
     }
   }
 
-  include( "filenames.php" );
 
   if ( empty( $message ) )
   {
@@ -35,14 +47,6 @@
     $command = $python . " parse.py -i " . $metasysFile["tmp_name"] . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end;
 
     // Execute Python script
-    if ( file_exists( $readyFilename ) )
-    {
-      unlink( $readyFilename );
-    }
-    if ( file_exists( $resultsFilename ) )
-    {
-      unlink( $resultsFilename );
-    }
     exec( $command, $output, $status );
 
     // Check whether script generated an output file
@@ -61,16 +65,12 @@
   {
     // Normal: Process results
 
-    // Tell poller that results are ready
-    $readyFile = fopen( $readyFilename, "w" ) or die( "Unable to open file: " . $readyFilename );
-    $txt = "Mickey Mouse\n";
-    fwrite($readyFile, $txt);
-    $txt = "Minnie Mouse\n";
-    fwrite($readyFile, $txt);
-    fclose($readyFile);
-
     // Download results
     downloadFile( $resultsFilename );
+
+    // Tell poller that results are ready
+    $readyFile = fopen( $readyFilename, "w" ) or die( "Unable to open file: " . $readyFilename );
+    fclose( $readyFile );
   }
   else
   {

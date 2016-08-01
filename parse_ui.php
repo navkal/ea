@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="../common/wickedpicker/dist/wickedpicker.min.css">
-<script type="text/javascript" src="../common/wickedpicker/dist/wickedpicker.unmin.js"></script>
+<script type="text/javascript" src="../common/wickedpicker/dist/wickedpicker.min.js"></script>
 
 <style>
 @media( max-width: 767px )
@@ -167,13 +167,13 @@
 
   function ajaxError( tJqXhr, sStatus, sErrorThrown )
   {
-    console.log( "AJAX error:\n  Status=<" + sStatus +">\n  Error=<" + sErrorThrown + ">" );
+    console.log( "AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">" );
     window.location.assign( "../error/404.html" );
   }
 
   function ajaxComplete( tJqXhr, sStatus )
   {
-    console.log( "AJAX complete:\n  Status=<" + sStatus + ">" );
+    console.log( "AJAX complete: Status=<" + sStatus + ">" );
   }
 
 </script>
