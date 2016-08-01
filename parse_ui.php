@@ -141,12 +141,16 @@
       if ( $( "#summarize" ).prop( "checked" ) )
       {
         $( "#paramStartTime" ).text( $( "#startTime" ).val() );
-        $( "#paramEndTime" ).text( $( "#daily" ).prop( "checked" ) ? "Full Day" : $( "#endTime" ).val() );
-        $( "#paramSummary" ).css( "display", "block" );
+        var daily = $( "#daily" ).prop( "checked" );
+        $( "#paramEndTimeTitle" ).text( daily ? "Full Day" : "End Time" );
+        $( "#paramEndTime" ).text( daily ? "" : $( "#endTime" ).val() );
       }
       else
       {
-        $( "#paramSummary" ).css( "display", "none" );
+        $( "#paramStartTimeTitle" ).css( "display", "none" );
+        $( "#paramStartTime" ).css( "display", "none" );
+        $( "#paramEndTimeTitle" ).css( "display", "none" );
+        $( "#paramEndTime" ).css( "display", "none" );
       }
 
       $( "#results" ).html( rsp );
@@ -416,11 +420,22 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div id="params" class="well">
-          <p id="paramFile"></p>
-          <div id="paramSummary">
-            <p id="paramStartTime"></p>
-            <p id="paramEndTime"></p>
-          </div>
+          <dl class="dl-horizontal" >
+            <dt>
+              Metasys File
+            </dt>
+            <dd id="paramFile">
+            </dd>
+            <dt id="paramStartTimeTitle">
+              Start Time
+            </dt>
+            <dd id="paramStartTime">
+            </dd>
+            <dt id="paramEndTimeTitle">
+            </dt>
+            <dd id="paramEndTime">
+            </dd>
+          </dl>
         </div>
 
         <div id="results" class="well">
