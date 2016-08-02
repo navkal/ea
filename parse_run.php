@@ -116,6 +116,10 @@ function showMessage( $uploadFilename, $message )
 
     </body>
   </html>
+  <script>
+    $( 'head' ).append( '<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
+    document.title = "Metasys Data Analysis";
+  </script>  
 <?php
 }
 ?>
