@@ -138,7 +138,7 @@
   function isItReadyYet()
   {
     $.ajax(
-      "isItReadyYet.php?timestamp=" + $( "#timestamp" ).val(),
+      "parse_ready.php?timestamp=" + $( "#timestamp" ).val(),
       {
         type: "GET",
         cache: false,
