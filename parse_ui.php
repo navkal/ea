@@ -141,13 +141,8 @@
       $( "body" ).css( "cursor", "default" );
 
       // Render results
-      setTimeout( parseDone, 1 );
+      window.location.assign( "parse_done.php" );
     }
-  }
-
-  function parseDone()
-  {
-    window.location.assign( "parse_done.php" );
   }
 
   function ajaxError( tJqXhr, sStatus, sErrorThrown )

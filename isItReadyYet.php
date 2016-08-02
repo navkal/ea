@@ -2,8 +2,9 @@
   require_once "../common/util.php";
   require_once "filenames.php" ;
 
-  if ( @fopen( $paramsFilename, "r" ) )
+  if ( $paramsFile = @fopen( $paramsFilename, "r" ) )
   {
+    fclose( $paramsFile );
     $rsp = "ready";
   }
   else
