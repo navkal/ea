@@ -67,7 +67,7 @@
     <!-- Close button -->
     <div class="container">
       <div style="text-align:center;" >
-       <a class="btn btn-default" href="javascript:history.back()" role="button">Close</a>
+       <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
       </div>
     </div>
 
@@ -78,7 +78,30 @@
 
   </body>
 </html>
+
+<script type="text/javascript" src="../common/util.js"></script>
 <script>
   $( 'head' ).append( '<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
   document.title = "Metasys Data Analysis";
+
+  function startClose()
+  {
+    $.ajax(
+      "parse_cleanup.php?timestamp=<?=$timestamp?>",
+      {
+        type: "GET",
+        cache: false,
+        dataType: "json",
+        success: finishClose,
+        error: ajaxError,
+        complete: ajaxComplete
+      }
+    );
+  }
+
+  function finishClose()
+  {
+    history.back();
+  }
 </script>
+

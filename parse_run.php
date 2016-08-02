@@ -96,8 +96,8 @@ function showMessage( $uploadFilename, $message )
     <body>
       <div class="container" style="padding-top:30px">
         <div class="alert alert-danger" >
-          <h4>Error processing file <b><?php echo $uploadFilename;?></b></h4>
-          <p><?php echo $message;?></p>
+          <h4>Error processing file <b><?=$uploadFilename?></b></h4>
+          <p><?=$message?></p>
         </div>
       </div>
 

@@ -1,5 +1,25 @@
+<?php
+  require_once "../common/util.php";
+
+  // Pre-cleanup
+  // --> NOTE: This is not suitable for multi-user environment! -->
+  $files = glob( "out_*.csv" );
+  if ( ! empty( $files ) )
+  {
+    array_map( "unlink", $files );
+  }
+
+  $files = glob( "params_*.csv" );
+  if ( ! empty( $files ) )
+  {
+    array_map( "unlink", $files );
+  }
+  // <-- NOTE: This is not suitable for multi-user environment! <--
+?>
+
 <link rel="stylesheet" href="../common/wickedpicker/dist/wickedpicker.min.css">
 <script type="text/javascript" src="../common/wickedpicker/dist/wickedpicker.min.js"></script>
+<script type="text/javascript" src="../common/util.js"></script>
 
 <style>
 @media( max-width: 767px )
@@ -147,18 +167,6 @@
       window.location.assign( "parse_done.php?timestamp=" + $( "#timestamp" ).val()  );
     }
   }
-
-  function ajaxError( tJqXhr, sStatus, sErrorThrown )
-  {
-    console.log( "AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">" );
-    window.location.assign( "../error/404.html" );
-  }
-
-  function ajaxComplete( tJqXhr, sStatus )
-  {
-    console.log( "AJAX complete: Status=<" + sStatus + ">" );
-  }
-
 </script>
 
 <!-- Modal dialog for Metasys File help -->
