@@ -79,7 +79,6 @@
   else
   {
     // Failure: Report error
-    initUi();
     showMessage( $metasysFile["name"], $message );
   }
 ?>
@@ -92,6 +91,7 @@ function showMessage( $uploadFilename, $message )
   <html>
     <?php
       include "../common/head.php";
+      initUi();
     ?>
 
     <body>
@@ -119,7 +119,7 @@ function showMessage( $uploadFilename, $message )
   <script>
     $( 'head' ).append( '<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
     document.title = "Metasys Data Analysis";
-  </script>  
+  </script>
 <?php
 }
 ?>
