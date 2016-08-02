@@ -1,4 +1,4 @@
 <?php
-  $resultsFilename = "out.csv";
-  $paramsFilename = "params.csv";
+  $resultsFilename = "out_" . $timestamp . ".csv";
+  $paramsFilename = $timestamp . ".csv";
 ?>

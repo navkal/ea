@@ -1,10 +1,9 @@
 <?php
   require_once "../common/util.php";
-  require_once "filenames.php" ;
 
-  // Pre-cleanup output files
-  @unlink( $resultsFilename );
-  @unlink( $paramsFilename );
+  // Save identifying timestamp
+  $timestamp = $_POST["timestamp"];
+  require_once "filenames.php";
 
   // Check uploaded file for errors
   $metasysFile = $_FILES["metasysFile"];

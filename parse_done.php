@@ -4,6 +4,8 @@
     include "../common/head.php";
     initUi();
 
+    $timestamp = $_GET["timestamp"];
+    error_log( "===> parse_done timestamp=" . $timestamp );
     require_once "filenames.php" ;
     $paramsFile = fopen( $paramsFilename, "r" );
     $params = fgetcsv( $paramsFile );
@@ -79,4 +81,4 @@
 <script>
   $( 'head' ).append( '<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
   document.title = "Metasys Data Analysis";
-</script>  
+</script>

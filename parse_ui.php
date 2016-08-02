@@ -15,6 +15,9 @@
   $( document ).ready(
     function()
     {
+      // Initialize identifying timestamp
+      $( "#timestamp" ).val( Date.now() );
+
       // Initialize the file chooser
       $( "#metasysFile" ).val( "" );
       $( "#uploadFilename" ).val( "" );
@@ -115,7 +118,7 @@
   function isItReadyYet()
   {
     $.ajax(
-      "isItReadyYet.php",
+      "isItReadyYet.php?timestamp=" + $( "#timestamp" ).val(),
       {
         type: "GET",
         cache: false,
@@ -141,7 +144,7 @@
       $( "body" ).css( "cursor", "default" );
 
       // Render results
-      window.location.assign( "parse_done.php" );
+      window.location.assign( "parse_done.php?timestamp=" + $( "#timestamp" ).val()  );
     }
   }
 
@@ -288,6 +291,9 @@
   <br/>
 
   <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="parse_run.php" method="post" enctype="multipart/form-data" >
+
+    <!-- Identifying timestamp -->
+    <input type="hidden" id="timestamp" name="timestamp" >
 
     <!-- Metasys File chooser -->
     <div class="row">
