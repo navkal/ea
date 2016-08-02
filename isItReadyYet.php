@@ -2,15 +2,14 @@
   require_once "../common/util.php";
   require_once "filenames.php" ;
 
-  if ( file_exists( $readyFilename ) )
+  if ( @fopen( $paramsFilename, "r" ) )
   {
-    unlink( $readyFilename );
-    $resultsFile = fopen( $resultsFilename, "r" );
-    echo( print_r( fgetcsv( $resultsFile ), true ) );
-    fclose( $resultsFile );
+    $rsp = "ready";
   }
   else
   {
-    echo( "" );
+    $rsp = "";
   }
+
+  echo( json_encode( $rsp ) );
 ?>

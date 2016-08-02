@@ -119,7 +119,7 @@
       {
         type: "GET",
         cache: false,
-        dataType: "text",
+        dataType: "json",
         success: handlePollResponse,
         error: ajaxError,
         complete: ajaxComplete
@@ -132,37 +132,22 @@
     console.log( "=========> poll response=<" + rsp + ">" );
     if ( rsp == "" )
     {
+      // Try again
       setTimeout( isItReadyYet, 1000 );
     }
     else
     {
-      // Load results into output block
-      $( "#paramFile" ).text( $( "#uploadFilename" ).val() );
-
-      if ( $( "#summarize" ).prop( "checked" ) )
-      {
-        $( "#paramStartTime" ).text( $( "#startTime" ).val() );
-        var daily = $( "#daily" ).prop( "checked" );
-        $( "#paramEndTimeTitle" ).text( daily ? "Full Day" : "End Time" );
-        $( "#paramEndTime" ).text( daily ? "" : $( "#endTime" ).val() );
-      }
-      else
-      {
-        $( "#paramStartTimeTitle" ).css( "display", "none" );
-        $( "#paramStartTime" ).css( "display", "none" );
-        $( "#paramEndTimeTitle" ).css( "display", "none" );
-        $( "#paramEndTime" ).css( "display", "none" );
-      }
-
-      $( "#results" ).html( rsp );
-
-      // Hide input block and show output block
-      $( "#input" ).css( "display", "none" );
-      $( "#output" ).css( "display", "block" );
-      
-      // Restore default cursor
+      // Clear wait cursor
       $( "body" ).css( "cursor", "default" );
+
+      // Render results
+      setTimeout( parseDone, 1 );
     }
+  }
+
+  function parseDone()
+  {
+    window.location.assign( "parse_done.php" );
   }
 
   function ajaxError( tJqXhr, sStatus, sErrorThrown )
@@ -307,151 +292,115 @@
   <p class="h3">Metasys Data Analysis</p>
   <br/>
 
-  <div id="input">
-    <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="parse_run.php" method="post" enctype="multipart/form-data" >
+  <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="parse_run.php" method="post" enctype="multipart/form-data" >
 
-      <!-- Metasys File chooser -->
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <span class="panel-title">
-                <div class="row">
-                  <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
-                    Metasys File
-                  </div>
-                  <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
-                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpMetasysFile">
-                      Help
-                    </button>
-                  </div>
-                </div>
-              </span>
-            </div>
-            <div class="panel-body">
-              <div class="form-group" >
-                <div class="input-group">
-                  <label class="input-group-btn">
-                    <span class="btn btn-default">
-                      Browse…
-                      <input type="file" name="metasysFile" id="metasysFile" style="display:none" onchange="showFilename( 'uploadFilename', 'metasysFile' )" >
-                    </span>
-                  </label>
-                  <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <br/>
-
-      <!-- Options -->
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <span class="panel-title">
-                <div class="row">
-                  <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
-                    Analysis Options
-                  </div>
-                  <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
-                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">
-                      Help
-                    </button>
-                  </div>
-                </div>
-              </span>
-            </div>
-
-            <div class="panel-body">
-
-              <div class="form-group" >
-                <div class="checkbox">
-                  <label><input type="checkbox" id="summarize" onchange="onChangeSummarize()" >Summarize</label>
-                </div>
-              </div>
-
-              <div class="form-group" >
-                <label class="control-label" for="startTime" >Start Time</label>
-                <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
-              </div>
-
-              <br/>
-              <div class="form-group" >
-                <div class="checkbox">
-                  <label><input type="checkbox" id="daily" onchange="onChangeDaily()" >Full Day</label>
-                </div>
-              </div>
-
-              <div class="form-group" >
-                <label class="control-label" for="endTime" >End Time</label>
-                <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </form>
-
+    <!-- Metasys File chooser -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div style="text-align:center;" >
-          <button type="submit" form="uploadForm" class="btn btn-primary" >OK</button>
-          <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <span class="panel-title">
+              <div class="row">
+                <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
+                  Metasys File
+                </div>
+                <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
+                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpMetasysFile">
+                    Help
+                  </button>
+                </div>
+              </div>
+            </span>
+          </div>
+          <div class="panel-body">
+            <div class="form-group" >
+              <div class="input-group">
+                <label class="input-group-btn">
+                  <span class="btn btn-default">
+                    Browse…
+                    <input type="file" name="metasysFile" id="metasysFile" style="display:none" onchange="showFilename( 'uploadFilename', 'metasysFile' )" >
+                  </span>
+                </label>
+                <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <br/>
 
+    <!-- Options -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="messages" class="alert alert-danger" style="display:none" role="alert">
-          <ul id="messageList">
-          </ul>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <span class="panel-title">
+              <div class="row">
+                <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
+                  Analysis Options
+                </div>
+                <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
+                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">
+                    Help
+                  </button>
+                </div>
+              </div>
+            </span>
+          </div>
+
+          <div class="panel-body">
+
+            <div class="form-group" >
+              <div class="checkbox">
+                <label><input type="checkbox" id="summarize" onchange="onChangeSummarize()" >Summarize</label>
+              </div>
+            </div>
+
+            <div class="form-group" >
+              <label class="control-label" for="startTime" >Start Time</label>
+              <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
+            </div>
+
+            <br/>
+            <div class="form-group" >
+              <div class="checkbox">
+                <label><input type="checkbox" id="daily" onchange="onChangeDaily()" >Full Day</label>
+              </div>
+            </div>
+
+            <div class="form-group" >
+              <label class="control-label" for="endTime" >End Time</label>
+              <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
+            </div>
+
+          </div>
         </div>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div style="text-align:center;" >
+        <button type="submit" form="uploadForm" class="btn btn-primary" >OK</button>
+        <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
       </div>
     </div>
   </div>
 
-  <div id="output" style="display:none">
+  <br/>
 
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="params" class="well">
-          <dl class="dl-horizontal" >
-            <dt>
-              Metasys File
-            </dt>
-            <dd id="paramFile">
-            </dd>
-            <dt id="paramStartTimeTitle">
-              Start Time
-            </dt>
-            <dd id="paramStartTime">
-            </dd>
-            <dt id="paramEndTimeTitle">
-            </dt>
-            <dd id="paramEndTime">
-            </dd>
-          </dl>
-        </div>
-
-        <div id="results" class="well">
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div style="text-align:center;" >
-        <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Close</button>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div id="messages" class="alert alert-danger" style="display:none" role="alert">
+        <ul id="messageList">
+        </ul>
       </div>
     </div>
   </div>
 
 </div>
+

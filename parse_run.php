@@ -1,18 +1,10 @@
 <?php
   require_once "../common/util.php";
   require_once "filenames.php" ;
-  
+
   // Pre-cleanup output files
-  if ( file_exists( $readyFilename ) )
-  {
-    error_log( "===> pre-clean " . $readyFilename );
-    unlink( $readyFilename );
-  }
-  if ( file_exists( $resultsFilename ) )
-  {
-    error_log( "===> pre-clean " . $resultsFilename );
-    unlink( $resultsFilename );
-  }
+  @unlink( $resultsFilename );
+  @unlink( $paramsFilename );
 
   // Check uploaded file for errors
   $metasysFile = $_FILES["metasysFile"];
@@ -30,12 +22,11 @@
 
   if ( empty( $message ) )
   {
-    if ( $metasysFile["size"] > 500000000 )
+    if ( $metasysFile["size"] > 499999999 )
     {
       $message = "File too large: " . $metasysFile["size"] . " bytes";
     }
   }
-
 
   if ( empty( $message ) )
   {
@@ -65,16 +56,29 @@
   {
     // Normal: Process results
 
+    // Save script parameters in file
+    $params = $metasysFile["name"];
+    if ( $summarize )
+    {
+      $params .= "," . str_replace( ' ', '', $_POST["startTime"] );
+
+      if ( $_POST["endTime"] )
+      {
+        $params .= "," . str_replace( ' ', '', $_POST["endTime"] );
+      }
+    }
+
+    error_log( "=======> saving params=" . $params );
+    $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
+    fwrite( $paramsFile, $params );
+    fclose( $paramsFile );
+
     // Download results
     downloadFile( $resultsFilename );
-
-    // Tell poller that results are ready
-    $readyFile = fopen( $readyFilename, "w" ) or die( "Unable to open file: " . $readyFilename );
-    fclose( $readyFile );
   }
   else
   {
-    // Failure: report error
+    // Failure: Report error
     initUi();
     showMessage( $metasysFile["name"], $message );
   }
