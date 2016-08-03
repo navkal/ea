@@ -1,15 +1,15 @@
 <?php
-  require_once "../common/util.php";
+  require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
 
   // Pre-cleanup
   // --> NOTE: This is not suitable for multi-user environment! -->
-  $files = glob( "out_*.csv" );
+  $files = glob( "mda/out_*.csv" );
   if ( ! empty( $files ) )
   {
     array_map( "unlink", $files );
   }
 
-  $files = glob( "params_*.csv" );
+  $files = glob( "mda/params_*.csv" );
   if ( ! empty( $files ) )
   {
     array_map( "unlink", $files );
@@ -17,9 +17,9 @@
   // <-- NOTE: This is not suitable for multi-user environment! <--
 ?>
 
-<link rel="stylesheet" href="../common/wickedpicker/dist/wickedpicker.min.css">
-<script type="text/javascript" src="../common/wickedpicker/dist/wickedpicker.min.js"></script>
-<script type="text/javascript" src="../common/util.js"></script>
+<link rel="stylesheet" href="../../common/wickedpicker/dist/wickedpicker.min.css">
+<script type="text/javascript" src="../../common/wickedpicker/dist/wickedpicker.min.js"></script>
+<script type="text/javascript" src="../../common/util.js"></script>
 
 <style>
 @media( max-width: 767px )
@@ -138,7 +138,7 @@
   function isItReadyYet()
   {
     $.ajax(
-      "parse_ready.php?timestamp=" + $( "#timestamp" ).val(),
+      "mda/parse_ready.php?timestamp=" + $( "#timestamp" ).val(),
       {
         type: "GET",
         cache: false,
@@ -164,7 +164,7 @@
       $( "body" ).css( "cursor", "default" );
 
       // Render results
-      window.location.assign( "parse_done.php?timestamp=" + $( "#timestamp" ).val()  );
+      window.location.assign( "mda/parse_done.php?timestamp=" + $( "#timestamp" ).val()  );
     }
   }
 </script>
@@ -298,7 +298,7 @@
   <p class="h3">Metasys Data Analysis</p>
   <br/>
 
-  <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="parse_run.php" method="post" enctype="multipart/form-data" >
+  <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
 
     <!-- Identifying timestamp -->
     <input type="hidden" id="timestamp" name="timestamp" >

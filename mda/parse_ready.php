@@ -1,5 +1,5 @@
 <?php
-  require_once "../common/util.php";
+  require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
 
   $timestamp = $_GET["timestamp"];
   require_once "filenames.php" ;

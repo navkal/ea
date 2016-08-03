@@ -1,5 +1,5 @@
 <?php
-  require_once "../common/util.php";
+  require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
 
   // Save identifying timestamp
   $timestamp = $_POST["timestamp"];
@@ -89,8 +89,8 @@ function showMessage( $uploadFilename, $message )
   <!DOCTYPE html>
   <html>
     <?php
-      include "../common/head.php";
-      initUi();
+      include $_SERVER[DOCUMENT_ROOT]."/common/head.php";
+      initUi( $_SERVER[DOCUMENT_ROOT]."/ea/" );
     ?>
 
     <body>
@@ -110,13 +110,13 @@ function showMessage( $uploadFilename, $message )
 
       <?php
         // Sticky footer
-        include "../common/footer.php";
+        include $_SERVER[DOCUMENT_ROOT]."/common/footer.php";
       ?>
 
     </body>
   </html>
   <script>
-    $( 'head' ).append( '<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
+    $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
     document.title = "Metasys Data Analysis";
   </script>
 <?php

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <?php
-    include "../common/head.php";
-    initUi();
+    include $_SERVER[DOCUMENT_ROOT]."/common/head.php";
+    initUi( $_SERVER[DOCUMENT_ROOT]."/ea/" );
 
     $timestamp = $_GET["timestamp"];
     error_log( "===> parse_done timestamp=" . $timestamp );
@@ -73,15 +73,15 @@
 
     <?php
       // Sticky footer
-      include "../common/footer.php";
+      $_SERVER[DOCUMENT_ROOT]."/common/footer.php";
     ?>
 
   </body>
 </html>
 
-<script type="text/javascript" src="../common/util.js"></script>
+<script type="text/javascript" src="../../common/util.js"></script>
 <script>
-  $( 'head' ).append( '<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
+  $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
   document.title = "Metasys Data Analysis";
 
   function startClose()
