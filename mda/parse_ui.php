@@ -1,20 +1,5 @@
 <?php
   require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
-
-  // Pre-cleanup
-  // --> NOTE: This is not suitable for multi-user environment! -->
-  $files = glob( "mda/out_*.csv" );
-  if ( ! empty( $files ) )
-  {
-    array_map( "unlink", $files );
-  }
-
-  $files = glob( "mda/params_*.csv" );
-  if ( ! empty( $files ) )
-  {
-    array_map( "unlink", $files );
-  }
-  // <-- NOTE: This is not suitable for multi-user environment! <--
 ?>
 
 <link rel="stylesheet" href="../../common/wickedpicker/dist/wickedpicker.min.css">

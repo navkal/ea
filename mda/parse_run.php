@@ -67,7 +67,6 @@
       }
     }
 
-    error_log( "=======> saving params=" . $params );
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
     fwrite( $paramsFile, $params );
     fclose( $paramsFile );

@@ -5,11 +5,9 @@
     initUi( $_SERVER[DOCUMENT_ROOT]."/ea/" );
 
     $timestamp = $_GET["timestamp"];
-    error_log( "===> parse_done timestamp=" . $timestamp );
     require_once "filenames.php" ;
     $paramsFile = fopen( $paramsFilename, "r" );
     $params = fgetcsv( $paramsFile );
-    error_log( "=========> read params=" . print_r( $params, true ) );
     fclose( $paramsFile );
   ?>
 
