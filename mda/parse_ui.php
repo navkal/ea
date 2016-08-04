@@ -32,7 +32,7 @@
       $( '#endTime' ).wickedpicker( { now: "00:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
 
       // Initialize options
-      $( "#summarize" ).prop( "checked", false);
+      $( "#summarize" ).prop( "checked", true );
       onChangeSummarize();
     }
   );
@@ -44,7 +44,7 @@
 
     $( "#daily" ).parent().css( "color", bDisable ? "lightgray" : "black" );
     $( "#daily" ).prop( "disabled", bDisable );
-    $( "#daily" ).prop( "checked", false);
+    $( "#daily" ).prop( "checked", ! bDisable );
 
     disableTimeInput( "startTime", bDisable );
 
