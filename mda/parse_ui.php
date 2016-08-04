@@ -28,8 +28,8 @@
       $( "#uploadFilename" ).val( "" );
 
       // Create time pickers
-      $( '#startTime' ).wickedpicker( { now: "00:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
-      $( '#endTime' ).wickedpicker( { now: "00:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
+      $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
+      $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
 
       // Initialize options
       $( "#summarize" ).prop( "checked", true );
@@ -387,6 +387,7 @@
               <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
             </div>
 
+            <br/>
             <div class="form-group">
               <label for="cost">Cost per kWh</label>
               <div class="input-group">
