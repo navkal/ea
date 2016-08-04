@@ -12,7 +12,7 @@
   ?>
 
   <body>
-    <div class="container" style="padding-top:30px">
+    <div class="container" style="padding-top:30px;padding-bottom:60px">
       <div class="page-header">
         <p class="h3">Metasys Data Analysis results</p>
       </div>
@@ -66,7 +66,7 @@
 
     <?php
       // Sticky footer
-      $_SERVER[DOCUMENT_ROOT]."/common/footer.php";
+      include $_SERVER[DOCUMENT_ROOT]."/common/footer.php";
     ?>
 
   </body>
