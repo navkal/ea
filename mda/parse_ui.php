@@ -276,6 +276,18 @@
             </ul>
           </dd>
         </dl>
+        <dl>
+          <dt>
+            Cost per kWh
+          </dt>
+          <dd>
+            <ul>
+              <li>
+                Indicates the cost of electricity in dollars.
+              </li>
+            </ul>
+          </dd>
+        </dl>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
