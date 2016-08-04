@@ -14,48 +14,51 @@
   <body>
     <div class="container" style="padding-top:30px;padding-bottom:60px">
       <div class="page-header">
-        <p class="h3">Metasys Data Analysis results</p>
+        <p class="h3">Metasys Data Analysis completion</p>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-info">
               <dl class="dl-horizontal" >
                 <dt>
                   Metasys File
                 </dt>
                 <dd>
-                  <?php
-                    echo $params[0];
-                  ?>
+                  <?=$params[0]?>
                 </dd>
                 <dt>
                   Start Time
                 </dt>
                 <dd>
-                  <?php
-                    echo( isset( $params[1] ) ? $params[1] : "n/a" );
-                  ?>
+                  <?=isset( $params[1] ) ? $params[1] : "n/a"?>
                 </dd>
                 <dt>
                   End Time
                 </dt>
                 <dd>
-                  <?php
-                    echo( isset( $params[2] ) ? $params[2] : "n/a" );
-                  ?>
+                  <?=isset( $params[2] ) ? $params[2] : "n/a"?>
                 </dd>
               </dl>
-            </div>
-            <div class="panel-body">
-              <?php
-                $resultsFile = fopen( $resultsFilename, "r" );
-                echo( print_r( fgetcsv( $resultsFile ), true ) );
-                fclose( $resultsFile );
-              ?>
-            </div>
-          </div>
+            </li>
+            <li class="list-group-item list-group-item-success">
+              <dl class="dl-horizontal" >
+                <dt>
+                  Results File
+                </dt>
+                <dd>
+                  <?=basename( $resultsFilename )?>
+                </dd>
+              </dl>
+            </li>
+          </ul>
         </div>
+      </div>
+
+      <div style="text-align:center;" >
+        <?php
+          include "parse_display.php";
+        ?>
       </div>
 
       <!-- Close button -->
