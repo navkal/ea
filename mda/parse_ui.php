@@ -3,7 +3,7 @@
 ?>
 
 <link rel="stylesheet" href="../../common/wickedpicker/dist/wickedpicker.min.css">
-<script type="text/javascript" src="../../common/wickedpicker/dist/wickedpicker.min.js"></script>
+<script type="text/javascript" src="../../common/wickedpicker/dist/wickedpicker.unmin.js"></script>
 <script type="text/javascript" src="../../common/util.js"></script>
 
 <style>
@@ -49,6 +49,11 @@
     disableTimeInput( "startTime", bDisable );
 
     onChangeDaily();
+
+    $( "#cost" ).prop( "disabled", bDisable );
+    $( "#cost" ).val( bDisable ? "" : "0.16" );
+    $( "label[for='cost']" ).css( "color", bDisable ? "lightgray" : "black" );
+    $( "#dollars" ).css( "color", bDisable ? "lightgray" : "black" );
   }
 
   // Handle change of Summarize checkbox
@@ -368,6 +373,14 @@
             <div class="form-group" >
               <label class="control-label" for="endTime" >End Time</label>
               <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
+            </div>
+
+            <div class="form-group">
+              <label for="cost">Cost per kWh</label>
+              <div class="input-group">
+                <span class="input-group-addon" id="dollars">$</span>
+                <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
+              </div>
             </div>
 
           </div>

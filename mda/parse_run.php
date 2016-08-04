@@ -34,7 +34,9 @@
     $summarize = $_POST["startTime"] ? "-s" : "";
     $start = $summarize ? "--start " . str_replace( ' ', '', $_POST["startTime"] ) : "";
     $end = $_POST["endTime"] ? "--end " . str_replace( ' ', '', $_POST["endTime"] ) : "";
-    $command = $python . " parse.py -i " . $metasysFile["tmp_name"] . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end;
+    $cost = $summarize ? "--cost " . $_POST["cost"] : "";
+    $command = $python . " parse.py -i " . $metasysFile["tmp_name"] . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end . " " . $cost;
+    error_log( "===> command=" . $command );
 
     // Execute Python script
     exec( $command, $output, $status );
@@ -60,11 +62,8 @@
     if ( $summarize )
     {
       $params .= "," . str_replace( ' ', '', $_POST["startTime"] );
-
-      if ( $_POST["endTime"] )
-      {
-        $params .= "," . str_replace( ' ', '', $_POST["endTime"] );
-      }
+      $params .= "," . ( $_POST["endTime"] ? str_replace( ' ', '', $_POST["endTime"] ) : "" );
+      $params .= ",$" . $_POST["cost"];
     }
 
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );

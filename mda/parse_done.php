@@ -31,13 +31,19 @@
                   Start Time
                 </dt>
                 <dd>
-                  <?=isset( $params[1] ) ? $params[1] : "n/a"?>
+                  <?=isset( $params[1] ) && $params[1] ? $params[1] : "n/a"?>
                 </dd>
                 <dt>
                   End Time
                 </dt>
                 <dd>
-                  <?=isset( $params[2] ) ? $params[2] : "n/a"?>
+                  <?=isset( $params[2] ) && $params[2] ? $params[2] : "n/a"?>
+                </dd>
+                <dt>
+                  Cost per kWh
+                </dt>
+                <dd>
+                  <?=isset( $params[3] ) && $params[3] ? $params[3] : "n/a"?>
                 </dd>
               </dl>
             </li>
