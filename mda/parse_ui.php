@@ -280,8 +280,9 @@
 </div>
 
 <div class="container">
-  <p class="h3">Metasys Data Analysis</p>
-  <br/>
+  <div class="page-header">
+    <p class="h3">Metasys Data Analysis</p>
+  </div>
 
   <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
 
