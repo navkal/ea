@@ -214,7 +214,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="helpOptionsLabel">Analysis Options</h4>
+        <h4 class="modal-title" id="helpOptionsLabel"><?=$labels["analysisOptions"]?></h4>
       </div>
       <div class="modal-body bg-info">
         <dl>
@@ -354,7 +354,7 @@
             <span class="panel-title">
               <div class="row">
                 <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
-                  Analysis Options
+                  <?=$labels["analysisOptions"]?>
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
                   <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">
