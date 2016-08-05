@@ -227,7 +227,7 @@
         </dl>
         <dl>
           <dt>
-            Time Period
+            <?=$labels["period"]?>
           </dt>
         </dl>
         <dl class="padLeftSmall">
@@ -380,7 +380,7 @@
 
             <br/>
             <div class="form-group">
-              <label class="control-label" for="period" >Time Period</label>
+              <label class="control-label" for="period" ><?=$labels["period"]?></label>
               <div>
                 <label class="radio-inline" >
                   <input type="radio" name="period" id="fullday" value="Full Day" onchange="onChangePeriod()" checked >

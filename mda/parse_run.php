@@ -65,7 +65,7 @@
       $params .= "," . $labels["startTime"] . "," . str_replace( ' ', '', $_POST["startTime"] );
       if ( $_POST["period"] == "Full Day" )
       {
-        $params .= ",Time Period," . $_POST["period"];
+        $params .= "," . $labels["period"] . "," . $_POST["period"];
       }
       else
       {
