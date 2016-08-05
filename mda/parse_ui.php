@@ -219,7 +219,7 @@
       <div class="modal-body bg-info">
         <dl>
           <dt>
-            Summarize
+            <?=$labels["summarize"]?>
           </dt>
           <dd>
             Aggregates results in specified time periods.
@@ -369,7 +369,7 @@
 
             <div class="form-group" >
               <div class="checkbox">
-                <label><input type="checkbox" id="summarize" onchange="onChangeSummarize()" >Summarize</label>
+                <label><input type="checkbox" id="summarize" onchange="onChangeSummarize()" ><?=$labels["summarize"]?></label>
               </div>
             </div>
 
