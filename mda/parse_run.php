@@ -63,7 +63,7 @@
     if ( $summarize )
     {
       $params .= "," . $labels["startTime"] . "," . str_replace( ' ', '', $_POST["startTime"] );
-      if ( $_POST["period"] == "Full Day" )
+      if ( $_POST["period"] == $labels["fullday"] )
       {
         $params .= "," . $labels["period"] . "," . $_POST["period"];
       }

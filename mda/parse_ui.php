@@ -234,7 +234,7 @@
           <dd>
             <dl class="dl-horizontal" >
               <dt>
-                Full Day
+                <?=$labels["fullday"]?>
               </dt>
               <dd>
                 Aggregates results in 24-hour periods beginning with <i><?=$labels["startTime"]?></i>.
@@ -383,8 +383,8 @@
               <label class="control-label" for="period" ><?=$labels["period"]?></label>
               <div>
                 <label class="radio-inline" >
-                  <input type="radio" name="period" id="fullday" value="Full Day" onchange="onChangePeriod()" checked >
-                  Full Day
+                  <input type="radio" name="period" id="fullday" value="<?=$labels["fullday"]?>" onchange="onChangePeriod()" checked >
+                  <?=$labels["fullday"]?>
                 </label>
                 <label class="radio-inline" >
                   <input type="radio" name="period" id="partday" value="Partial Day" onchange="onChangePeriod()" >
