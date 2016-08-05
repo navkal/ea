@@ -42,13 +42,17 @@
   {
     var bDisable = ! $( "#summarize" ).prop( "checked" );
 
-    $( "#daily" ).parent().css( "color", bDisable ? "lightgray" : "black" );
-    $( "#daily" ).prop( "disabled", bDisable );
-    $( "#daily" ).prop( "checked", ! bDisable );
+    var period = $( "input[type=radio][name=period]" );
+    period.parent().css( "color", bDisable ? "lightgray" : "black" );
+    period.parent().css( "cursor", bDisable ? "default" : "pointer" );
+    period.prop( "disabled", bDisable );
+    $( "#fullday" ).prop( "checked", ! bDisable );
+    $( "#partday" ).prop( "checked", false );
+    $( "label[for=period" ).css( "color", bDisable ? "lightgray" : "black" );
 
     disableTimeInput( "startTime", bDisable );
 
-    onChangeDaily();
+    onChangePeriod();
 
     $( "#cost" ).prop( "disabled", bDisable );
     $( "#cost" ).val( bDisable ? "" : "0.16" );
@@ -56,12 +60,13 @@
     $( "#dollars" ).css( "color", bDisable ? "lightgray" : "black" );
   }
 
-  // Handle change of Summarize checkbox
-  function onChangeDaily()
+  // Handle change of Period radio buttons
+  function onChangePeriod()
   {
-    sumChk = $( "#summarize" ).prop( "checked" );
-    dlyChk = $( "#daily" ).prop( "checked" );
-    var bDisable = ! sumChk || ( sumChk && dlyChk );
+    var summaryChecked = $( "#summarize" ).prop( "checked" );
+    var fulldayChecked = $( "#fullday" ).prop( "checked" );
+
+    var bDisable = ! summaryChecked || ( summaryChecked && fulldayChecked );
     disableTimeInput( "endTime", bDisable )
   }
 
@@ -376,9 +381,17 @@
             </div>
 
             <br/>
-            <div class="form-group" >
-              <div class="checkbox">
-                <label><input type="checkbox" id="daily" onchange="onChangeDaily()" >Full Day</label>
+            <div class="form-group">
+              <label class="control-label" for="period" >Period</label>
+              <div>
+                <label class="radio-inline" >
+                  <input type="radio" name="period" id="fullday" value="fullday" onchange="onChangePeriod()" checked >
+                  Full Day
+                </label>
+                <label class="radio-inline" >
+                  <input type="radio" name="period" id="partday" value="partday" onchange="onChangePeriod()" >
+                  Partial Day
+                </label>
               </div>
             </div>
 
