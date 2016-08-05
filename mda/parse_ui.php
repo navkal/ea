@@ -49,7 +49,7 @@
     period.prop( "disabled", bDisable );
     $( "#fullday" ).prop( "checked", ! bDisable );
     $( "#partday" ).prop( "checked", false );
-    $( "label[for=period" ).css( "color", bDisable ? "lightgray" : "black" );
+    $( "label[for=period]" ).css( "color", bDisable ? "lightgray" : "black" );
 
     disableTimeInput( "startTime", bDisable );
 
@@ -57,7 +57,7 @@
 
     $( "#cost" ).prop( "disabled", bDisable );
     $( "#cost" ).val( bDisable ? "" : "0.16" );
-    $( "label[for='cost']" ).css( "color", bDisable ? "lightgray" : "black" );
+    $( "label[for=cost]" ).css( "color", bDisable ? "lightgray" : "black" );
     $( "#dollars" ).css( "color", bDisable ? "lightgray" : "black" );
   }
 
@@ -108,7 +108,7 @@
         &&  ! $( "#startTime" ).prop( "disabled" )
         && ( $( "#startTime" ).val() == $( "#endTime" ).val() ) )
     {
-      messages.push( "Start Time and End Time must differ" );
+      messages.push( "<?=$labels["startTime"]?> and End Time must differ" );
       $( "#startTime" ).parent().addClass( "has-error" );
       $( "#endTime" ).parent().addClass( "has-error" );
     }
@@ -237,7 +237,7 @@
                 Full Day
               </dt>
               <dd>
-                Aggregates results in 24-hour periods beginning with <i>Start Time</i>.
+                Aggregates results in 24-hour periods beginning with <i><?=$labels["startTime"]?></i>.
               </dd>
             </dl>
             <dl class="dl-horizontal" >
@@ -245,15 +245,15 @@
                 Partial Day
               </dt>
               <dd>
-                Aggregates results in periods from <i>Start Time</i> to <i>End Time</i>.
+                Aggregates results in periods from <i><?=$labels["startTime"]?></i> to <i>End Time</i>.
               </dd>
               <dd>
                 <ul>
                   <li>
-                    If <i>Start Time</i> is greater than <i>End Time</i>, the time periods cross midnight.
+                    If <i><?=$labels["startTime"]?></i> is greater than <i>End Time</i>, the time periods cross midnight.
                   </li>
                   <li>
-                    <i>Start Time</i> and <i>End Time</i> must have different values.
+                    <i><?=$labels["startTime"]?></i> and <i>End Time</i> must have different values.
                   </li>
                 </ul>
               </dd>
@@ -263,7 +263,7 @@
         </dl>
         <dl>
           <dt>
-            Start Time
+            <?=$labels["startTime"]?>
           </dt>
           <dt>
             End Time
@@ -374,7 +374,7 @@
             </div>
 
             <div class="form-group" >
-              <label class="control-label" for="startTime" >Start Time</label>
+              <label class="control-label" for="startTime" ><?=$labels["startTime"]?></label>
               <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
             </div>
 

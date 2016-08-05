@@ -62,7 +62,7 @@
     $params = $labels["metasysFile"] . "," . $metasysFile["name"];
     if ( $summarize )
     {
-      $params .= ",Start Time," . str_replace( ' ', '', $_POST["startTime"] );
+      $params .= "," . $labels["startTime"] . "," . str_replace( ' ', '', $_POST["startTime"] );
       if ( $_POST["period"] == "Full Day" )
       {
         $params .= ",Time Period," . $_POST["period"];
