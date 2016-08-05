@@ -1,5 +1,6 @@
 <?php
   require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
+  require_once "labels.php";
 ?>
 
 <link rel="stylesheet" href="../../common/wickedpicker/dist/wickedpicker.min.css">
@@ -98,7 +99,7 @@
     // Check Metasys File
     if ( $( "#metasysFile" ).val() == "" )
     {
-      messages.push( "Metasys File is required" );
+      messages.push( "<?=$labels['metasysFile']?> is required" );
       $( "#uploadFilename" ).parent().addClass( "has-error" );
     }
 
@@ -170,7 +171,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="helpMetasysFileLabel">Metasys File</h4>
+        <h4 class="modal-title" id="helpMetasysFileLabel"><?=$labels["metasysFile"]?></h4>
       </div>
       <div class="modal-body bg-info">
         <dl>
@@ -180,7 +181,7 @@
         </dl>
        <dl>
           <dt>
-            How Metasys File is used:
+            How <?=$labels["metasysFile"]?> is used:
           </dt>
           <dd>
             <ol>
@@ -188,10 +189,10 @@
                 You click <i>OK</i>.
               </li>
               <li>
-                Browser uploads Metasys File to server.
+                Browser uploads <?=$labels["metasysFile"]?> to server.
               </li>
               <li>
-                Metasys Data Analysis script analyzes contents of Metasys File.
+                Metasys Data Analysis script analyzes contents of <?=$labels["metasysFile"]?>.
               </li>
               <li>
                 Browser downloads analysis results to your computer.
@@ -316,7 +317,7 @@
             <span class="panel-title">
               <div class="row">
                 <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
-                  Metasys File
+                  <?=$labels["metasysFile"]?>
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
                   <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpMetasysFile">

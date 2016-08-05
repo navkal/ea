@@ -1,5 +1,6 @@
 <?php
   require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
+  require_once "labels.php";
 
   // Save identifying timestamp
   $timestamp = $_POST["timestamp"];
@@ -58,7 +59,7 @@
     // Normal: Process results
 
     // Save script parameters in file
-    $params = "Metasys File," . $metasysFile["name"];
+    $params = $labels["metasysFile"] . "," . $metasysFile["name"];
     if ( $summarize )
     {
       $params .= ",Start Time," . str_replace( ' ', '', $_POST["startTime"] );
