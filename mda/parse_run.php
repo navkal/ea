@@ -71,7 +71,7 @@
       {
         $params .= "," . $labels["endTime"] . "," . str_replace( ' ', '', $_POST["endTime"] );
       }
-      $params .= ",Cost per kWh,$" . $_POST["cost"];
+      $params .= "," . $labels["cost"] . ",$" . $_POST["cost"];
     }
     else
     {

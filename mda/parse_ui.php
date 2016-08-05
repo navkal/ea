@@ -281,7 +281,7 @@
         </dl>
         <dl>
           <dt>
-            Cost per kWh
+            <?=$labels["cost"]?>
           </dt>
           <dd>
             <ul>
@@ -400,7 +400,7 @@
 
             <br/>
             <div class="form-group">
-              <label for="cost">Cost per kWh</label>
+              <label for="cost"><?=$labels["cost"]?></label>
               <div class="input-group">
                 <span class="input-group-addon" id="dollars">$</span>
                 <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
