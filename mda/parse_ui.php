@@ -108,7 +108,7 @@
         &&  ! $( "#startTime" ).prop( "disabled" )
         && ( $( "#startTime" ).val() == $( "#endTime" ).val() ) )
     {
-      messages.push( "<?=$labels["startTime"]?> and End Time must differ" );
+      messages.push( "<?=$labels["startTime"]?> and <?=$labels["endTime"]?> must differ" );
       $( "#startTime" ).parent().addClass( "has-error" );
       $( "#endTime" ).parent().addClass( "has-error" );
     }
@@ -245,15 +245,15 @@
                 <?=$labels["partday"]?>
               </dt>
               <dd>
-                Aggregates results in periods from <i><?=$labels["startTime"]?></i> to <i>End Time</i>.
+                Aggregates results in periods from <i><?=$labels["startTime"]?></i> to <i><?=$labels["endTime"]?></i>.
               </dd>
               <dd>
                 <ul>
                   <li>
-                    If <i><?=$labels["startTime"]?></i> is greater than <i>End Time</i>, the time periods cross midnight.
+                    If <i><?=$labels["startTime"]?></i> is greater than <i><?=$labels["endTime"]?></i>, the time periods cross midnight.
                   </li>
                   <li>
-                    <i><?=$labels["startTime"]?></i> and <i>End Time</i> must have different values.
+                    <i><?=$labels["startTime"]?></i> and <i><?=$labels["endTime"]?></i> must have different values.
                   </li>
                 </ul>
               </dd>
@@ -266,7 +266,7 @@
             <?=$labels["startTime"]?>
           </dt>
           <dt>
-            End Time
+            <?=$labels["endTime"]?>
           </dt>
           <dd>
             <ul>
@@ -394,7 +394,7 @@
             </div>
 
             <div class="form-group" >
-              <label class="control-label" for="endTime" >End Time</label>
+              <label class="control-label" for="endTime" ><?=$labels["endTime"]?></label>
               <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
             </div>
 
