@@ -21,30 +21,17 @@
           <ul class="list-group">
             <li class="list-group-item list-group-item-info">
               <dl class="dl-horizontal" >
-                <dt>
-                  Metasys File
-                </dt>
-                <dd>
-                  <?=$params[0]?>
-                </dd>
-                <dt>
-                  Start Time
-                </dt>
-                <dd>
-                  <?=isset( $params[1] ) && $params[1] ? $params[1] : "n/a"?>
-                </dd>
-                <dt>
-                  End Time
-                </dt>
-                <dd>
-                  <?=isset( $params[2] ) && $params[2] ? $params[2] : "n/a"?>
-                </dd>
-                <dt>
-                  Cost per kWh
-                </dt>
-                <dd>
-                  <?=isset( $params[3] ) && $params[3] ? $params[3] : "n/a"?>
-                </dd>
+                <?php
+                  for ( $index = 0; $index < count( $params ); $index += 2 )
+                  {
+                    echo "<dt>";
+                    echo $params[$index];
+                    echo "</dt>";
+                    echo "<dd>";
+                    echo $params[$index+1];
+                    echo "</dd>";
+                  }
+                ?>
               </dl>
             </li>
             <li class="list-group-item list-group-item-success">

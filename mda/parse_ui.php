@@ -221,22 +221,19 @@
             Summarize
           </dt>
           <dd>
-            Aggregates results in specified periods.
+            Aggregates results in specified time periods.
           </dd>
         </dl>
         <dl>
           <dt>
-            Full Day
+            Time Period
           </dt>
-          <dd>
-            Controls how periods are determined.
-          </dd>
         </dl>
         <dl class="padLeftSmall">
           <dd>
             <dl class="dl-horizontal" >
               <dt>
-                Checked
+                Full Day
               </dt>
               <dd>
                 Aggregates results in 24-hour periods beginning with <i>Start Time</i>.
@@ -244,7 +241,7 @@
             </dl>
             <dl class="dl-horizontal" >
               <dt>
-                Unchecked
+                Partial Day
               </dt>
               <dd>
                 Aggregates results in periods from <i>Start Time</i> to <i>End Time</i>.
@@ -252,7 +249,7 @@
               <dd>
                 <ul>
                   <li>
-                    If <i>Start Time</i> is greater than <i>End Time</i>, the periods cross midnight.
+                    If <i>Start Time</i> is greater than <i>End Time</i>, the time periods cross midnight.
                   </li>
                   <li>
                     <i>Start Time</i> and <i>End Time</i> must have different values.
@@ -382,14 +379,14 @@
 
             <br/>
             <div class="form-group">
-              <label class="control-label" for="period" >Period</label>
+              <label class="control-label" for="period" >Time Period</label>
               <div>
                 <label class="radio-inline" >
-                  <input type="radio" name="period" id="fullday" value="fullday" onchange="onChangePeriod()" checked >
+                  <input type="radio" name="period" id="fullday" value="Full Day" onchange="onChangePeriod()" checked >
                   Full Day
                 </label>
                 <label class="radio-inline" >
-                  <input type="radio" name="period" id="partday" value="partday" onchange="onChangePeriod()" >
+                  <input type="radio" name="period" id="partday" value="Partial Day" onchange="onChangePeriod()" >
                   Partial Day
                 </label>
               </div>

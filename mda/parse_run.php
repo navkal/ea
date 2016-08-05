@@ -58,12 +58,23 @@
     // Normal: Process results
 
     // Save script parameters in file
-    $params = $metasysFile["name"];
+    $params = "Metasys File," . $metasysFile["name"];
     if ( $summarize )
     {
-      $params .= "," . str_replace( ' ', '', $_POST["startTime"] );
-      $params .= "," . ( $_POST["endTime"] ? str_replace( ' ', '', $_POST["endTime"] ) : "" );
-      $params .= ",$" . $_POST["cost"];
+      $params .= ",Start Time," . str_replace( ' ', '', $_POST["startTime"] );
+      if ( $_POST["period"] == "Full Day" )
+      {
+        $params .= ",Time Period," . $_POST["period"];
+      }
+      else
+      {
+        $params .= ",End Time," . str_replace( ' ', '', $_POST["endTime"] );
+      }
+      $params .= ",Cost per kWh,$" . $_POST["cost"];
+    }
+    else
+    {
+      $params .= ",Analysis Options,none";
     }
 
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
