@@ -1,6 +1,6 @@
 <?php
   require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
-  require_once "labels.php";
+  include "labels.php";
 
   // Save identifying timestamp
   $timestamp = $_POST["timestamp"];
@@ -45,7 +45,7 @@
     // Check whether script generated an output file
     if ( ! file_exists( $resultsFilename ) )
     {
-      $message = "Metasys Data Analysis script failed to generate output file.<br/>";
+      $message = $labels['metasysDataAnalysis'] . " script failed to generate output file.<br/>";
       foreach ( $output as $line )
       {
         $message .= "<br/>" . $line;
@@ -101,6 +101,7 @@ function showMessage( $uploadFilename, $message )
     <?php
       include $_SERVER[DOCUMENT_ROOT]."/common/head.php";
       initUi( $_SERVER[DOCUMENT_ROOT]."/ea/" );
+      include "labels.php" ;
     ?>
 
     <body>
@@ -127,7 +128,7 @@ function showMessage( $uploadFilename, $message )
   </html>
   <script>
     $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
-    document.title = "Metasys Data Analysis";
+    document.title = "<?=$labels['metasysDataAnalysis']?>";
   </script>
 <?php
 }

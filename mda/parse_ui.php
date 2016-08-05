@@ -192,7 +192,7 @@
                 Browser uploads <?=$labels["metasysFile"]?> to server.
               </li>
               <li>
-                Metasys Data Analysis script analyzes contents of <?=$labels["metasysFile"]?>.
+                <?=$labels['metasysDataAnalysis']?> script analyzes contents of <?=$labels["metasysFile"]?>.
               </li>
               <li>
                 Browser downloads analysis results to your computer.
@@ -301,7 +301,7 @@
 
 <div class="container">
   <div class="page-header">
-    <p class="h3">Metasys Data Analysis</p>
+    <p class="h3"><?=$labels['metasysDataAnalysis']?></p>
   </div>
 
   <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >

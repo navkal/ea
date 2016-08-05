@@ -1,6 +1,7 @@
 <?php
   $labels =
   [
+    "metasysDataAnalysis" => "Metasys Data Analysis",
     "metasysFile" => "Metasys File",
     "analysisOptions" => "Analysis Options",
     "summarize" => "Summarize",
