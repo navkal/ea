@@ -6,7 +6,7 @@
     "analysisOptions" => "Analysis Options",
     "format" => "Report Format",
     "summary" => "Summary",
-    "full" => "Full",
+    "detailed" => "Detailed",
     "startTime" => "Start Time",
     "period" => "Time Period",
     "fullday" => "Full Day",

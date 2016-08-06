@@ -233,10 +233,10 @@
             </dl>
             <dl class="dl-horizontal" >
               <dt>
-                <?=$labels["full"]?>
+                <?=$labels["detailed"]?>
               </dt>
               <dd>
-                Does not aggregate results.
+                Reports full results.
               </dd>
             </dl>
           </dd>
@@ -390,8 +390,8 @@
                   <?=$labels["summary"]?>
                 </label>
                 <label class="radio-inline" >
-                  <input type="radio" name="format" id="full" value="<?=$labels["full"]?>" onchange="onChangeFormat()" >
-                  <?=$labels["full"]?>
+                  <input type="radio" name="format" id="detailed" value="<?=$labels["detailed"]?>" onchange="onChangeFormat()" >
+                  <?=$labels["detailed"]?>
                 </label>
               </div>
             </div>
