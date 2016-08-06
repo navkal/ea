@@ -75,7 +75,7 @@
     }
     else
     {
-      $params .= "," . $labels["analysisOptions"] . ",none";
+      $params .= "," . $labels["format"] . "," . $labels["full"];
     }
 
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );

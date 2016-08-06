@@ -33,15 +33,14 @@
       $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
 
       // Initialize options
-      $( "#summarize" ).prop( "checked", true );
-      onChangeSummarize();
+      onChangeFormat();
     }
   );
 
-  // Handle change of Summarize checkbox
-  function onChangeSummarize()
+  // Handle change of Report Format radio buttons
+  function onChangeFormat()
   {
-    var bDisable = ! $( "#summarize" ).prop( "checked" );
+    var bDisable = ! $( "#summary" ).prop( "checked" );
 
     var period = $( "input[type=radio][name=period]" );
     period.parent().css( "color", bDisable ? "lightgray" : "black" );
@@ -64,7 +63,7 @@
   // Handle change of Period radio buttons
   function onChangePeriod()
   {
-    var summaryChecked = $( "#summarize" ).prop( "checked" );
+    var summaryChecked = $( "#summary" ).prop( "checked" );
     var fulldayChecked = $( "#fullday" ).prop( "checked" );
 
     var bDisable = ! summaryChecked || ( summaryChecked && fulldayChecked );
@@ -219,10 +218,27 @@
       <div class="modal-body bg-info">
         <dl>
           <dt>
-            <?=$labels["summarize"]?>
+            <?=$labels["format"]?>
           </dt>
+        </dl>
+        <dl class="padLeftSmall">
           <dd>
-            Aggregates results in specified time periods.
+            <dl class="dl-horizontal" >
+              <dt>
+                <?=$labels["summary"]?>
+              </dt>
+              <dd>
+                Aggregates results in specified time periods.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                <?=$labels["full"]?>
+              </dt>
+              <dd>
+                Does not aggregate results.
+              </dd>
+            </dl>
           </dd>
         </dl>
         <dl>
@@ -260,7 +276,6 @@
             </dl>
           </dd>
         </dl>
-        </dl>
         <dl>
           <dt>
             <?=$labels["startTime"]?>
@@ -284,9 +299,9 @@
             <?=$labels["cost"]?>
           </dt>
           <dd>
-            <ul>
+            <ul style="list-style-type:none" >
               <li>
-                Indicates the cost of electricity in dollars.
+                Cost of electricity in dollars.
               </li>
             </ul>
           </dd>
@@ -367,12 +382,21 @@
 
           <div class="panel-body">
 
-            <div class="form-group" >
-              <div class="checkbox">
-                <label><input type="checkbox" id="summarize" onchange="onChangeSummarize()" ><?=$labels["summarize"]?></label>
+            <div class="form-group">
+              <label class="control-label" for="format" ><?=$labels["format"]?></label>
+              <div>
+                <label class="radio-inline" >
+                  <input type="radio" name="format" id="summary" value="<?=$labels["summary"]?>" onchange="onChangeFormat()" checked >
+                  <?=$labels["summary"]?>
+                </label>
+                <label class="radio-inline" >
+                  <input type="radio" name="format" id="full" value="<?=$labels["full"]?>" onchange="onChangeFormat()" >
+                  <?=$labels["full"]?>
+                </label>
               </div>
             </div>
 
+            <br/>
             <div class="form-group" >
               <label class="control-label" for="startTime" ><?=$labels["startTime"]?></label>
               <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
