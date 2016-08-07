@@ -236,7 +236,7 @@
                 <?=$labels["detailed"]?>
               </dt>
               <dd>
-                Reports full results.
+                Includes a result for each distinct timestamp found in Metasys File.
               </dd>
             </dl>
           </dd>
