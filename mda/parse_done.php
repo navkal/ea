@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <?php
-    include $_SERVER[DOCUMENT_ROOT]."/common/head.php";
-    initUi( $_SERVER[DOCUMENT_ROOT]."/ea/" );
+    include $_SERVER[DOCUMENT_ROOT]."/../common/head.php";
+    initUi( $_SERVER[DOCUMENT_ROOT]."/" );
 
     $timestamp = $_GET["timestamp"];
     require_once "filenames.php" ;
@@ -64,13 +64,13 @@
 
     <?php
       // Sticky footer
-      include $_SERVER[DOCUMENT_ROOT]."/common/footer.php";
+      include $_SERVER[DOCUMENT_ROOT]."/../common/footer.php";
     ?>
 
   </body>
 </html>
 
-<script type="text/javascript" src="../../common/util.js"></script>
+<script type="text/javascript" src="../util/util.js"></script>
 <script>
   $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
   document.title = "<?=$labels['metasysDataAnalysis']?>";

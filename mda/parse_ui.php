@@ -1,11 +1,11 @@
 <?php
-  require_once $_SERVER[DOCUMENT_ROOT]."/common/util.php";
+  require_once $_SERVER[DOCUMENT_ROOT]."/../common/util.php";
   require_once "labels.php";
 ?>
 
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">
 <script type="text/javascript" src="lib/wickedpicker/dist/wickedpicker.unmin.js"></script>
-<script type="text/javascript" src="../../common/util.js"></script>
+<script type="text/javascript" src="../util/util.js"></script>
 
 <style>
 @media( max-width: 767px )
@@ -147,7 +147,6 @@
 
   function handlePollResponse( rsp, sStatus, tJqXhr )
   {
-    console.log( "=========> poll response=<" + rsp + ">" );
     if ( rsp == "" )
     {
       // Try again
