@@ -31,7 +31,7 @@
   if ( empty( $message ) )
   {
     // Set up Python command
-    $python = ( strpos( strtolower( php_uname( "s" ) ), "windows" ) === FALSE ) ? "python" : '"C:\Users\Ayee\Anaconda3\python.exe"';
+    $python = ( strpos( strtolower( php_uname( "s" ) ), "windows" ) === FALSE ) ? "/home/ea/anaconda3/bin/python" : '"C:\Users\Ayee\Anaconda3\python.exe"';
     $summarize = isset( $_POST["startTime"] ) ? "-s" : "";
     $start = $summarize ? "--start " . str_replace( ' ', '', $_POST["startTime"] ) : "";
     $end = isset( $_POST["endTime"] ) ? "--end " . str_replace( ' ', '', $_POST["endTime"] ) : "";
