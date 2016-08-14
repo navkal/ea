@@ -32,9 +32,9 @@
   {
     // Set up Python command
     $python = ( strpos( strtolower( php_uname( "s" ) ), "windows" ) === FALSE ) ? "python" : '"C:\Users\Ayee\Anaconda3\python.exe"';
-    $summarize = $_POST["startTime"] ? "-s" : "";
+    $summarize = isset( $_POST["startTime"] ) ? "-s" : "";
     $start = $summarize ? "--start " . str_replace( ' ', '', $_POST["startTime"] ) : "";
-    $end = $_POST["endTime"] ? "--end " . str_replace( ' ', '', $_POST["endTime"] ) : "";
+    $end = isset( $_POST["endTime"] ) ? "--end " . str_replace( ' ', '', $_POST["endTime"] ) : "";
     $cost = $summarize ? "--cost " . $_POST["cost"] : "";
     $command = $python . " parse.py -i " . $metasysFile["tmp_name"] . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end . " " . $cost;
     error_log( "===> command=" . $command );
