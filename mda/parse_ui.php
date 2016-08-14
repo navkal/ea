@@ -315,9 +315,7 @@
 </div>
 
 <div class="container">
-  <div class="page-header">
-    <p class="h3"><?=$labels['metasysDataAnalysis']?></p>
-  </div>
+  <h3><?=$labels['metasysDataAnalysis']?></h3>
 
   <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
 
@@ -359,8 +357,6 @@
       </div>
     </div>
 
-    <br/>
-
     <!-- Options -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -396,13 +392,11 @@
               </div>
             </div>
 
-            <br/>
             <div class="form-group" >
               <label class="control-label" for="startTime" ><?=$labels["startTime"]?></label>
               <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
             </div>
 
-            <br/>
             <div class="form-group">
               <label class="control-label" for="period" ><?=$labels["period"]?></label>
               <div>
@@ -422,7 +416,6 @@
               <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
             </div>
 
-            <br/>
             <div class="form-group">
               <label for="cost"><?=$labels["cost"]?></label>
               <div class="input-group">
