@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <?php
-    include $_SERVER[DOCUMENT_ROOT]."/../common/head.php";
-    initUi( $_SERVER[DOCUMENT_ROOT]."/" );
+    include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
+    initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
 
     $timestamp = $_GET["timestamp"];
     require_once "filenames.php" ;
@@ -64,7 +64,7 @@
 
     <?php
       // Sticky footer
-      include $_SERVER[DOCUMENT_ROOT]."/../common/footer.php";
+      include $_SERVER["DOCUMENT_ROOT"]."/../common/footer.php";
     ?>
 
   </body>

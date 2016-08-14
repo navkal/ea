@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER[DOCUMENT_ROOT]."/../common/util.php";
+  require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
   include "labels.php";
 
   // Save identifying timestamp
@@ -99,8 +99,8 @@ function showMessage( $uploadFilename, $message )
   <!DOCTYPE html>
   <html>
     <?php
-      include $_SERVER[DOCUMENT_ROOT]."/../common/head.php";
-      initUi( $_SERVER[DOCUMENT_ROOT]."/" );
+      include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
+      initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
       include "labels.php" ;
     ?>
 
@@ -121,7 +121,7 @@ function showMessage( $uploadFilename, $message )
 
       <?php
         // Sticky footer
-        include $_SERVER[DOCUMENT_ROOT]."/../common/footer.php";
+        include $_SERVER["DOCUMENT_ROOT"]."/../common/footer.php";
       ?>
 
     </body>

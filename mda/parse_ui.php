@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER[DOCUMENT_ROOT]."/../common/util.php";
+  require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
   require_once "labels.php";
 ?>
 
