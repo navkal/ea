@@ -33,6 +33,7 @@
       $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
 
       // Initialize options
+      $( "#summary" ).prop( "checked", true );
       onChangeFormat();
     }
   );
@@ -104,7 +105,7 @@
 
     // Check time inputs
     if ( ! $( "#startTime" ).prop( "disabled" )
-        &&  ! $( "#startTime" ).prop( "disabled" )
+        &&  ! $( "#endTime" ).prop( "disabled" )
         && ( $( "#startTime" ).val() == $( "#endTime" ).val() ) )
     {
       messages.push( "<?=$labels["startTime"]?> and <?=$labels["endTime"]?> must differ" );
@@ -385,7 +386,7 @@
               <label class="control-label" for="format" ><?=$labels["format"]?></label>
               <div>
                 <label class="radio-inline" >
-                  <input type="radio" name="format" id="summary" value="<?=$labels["summary"]?>" onchange="onChangeFormat()" checked >
+                  <input type="radio" name="format" id="summary" value="<?=$labels["summary"]?>" onchange="onChangeFormat()" >
                   <?=$labels["summary"]?>
                 </label>
                 <label class="radio-inline" >
@@ -406,7 +407,7 @@
               <label class="control-label" for="period" ><?=$labels["period"]?></label>
               <div>
                 <label class="radio-inline" >
-                  <input type="radio" name="period" id="fullday" value="<?=$labels["fullday"]?>" onchange="onChangePeriod()" checked >
+                  <input type="radio" name="period" id="fullday" value="<?=$labels["fullday"]?>" onchange="onChangePeriod()" >
                   <?=$labels["fullday"]?>
                 </label>
                 <label class="radio-inline" >
@@ -435,16 +436,16 @@
       </div>
     </div>
 
-  </form>
-
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div style="text-align:center;" >
-        <button type="submit" form="uploadForm" class="btn btn-primary" >OK</button>
-        <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="text-align:center;" >
+          <button type="submit" form="uploadForm" class="btn btn-primary" >OK</button>
+          <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+        </div>
       </div>
     </div>
-  </div>
+
+  </form>
 
   <br/>
 
