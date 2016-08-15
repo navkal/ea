@@ -16,7 +16,7 @@ def parse(input_file):
     """
     # Read the file into a pandas Series with MultiIndex
     df = pd.read_csv(input_file,
-                     index_col=[0, 1],
+                     index_col=[0, 2],
                      converters={'Object Value': drop_units})['Object Value']
 
     # Drop duplicate measurements
@@ -26,24 +26,10 @@ def parse(input_file):
     # Transform df from 1-dimensional Series with MultiIndex to 2-dimensional DataFrame
     df = df.unstack(level=-1)
 
-    # Remove prefixes from column names
-    df.columns = [drop_prefix(column_name) for column_name in df.columns]
-
     # Convert index to DatetimeIndex
     df.index = pd.to_datetime(df.index, dayfirst=True)
 
     return df
-
-
-def drop_prefix(variable_name):
-    """Remove the 'Town Of Andover:AHS-NAE1/FEC Bus2.' prefix from variable names"""
-    pattern = re.compile(r"\ATown Of Andover:AHS-NAE1/FEC Bus2\.(.*)\Z")
-    match = pattern.match(variable_name)
-    if match is None:
-        # variable_name was not of the expected format
-        return np.nan
-    else:
-        return match.group(1)
 
 
 def drop_units(value):
@@ -57,37 +43,25 @@ def drop_units(value):
         return float(match.group(1))
 
 
-def summarize(df, cost, start_time=None, end_time=None):
+def summarize(df, columns, start_time=None, end_time=None):
     """Return a table describing daily energy usage"""
     if end_time is not None and start_time is None:
         raise ValueError('end_time should not be specified unless start_time is specified')
     elif start_time is not None and end_time is not None:
         df = df.iloc[df.index.indexer_between_time(start_time, end_time),:]
 
-    summary_columns = [
-        'MAIN ELECTRIC METER.Analog Inputs.Energy.Main-kWh-Energy (Trend1)',
-        'PANEL DHB ELECTRIC METER.Analog Inputs.Energy.DHB - kWh Total (Trend1)',
-        'PANEL M1 ELECTRIC METER.Analog Inputs.Energy.M1-kWh-Energy (Trend1)',
-        'PANEL DG ELECTRIC METER.Analog Inputs.Energy.DG-kWh-Energy (Trend1)',
-        'PANEL DE-ATS ELECTRIC METER.Analog Inputs.Energy.DE-ATS-Energy-kWh (Trend1)',
-        'PANEL COLLINS ELECTRIC METER.Analog Inputs.Energy.CollinCtr-Energy-kWh (Trend1)',
-        'PANEL DL ELECTRIC METER.Analog Inputs.Energy.DL-Energy-kWh (Trend1)'
-    ]
-    summary_labels = ['Main', 'DHB', 'M1', 'DG', 'DE-ATS', 'Collins', 'DL']
-    subset = df[summary_columns]
+    invalid_columns = set(columns) - set(df.columns)
+    if invalid_columns:
+        raise ValueError('the following column names were not found: {0}'.format(invalid_columns))
+    subset = df[columns]
 
     # Sometimes measurements are incorrectly reported as 0
     subset = subset.replace(to_replace=0, value=np.nan)
 
-    grouped = subset.groupby(group_key(subset, start_time, end_time))
-
-    grouped_cumulative_energy = grouped[summary_columns]
+    grouped_cumulative_energy = subset.groupby(group_key(subset, start_time, end_time))
     daily_energy = grouped_cumulative_energy.max() - grouped_cumulative_energy.min()
-    daily_energy.columns = [label + ' (kWh)' for label in summary_labels]
-    daily_dollars = daily_energy * cost
-    daily_dollars.columns = [label + ' ($)' for label in summary_labels]
 
-    return pd.concat((daily_energy, daily_dollars), axis=1)
+    return daily_energy
 
 
 def group_key(df, start_time, end_time):
@@ -131,15 +105,21 @@ def header(start_time, end_time):
         return 'Usage statistics from between %s and %s each day' % (start_time, end_time)
 
 
-def save_df(transformed, summarize, start_time, end_time, output_file):
+def save_df(transformed, summarized, start_time, end_time, output_file):
     """Save input DataFrame to a csv file"""
-    if summarize:
+    if summarized:
         with open(output_file, 'w') as output_file:
             output_file.write(header(start_time, end_time))
             output_file.write('\n')
             transformed.to_csv(output_file, mode='a')
     else:
         transformed.to_csv(output_file)
+
+
+def _parse_columns_file(columns_file):
+    with open(columns_file) as f:
+        columns = [column.strip('\n') for column in f]
+    return columns
 
 
 if __name__ == '__main__':
@@ -151,15 +131,16 @@ if __name__ == '__main__':
     parser.add_argument('--end', dest='end_time', nargs='?', help='end time for summary table')
     parser.add_argument('-i', dest='input_file',  help='name of input file')
     parser.add_argument('-o', dest='output_file', help='name of output file')
-    parser.add_argument('--cost', dest='cost', nargs='?', default=.16,
-                        help='cost of electricity, in $/kWh', type=float)
+    parser.add_argument('-c', dest='columns_file', nargs='?', help='name of header file')
     args = parser.parse_args()
     transformed = parse(args.input_file)
 
+    if args.columns_file:
+        columns = _parse_columns_file(args.columns_file)
     start_time = _string_to_time(args.start_time)
     end_time = _string_to_time(args.end_time)
 
     if args.summarize:
-        transformed = summarize(transformed, args.cost, start_time, end_time)
+        transformed = summarize(transformed, columns, start_time, end_time)
 
     save_df(transformed, args.summarize, args.start_time, args.end_time, args.output_file)
