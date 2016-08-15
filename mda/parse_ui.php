@@ -42,21 +42,21 @@
       $( "body" ).css( "cursor", "progress" );
 
       // Post file to server
-      var data = new FormData();
-      data.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
+      var postData = new FormData();
+      postData.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
 
       $.ajax(
         "mda/parse_upload.php?timestamp=" + $( "#timestamp" ).val(),
         {
           type: 'POST',
-          processData: false, // important
-          contentType: false, // important
+          processData: false,
+          contentType: false,
           dataType : 'json',
-          data: data
+          data: postData
         }
       )
       .done( handlePostResponse )
-      .fail( ajaxError );
+      .fail( ajaxFail );
     }
   }
 
@@ -73,6 +73,12 @@
     {
       showOptions( rsp.columns );
     }
+  }
+
+  function ajaxFail( rsp, sStatus, tJqXhr )
+  {
+    $( "body" ).css( "cursor", "default" );
+    showMessages( "AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">" );
   }
 
   function showOptions( columns )
