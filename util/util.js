@@ -1,4 +1,4 @@
-function ajaxSuccess( tJqXhr, sStatus, sErrorThrown )
+function ajaxSuccess( rsp, sStatus, tJqXhr )
 {
   // Do nothing
 }
