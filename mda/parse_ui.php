@@ -75,10 +75,10 @@
     }
   }
 
-  function ajaxFail( rsp, sStatus, tJqXhr )
+  function ajaxFail( tJqXhr, sStatus, sErrorThrown )
   {
     $( "body" ).css( "cursor", "default" );
-    showMessages( "AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">" );
+    showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
   }
 
   function showOptions( columns )
