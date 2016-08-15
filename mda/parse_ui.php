@@ -75,12 +75,6 @@
     }
   }
 
-  function ajaxFail( tJqXhr, sStatus, sErrorThrown )
-  {
-    $( "body" ).css( "cursor", "default" );
-    showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
-  }
-
   function showOptions( columns )
   {
     // Hide file chooser
@@ -230,7 +224,7 @@
       }
     )
     .done( handlePollResponse )
-    .fail( ajaxError );
+    .fail( ajaxFail );
   }
 
   function handlePollResponse( rsp, sStatus, tJqXhr )
@@ -248,6 +242,12 @@
       // Render results
       window.location.assign( "mda/parse_done.php?timestamp=" + $( "#timestamp" ).val()  );
     }
+  }
+
+  function ajaxFail( tJqXhr, sStatus, sErrorThrown )
+  {
+    $( "body" ).css( "cursor", "default" );
+    showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
   }
 </script>
 
