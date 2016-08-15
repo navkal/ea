@@ -82,12 +82,11 @@
       {
         type: "GET",
         cache: false,
-        dataType: "json",
-        success: finishClose,
-        error: ajaxError,
-        complete: ajaxComplete
+        dataType: "json"
       }
-    );
+    )
+    .done( finishClose )
+    .fail( ajaxError );
   }
 
   function finishClose()

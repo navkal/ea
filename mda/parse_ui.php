@@ -23,20 +23,75 @@
     {
       // Initialize identifying timestamp
       $( "#timestamp" ).val( Date.now() );
+      console.log( "===> timestamp=" + $( "#timestamp" ).val() );
 
       // Initialize the file chooser
       $( "#metasysFile" ).val( "" );
       $( "#uploadFilename" ).val( "" );
 
-      // Create time pickers
-      $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
-      $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
-
-      // Initialize options
-      $( "#summary" ).prop( "checked", true );
-      onChangeFormat();
+      // Hide Analysis Options form
+      $( "#optionsForm" ).css( "display", "none" );
     }
   );
+
+  function onSubmitFile()
+  {
+    if ( validateFormInput( validateFileInput ) )
+    {
+      // Set wait cursor
+      $( "body" ).css( "cursor", "progress" );
+
+      // Post file to server
+      var data = new FormData();
+      data.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
+
+      $.ajax(
+        "mda/parse_upload.php?timestamp=" + $( "#timestamp" ).val(),
+        {
+          type: 'POST',
+          processData: false, // important
+          contentType: false, // important
+          dataType : 'json',
+          data: data
+        }
+      )
+      .done( handlePostResponse )
+      .fail( ajaxError );
+    }
+  }
+
+  function handlePostResponse( rsp, sStatus, tJqXhr )
+  {
+    $( "body" ).css( "cursor", "default" );
+    console.log( "handlePostResponse, rsp=" + JSON.stringify( rsp ) );
+
+    if ( rsp.messages.length )
+    {
+      showMessages( rsp.messages );
+    }
+    else
+    {
+      showOptions( rsp.columns );
+    }
+  }
+
+  function showOptions( columns )
+  {
+    // Hide file chooser
+    $( "#fileBlock" ).css( "display", "none" );
+
+    // Show Analysis Options form
+    $( "#optionsForm" ).css( "display", "block" );
+    $( "#uploadName" ).val( $( "#uploadFilename" ).val() );
+
+    // Create time pickers
+    $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
+    $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
+
+    // Initialize options
+    $( "#summary" ).prop( "checked", true );
+    onChangeFormat();
+  }
 
   // Handle change of Report Format radio buttons
   function onChangeFormat()
@@ -86,15 +141,31 @@
     $( '#' + sFilenameId ).val( sFilename );
   }
 
-  // Validate input supplied in form
-  function validateFormInput()
+  function onSubmitOptions()
   {
-    // Clear all visual feedback
-    $( ".has-error" ).removeClass( "has-error" );
-    $( "#messages" ).css( "display", "none" );
-    $( "#messageList" ).html( "" );
+    var valid = validateFormInput( validateOptionsInput );
 
-    var messages = [];
+    if ( valid )
+    {
+      $( "body" ).css( "cursor", "progress" );
+      setTimeout( isItReadyYet, 1000 );
+    }
+
+    return valid;
+  }
+
+  // Validate input supplied in form
+  function validateFormInput( validateWhat )
+  {
+    clearMessages();
+    var messages = validateWhat();
+    showMessages( messages );
+    return ( messages.length == 0 );
+  }
+
+  function validateFileInput()
+  {
+      var messages = [];
 
     // Check Metasys File
     if ( $( "#metasysFile" ).val() == "" )
@@ -102,6 +173,13 @@
       messages.push( "<?=$labels['metasysFile']?> is required" );
       $( "#uploadFilename" ).parent().addClass( "has-error" );
     }
+
+    return messages;
+}
+
+  function validateOptionsInput()
+  {
+      var messages = [];
 
     // Check time inputs
     if ( ! $( "#startTime" ).prop( "disabled" )
@@ -113,13 +191,19 @@
       $( "#endTime" ).parent().addClass( "has-error" );
     }
 
-    // Update visual feedback
-    if ( messages.length == 0 )
-    {
-      $( "body" ).css( "cursor", "progress" );
-      setTimeout( isItReadyYet, 1000 );
-    }
-    else
+    return messages;
+  }
+
+  function clearMessages()
+  {
+    $( ".has-error" ).removeClass( "has-error" );
+    $( "#messages" ).css( "display", "none" );
+    $( "#messageList" ).html( "" );
+  }
+
+  function showMessages( messages )
+  {
+    if ( messages.length > 0 )
     {
       for ( var index in messages )
       {
@@ -127,8 +211,6 @@
       }
       $( "#messages" ).css( "display", "block" );
     }
-
-    return ( messages.length == 0 );
   }
 
   function isItReadyYet()
@@ -138,12 +220,11 @@
       {
         type: "GET",
         cache: false,
-        dataType: "json",
-        success: handlePollResponse,
-        error: ajaxError,
-        complete: ajaxComplete
+        dataType: "json"
       }
-    );
+    )
+    .done( handlePollResponse )
+    .fail( ajaxError );
   }
 
   function handlePollResponse( rsp, sStatus, tJqXhr )
@@ -319,11 +400,8 @@
     <p class="h3"><?=$labels['metasysDataAnalysis']?></p>
   </div>
 
-  <form id="uploadForm" role="form" onsubmit="return validateFormInput();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
 
-    <!-- Identifying timestamp -->
-    <input type="hidden" id="timestamp" name="timestamp" >
-
+  <div id="fileBlock" >
     <!-- Metasys File chooser -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -359,7 +437,20 @@
       </div>
     </div>
 
-    <br/>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="text-align:center;" >
+          <button class="btn btn-primary" onclick="onSubmitFile()" >OK</button>
+          <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="optionsForm" role="form" onsubmit="return onSubmitOptions();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
+
+    <!-- Hidden inputs -->
+    <input type="hidden" id="timestamp" name="timestamp" >
 
     <!-- Options -->
     <div class="row">
@@ -381,6 +472,11 @@
           </div>
 
           <div class="panel-body">
+
+            <div class="form-group" >
+              <label class="control-label" for="uploadName" ><?=$labels["metasysFile"]?></label>
+              <input type="text" readonly id="uploadName" name="uploadName" >
+            </div>
 
             <div class="form-group">
               <label class="control-label" for="format" ><?=$labels["format"]?></label>
@@ -439,7 +535,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button type="submit" form="uploadForm" class="btn btn-primary" >OK</button>
+          <button type="submit" form="optionsForm" class="btn btn-primary" >OK</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
         </div>
       </div>
