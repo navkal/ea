@@ -1,7 +1,6 @@
 <?php
   $labels =
   [
-    "partday" => "Partial Day",
     "endTime" => "End Time",
     "cost" => "Cost per kWh"
   ];
@@ -13,6 +12,7 @@
   define( SUMMARY, "Summary" );
   define( TIME_PERIOD, "Time Period" );
   define( FULL_DAY, "Full Day" );
+  define( PARTIAL_DAY, "Partial Day" );
   define( DETAILED, "Detailed" );
   define( START_TIME, "Start Time" );
   define( RESULTS_FILE, "Results File" );

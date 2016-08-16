@@ -346,7 +346,7 @@
             </dl>
             <dl class="dl-horizontal" >
               <dt>
-                <?=$labels["partday"]?>
+                <?=PARTIAL_DAY?>
               </dt>
               <dd>
                 Aggregates results in periods from <i><?=START_TIME?></i> to <i><?=$labels["endTime"]?></i>.
@@ -525,8 +525,8 @@
                   <?=FULL_DAY?>
                 </label>
                 <label class="radio-inline" >
-                  <input type="radio" name="period" id="partday" value="<?=$labels["partday"]?>" onchange="onChangePeriod()" >
-                  <?=$labels["partday"]?>
+                  <input type="radio" name="period" id="partday" value="<?=PARTIAL_DAY?>" onchange="onChangePeriod()" >
+                  <?=PARTIAL_DAY?>
                 </label>
               </div>
             </div>
