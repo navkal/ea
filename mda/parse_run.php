@@ -61,7 +61,7 @@
     }
     else
     {
-      $params .= "," . $labels["format"] . "," . $labels["detailed"];
+      $params .= "," . REPORT_FORMAT . "," . $labels["detailed"];
     }
 
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );

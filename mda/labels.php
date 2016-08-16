@@ -16,5 +16,6 @@
   define( RESULTS_FILE, "Results File" );
   define( ANALYSIS_OPTIONS, "Analysis Options" );
   define( START_TIME, "Start Time" );
+  define( REPORT_FORMAT, "Report Format" );
   define( XXX, "XXX" );
 ?>

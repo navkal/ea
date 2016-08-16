@@ -306,7 +306,7 @@
       <div class="modal-body bg-info">
         <dl>
           <dt>
-            <?=$labels["format"]?>
+            <?=REPORT_FORMAT?>
           </dt>
         </dl>
         <dl class="padLeftSmall">
@@ -497,7 +497,7 @@
           <div class="panel-body">
 
             <div class="form-group">
-              <label class="control-label" for="format" ><?=$labels["format"]?></label>
+              <label class="control-label" for="format" ><?=REPORT_FORMAT?></label>
               <div>
                 <label class="radio-inline" >
                   <input type="radio" name="format" id="summary" value="<?=$labels["summary"]?>" onchange="onChangeFormat()" >
