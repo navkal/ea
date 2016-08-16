@@ -1,7 +1,6 @@
 <?php
   $labels =
   [
-    "analysisOptions" => "Analysis Options",
     "format" => "Report Format",
     "summary" => "Summary",
     "detailed" => "Detailed",
@@ -16,5 +15,6 @@
   define( METASYS_DATA_ANALYSIS, "Metasys Data Analysis" );
   define( METASYS_FILE, "Metasys File" );
   define( RESULTS_FILE, "Results File" );
+  define( ANALYSIS_OPTIONS, "Analysis Options" );
   define( XXX, "XXX" );
 ?>
