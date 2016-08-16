@@ -49,9 +49,9 @@
     if ( $summarize )
     {
       $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
-      if ( $_POST["period"] == $labels["fullday"] )
+      if ( $_POST["period"] == FULL_DAY )
       {
-        $params .= "," . $labels["period"] . "," . $_POST["period"];
+        $params .= "," . TIME_PERIOD . "," . $_POST["period"];
       }
       else
       {
