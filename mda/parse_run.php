@@ -32,7 +32,7 @@
   // Check whether script generated an output file
   if ( ! file_exists( $resultsFilename ) )
   {
-    $message = $labels['metasysDataAnalysis'] . " script failed to generate output file.<br/>";
+    $message = METASYS_DATA_ANALYSIS . " script failed to generate output file.<br/>";
     foreach ( $output as $line )
     {
       $message .= "<br/>" . $line;
@@ -45,7 +45,7 @@
     // Normal: Process results
 
     // Save script parameters in file
-    $params = $labels["metasysFile"] . "," . $_POST["uploadName"];
+    $params = METASYS_FILE . "," . $_POST["uploadName"];
     if ( $summarize )
     {
       $params .= "," . $labels["startTime"] . "," . str_replace( ' ', '', $_POST["startTime"] );
@@ -114,7 +114,7 @@ function showMessage( $uploadFilename, $message )
   </html>
   <script>
     $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
-    document.title = "<?=$labels['metasysDataAnalysis']?>";
+    document.title = "<?=METASYS_DATA_ANALYSIS?>";
   </script>
 <?php
 }

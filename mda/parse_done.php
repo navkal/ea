@@ -16,7 +16,7 @@
   <body>
     <div class="container" style="padding-top:30px;padding-bottom:60px">
       <div class="page-header">
-        <p class="h3"><?=$labels["metasysDataAnalysis"]?> completion</p>
+        <p class="h3"><?=METASYS_DATA_ANALYSIS?> completion</p>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -39,7 +39,7 @@
             <li class="list-group-item list-group-item-success">
               <dl class="dl-horizontal" >
                 <dt>
-                  Results File
+                  <?=RESULTS_FILE?>
                 </dt>
                 <dd>
                   <?=basename( $resultsFilename )?>
@@ -73,7 +73,7 @@
 <script type="text/javascript" src="../util/util.js"></script>
 <script>
   $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
-  document.title = "<?=$labels['metasysDataAnalysis']?>";
+  document.title = "<?=METASYS_DATA_ANALYSIS?>";
 
   function startClose()
   {

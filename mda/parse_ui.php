@@ -171,7 +171,7 @@
     // Check Metasys File
     if ( $( "#metasysFile" ).val() == "" )
     {
-      messages.push( "<?=$labels['metasysFile']?> is required" );
+      messages.push( "<?=METASYS_FILE?> is required" );
       $( "#uploadFilename" ).parent().addClass( "has-error" );
     }
 
@@ -258,7 +258,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="helpMetasysFileLabel"><?=$labels["metasysFile"]?></h4>
+        <h4 class="modal-title" id="helpMetasysFileLabel"><?=METASYS_FILE?></h4>
       </div>
       <div class="modal-body bg-info">
         <dl>
@@ -268,7 +268,7 @@
         </dl>
        <dl>
           <dt>
-            How <?=$labels["metasysFile"]?> is used:
+            How <?=METASYS_FILE?> is used:
           </dt>
           <dd>
             <ol>
@@ -276,10 +276,10 @@
                 You click <i>OK</i>.
               </li>
               <li>
-                Browser uploads <?=$labels["metasysFile"]?> to server.
+                Browser uploads <?=METASYS_FILE?> to server.
               </li>
               <li>
-                <?=$labels['metasysDataAnalysis']?> script analyzes contents of <?=$labels["metasysFile"]?>.
+                <?=METASYS_DATA_ANALYSIS?> script analyzes contents of <?=METASYS_FILE?>.
               </li>
               <li>
                 Browser downloads analysis results to your computer.
@@ -404,7 +404,7 @@
 
 <div class="container">
   <div class="page-header">
-    <p class="h3"><?=$labels['metasysDataAnalysis']?></p>
+    <p class="h3"><?=METASYS_DATA_ANALYSIS?></p>
   </div>
 
 
@@ -417,7 +417,7 @@
             <span class="panel-title">
               <div class="row">
                 <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
-                  <?=$labels["metasysFile"]?>
+                  <?=METASYS_FILE?>
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
                   <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpMetasysFile">
@@ -461,7 +461,7 @@
         <div class="alert alert-info well-sm" >
           <div class="row">
             <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
-              <label class="control-label text-right" ><?=$labels["metasysFile"]?></label>
+              <label class="control-label text-right" ><?=METASYS_FILE?></label>
             </div>
             <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
               <span id="uploadNameText"></span>
