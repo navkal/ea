@@ -313,7 +313,7 @@
           <dd>
             <dl class="dl-horizontal" >
               <dt>
-                <?=$labels["summary"]?>
+                <?=SUMMARY?>
               </dt>
               <dd>
                 Aggregates results in specified time periods.
@@ -500,8 +500,8 @@
               <label class="control-label" for="format" ><?=REPORT_FORMAT?></label>
               <div>
                 <label class="radio-inline" >
-                  <input type="radio" name="format" id="summary" value="<?=$labels["summary"]?>" onchange="onChangeFormat()" >
-                  <?=$labels["summary"]?>
+                  <input type="radio" name="format" id="summary" value="<?=SUMMARY?>" onchange="onChangeFormat()" >
+                  <?=SUMMARY?>
                 </label>
                 <label class="radio-inline" >
                   <input type="radio" name="format" id="detailed" value="<?=$labels["detailed"]?>" onchange="onChangeFormat()" >
