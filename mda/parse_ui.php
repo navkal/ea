@@ -321,7 +321,7 @@
             </dl>
             <dl class="dl-horizontal" >
               <dt>
-                <?=$labels["detailed"]?>
+                <?=DETAILED?>
               </dt>
               <dd>
                 Includes a result for each distinct timestamp found in Metasys File.
@@ -504,8 +504,8 @@
                   <?=SUMMARY?>
                 </label>
                 <label class="radio-inline" >
-                  <input type="radio" name="format" id="detailed" value="<?=$labels["detailed"]?>" onchange="onChangeFormat()" >
-                  <?=$labels["detailed"]?>
+                  <input type="radio" name="format" id="detailed" value="<?=DETAILED?>" onchange="onChangeFormat()" >
+                  <?=DETAILED?>
                 </label>
               </div>
             </div>
