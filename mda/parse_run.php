@@ -48,7 +48,7 @@
     $params = METASYS_FILE . "," . $_POST["uploadName"];
     if ( $summarize )
     {
-      $params .= "," . $labels["startTime"] . "," . str_replace( ' ', '', $_POST["startTime"] );
+      $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
       if ( $_POST["period"] == $labels["fullday"] )
       {
         $params .= "," . $labels["period"] . "," . $_POST["period"];

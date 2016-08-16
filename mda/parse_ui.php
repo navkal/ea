@@ -187,7 +187,7 @@
         &&  ! $( "#endTime" ).prop( "disabled" )
         && ( $( "#startTime" ).val() == $( "#endTime" ).val() ) )
     {
-      messages.push( "<?=$labels["startTime"]?> and <?=$labels["endTime"]?> must differ" );
+      messages.push( "<?=START_TIME?> and <?=$labels["endTime"]?> must differ" );
       $( "#startTime" ).parent().addClass( "has-error" );
       $( "#endTime" ).parent().addClass( "has-error" );
     }
@@ -341,7 +341,7 @@
                 <?=$labels["fullday"]?>
               </dt>
               <dd>
-                Aggregates results in 24-hour periods beginning with <i><?=$labels["startTime"]?></i>.
+                Aggregates results in 24-hour periods beginning with <i><?=START_TIME?></i>.
               </dd>
             </dl>
             <dl class="dl-horizontal" >
@@ -349,15 +349,15 @@
                 <?=$labels["partday"]?>
               </dt>
               <dd>
-                Aggregates results in periods from <i><?=$labels["startTime"]?></i> to <i><?=$labels["endTime"]?></i>.
+                Aggregates results in periods from <i><?=START_TIME?></i> to <i><?=$labels["endTime"]?></i>.
               </dd>
               <dd>
                 <ul>
                   <li>
-                    If <i><?=$labels["startTime"]?></i> is greater than <i><?=$labels["endTime"]?></i>, the time periods cross midnight.
+                    If <i><?=START_TIME?></i> is greater than <i><?=$labels["endTime"]?></i>, the time periods cross midnight.
                   </li>
                   <li>
-                    <i><?=$labels["startTime"]?></i> and <i><?=$labels["endTime"]?></i> must have different values.
+                    <i><?=START_TIME?></i> and <i><?=$labels["endTime"]?></i> must have different values.
                   </li>
                 </ul>
               </dd>
@@ -366,7 +366,7 @@
         </dl>
         <dl>
           <dt>
-            <?=$labels["startTime"]?>
+            <?=START_TIME?>
           </dt>
           <dt>
             <?=$labels["endTime"]?>
@@ -512,7 +512,7 @@
 
             <br/>
             <div class="form-group" >
-              <label class="control-label" for="startTime" ><?=$labels["startTime"]?></label>
+              <label class="control-label" for="startTime" ><?=START_TIME?></label>
               <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
             </div>
 
