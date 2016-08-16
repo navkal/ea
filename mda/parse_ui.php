@@ -86,6 +86,9 @@
     $( "#uploadName" ).val( $( "#uploadFilename" ).val() );
     $( "#uploadNameText" ).text( $( "#uploadFilename" ).val() );
 
+    // Show first Options tab
+    $( "#optionsTabs a[href='#analysisOptions']" ).tab( "show" );
+
     // Create time pickers
     $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
     $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
@@ -305,6 +308,7 @@
     </div>
   </div>
 
+
   <form id="optionsForm" role="form" onsubmit="return onSubmitOptions();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
 
     <div class="row">
@@ -326,81 +330,101 @@
     <input type="hidden" id="timestamp" name="timestamp" >
     <input type="hidden" id="uploadName" name="uploadName" >
 
-    <!-- Options -->
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <span class="panel-title">
-              <div class="row">
-                <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
-                  <?=ANALYSIS_OPTIONS?>
+    <!-- Options tabs -->
+    <ul id="optionsTabs" class="nav nav-tabs">
+      <li><a data-toggle="tab" href="#analysisOptions"><?=ANALYSIS_OPTIONS?></a></li>
+      <li><a data-toggle="tab" href="#columnOptions"><?=COLUMN_OPTIONS?></a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Analysis Options -->
+      <div id="analysisOptions" class="tab-pane fade">
+        <br/>
+        <div class="row" >
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span class="panel-title">
+                  <div class="row">
+                    <div class="col-xs-9 col-sm-10 col-md-11 col-lg-11">
+                      <?=ANALYSIS_OPTIONS?>
+                    </div>
+                    <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
+                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">
+                        Help
+                      </button>
+                    </div>
+                  </div>
+                </span>
+              </div>
+
+              <div class="panel-body">
+
+                <div class="form-group">
+                  <label class="control-label" for="format" ><?=REPORT_FORMAT?></label>
+                  <div>
+                    <label class="radio-inline" >
+                      <input type="radio" name="format" id="summary" value="<?=SUMMARY?>" onchange="onChangeFormat()" >
+                      <?=SUMMARY?>
+                    </label>
+                    <label class="radio-inline" >
+                      <input type="radio" name="format" id="detailed" value="<?=DETAILED?>" onchange="onChangeFormat()" >
+                      <?=DETAILED?>
+                    </label>
+                  </div>
                 </div>
-                <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
-                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">
-                    Help
-                  </button>
+
+                <br/>
+                <div class="form-group" >
+                  <label class="control-label" for="startTime" ><?=START_TIME?></label>
+                  <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
                 </div>
-              </div>
-            </span>
-          </div>
 
-          <div class="panel-body">
+                <br/>
+                <div class="form-group">
+                  <label class="control-label" for="period" ><?=TIME_PERIOD?></label>
+                  <div>
+                    <label class="radio-inline" >
+                      <input type="radio" name="period" id="fullday" value="<?=FULL_DAY?>" onchange="onChangePeriod()" >
+                      <?=FULL_DAY?>
+                    </label>
+                    <label class="radio-inline" >
+                      <input type="radio" name="period" id="partday" value="<?=PARTIAL_DAY?>" onchange="onChangePeriod()" >
+                      <?=PARTIAL_DAY?>
+                    </label>
+                  </div>
+                </div>
 
-            <div class="form-group">
-              <label class="control-label" for="format" ><?=REPORT_FORMAT?></label>
-              <div>
-                <label class="radio-inline" >
-                  <input type="radio" name="format" id="summary" value="<?=SUMMARY?>" onchange="onChangeFormat()" >
-                  <?=SUMMARY?>
-                </label>
-                <label class="radio-inline" >
-                  <input type="radio" name="format" id="detailed" value="<?=DETAILED?>" onchange="onChangeFormat()" >
-                  <?=DETAILED?>
-                </label>
-              </div>
-            </div>
+                <div class="form-group" >
+                  <label class="control-label" for="endTime" ><?=END_TIME?></label>
+                  <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
+                </div>
 
-            <br/>
-            <div class="form-group" >
-              <label class="control-label" for="startTime" ><?=START_TIME?></label>
-              <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
-            </div>
+                <br/>
+                <div class="form-group">
+                  <label for="cost"><?=COST_PER_KWH?></label>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="dollars">$</span>
+                    <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
+                  </div>
+                </div>
 
-            <br/>
-            <div class="form-group">
-              <label class="control-label" for="period" ><?=TIME_PERIOD?></label>
-              <div>
-                <label class="radio-inline" >
-                  <input type="radio" name="period" id="fullday" value="<?=FULL_DAY?>" onchange="onChangePeriod()" >
-                  <?=FULL_DAY?>
-                </label>
-                <label class="radio-inline" >
-                  <input type="radio" name="period" id="partday" value="<?=PARTIAL_DAY?>" onchange="onChangePeriod()" >
-                  <?=PARTIAL_DAY?>
-                </label>
               </div>
             </div>
-
-            <div class="form-group" >
-              <label class="control-label" for="endTime" ><?=END_TIME?></label>
-              <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
-            </div>
-
-            <br/>
-            <div class="form-group">
-              <label for="cost"><?=COST_PER_KWH?></label>
-              <div class="input-group">
-                <span class="input-group-addon" id="dollars">$</span>
-                <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
-              </div>
-            </div>
-
           </div>
         </div>
       </div>
+
+      <!-- Column Options -->
+      <div id="columnOptions" class="tab-pane fade">
+        <h3><?=COLUMN_OPTIONS?></h3>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+
     </div>
 
+    <!-- OK/Cancel buttons -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
