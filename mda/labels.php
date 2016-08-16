@@ -15,6 +15,6 @@
   define( PARTIAL_DAY, "Partial Day" );
   define( DETAILED, "Detailed" );
   define( START_TIME, "Start Time" );
+  define( END_TIME, "End Time" );
   define( RESULTS_FILE, "Results File" );
-  define( XXX, "XXX" );
 ?>

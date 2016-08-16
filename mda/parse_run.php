@@ -55,7 +55,7 @@
       }
       else
       {
-        $params .= "," . $labels["endTime"] . "," . str_replace( ' ', '', $_POST["endTime"] );
+        $params .= "," . END_TIME . "," . str_replace( ' ', '', $_POST["endTime"] );
       }
       $params .= "," . $labels["cost"] . ",$" . $_POST["cost"];
     }

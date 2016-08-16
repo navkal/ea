@@ -187,7 +187,7 @@
         &&  ! $( "#endTime" ).prop( "disabled" )
         && ( $( "#startTime" ).val() == $( "#endTime" ).val() ) )
     {
-      messages.push( "<?=START_TIME?> and <?=$labels["endTime"]?> must differ" );
+      messages.push( "<?=START_TIME?> and <?=END_TIME?> must differ" );
       $( "#startTime" ).parent().addClass( "has-error" );
       $( "#endTime" ).parent().addClass( "has-error" );
     }
@@ -349,15 +349,15 @@
                 <?=PARTIAL_DAY?>
               </dt>
               <dd>
-                Aggregates results in periods from <i><?=START_TIME?></i> to <i><?=$labels["endTime"]?></i>.
+                Aggregates results in periods from <i><?=START_TIME?></i> to <i><?=END_TIME?></i>.
               </dd>
               <dd>
                 <ul>
                   <li>
-                    If <i><?=START_TIME?></i> is greater than <i><?=$labels["endTime"]?></i>, the time periods cross midnight.
+                    If <i><?=START_TIME?></i> is greater than <i><?=END_TIME?></i>, the time periods cross midnight.
                   </li>
                   <li>
-                    <i><?=START_TIME?></i> and <i><?=$labels["endTime"]?></i> must have different values.
+                    <i><?=START_TIME?></i> and <i><?=END_TIME?></i> must have different values.
                   </li>
                 </ul>
               </dd>
@@ -369,7 +369,7 @@
             <?=START_TIME?>
           </dt>
           <dt>
-            <?=$labels["endTime"]?>
+            <?=END_TIME?>
           </dt>
           <dd>
             <ul>
@@ -532,7 +532,7 @@
             </div>
 
             <div class="form-group" >
-              <label class="control-label" for="endTime" ><?=$labels["endTime"]?></label>
+              <label class="control-label" for="endTime" ><?=END_TIME?></label>
               <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
             </div>
 
