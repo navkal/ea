@@ -93,9 +93,16 @@
     $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
     $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
 
-    // Initialize options
+    // Initialize Analysis Options
     $( "#summary" ).prop( "checked", true );
     onChangeFormat();
+
+    // Initialize Column Options
+    $( "#columns" ).html( "" );
+    for ( var i in columns )
+    {
+      $( "#columns" ).append( "<li>" + columns[i] +  "</li>" );
+    }
   }
 
   // Handle change of Report Format radio buttons
@@ -419,7 +426,8 @@
       <!-- Column Options -->
       <div id="columnOptions" class="tab-pane fade">
         <h3><?=COLUMN_OPTIONS?></h3>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <ul id="columns">
+        </ul>
       </div>
 
     </div>
