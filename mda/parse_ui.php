@@ -83,6 +83,7 @@
     // Show Analysis Options form
     $( "#optionsForm" ).css( "display", "block" );
     $( "#uploadName" ).val( $( "#uploadFilename" ).val() );
+    $( "#uploadNameText" ).text( $( "#uploadFilename" ).val() );
 
     // Create time pickers
     $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
@@ -455,8 +456,24 @@
 
   <form id="optionsForm" role="form" onsubmit="return onSubmitOptions();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
 
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="alert alert-info well-sm" >
+          <div class="row">
+            <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+              <label class="control-label text-right" ><?=$labels["metasysFile"]?></label>
+            </div>
+            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+              <span id="uploadNameText"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Hidden inputs -->
     <input type="hidden" id="timestamp" name="timestamp" >
+    <input type="hidden" id="uploadName" name="uploadName" >
 
     <!-- Options -->
     <div class="row">
@@ -478,11 +495,6 @@
           </div>
 
           <div class="panel-body">
-
-            <div class="form-group" >
-              <label class="control-label" for="uploadName" ><?=$labels["metasysFile"]?></label>
-              <input type="text" readonly id="uploadName" name="uploadName" >
-            </div>
 
             <div class="form-group">
               <label class="control-label" for="format" ><?=$labels["format"]?></label>
