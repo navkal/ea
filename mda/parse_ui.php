@@ -318,7 +318,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button class="btn btn-primary" onclick="onSubmitFile()" >Next</button>
+          <button class="btn btn-primary" onclick="onSubmitFile()" >Upload</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpMetasysFile">Help</button>
         </div>
@@ -430,7 +430,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button type="submit" form="optionsForm" class="btn btn-primary" >Finish</button>
+          <button type="submit" form="optionsForm" class="btn btn-primary" >Analyze</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
           <button id="multiHelp" type="button" class="btn btn-info" data-toggle="modal">Help</button>
         </div>
