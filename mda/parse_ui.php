@@ -19,21 +19,21 @@
 </style>
 
 <script>
-  $( document ).ready(
-    function()
-    {
-      // Initialize identifying timestamp
-      $( "#timestamp" ).val( Date.now() );
-      console.log( "===> timestamp=" + $( "#timestamp" ).val() );
+  $( document ).ready( initFileView );
 
-      // Initialize the file chooser
-      $( "#metasysFile" ).val( "" );
-      $( "#uploadFilename" ).val( "" );
+  function initFileView()
+  {
+    // Initialize identifying timestamp
+    $( "#timestamp" ).val( Date.now() );
+    console.log( "===> timestamp=" + $( "#timestamp" ).val() );
 
-      // Hide Analysis Options form
-      $( "#optionsForm" ).css( "display", "none" );
-    }
-  );
+    // Initialize the file chooser
+    $( "#metasysFile" ).val( "" );
+    $( "#uploadFilename" ).val( "" );
+
+    // Hide Analysis Options form
+    $( "#optionsForm" ).css( "display", "none" );
+  }
 
   function onSubmitFile()
   {
@@ -280,22 +280,9 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <span class="panel-title">
-              <div class="row">
-                <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
-                  <?=METASYS_FILE?>
-                </div>
-                <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
-                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpMetasysFile">
-                    Help
-                  </button>
-                </div>
-              </div>
-            </span>
-          </div>
           <div class="panel-body">
             <div class="form-group" >
+              <label class="control-label" for="metasysFile" ><?=METASYS_FILE?></label>
               <div class="input-group">
                 <label class="input-group-btn">
                   <span class="btn btn-default">
@@ -315,12 +302,12 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
           <button class="btn btn-primary" onclick="onSubmitFile()" >Next</button>
-          <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+          <button type="reset" onclick="initFileView();" class="btn btn-default" >Cancel</button>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpMetasysFile">Help</button>
         </div>
       </div>
     </div>
   </div>
-
 
   <form id="optionsForm" role="form" onsubmit="return onSubmitOptions();" action="mda/parse_run.php" method="post" enctype="multipart/form-data" >
 
@@ -364,9 +351,7 @@
                       <?=ANALYSIS_OPTIONS?>
                     </div>
                     <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
-                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">
-                        Help
-                      </button>
+                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">Help</button>
                     </div>
                   </div>
                 </span>
@@ -438,7 +423,7 @@
 
     </div>
 
-    <!-- OK/Cancel buttons -->
+    <!-- Form buttons -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
