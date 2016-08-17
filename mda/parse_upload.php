@@ -36,13 +36,19 @@
   {
     $colMap = [];
 
+    fgetcsv( $inputFile );
     while( ( $line = fgetcsv( $inputFile ) ) !== false )
     {
-      $colMap[$line[2]] = "";
+      if ( $name = $line[2] )
+      {
+        $colMap[$name] = "";
+      }
     }
+
     fclose( $inputFile );
 
     $columns = array_keys( $colMap );
+    sort( $columns );
     error_log( "===> columns=" . print_r( $columns, true ) );
   }
 
