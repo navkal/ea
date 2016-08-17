@@ -38,6 +38,9 @@
   {
     if ( validateFormInput( validateFileInput ) )
     {
+      // Disable upload button
+      $( "#uploadButton" ).prop( "disabled", true );
+
       // Set wait cursor
       $( "body" ).css( "cursor", "progress" );
 
@@ -163,6 +166,7 @@
 
     if ( valid )
     {
+      $( "#analyzeButton" ).prop( "disabled", true );
       $( "body" ).css( "cursor", "progress" );
       setTimeout( isItReadyYet, 1000 );
     }
@@ -309,7 +313,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button class="btn btn-primary" onclick="onSubmitFile()" >Upload</button>
+          <button id="uploadButton" class="btn btn-primary" onclick="onSubmitFile()" >Upload</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpMetasysFile">Help</button>
         </div>
@@ -421,7 +425,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button type="submit" form="optionsForm" class="btn btn-primary" >Analyze</button>
+          <button id="analyzeButton" type="submit" form="optionsForm" class="btn btn-primary" >Analyze</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
           <button id="multiHelp" type="button" class="btn btn-info" data-toggle="modal">Help</button>
         </div>
