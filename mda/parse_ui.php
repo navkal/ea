@@ -104,6 +104,11 @@
     {
       $( "#columns" ).append( "<li>" + columns[i] +  "</li>" );
     }
+
+    // Set handlers to update Help button targets
+    $( "#optionsTabs a[href='#analysisOptions']" ).on( "shown.bs.tab", setOptionsHelp );
+    $( "#optionsTabs a[href='#columns']" ).on( "shown.bs.tab", setColumnsHelp );
+    setOptionsHelp();
   }
 
   function showFileView()
@@ -269,6 +274,16 @@
     $( "body" ).css( "cursor", "default" );
     showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
   }
+
+  function setOptionsHelp()
+  {
+    $( "#multiHelp" ).attr( "data-target", "#helpOptions" );
+  }
+
+  function setColumnsHelp()
+  {
+    $( "#multiHelp" ).attr( "data-target", "#helpColumns" );
+  }
 </script>
 
 <div class="container">
@@ -417,7 +432,7 @@
         <div style="text-align:center;" >
           <button type="submit" form="optionsForm" class="btn btn-primary" >Finish</button>
           <button type="reset" onclick="showFileView();" class="btn btn-default" >Back</button>
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpOptions">Help</button>
+          <button id="multiHelp" type="button" class="btn btn-info" data-toggle="modal">Help</button>
         </div>
       </div>
     </div>
