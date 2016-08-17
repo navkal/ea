@@ -11,6 +11,6 @@
   define( PARTIAL_DAY, "Partial Day" );
   define( END_TIME, "End Time" );
   define( COST_PER_KWH, "Cost per kWh" );
-  define( COLUMN_OPTIONS, "Column Options" );
+  define( COLUMNS, "Columns" );
   define( RESULTS_FILE, "Results File" );
 ?>

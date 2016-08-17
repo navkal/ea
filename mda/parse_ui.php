@@ -97,7 +97,7 @@
     $( "#summary" ).prop( "checked", true );
     onChangeFormat();
 
-    // Initialize Column Options
+    // Initialize Columns
     $( "#columns" ).html( "" );
     for ( var i in columns )
     {
@@ -333,30 +333,16 @@
     <!-- Options tabs -->
     <ul id="optionsTabs" class="nav nav-tabs">
       <li><a data-toggle="tab" href="#analysisOptions"><?=ANALYSIS_OPTIONS?></a></li>
-      <li><a data-toggle="tab" href="#columnOptions"><?=COLUMN_OPTIONS?></a></li>
+      <li><a data-toggle="tab" href="#columns"><?=COLUMNS?></a></li>
     </ul>
 
     <div class="tab-content">
 
       <!-- Analysis Options -->
       <div id="analysisOptions" class="tab-pane fade">
-        <br/>
         <div class="row" >
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
-              <div class="panel-heading">
-                <span class="panel-title">
-                  <div class="row">
-                    <div class="col-xs-9 col-sm-10 col-md-11 col-lg-11">
-                      <?=ANALYSIS_OPTIONS?>
-                    </div>
-                    <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
-                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpOptions">Help</button>
-                    </div>
-                  </div>
-                </span>
-              </div>
-
               <div class="panel-body">
 
                 <div class="form-group">
@@ -414,9 +400,9 @@
         </div>
       </div>
 
-      <!-- Column Options -->
-      <div id="columnOptions" class="tab-pane fade">
-        <h3><?=COLUMN_OPTIONS?></h3>
+      <!-- Columns -->
+      <div id="columns" class="tab-pane fade">
+        <h3><?=COLUMNS?></h3>
         <ul id="columns">
         </ul>
       </div>
@@ -429,6 +415,7 @@
         <div style="text-align:center;" >
           <button type="submit" form="optionsForm" class="btn btn-primary" >Finish</button>
           <button type="reset" onclick="showFileView();" class="btn btn-default" >Back</button>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpOptions">Help</button>
         </div>
       </div>
     </div>
