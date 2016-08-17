@@ -25,6 +25,10 @@
   {
     array_push( $messages, "Failed to move uploaded file" );
   }
+  elseif ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
+  {
+    array_push( $messages, "Failed to open uploaded file" );
+  }
 
   $columns = [];
 
@@ -32,7 +36,6 @@
   {
     $colMap = [];
 
-    $inputFile = fopen( $inputFilename, "r" );
     while( ( $line = fgetcsv( $inputFile ) ) !== false )
     {
       $split = explode( ".", $line[1] );
