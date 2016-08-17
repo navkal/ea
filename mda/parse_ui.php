@@ -103,13 +103,43 @@
     $( "#columnChooser" ).html( "" );
     for ( var i in columns )
     {
-      $( "#columnChooser" ).append( "<li>" + columns[i] +  "</li>" );
+      $( "#columnChooser" ).append( makeColumnChooserRow( columns[i] ) );
     }
 
     // Set handlers to update Help button targets
     $( "#optionsTabs a[href='#analysisOptionsTab']" ).on( "shown.bs.tab", setOptionsHelp );
     $( "#optionsTabs a[href='#columnsTab']" ).on( "shown.bs.tab", setColumnsHelp );
     setOptionsHelp();
+  }
+
+  function makeColumnChooserRow( name )
+  {
+    var row = '';
+
+row +=
+'<div class="row">';
+row +=
+  '<div class="col-lg-6">';
+row +=
+    '<div class="input-group">';
+row +=
+      '<span class="input-group-addon">';
+row +=
+        '<input type="checkbox" name="">';
+row +=
+      '</span>';
+row +=
+      '<input type="text" class="form-control" value="' + name + '" readonly>';
+row +=
+    '</div>';
+row +=
+  '</div>';
+row +=
+'</div>';
+
+
+
+    return row;
   }
 
   // Handle change of Report Format radio buttons
@@ -415,8 +445,8 @@
       <!-- Columns -->
       <div id="columnsTab" class="tab-pane fade">
         <h3><?=COLUMNS?></h3>
-        <ul id="columnChooser">
-        </ul>
+        <div id="columnChooser">
+        </div>
       </div>
 
     </div>
