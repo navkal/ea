@@ -23,8 +23,6 @@
 
   function initFileView()
   {
-    clearMessages();
-
     // Initialize identifying timestamp
     $( "#timestamp" ).val( Date.now() );
 
@@ -109,13 +107,6 @@
     $( "#optionsTabs a[href='#analysisOptions']" ).on( "shown.bs.tab", setOptionsHelp );
     $( "#optionsTabs a[href='#columns']" ).on( "shown.bs.tab", setColumnsHelp );
     setOptionsHelp();
-  }
-
-  function showFileView()
-  {
-    clearMessages();
-    $( "#fileBlock" ).css( "display", "block" );
-    $( "#optionsForm" ).css( "display", "none" );
   }
 
   // Handle change of Report Format radio buttons
