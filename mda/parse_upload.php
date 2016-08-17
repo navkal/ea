@@ -38,14 +38,7 @@
 
     while( ( $line = fgetcsv( $inputFile ) ) !== false )
     {
-      $split = explode( ".", $line[1] );
-      $count = count( $split );
-      $prefix = $split[$count-2];
-      if ( $prefix == "Energy" )
-      {
-        $colName = $prefix . "." . $split[$count-1];
-        $colMap[$colName] = "";
-      }
+      $colMap[$line[2]] = "";
     }
     fclose( $inputFile );
 
