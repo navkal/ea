@@ -72,11 +72,11 @@
     }
     else
     {
-      showOptions( rsp.columns );
+      showOptionsView( rsp.columns );
     }
   }
 
-  function showOptions( columns )
+  function showOptionsView( columns )
   {
     // Hide file chooser
     $( "#fileBlock" ).css( "display", "none" );
@@ -103,6 +103,12 @@
     {
       $( "#columns" ).append( "<li>" + columns[i] +  "</li>" );
     }
+  }
+
+  function showFileView()
+  {
+    $( "#fileBlock" ).css( "display", "block" );
+    $( "#optionsForm" ).css( "display", "none" );
   }
 
   // Handle change of Report Format radio buttons
@@ -308,7 +314,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button class="btn btn-primary" onclick="onSubmitFile()" >OK</button>
+          <button class="btn btn-primary" onclick="onSubmitFile()" >Next</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
         </div>
       </div>
@@ -436,8 +442,8 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button type="submit" form="optionsForm" class="btn btn-primary" >OK</button>
-          <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+          <button type="submit" form="optionsForm" class="btn btn-primary" >Finish</button>
+          <button type="reset" onclick="showFileView();" class="btn btn-default" >Back</button>
         </div>
       </div>
     </div>
