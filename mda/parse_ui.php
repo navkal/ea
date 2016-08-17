@@ -89,7 +89,7 @@
     $( "#uploadNameText" ).text( $( "#uploadFilename" ).val() );
 
     // Show first Options tab
-    $( "#optionsTabs a[href='#analysisOptions']" ).tab( "show" );
+    $( "#optionsTabs a[href='#analysisOptionsTab']" ).tab( "show" );
 
     // Create time pickers
     $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
@@ -100,15 +100,15 @@
     onChangeFormat();
 
     // Initialize Columns
-    $( "#columns" ).html( "" );
+    $( "#columnChooser" ).html( "" );
     for ( var i in columns )
     {
-      $( "#columns" ).append( "<li>" + columns[i] +  "</li>" );
+      $( "#columnChooser" ).append( "<li>" + columns[i] +  "</li>" );
     }
 
     // Set handlers to update Help button targets
-    $( "#optionsTabs a[href='#analysisOptions']" ).on( "shown.bs.tab", setOptionsHelp );
-    $( "#optionsTabs a[href='#columns']" ).on( "shown.bs.tab", setColumnsHelp );
+    $( "#optionsTabs a[href='#analysisOptionsTab']" ).on( "shown.bs.tab", setOptionsHelp );
+    $( "#optionsTabs a[href='#columnsTab']" ).on( "shown.bs.tab", setColumnsHelp );
     setOptionsHelp();
   }
 
@@ -344,14 +344,14 @@
 
     <!-- Options tabs -->
     <ul id="optionsTabs" class="nav nav-tabs">
-      <li><a data-toggle="tab" href="#analysisOptions"><?=ANALYSIS_OPTIONS?></a></li>
-      <li><a data-toggle="tab" href="#columns"><?=COLUMNS?></a></li>
+      <li><a data-toggle="tab" href="#analysisOptionsTab"><?=ANALYSIS_OPTIONS?></a></li>
+      <li><a data-toggle="tab" href="#columnsTab"><?=COLUMNS?></a></li>
     </ul>
 
     <div class="tab-content">
 
       <!-- Analysis Options -->
-      <div id="analysisOptions" class="tab-pane fade">
+      <div id="analysisOptionsTab" class="tab-pane fade">
         <div class="row" >
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
@@ -413,9 +413,9 @@
       </div>
 
       <!-- Columns -->
-      <div id="columns" class="tab-pane fade">
+      <div id="columnsTab" class="tab-pane fade">
         <h3><?=COLUMNS?></h3>
-        <ul id="columns">
+        <ul id="columnChooser">
         </ul>
       </div>
 
