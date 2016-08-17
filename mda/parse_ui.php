@@ -23,9 +23,10 @@
 
   function initFileView()
   {
+    clearMessages();
+
     // Initialize identifying timestamp
     $( "#timestamp" ).val( Date.now() );
-    console.log( "===> timestamp=" + $( "#timestamp" ).val() );
 
     // Initialize the file chooser
     $( "#metasysFile" ).val( "" );
@@ -107,6 +108,7 @@
 
   function showFileView()
   {
+    clearMessages();
     $( "#fileBlock" ).css( "display", "block" );
     $( "#optionsForm" ).css( "display", "none" );
   }
