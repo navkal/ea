@@ -30,13 +30,24 @@
 
   if ( empty( $messages ) )
   {
-    error_log( "generate columns here" );
-    $columns =
-    [
-      "foo",
-      "moo",
-      "goo"
-    ];
+    $colMap = [];
+
+    $inputFile = fopen( $inputFilename, "r" );
+    while( ( $line = fgetcsv( $inputFile ) ) !== false )
+    {
+      $split = explode( ".", $line[1] );
+      $count = count( $split );
+      $prefix = $split[$count-2];
+      if ( $prefix == "Energy" )
+      {
+        $colName = $prefix . "." . $split[$count-1];
+        $colMap[$colName] = "";
+      }
+    }
+    fclose( $inputFile );
+
+    $columns = array_keys( $colMap );
+    error_log( "===> columns=" . print_r( $columns, true ) );
   }
 
   $rsp =
