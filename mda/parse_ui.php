@@ -100,10 +100,10 @@
     onChangeFormat();
 
     // Initialize Columns
-    $( "#columnChooser" ).html( "" );
+    $( "#columnPicker" ).html( "" );
     for ( var i in columns )
     {
-      $( "#columnChooser" ).append( makeColumnChooserRow( i, columns[i] ) );
+      $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
     }
 
     // Set handlers to update Help button targets
@@ -112,7 +112,7 @@
     setOptionsHelp();
   }
 
-  function makeColumnChooserRow( index, colName )
+  function makeColumnPickerRow( index, colName )
   {
     var row = '';
 
@@ -230,9 +230,9 @@ row +=
       $( "#startTime" ).parent().addClass( "has-error" );
       $( "#endTime" ).parent().addClass( "has-error" );
     }
-    
+
     // Check column selections
-    if ( $( "#columnChooser input[type=checkbox]:checked" ).length == 0 )
+    if ( $( "#columnPicker input[type=checkbox]:checked" ).length == 0 )
     {
       messages.push( "You must select at least one column" );
     }
@@ -441,7 +441,7 @@ row +=
       <!-- Columns -->
       <div id="columnsTab" class="tab-pane fade">
         <h3><?=COLUMNS?></h3>
-        <div id="columnChooser">
+        <div id="columnPicker">
         </div>
       </div>
 
