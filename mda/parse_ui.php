@@ -103,7 +103,7 @@
     $( "#columnChooser" ).html( "" );
     for ( var i in columns )
     {
-      $( "#columnChooser" ).append( makeColumnChooserRow( columns[i] ) );
+      $( "#columnChooser" ).append( makeColumnChooserRow( i, columns[i] ) );
     }
 
     // Set handlers to update Help button targets
@@ -112,7 +112,7 @@
     setOptionsHelp();
   }
 
-  function makeColumnChooserRow( name )
+  function makeColumnChooserRow( index, colName )
   {
     var row = '';
 
@@ -120,16 +120,12 @@ row +=
 '<div class="row">';
 row +=
   '<div class="col-lg-6">';
-
 row +=
-    '<label class="checkbox-inline"><input type="checkbox" value="' + name + '">' + name + '</label>';
-
+    '<label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '">' + colName + '</label>';
 row +=
   '</div>';
 row +=
 '</div>';
-
-
 
 
 
