@@ -230,6 +230,12 @@ row +=
       $( "#startTime" ).parent().addClass( "has-error" );
       $( "#endTime" ).parent().addClass( "has-error" );
     }
+    
+    // Check column selections
+    if ( $( "#columnChooser input[type=checkbox]:checked" ).length == 0 )
+    {
+      messages.push( "You must select at least one column" );
+    }
 
     return messages;
   }
