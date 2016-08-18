@@ -59,23 +59,30 @@
         }
       )
       .done( handlePostResponse )
-      .fail( ajaxFail );
+      .fail( handlePostError );
     }
   }
 
   function handlePostResponse( rsp, sStatus, tJqXhr )
   {
-    $( "body" ).css( "cursor", "default" );
     console.log( "handlePostResponse, rsp=" + JSON.stringify( rsp ) );
+    $( "body" ).css( "cursor", "default" );
 
     if ( rsp.messages.length )
     {
-      showMessages( rsp.messages );
+       $( "#uploadButton" ).prop( "disabled", false );
+       showMessages( rsp.messages );
     }
     else
     {
       showOptionsView( rsp.columns );
     }
+  }
+
+  function handlePostError( tJqXhr, sStatus, sErrorThrown )
+  {
+    $( "#uploadButton" ).prop( "disabled", false );
+    ajaxFail( tJqXhr, sStatus, sErrorThrown );
   }
 
   function showOptionsView( columns )
@@ -100,7 +107,6 @@
     onChangeFormat();
 
     // Initialize Columns
-    $( "#columnPicker" ).html( "" );
     for ( var i in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );

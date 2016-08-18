@@ -47,8 +47,15 @@
 
     fclose( $inputFile );
 
-    $columns = array_keys( $colMap );
-    sort( $columns );
+    if ( count( $colMap ) )
+    {
+      $columns = array_keys( $colMap );
+      sort( $columns );
+    }
+    else
+    {
+      array_push( $messages, "Uploaded file does not contain any columns" );
+    }
     error_log( "===> columns=" . print_r( $columns, true ) );
   }
 
