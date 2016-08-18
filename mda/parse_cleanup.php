@@ -4,8 +4,9 @@
   $timestamp = $_GET["timestamp"];
   require_once "filenames.php" ;
 
-  @unlink( $paramsFilename );
+  @unlink( $columnsFilename );
   @unlink( $resultsFilename );
+  @unlink( $paramsFilename );
 
   echo( json_encode( "" ) );
 ?>
