@@ -6,9 +6,18 @@
 
     $timestamp = $_GET["timestamp"];
     require_once "filenames.php" ;
+
     $paramsFile = fopen( $paramsFilename, "r" );
     $params = fgetcsv( $paramsFile );
     fclose( $paramsFile );
+
+    $columns = [];
+    $columnsFile = fopen( $columnsFilename, "r" );
+    while( ( $line = fgetcsv( $columnsFile ) ) !== false )
+    {
+      array_push( $columns, $line[0] );
+    }
+    fclose( $columnsFile );
 
     require_once "labels.php" ;
   ?>
@@ -34,6 +43,21 @@
                     echo "</dd>";
                   }
                 ?>
+                <dt>
+                  <?=COLUMNS?>
+                </dt>
+                <dd>
+                  <ul>
+                    <?php
+                      foreach ( $columns as $colName )
+                      {
+                        echo "<li>";
+                        echo $colName;
+                        echo "</li>";
+                      }
+                    ?>
+                  </ul>
+                </dd>
               </dl>
             </li>
             <li class="list-group-item list-group-item-success">
