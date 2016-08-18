@@ -120,22 +120,16 @@ row +=
 '<div class="row">';
 row +=
   '<div class="col-lg-6">';
+
 row +=
-    '<div class="input-group">';
-row +=
-      '<span class="input-group-addon">';
-row +=
-        '<input type="checkbox" name="">';
-row +=
-      '</span>';
-row +=
-      '<input type="text" class="form-control" value="' + name + '" readonly>';
-row +=
-    '</div>';
+    '<label class="checkbox-inline"><input type="checkbox" value="' + name + '">' + name + '</label>';
+
 row +=
   '</div>';
 row +=
 '</div>';
+
+
 
 
 
