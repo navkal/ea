@@ -127,7 +127,7 @@ row +=
 row +=
   '<div class="col-lg-6">';
 row +=
-    '<label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '">' + colName + '</label>';
+    '<label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label>';
 row +=
   '</div>';
 row +=
@@ -318,6 +318,7 @@ row +=
     <p class="h3"><?=METASYS_DATA_ANALYSIS?></p>
   </div>
 
+  <?php // include "columnPicker.php"?>
 
   <div id="fileBlock" >
     <!-- Metasys File chooser -->
