@@ -44,7 +44,7 @@
                   }
                 ?>
                 <dt>
-                  <?=COLUMNS?>
+                  <?=POINTS_OF_INTEREST?>
                 </dt>
                 <dd>
                   <ul>

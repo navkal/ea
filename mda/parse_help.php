@@ -154,12 +154,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="helpColumnsLabel"><?=COLUMNS?></h4>
+        <h4 class="modal-title" id="helpColumnsLabel"><?=POINTS_OF_INTEREST?></h4>
       </div>
       <div class="modal-body bg-info">
        <dl>
           <dt>
-            <?=COLUMNS?>
+            <?=POINTS_OF_INTEREST?>
           </dt>
           <dd>
             <ol>

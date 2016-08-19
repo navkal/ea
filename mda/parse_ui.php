@@ -378,7 +378,7 @@ row +=
     <!-- Options tabs -->
     <ul id="optionsTabs" class="nav nav-tabs">
       <li><a data-toggle="tab" href="#analysisOptionsTab"><?=ANALYSIS_OPTIONS?></a></li>
-      <li><a data-toggle="tab" href="#columnsTab"><?=COLUMNS?></a></li>
+      <li><a data-toggle="tab" href="#columnsTab"><?=POINTS_OF_INTEREST?></a></li>
     </ul>
 
     <div class="tab-content">
@@ -447,7 +447,7 @@ row +=
 
       <!-- Columns -->
       <div id="columnsTab" class="tab-pane fade">
-        <h3><?=COLUMNS?></h3>
+        <h3><?=POINTS_OF_INTEREST?></h3>
         <div id="columnPicker">
         </div>
       </div>
