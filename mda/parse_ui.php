@@ -124,6 +124,15 @@
         }
       }
     );
+    $( "#checkComplement" ).click(
+      function()
+      {
+        var checked = $( "#columnPicker input[type=checkbox]:checked" );
+        var unchecked =  $( "#columnPicker input[type=checkbox]:not(checked)" );
+        unchecked.prop( "checked", true );
+        checked.prop( "checked", false );
+      }
+    );
     for ( var i in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
@@ -466,6 +475,7 @@ row +=
       <div id="columnsTab" class="tab-pane fade">
         <h3><?=POINTS_OF_INTEREST?></h3>
           <button type="button" id="checkAll" class="btn btn-default" ></button>
+          <button type="button" id="checkComplement" class="btn btn-default" >Check Complement</button>
         <div id="columnPicker">
         </div>
       </div>
