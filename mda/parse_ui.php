@@ -107,6 +107,23 @@
     onChangeFormat();
 
     // Initialize Columns
+    $( "#checkAll" ).text( "Uncheck All" );
+    $( "#checkAll" ).click(
+      function()
+      {
+        var btn = $( "#checkAll" );
+        if ( btn.text() == "Check All" )
+        {
+          btn.text( "Uncheck All" );
+          $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
+        }
+        else
+        {
+          btn.text( "Check All" );
+          $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
+        }
+      }
+    );
     for ( var i in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
@@ -448,6 +465,7 @@ row +=
       <!-- Columns -->
       <div id="columnsTab" class="tab-pane fade">
         <h3><?=POINTS_OF_INTEREST?></h3>
+          <button type="button" id="checkAll" class="btn btn-default" ></button>
         <div id="columnPicker">
         </div>
       </div>

@@ -1,6 +1,7 @@
 <?php
   error_log( "====> files=" . print_r( $_FILES, true ) );
   error_log( "====> rq=" . print_r( $_REQUEST, true ) );
+  require_once "labels.php";
 
   $timestamp = $_REQUEST["timestamp"];
   require_once "filenames.php" ;
@@ -54,7 +55,7 @@
     }
     else
     {
-      array_push( $messages, "Uploaded file does not contain any columns" );
+      array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
     }
     error_log( "===> columns=" . print_r( $columns, true ) );
   }
