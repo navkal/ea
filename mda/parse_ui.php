@@ -107,21 +107,16 @@
     onChangeFormat();
 
     // Initialize Columns
-    $( "#checkAll" ).text( "Uncheck All" );
     $( "#checkAll" ).click(
       function()
       {
-        var btn = $( "#checkAll" );
-        if ( btn.text() == "Check All" )
-        {
-          btn.text( "Uncheck All" );
-          $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
-        }
-        else
-        {
-          btn.text( "Check All" );
-          $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
-        }
+        $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
+      }
+    );
+    $( "#uncheckAll" ).click(
+      function()
+      {
+        $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
       }
     );
     $( "#checkComplement" ).click(
@@ -474,9 +469,12 @@ row +=
       <!-- Columns -->
       <div id="columnsTab" class="tab-pane fade">
         <h3><?=POINTS_OF_INTEREST?></h3>
-          <button type="button" id="checkAll" class="btn btn-default" ></button>
+        <div>
+          <button type="button" id="checkAll" class="btn btn-default" >Check All</button>
+          <button type="button" id="uncheckAll" class="btn btn-default" >Uncheck All</button>
           <button type="button" id="checkComplement" class="btn btn-default" >Check Complement</button>
-        <div id="columnPicker">
+        </div>
+        <div id="columnPicker" style="padding-top:20px; padding-bottom:20px;">
         </div>
       </div>
 
