@@ -29,7 +29,7 @@
   // --> Deprecated parse.py parameter: Cost per kWh -->
   $cost = $summarize ? "--cost " . $_POST["cost"] : "";
   // <-- Deprecated parse.py parameter <--
-  $columns = "-c " . $columnsFilename;
+  $columns = $summarize ? "-c " . $columnsFilename : "";
   $command = $python . " parse.py -i " . $inputFilename . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end . " " . $columns;
   error_log( "===> command=" . $command );
 

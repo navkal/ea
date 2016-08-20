@@ -185,6 +185,16 @@ row +=
     $( "#cost" ).val( bDisable ? "" : "0.16" );
     $( "label[for=cost]" ).css( "color", bDisable ? "lightgray" : "black" );
     $( "#dollars" ).css( "color", bDisable ? "lightgray" : "black" );
+
+    if ( bDisable )
+    {
+      $( "#columnsTabItem" ).addClass( "disabled" );
+    }
+    else
+    {
+      $( "#columnsTabItem" ).removeClass( "disabled" );
+    }
+    $( "#columnsTabLink" ).prop( "disabled", bDisable );
   }
 
   // Handle change of Period radio buttons
@@ -413,7 +423,7 @@ row +=
     <!-- Options tabs -->
     <ul id="optionsTabs" class="nav nav-tabs">
       <li><a data-toggle="tab" href="#analysisOptionsTab"><?=ANALYSIS_OPTIONS?></a></li>
-      <li><a data-toggle="tab" href="#columnsTab"><?=POINTS_OF_INTEREST?></a></li>
+      <li id="columnsTabItem" ><a id="columnsTabLink" data-toggle="tab" href="#columnsTab"><?=POINTS_OF_INTEREST?></a></li>
     </ul>
 
     <div class="tab-content">
