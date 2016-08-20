@@ -115,7 +115,7 @@
 
   function finishClose()
   {
-    history.back();
+    document.location.href="/";
   }
 </script>
 

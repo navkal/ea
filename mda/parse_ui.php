@@ -72,11 +72,12 @@
   function handlePostResponse( rsp, sStatus, tJqXhr )
   {
     console.log( "handlePostResponse, rsp=" + JSON.stringify( rsp ) );
+    // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
+    $( "#uploadButton" ).prop( "disabled", false );
 
     if ( rsp.messages.length )
     {
-       $( "#uploadButton" ).prop( "disabled", false );
        showMessages( rsp.messages );
     }
     else
@@ -87,7 +88,10 @@
 
   function handlePostError( tJqXhr, sStatus, sErrorThrown )
   {
+    // Restore cursor and button states
+    $( "body" ).css( "cursor", "default" );
     $( "#uploadButton" ).prop( "disabled", false );
+
     ajaxFail( tJqXhr, sStatus, sErrorThrown );
   }
 
@@ -298,7 +302,7 @@ row +=
       }
     )
     .done( handlePollResponse )
-    .fail( ajaxFail );
+    .fail( handlePollError );
   }
 
   function handlePollResponse( rsp, sStatus, tJqXhr )
@@ -310,17 +314,26 @@ row +=
     }
     else
     {
-      // Clear wait cursor
+      // Restore cursor and button states
       $( "body" ).css( "cursor", "default" );
+      $( "#analyzeButton" ).prop( "disabled", false );
 
       // Render results
       window.location.assign( "mda/parse_done.php?timestamp=" + $( "#timestamp" ).val()  );
     }
   }
 
+  function handlePollError( tJqXhr, sStatus, sErrorThrown )
+  {
+    // Restore cursor and button states
+    $( "body" ).css( "cursor", "default" );
+    $( "#analyzeButton" ).prop( "disabled", false );
+
+    ajaxFail( tJqXhr, sStatus, sErrorThrown );
+  }
+
   function ajaxFail( tJqXhr, sStatus, sErrorThrown )
   {
-    $( "body" ).css( "cursor", "default" );
     showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
   }
 

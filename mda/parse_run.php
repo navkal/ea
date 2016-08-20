@@ -110,7 +110,7 @@ function showMessage( $uploadFilename, $message )
       <!-- OK button -->
       <div class="container">
         <div style="text-align:center;" >
-         <a class="btn btn-default" href="javascript:history.back()" role="button">OK</a>
+         <a class="btn btn-default" href="/" role="button">OK</a>
         </div>
       </div>
 
