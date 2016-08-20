@@ -27,7 +27,7 @@ def parse(input_file):
     df = df.unstack(level=-1)
 
     # Convert index to DatetimeIndex
-    df.index = pd.to_datetime(df.index, dayfirst=True)
+    df.index = pd.to_datetime(df.index)
 
     return df
 
