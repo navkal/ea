@@ -25,7 +25,6 @@
     {
       if ( strpos( $key, "columns-" ) === 0 )
       {
-        error_log( "===> saving column <" . $col . ">" );
         fwrite( $columnsFile, urldecode( $col ) . PHP_EOL );
       }
     }
@@ -76,9 +75,7 @@
     }
 
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
-    error_log( "===> parse_run writing to paramsFile: " . $params );
     fwrite( $paramsFile, $params . PHP_EOL );
-    error_log( "===> parse_run writing to paramsFile: " . $columns );
     fwrite( $paramsFile, $columns. PHP_EOL );
     fclose( $paramsFile );
 

@@ -57,7 +57,6 @@
     {
       array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
     }
-    error_log( "===> columns=" . print_r( $columns, true ) );
   }
 
   $rsp =
