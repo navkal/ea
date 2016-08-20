@@ -118,12 +118,7 @@
 
     // Initialize Columns
     $( "#checkAll" ).click( checkAll );
-    $( "#uncheckAll" ).click(
-      function()
-      {
-        $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
-      }
-    );
+    $( "#uncheckAll" ).click( uncheckAll );
     $( "#checkComplement" ).click(
       function()
       {
@@ -147,6 +142,11 @@
   function checkAll()
   {
     $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
+  }
+
+  function uncheckAll()
+  {
+    $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
   }
 
   function makeColumnPickerRow( index, colName )
@@ -188,7 +188,6 @@ row +=
 
     if ( bDisable )
     {
-      checkAll();
       $( "#columnsTabItem" ).addClass( "disabled" );
     }
     else
@@ -275,7 +274,7 @@ row +=
     }
 
     // Check column selections
-    if ( $( "#columnPicker input[type=checkbox]:checked" ).length == 0 )
+    if ( $( "#summary" ).prop( "checked" ) && $( "#columnPicker input[type=checkbox]:checked" ).length == 0 )
     {
       messages.push( "You must select at least one column" );
     }
