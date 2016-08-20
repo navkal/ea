@@ -144,15 +144,12 @@
     var row = '';
 
 row +=
-'<div class="row">';
-row +=
-  '<div class="col-lg-6">';
+  '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">';
 row +=
     '<label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label>';
 row +=
   '</div>';
-row +=
-'</div>';
+
 
 
 
@@ -474,7 +471,7 @@ row +=
           <button type="button" id="uncheckAll" class="btn btn-default" >Uncheck All</button>
           <button type="button" id="checkComplement" class="btn btn-default" >Check Complement</button>
         </div>
-        <div id="columnPicker" style="padding-top:20px; padding-bottom:20px;">
+        <div id="columnPicker" class="row" style="padding-top:20px; padding-bottom:20px;">
         </div>
       </div>
 
