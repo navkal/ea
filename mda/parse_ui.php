@@ -117,12 +117,7 @@
     onChangeFormat();
 
     // Initialize Columns
-    $( "#checkAll" ).click(
-      function()
-      {
-        $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
-      }
-    );
+    $( "#checkAll" ).click( checkAll );
     $( "#uncheckAll" ).click(
       function()
       {
@@ -147,6 +142,11 @@
     $( "#optionsTabs a[href='#analysisOptionsTab']" ).on( "shown.bs.tab", setOptionsHelp );
     $( "#optionsTabs a[href='#columnsTab']" ).on( "shown.bs.tab", setColumnsHelp );
     setOptionsHelp();
+  }
+
+  function checkAll()
+  {
+    $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
   }
 
   function makeColumnPickerRow( index, colName )
@@ -188,6 +188,7 @@ row +=
 
     if ( bDisable )
     {
+      checkAll();
       $( "#columnsTabItem" ).addClass( "disabled" );
     }
     else

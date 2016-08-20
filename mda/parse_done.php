@@ -9,15 +9,19 @@
 
     $paramsFile = fopen( $paramsFilename, "r" );
     $params = fgetcsv( $paramsFile );
+    $colParam = fgetcsv( $paramsFile )[0];
     fclose( $paramsFile );
 
     $columns = [];
-    $columnsFile = fopen( $columnsFilename, "r" );
-    while( ( $line = fgetcsv( $columnsFile ) ) !== false )
+    if ( $colParam )
     {
-      array_push( $columns, $line[0] );
+      $columnsFile = fopen( $columnsFilename, "r" );
+      while( ( $line = fgetcsv( $columnsFile ) ) !== false )
+      {
+        array_push( $columns, $line[0] );
+      }
+      fclose( $columnsFile );
     }
-    fclose( $columnsFile );
 
     require_once "labels.php" ;
   ?>
@@ -44,7 +48,7 @@
                   }
                 ?>
                 <dt>
-                  <?=POINTS_OF_INTEREST?>
+                  <?= $colParam ? POINTS_OF_INTEREST : "" ?>
                 </dt>
                 <dd>
                   <ul>
