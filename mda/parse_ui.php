@@ -16,6 +16,12 @@
     padding-left: 20px;
   }
 }
+#columnPicker
+{
+  -webkit-column-width: 270px; /* Chrome, Safari, Opera */
+  -moz-column-width: 270px; /* Firefox */
+  column-width: 270px;
+}
 </style>
 
 <script>
@@ -143,12 +149,10 @@
   {
     var row = '';
 
+
 row +=
-  '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">';
-row +=
-    '<label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label>';
-row +=
-  '</div>';
+    '<li><label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label></li>';
+
 
 
 
@@ -471,7 +475,11 @@ row +=
           <button type="button" id="uncheckAll" class="btn btn-default" >Uncheck All</button>
           <button type="button" id="checkComplement" class="btn btn-default" >Check Complement</button>
         </div>
-        <div id="columnPicker" class="row" style="padding-top:20px; padding-bottom:20px;">
+        <div class="row" style="padding-top:20px; padding-bottom:20px;">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul id="columnPicker" class="list-unstyled" >
+            </ul>
+          </div>
         </div>
       </div>
 
