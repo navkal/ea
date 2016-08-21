@@ -214,7 +214,7 @@
 
   function makeColumnPickerRow( index, colName )
   {
-    return '<li><label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label></li>';
+    return '<li><label class="checkbox checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label></li>';
   }
 
   function onColumnSelChange()
@@ -526,13 +526,13 @@
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <?=POINTS_OF_INTEREST?>
+                Available <?=POINTS_OF_INTEREST?>
               </div>
               <div class="panel-body">
                 <div style="padding-bottom: 15px;">
-                  <button type="button" id="checkAll" class="btn btn-default" >Check All</button>
-                  <button type="button" id="uncheckAll" class="btn btn-default" >Uncheck All</button>
-                  <button type="button" id="checkComplement" class="btn btn-default" >Check Complement</button>
+                  <button type="button" id="checkAll" class="btn btn-default btn-xs" >Check All</button>
+                  <button type="button" id="uncheckAll" class="btn btn-default btn-xs" >Uncheck All</button>
+                  <button type="button" id="checkComplement" class="btn btn-default btn-xs" >Check Complement</button>
                 </div>
                 <ul id="columnPicker" class="list-unstyled" >
                 </ul>
