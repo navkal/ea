@@ -22,6 +22,14 @@
   -moz-column-width: 270px; /* Firefox */
   column-width: 270px;
 }
+@media( max-width: 991px )
+{
+  .padBottomSmall
+  {
+    padding-bottom: 10px;
+  }
+}
+
 </style>
 
 <script>
@@ -133,35 +141,17 @@
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
     }
 
+    // Set column-related handlers
+    $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
+    $( ".up" ).click( moveColumnUp );
+    $( ".dn" ).click( moveColumnDown );
+    setColumnButtonSize();
+    $( window ).on( "resize", setColumnButtonSize );
+
     // Set handlers to update Help button targets
     $( "#optionsTabs a[href='#analysisOptionsTab']" ).on( "shown.bs.tab", setOptionsHelp );
     $( "#optionsTabs a[href='#columnsTab']" ).on( "shown.bs.tab", setColumnsHelp );
     setOptionsHelp();
-  }
-
-  function checkAll()
-  {
-    $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
-  }
-
-  function uncheckAll()
-  {
-    $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
-  }
-
-  function makeColumnPickerRow( index, colName )
-  {
-    var row = '';
-
-
-row +=
-    '<li><label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label></li>';
-
-
-
-
-
-    return row;
   }
 
   // Handle change of Report Format radio buttons
@@ -210,6 +200,56 @@ row +=
   {
     var sFilename = $( '#' + sFileId ).val().split('\\').pop().split('/').pop();
     $( '#' + sFilenameId ).val( sFilename );
+  }
+
+  function checkAll()
+  {
+    $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
+  }
+
+  function uncheckAll()
+  {
+    $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
+  }
+
+  function makeColumnPickerRow( index, colName )
+  {
+    return '<li><label class="checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label></li>';
+  }
+
+  function onColumnSelChange()
+  {
+    var checkbox = $( event.target );
+    var label = checkbox.parent().text();
+
+    console.log( "change at " + label );
+    console.log( "index of checkbox=" + checkbox.closest( "li" ).index() );
+  }
+
+  function moveColumnUp( event )
+  {
+    var item = $( event.target ).closest( "a" );
+    item.prev().before( item );
+  }
+
+  function moveColumnDown( event )
+  {
+    var item = $( event.target ).closest( "a" );
+    item.next().after( item );
+  }
+
+  function setColumnButtonSize()
+  {
+    if ( $( window ).width() < 768 )
+    {
+      $( "#columnEditor button" ).addClass( "btn-xs" );
+      $( "#columnEditor button" ).removeClass( "btn-sm" );
+    }
+    else
+    {
+      $( "#columnEditor button" ).addClass( "btn-sm" );
+      $( "#columnEditor button" ).removeClass( "btn-xs" );
+    }
   }
 
   function onSubmitOptions()
@@ -353,7 +393,7 @@ row +=
     <p class="h3"><?=METASYS_DATA_ANALYSIS?></p>
   </div>
 
-  <?php // include "columnEditor.php"?>
+  <?php // include "prototype.php";?>
 
   <div id="fileBlock" >
     <!-- Metasys File chooser -->
@@ -482,16 +522,141 @@ row +=
 
       <!-- Columns -->
       <div id="columnsTab" class="tab-pane fade">
-        <h3><?=POINTS_OF_INTEREST?></h3>
-        <div>
-          <button type="button" id="checkAll" class="btn btn-default" >Check All</button>
-          <button type="button" id="uncheckAll" class="btn btn-default" >Uncheck All</button>
-          <button type="button" id="checkComplement" class="btn btn-default" >Check Complement</button>
-        </div>
         <div class="row" style="padding-top:20px; padding-bottom:20px;">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ul id="columnPicker" class="list-unstyled" >
-            </ul>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <?=POINTS_OF_INTEREST?>
+              </div>
+              <div class="panel-body">
+                <div style="padding-bottom: 15px;">
+                  <button type="button" id="checkAll" class="btn btn-default" >Check All</button>
+                  <button type="button" id="uncheckAll" class="btn btn-default" >Uncheck All</button>
+                  <button type="button" id="checkComplement" class="btn btn-default" >Check Complement</button>
+                </div>
+                <ul id="columnPicker" class="list-unstyled" >
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Selected <?=POINTS_OF_INTEREST?>
+      </div>
+      <div class="panel-body">
+        <div class="list-group" id="columnEditor">
+
+
+
+
+
+
+
+<a class="list-group-item" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
+      <h5 class="list-group-item-text">KVAR_Present_Demand.Main-kVAR_Present_Demand (Trend1)</h5>
+    </div>
+    <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
+      <input type="text" class="form-control" placeholder="Nickname" >
+    </div>
+    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
+      <button type="button" class="up btn btn-default" ><span class="glyphicon glyphicon-menu-up"></span></button>
+      <button type="button" class="dn btn btn-default" ><span class="glyphicon glyphicon-menu-down"></span></button>
+    </div>
+  </div>
+</a>
+<a class="list-group-item" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
+      <h5 class="list-group-item-text">Energy.M1-kWh-Energy (Trend1)</h5>
+    </div>
+    <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
+      <input type="text" class="form-control" placeholder="Nickname" >
+    </div>
+    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
+      <button type="button" class="up btn btn-default" ><span class="glyphicon glyphicon-menu-up"></span></button>
+      <button type="button" class="dn btn btn-default" ><span class="glyphicon glyphicon-menu-down"></span></button>
+    </div>
+  </div>
+</a>
+<a class="list-group-item" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
+      <h5 class="list-group-item-text">KVARh.DE-ATS-kVARh (Trend1)</h5>
+    </div>
+    <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
+      <input type="text" class="form-control" placeholder="Nickname" >
+    </div>
+    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
+      <button type="button" class="up btn btn-default" ><span class="glyphicon glyphicon-menu-up"></span></button>
+      <button type="button" class="dn btn btn-default" ><span class="glyphicon glyphicon-menu-down"></span></button>
+    </div>
+  </div>
+</a>
+<a class="list-group-item" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
+      <h5 class="list-group-item-text">KVA_Present_Demand.Main-kVA_Present_Demand (Trend1)</h5>
+    </div>
+    <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
+      <input type="text" class="form-control" placeholder="Nickname" >
+    </div>
+    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
+      <button type="button" class="up btn btn-default" ><span class="glyphicon glyphicon-menu-up"></span></button>
+      <button type="button" class="dn btn btn-default" ><span class="glyphicon glyphicon-menu-down"></span></button>
+    </div>
+  </div>
+</a>
+<a class="list-group-item" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
+      <h5 class="list-group-item-text">KW_Total.DHB - kW - Present Value (Trend1)</h5>
+    </div>
+    <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
+      <input type="text" class="form-control" placeholder="Nickname" >
+    </div>
+    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
+      <button type="button" class="up btn btn-default" ><span class="glyphicon glyphicon-menu-up"></span></button>
+      <button type="button" class="dn btn btn-default" ><span class="glyphicon glyphicon-menu-down"></span></button>
+    </div>
+  </div>
+</a>
+<a class="list-group-item" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
+      <h5 class="list-group-item-text">KVAR_Present_Demand.Main-kVAR_Present_Demand (Trend1)</h5>
+    </div>
+    <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
+      <input type="text" class="form-control" placeholder="Nickname" >
+    </div>
+    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
+      <button type="button" class="up btn btn-default" ><span class="glyphicon glyphicon-menu-up"></span></button>
+      <button type="button" class="dn btn btn-default" ><span class="glyphicon glyphicon-menu-down"></span></button>
+    </div>
+  </div>
+</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
         </div>
       </div>

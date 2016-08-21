@@ -1,51 +1,27 @@
 <script>
-  function up( event )
-  {
-    var item = $( event.target ).closest( "a" );
-    item.prev().before( item );
-  }
-
-  function dn( event )
-  {
-    var item = $( event.target ).closest( "a" );
-    item.next().after( item );
-  }
-
-  function setButtonSize()
+  function setBtnSz()
   {
     if ( $( window ).width() < 768 )
     {
-      $( "#columnEditor button" ).addClass( "btn-xs" );
-      $( "#columnEditor button" ).removeClass( "btn-sm" );
+      $( "#prototype button" ).addClass( "btn-xs" );
+      $( "#prototype button" ).removeClass( "btn-sm" );
     }
     else
     {
-      $( "#columnEditor button" ).addClass( "btn-sm" );
-      $( "#columnEditor button" ).removeClass( "btn-xs" );
+      $( "#prototype button" ).addClass( "btn-sm" );
+      $( "#prototype button" ).removeClass( "btn-xs" );
     }
   }
-
   $( document ).ready(
     function()
     {
-      $( ".up" ).click( up );
-      $( ".dn" ).click( dn );
-
-      setButtonSize();
-      $( window ).on( "resize", setButtonSize );
+      $( ".up" ).click( moveColumnUp );
+      $( ".dn" ).click( moveColumnDown );
+      setBtnSz();
+      $( window ).on( "resize", setBtnSz );
     }
   );
 </script>
-
-<style>
-@media( max-width: 991px )
-{
-  .padSmall
-  {
-    padding-bottom: 10px;
-  }
-}
-</style>
 
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -54,10 +30,10 @@
         Selected <?=POINTS_OF_INTEREST?>
       </div>
       <div class="panel-body">
-        <div class="list-group" id="columnEditor">
+        <div class="list-group" id="prototype">
           <a class="list-group-item" >
             <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padSmall">
+              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
                 <h5 class="list-group-item-text">KVAR_Present_Demand.Main-kVAR_Present_Demand (Trend1)</h5>
               </div>
               <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
@@ -71,7 +47,7 @@
           </a>
           <a class="list-group-item" >
             <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padSmall">
+              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
                 <h5 class="list-group-item-text">Energy.M1-kWh-Energy (Trend1)</h5>
               </div>
               <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
@@ -85,7 +61,7 @@
           </a>
           <a class="list-group-item" >
             <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padSmall">
+              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
                 <h5 class="list-group-item-text">KVARh.DE-ATS-kVARh (Trend1)</h5>
               </div>
               <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
@@ -99,7 +75,7 @@
           </a>
           <a class="list-group-item" >
             <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padSmall">
+              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
                 <h5 class="list-group-item-text">KVA_Present_Demand.Main-kVA_Present_Demand (Trend1)</h5>
               </div>
               <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
@@ -113,7 +89,7 @@
           </a>
           <a class="list-group-item" >
             <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padSmall">
+              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
                 <h5 class="list-group-item-text">KW_Total.DHB - kW - Present Value (Trend1)</h5>
               </div>
               <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">
@@ -127,7 +103,7 @@
           </a>
           <a class="list-group-item" >
             <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padSmall">
+              <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">
                 <h5 class="list-group-item-text">KVAR_Present_Demand.Main-kVAR_Present_Demand (Trend1)</h5>
               </div>
               <div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">

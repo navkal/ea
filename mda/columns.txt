@@ -1,2 +1,0 @@
-Energy.CollinCtr-Energy-kWh (Trend1)
-Energy.Main-kWh-Energy (Trend1)
