@@ -204,12 +204,22 @@
 
   function checkAll()
   {
-    $( "#columnPicker input[type=checkbox]" ).prop( "checked", true );
+    var all = $( "#columnPicker input[type=checkbox]" );
+    all.prop( "checked", true );
+    for ( var checkboxIndex = 0; checkboxIndex < all.length; checkboxIndex ++ )
+    {
+      addEditorColumn( checkboxIndex );
+    }
   }
 
   function uncheckAll()
   {
-    $( "#columnPicker input[type=checkbox]" ).prop( "checked", false );
+    var all = $( "#columnPicker input[type=checkbox]" );
+    all.prop( "checked", false );
+    for ( var checkboxIndex = 0; checkboxIndex < all.length; checkboxIndex ++ )
+    {
+      removeEditorColumn( checkboxIndex );
+    }
   }
 
   function makeColumnPickerRow( index, colName )
@@ -221,9 +231,28 @@
   {
     var checkbox = $( event.target );
     var label = checkbox.parent().text();
-
     console.log( "change at " + label );
-    console.log( "index of checkbox=" + checkbox.closest( "li" ).index() );
+
+    var checkboxIndex = checkbox.closest( "li" ).index();
+    console.log( "index of checkbox=" + checkboxIndex );
+    if ( checkbox.prop( "checked" ) )
+    {
+      addEditorColumn( checkboxIndex );
+    }
+    else
+    {
+      removeEditorColumn( checkboxIndex );
+    }
+  }
+
+  function addEditorColumn( checkboxIndex )
+  {
+    console.log( "======> in addEditorColumn(), checkboxIndex=" + checkboxIndex );
+  }
+
+  function removeEditorColumn( checkboxIndex )
+  {
+    console.log( "======> in removeEditorColumn(), checkboxIndex=" + checkboxIndex );
   }
 
   function moveColumnUp( event )
