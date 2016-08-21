@@ -353,7 +353,7 @@ row +=
     <p class="h3"><?=METASYS_DATA_ANALYSIS?></p>
   </div>
 
-  <?php // include "columnPicker.php"?>
+  <?php // include "columnEditor.php"?>
 
   <div id="fileBlock" >
     <!-- Metasys File chooser -->
