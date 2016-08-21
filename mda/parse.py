@@ -27,7 +27,7 @@ def parse(input_file):
     df = df.unstack(level=-1)
 
     # Convert index to DatetimeIndex
-    df.index = pd.to_datetime(df.index, infer_datetime_format=True )
+    df.index = pd.to_datetime(df.index, infer_datetime_format=True)
 
     return df
 
@@ -43,25 +43,37 @@ def drop_units(value):
         return float(match.group(1))
 
 
-def summarize(df, columns, start_time=None, end_time=None):
+def summarize(df, start_time=None, end_time=None):
     """Return a table describing daily energy usage"""
     if end_time is not None and start_time is None:
         raise ValueError('end_time should not be specified unless start_time is specified')
     elif start_time is not None and end_time is not None:
         df = df.iloc[df.index.indexer_between_time(start_time, end_time),:]
 
-    invalid_columns = set(columns) - set(df.columns)
-    if invalid_columns:
-        raise ValueError('the following column names were not found: {0}'.format(invalid_columns))
-    subset = df[columns]
-
     # Sometimes measurements are incorrectly reported as 0
-    subset = subset.replace(to_replace=0, value=np.nan)
+    df = df.replace(to_replace=0, value=np.nan)
 
-    grouped_cumulative_energy = subset.groupby(group_key(subset, start_time, end_time))
+    grouped_cumulative_energy = df.groupby(group_key(df, start_time, end_time))
     daily_energy = grouped_cumulative_energy.max() - grouped_cumulative_energy.min()
 
     return daily_energy
+
+
+def simplify_columns(df, columns, new_column_names):
+    """Restrict to certain columns, and rename them"""
+    subset = df.copy() # Avoid unexpected mutation of input
+
+    if columns is not None:
+        invalid_columns = set(columns) - set(df.columns)
+        if invalid_columns:
+            raise ValueError('the following column names were not found: {0}'.
+                             format(invalid_columns))
+        subset = df[columns]
+
+    if new_column_names is not None:
+        subset.columns = new_column_names
+
+    return subset
 
 
 def group_key(df, start_time, end_time):
@@ -117,9 +129,14 @@ def save_df(transformed, summarized, start_time, end_time, output_file):
 
 
 def _parse_columns_file(columns_file):
-    with open(columns_file) as f:
-        columns = [column.strip('\n') for column in f]
-    return columns
+    columns_df = pd.read_csv(columns_file, header=None)
+    columns = list(columns_df.iloc[:,0])
+    if columns_df.shape[1] == 1:
+        new_column_names = None
+    elif columns_df.shape[1] == 2:
+        new_column_names = list(columns_df.iloc[:,1])
+
+    return columns, new_column_names
 
 
 if __name__ == '__main__':
@@ -136,11 +153,13 @@ if __name__ == '__main__':
     transformed = parse(args.input_file)
 
     if args.columns_file:
-        columns = _parse_columns_file(args.columns_file)
+        columns, new_column_names = _parse_columns_file(args.columns_file)
+        transformed = simplify_columns(transformed, columns, new_column_names)
+
     start_time = _string_to_time(args.start_time)
     end_time = _string_to_time(args.end_time)
 
     if args.summarize:
-        transformed = summarize(transformed, columns, start_time, end_time)
+        transformed = summarize(transformed, start_time, end_time)
 
     save_df(transformed, args.summarize, args.start_time, args.end_time, args.output_file)

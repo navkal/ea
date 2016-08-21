@@ -8,6 +8,17 @@
   $timestamp = $_POST["timestamp"];
   require_once "filenames.php";
 
+  // Save selected columns in columns file
+  $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
+  foreach ( $_POST as $key => $col )
+  {
+    if ( strpos( $key, "columns-" ) === 0 )
+    {
+      fwrite( $columnsFile, urldecode( $col ) . PHP_EOL );
+    }
+  }
+  fclose( $columnsFile );
+
 
   // Set up Python command
   $python = getenv( "PYTHON" );
@@ -17,20 +28,7 @@
   // --> Deprecated parse.py parameter: Cost per kWh -->
   $cost = $summarize ? "--cost " . $_POST["cost"] : "";
   // <-- Deprecated parse.py parameter <--
-  if ( $summarize )
-  {
-    // Save selected columns in columns file
-    $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
-    foreach ( $_POST as $key => $col )
-    {
-      if ( strpos( $key, "columns-" ) === 0 )
-      {
-        fwrite( $columnsFile, urldecode( $col ) . PHP_EOL );
-      }
-    }
-    fclose( $columnsFile );
-  }
-  $columns = $summarize ? "-c " . $columnsFilename : "";
+  $columns = "-c " . $columnsFilename;
   $command = $python . " parse.py -i " . $inputFilename . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end . " " . $columns;
   error_log( "===> command=" . $command );
 
@@ -76,7 +74,6 @@
 
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
     fwrite( $paramsFile, $params . PHP_EOL );
-    fwrite( $paramsFile, $columns. PHP_EOL );
     fclose( $paramsFile );
 
     // Download results

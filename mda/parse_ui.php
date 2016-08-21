@@ -185,16 +185,6 @@ row +=
     $( "#cost" ).val( bDisable ? "" : "0.16" );
     $( "label[for=cost]" ).css( "color", bDisable ? "lightgray" : "" );
     $( "#dollars" ).css( "color", bDisable ? "lightgray" : "" );
-
-    if ( bDisable )
-    {
-      $( "#columnsTabItem" ).addClass( "disabled" );
-    }
-    else
-    {
-      $( "#columnsTabItem" ).removeClass( "disabled" );
-    }
-    $( "#columnsTabLink" ).prop( "disabled", bDisable );
   }
 
   // Handle change of Period radio buttons
@@ -274,7 +264,7 @@ row +=
     }
 
     // Check column selections
-    if ( $( "#summary" ).prop( "checked" ) && $( "#columnPicker input[type=checkbox]:checked" ).length == 0 )
+    if ( $( "#columnPicker input[type=checkbox]:checked" ).length == 0 )
     {
       messages.push( "You must select at least one column" );
     }
