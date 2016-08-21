@@ -127,19 +127,12 @@
     // Initialize Columns
     $( "#checkAll" ).click( checkAll );
     $( "#uncheckAll" ).click( uncheckAll );
-    $( "#checkComplement" ).click(
-      function()
-      {
-        var checked = $( "#columnPicker input[type=checkbox]:checked" );
-        var unchecked =  $( "#columnPicker input[type=checkbox]:not(checked)" );
-        unchecked.prop( "checked", true );
-        checked.prop( "checked", false );
-      }
-    );
+    $( "#checkComplement" ).click( checkComplement );
     for ( var i in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
     }
+    checkAll();
 
     // Set column-related handlers
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
@@ -222,9 +215,35 @@
     }
   }
 
+  function checkComplement()
+  {
+    var checked = $( "#columnPicker input[type=checkbox]:checked" );
+    var unchecked =  $( "#columnPicker input[type=checkbox]:not(:checked)" );
+    
+    // Reverse checkbox settings
+    checked.prop( "checked", false );
+    unchecked.prop( "checked", true );
+
+    // Remove newly unchecked items from editor
+    for ( var i = 0; i < checked.length; i ++ )
+    {
+      var checkbox = $( checked[i] );
+      var checkboxIndex = checkbox.closest( "li" ).index();
+      removeEditorColumn( checkboxIndex );
+    }
+
+    // Add newly checked items from editor
+    for ( var i = 0; i < unchecked.length; i ++ )
+    {
+      var checkbox = $( unchecked[i] );
+      var checkboxIndex = checkbox.closest( "li" ).index();
+      addEditorColumn( checkboxIndex );
+    }
+  }
+
   function makeColumnPickerRow( index, colName )
   {
-    return '<li><label class="checkbox checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '" checked>' + colName + '</label></li>';
+    return '<li><label class="checkbox checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '">' + colName + '</label></li>';
   }
 
   function onColumnSelChange()
