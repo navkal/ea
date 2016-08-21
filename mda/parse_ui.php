@@ -170,12 +170,12 @@ row +=
     var bDisable = ! $( "#summary" ).prop( "checked" );
 
     var period = $( "input[type=radio][name=period]" );
-    period.parent().css( "color", bDisable ? "lightgray" : "black" );
+    period.parent().css( "color", bDisable ? "lightgray" : "" );
     period.parent().css( "cursor", bDisable ? "default" : "pointer" );
     period.prop( "disabled", bDisable );
     $( "#fullday" ).prop( "checked", ! bDisable );
     $( "#partday" ).prop( "checked", false );
-    $( "label[for=period]" ).css( "color", bDisable ? "lightgray" : "black" );
+    $( "label[for=period]" ).css( "color", bDisable ? "lightgray" : "" );
 
     disableTimeInput( "startTime", bDisable );
 
@@ -183,8 +183,8 @@ row +=
 
     $( "#cost" ).prop( "disabled", bDisable );
     $( "#cost" ).val( bDisable ? "" : "0.16" );
-    $( "label[for=cost]" ).css( "color", bDisable ? "lightgray" : "black" );
-    $( "#dollars" ).css( "color", bDisable ? "lightgray" : "black" );
+    $( "label[for=cost]" ).css( "color", bDisable ? "lightgray" : "" );
+    $( "#dollars" ).css( "color", bDisable ? "lightgray" : "" );
 
     if ( bDisable )
     {
@@ -209,7 +209,7 @@ row +=
 
   function disableTimeInput( id, bDisable )
   {
-    $( "label[for='" + id + "']" ).css( "color", bDisable ? "lightgray" : "black" );
+    $( "label[for='" + id + "']" ).css( "color", bDisable ? "lightgray" : "" );
     var selector =  "#" + id;
     $( selector ).prop( "disabled", bDisable );
     $( selector ).val( bDisable ? "" : $( selector ).wickedpicker( "time" ) );
@@ -253,7 +253,7 @@ row +=
     if ( $( "#metasysFile" ).val() == "" )
     {
       messages.push( "<?=METASYS_FILE?> is required" );
-      $( "#uploadFilename" ).parent().addClass( "has-error" );
+      $( "#uploadFilename" ).parent().parent().addClass( "has-error" );
     }
 
     return messages;
