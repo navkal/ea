@@ -129,6 +129,7 @@
     $( "#checkAll" ).click( checkAll );
     $( "#uncheckAll" ).click( uncheckAll );
     $( "#checkComplement" ).click( checkComplement );
+    $( "#checkContaining" ).click( checkContaining );
     for ( var i in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
@@ -218,31 +219,50 @@
       found = lcCat.indexOf( substrings[index] ) != -1;
     }
 
-    // Start with all checkboxes unchecked
-    uncheckAll();
-
     // Check the checkboxes that comprise the default selection
     if ( found )
     {
-      // Determine which substring was chosen as the default
-      var substring = substrings[index-1];
-
-      // Select all labels with the substring
-      for ( var lbl = 0; lbl < labels.length; lbl ++ )
-      {
-        var label = $( labels[lbl] );
-        if ( label.text().toLowerCase().indexOf( substring )  != -1 )
-        {
-          label.find( "input" ).prop( "checked", true );
-          addEditorColumn( lbl );
-        }
-      }
+      checkAllContaining( substrings[index-1] );
     }
     else
     {
-      $( labels[0] ).find( "input" ).prop( "checked", true );
-      addEditorColumn( 0 );
+      checkFirst();
     }
+  }
+
+  function checkContaining()
+  {
+    var substring = $( "#columnSubstring" ).val();
+    if ( substring != "" )
+    {
+      checkAllContaining( substring );
+    }
+  }
+
+  function checkAllContaining( substring )
+  {
+    uncheckAll();
+    var labels = $( "#columnPicker label" );
+
+    // Select all labels with the substring
+    for ( var lbl = 0; lbl < labels.length; lbl ++ )
+    {
+      var label = $( labels[lbl] );
+      if ( label.text().toLowerCase().indexOf( substring )  != -1 )
+      {
+        label.find( "input" ).prop( "checked", true );
+        addEditorColumn( lbl );
+      }
+    }
+  }
+
+  function checkFirst()
+  {
+    uncheckAll();
+
+    var labels = $( "#columnPicker label" );
+    $( labels[0] ).find( "input" ).prop( "checked", true );
+    addEditorColumn( 0 );
   }
 
   function checkAll()
@@ -667,14 +687,31 @@
                 Available <?=POINTS_OF_INTEREST?>
               </div>
               <div class="panel-body">
-                <div style="padding-bottom: 15px;">
-                  <button type="button" id="checkDefault" class="btn btn-default btn-xs" >Check Default</button>
-                  <button type="button" id="checkAll" class="btn btn-default btn-xs" >Check All</button>
-                  <button type="button" id="uncheckAll" class="btn btn-default btn-xs" >Uncheck All</button>
-                  <button type="button" id="checkComplement" class="btn btn-default btn-xs" >Check Complement</button>
+
+                <!-- Accelerator buttons -->
+                <div class="input-group input-group-inline" >
+                  <span class="btn-group btn-group-xs" role="group" >
+                    <span class="btn-group btn-group-xs" role="group" >
+                      <button type="button" id="checkDefault" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>Default</button>
+                      <button type="button" id="checkAll" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>All</button>
+                      <button type="button" id="uncheckAll" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>None</button>
+                      <button type="button" id="checkComplement" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>Complement</button>
+                    </span>
+                    <span class="btn-group btn-group-xs" role="group" >
+                      <span class="input-group">
+                        <span class="input-group-btn">
+                          <button type="button" id="checkContaining" class="btn btn-default btn-xs"><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>Containing:</button>
+                        </span>
+                        <input type="text" id="columnSubstring" class="form-control" style="height:22px" placeholder="Search..." >
+                      </span>
+                    </span>
+                  </span>
                 </div>
+
+                <!-- Checkboxes -->
                 <ul id="columnPicker" class="list-unstyled" >
                 </ul>
+
               </div>
             </div>
             <div class="row">
