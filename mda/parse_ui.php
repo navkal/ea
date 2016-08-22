@@ -137,7 +137,6 @@
     // Set column-related handlers
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
     $( window ).on( "resize", setColumnButtonSize );
-    initColumnButtons();
 
     // Set handlers to update Help button targets
     $( "#optionsTabs a[href='#analysisOptionsTab']" ).on( "shown.bs.tab", setOptionsHelp );
@@ -284,9 +283,9 @@
       +
           '<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">'
       +
-            '<button type="button" class="up btn btn-default" ><span class="glyphicon glyphicon-menu-up"></span></button>'
+            '<button type="button" class="up btn btn-default" onclick="moveColumnUp(event)"><span class="glyphicon glyphicon-menu-up"></span></button>'
       +
-            '<button type="button" class="dn btn btn-default" ><span class="glyphicon glyphicon-menu-down"></span></button>'
+            '<button type="button" class="dn btn btn-default" onclick="moveColumnDown(event)"><span class="glyphicon glyphicon-menu-down"></span></button>'
       +
           '</div>'
       +
@@ -297,7 +296,7 @@
 
     $( "#columnEditor" ).append( column );
 
-    initColumnButtons();
+    setColumnButtonSize();
   }
 
   function removeEditorColumn( checkboxIndex )
@@ -322,13 +321,6 @@
   {
     var item = $( event.target ).closest( "a" );
     item.next().after( item );
-  }
-
-  function initColumnButtons()
-  {
-    $( ".up" ).click( moveColumnUp );
-    $( ".dn" ).click( moveColumnDown );
-    setColumnButtonSize();
   }
 
   function setColumnButtonSize()
