@@ -125,6 +125,7 @@
     onChangeFormat();
 
     // Initialize Columns
+    $( "#checkDefault" ).click( checkDefault );
     $( "#checkAll" ).click( checkAll );
     $( "#uncheckAll" ).click( uncheckAll );
     $( "#checkComplement" ).click( checkComplement );
@@ -132,7 +133,7 @@
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
     }
-    checkAll();
+    checkDefault();
 
     // Set column-related handlers
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
@@ -190,6 +191,58 @@
   {
     var sFilename = $( '#' + sFileId ).val().split('\\').pop().split('/').pop();
     $( '#' + sFilenameId ).val( sFilename );
+  }
+
+  function checkDefault()
+  {
+    // List of substrings identifying default checkbox selection, in order of preference
+    var substrings =
+    [
+      "energy",
+      "kwh",
+      "kvrh",
+      "kvarh",
+      "kw",
+      "kvr",
+      "kvar"
+    ];
+
+    // Concatenate all checkbox labels into one lowercase string
+    var labels = $( "#columnPicker label" );
+    var lcCat = labels.text().toLowerCase();
+
+    // Determine whether labels contain any of the substrings
+    var found = false;
+    for ( var index = 0; ( index < substrings.length ) && ! found; index ++ )
+    {
+      found = lcCat.indexOf( substrings[index] ) != -1;
+    }
+
+    // Start with all checkboxes unchecked
+    uncheckAll();
+
+    // Check the checkboxes that comprise the default selection
+    if ( found )
+    {
+      // Determine which substring was chosen as the default
+      var substring = substrings[index-1];
+
+      // Select all labels with the substring
+      for ( var lbl = 0; lbl < labels.length; lbl ++ )
+      {
+        var label = $( labels[lbl] );
+        if ( label.text().toLowerCase().indexOf( substring )  != -1 )
+        {
+          label.find( "input" ).prop( "checked", true );
+          addEditorColumn( lbl );
+        }
+      }
+    }
+    else
+    {
+      $( labels[0] ).find( "input" ).prop( "checked", true );
+      addEditorColumn( 0 );
+    }
   }
 
   function checkAll()
@@ -615,6 +668,7 @@
               </div>
               <div class="panel-body">
                 <div style="padding-bottom: 15px;">
+                  <button type="button" id="checkDefault" class="btn btn-default btn-xs" >Check Default</button>
                   <button type="button" id="checkAll" class="btn btn-default btn-xs" >Check All</button>
                   <button type="button" id="uncheckAll" class="btn btn-default btn-xs" >Uncheck All</button>
                   <button type="button" id="checkComplement" class="btn btn-default btn-xs" >Check Complement</button>
