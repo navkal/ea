@@ -268,7 +268,7 @@
     var colName = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label" ).text();
 
     var column =
-      '<a class="list-group-item" >'
+      '<a class="list-group-item ' + makeCheckboxIndexClass( checkboxIndex ) +'" >'
       +
         '<div class="row">'
       +
@@ -280,7 +280,7 @@
       +
           '<div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">'
       +
-            '<input type="text" class="form-control" placeholder="Nickname" value="' + checkboxIndex + '">'
+            '<input type="text" class="form-control" placeholder="Nickname" >'
       +
           '</div>'
       +
@@ -305,6 +305,13 @@
   function removeEditorColumn( checkboxIndex )
   {
     console.log( "======> in removeEditorColumn(), checkboxIndex=" + checkboxIndex );
+
+    $( "#columnEditor ." + makeCheckboxIndexClass( checkboxIndex ) ).remove();
+  }
+
+  function makeCheckboxIndexClass( checkboxIndex )
+  {
+    return "checkboxIndex-" + checkboxIndex;
   }
 
   function moveColumnUp( event )
