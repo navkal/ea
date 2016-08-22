@@ -480,18 +480,21 @@
 
     // Check nicknames
     var nicknames = $( "#columnEditor input" );
+    var foundComma = false;
     for ( var i = 0; i < nicknames.length; i ++ )
     {
       var nickname = $( nicknames[i] );
       var val = nickname.val();
-      console.log( "======> val=" + val );
+
       if ( val.indexOf( "," ) != -1 )
       {
-        console.log( "======> found comma!" );
-        nickname.addClass( "has-error" );
-        messages.push( "Column nicknames must not contain commas" );
+        foundComma = true;
+        nickname.parent().addClass( "has-error" );
       }
-      else {console.log( "======> NO COMMA" );}
+    }
+    if ( foundComma )
+    {
+      messages.push( "Column nicknames must not contain commas" );
     }
 
     return messages;
