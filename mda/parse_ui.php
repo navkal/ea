@@ -478,6 +478,22 @@
       messages.push( "You must select at least one column" );
     }
 
+    // Check nicknames
+    var nicknames = $( "#columnEditor input" );
+    for ( var i = 0; i < nicknames.length; i ++ )
+    {
+      var nickname = $( nicknames[i] );
+      var val = nickname.val();
+      console.log( "======> val=" + val );
+      if ( val.indexOf( "," ) != -1 )
+      {
+        console.log( "======> found comma!" );
+        nickname.addClass( "has-error" );
+        messages.push( "Column nicknames must not contain commas" );
+      }
+      else {console.log( "======> NO COMMA" );}
+    }
+
     return messages;
   }
 
