@@ -249,8 +249,7 @@
   function onColumnSelChange()
   {
     var checkbox = $( event.target );
-    var label = checkbox.parent().text();
-    console.log( "change at " + label );
+    console.log( "change at " + checkbox.parent().text() );
 
     var checkboxIndex = checkbox.closest( "li" ).index();
     console.log( "index of checkbox=" + checkboxIndex );
@@ -266,16 +265,16 @@
 
   function addEditorColumn( checkboxIndex )
   {
-    console.log( "======> in addEditorColumn(), checkboxIndex=" + checkboxIndex );
-    
-    var column = 
+    var colName = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label" ).text();
+
+    var column =
       '<a class="list-group-item" >'
       +
         '<div class="row">'
       +
           '<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">'
       +
-            '<h5 class="list-group-item-text">this has checkbox index of (' + checkboxIndex + ')</h5>'
+            '<h5 class="list-group-item-text">' + colName + '</h5>'
       +
           '</div>'
       +
@@ -299,7 +298,7 @@
       ;
 
     $( "#columnEditor" ).append( column );
-    
+
     setColumnButtonSize();
   }
 
