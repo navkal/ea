@@ -130,11 +130,13 @@
     $( "#uncheckAll" ).click( uncheckAll );
     $( "#checkComplement" ).click( checkComplement );
     $( "#checkContaining" ).click( checkContaining );
+    $( "#columnSubstring" ).keypress( onColumnSubstringKey );
     for ( var i in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
     }
     checkDefault();
+
 
     // Set column-related handlers
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
@@ -228,6 +230,15 @@
     {
       checkFirst();
     }
+  }
+
+  function onColumnSubstringKey( event )
+  {
+      if ( event.keyCode == "13" )
+      {
+        event.preventDefault();
+        checkContaining();
+      }
   }
 
   function checkContaining()
@@ -702,7 +713,7 @@
                         <span class="input-group-btn">
                           <button type="button" id="checkContaining" class="btn btn-default btn-xs"><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>Containing:</button>
                         </span>
-                        <input type="text" id="columnSubstring" class="form-control" style="height:22px" placeholder="Search..." >
+                        <input type="text" id="columnSubstring" class="form-control" style="height:22px" placeholder="Search..." autocomplete="off" >
                       </span>
                     </span>
                   </span>
