@@ -703,15 +703,15 @@
                 <div class="input-group input-group-inline" >
                   <span class="btn-group btn-group-xs" role="group" >
                     <span class="btn-group btn-group-xs" role="group" >
-                      <button type="button" id="checkDefault" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>Default</button>
-                      <button type="button" id="checkAll" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>All</button>
-                      <button type="button" id="uncheckAll" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>None</button>
-                      <button type="button" id="checkComplement" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>Complement</button>
+                      <button type="button" id="checkDefault" class="btn btn-default btn-xs" >Default</button>
+                      <button type="button" id="checkAll" class="btn btn-default btn-xs" >All</button>
+                      <button type="button" id="uncheckAll" class="btn btn-default btn-xs" >None</button>
+                      <button type="button" id="checkComplement" class="btn btn-default btn-xs" >Complement</button>
                     </span>
                     <span class="btn-group btn-group-xs" role="group" >
                       <span class="input-group">
                         <span class="input-group-btn">
-                          <button type="button" id="checkContaining" class="btn btn-default btn-xs"><span class="glyphicon glyphicon glyphicon-ok" style="padding-left:5px; padding-right:5px;"></span>Containing:</button>
+                          <button type="button" id="checkContaining" class="btn btn-default btn-xs">Containing:</button>
                         </span>
                         <input type="text" id="columnSubstring" class="form-control" style="height:22px" placeholder="Search..." autocomplete="off" >
                       </span>
