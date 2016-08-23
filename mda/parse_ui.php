@@ -380,9 +380,21 @@
       +
           '<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">'
       +
-            '<button type="button" class="up btn btn-default" onclick="moveColumnUp(event)" title="Move Up"><span class="glyphicon glyphicon-menu-up"></span></button>'
+            '<button type="button" class="up btn btn-default" onclick="moveColumnUp(event)" title="Move Up">'
       +
-            '<button type="button" class="dn btn btn-default" onclick="moveColumnDown(event)" title="Move Down"><span class="glyphicon glyphicon-menu-down"></span></button>'
+              '<span class="glyphicon glyphicon-menu-up">'
+      +
+              '</span>'
+      +
+            '</button>'
+      +
+            '<button type="button" class="dn btn btn-default" onclick="moveColumnDown(event)" title="Move Down">'
+      +
+              '<span class="glyphicon glyphicon-menu-down">'
+      +
+              '</span>'
+      +
+            '</button>'
       +
           '</div>'
       +

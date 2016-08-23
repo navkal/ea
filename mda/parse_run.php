@@ -13,7 +13,10 @@
   $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
   foreach ( $columnData as $columnPair )
   {
-    fwrite( $columnsFile, $columnPair["name"] . "," . $columnPair["nickname"] . PHP_EOL );
+    $name = $columnPair["name"];
+    $nickname = $columnPair["nickname"];
+    $line = $name . "," . ( $nickname ? $nickname : $name ) . PHP_EOL;
+    fwrite( $columnsFile,  $line );
   }
   fclose( $columnsFile );
 
