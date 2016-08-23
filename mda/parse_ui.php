@@ -496,8 +496,37 @@
     {
       messages.push( "Column nicknames must not contain commas" );
     }
+    else
+    {
+      buildColumnData();
+    }
 
     return messages;
+  }
+
+  function buildColumnData()
+  {
+    var columnData = [];
+    var columns = $( "#columnEditor > a > div" );
+    for ( var i = 0; i < columns.length; i ++ )
+    {
+      var column = $( columns[i] );
+      var name = column.find( "h5" ).text();
+      console.log( "=====> name=" + name );
+      var nickname = column.find( "input" ).val();
+      console.log( "=====> nickname=" + nickname );
+
+      columnData.push(
+        {
+          name: name,
+          nickname: nickname
+        }
+      );
+    }
+
+    var json = JSON.stringify( columnData );
+    console.log( "===> json=" . json );
+    $( "#columnData" ).val( json );
   }
 
   function clearMessages()
@@ -749,6 +778,7 @@
                     Selected <?=POINTS_OF_INTEREST?>
                   </div>
                   <div class="panel-body">
+                    <input type="hidden" id="columnData" name="columnData" >
                     <div class="list-group" id="columnEditor">
                     </div>
                   </div>

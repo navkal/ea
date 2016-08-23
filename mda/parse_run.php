@@ -9,6 +9,7 @@
   require_once "filenames.php";
 
   // Save selected columns in columns file
+  /********************************************* /
   $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
   foreach ( $_POST as $key => $col )
   {
@@ -18,7 +19,17 @@
     }
   }
   fclose( $columnsFile );
+  /*********************************************/
 
+  $columnData = json_decode( $_POST["columnData"], true );
+  $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
+  foreach ( $columnData as $columnPair )
+  {
+    error_log( "=====> name=" . $columnPair["name"] );
+    error_log( "=====> nickname=" . $columnPair["nickname"] );
+    fwrite( $columnsFile, $columnPair["name"] . "," . $columnPair["nickname"] . PHP_EOL );
+  }
+  fclose( $columnsFile );
 
   // Set up Python command
   $python = getenv( "PYTHON" );
