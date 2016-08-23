@@ -40,12 +40,45 @@
     // Initialize identifying timestamp
     $( "#timestamp" ).val( Date.now() );
 
-    // Initialize the file chooser
+    // Initialize file source radio buttons
+    $( "#preload" ).prop( "checked", true );
+    onChangeFileSource();
+
+    // Initialize the file preload chooser
+    makePreloadPicker();
+
+    // Initialize the file upload chooser
     $( "#metasysFile" ).val( "" );
     $( "#uploadFilename" ).val( "" );
 
     // Hide Analysis Options form
     $( "#optionsForm" ).css( "display", "none" );
+  }
+
+  function onChangeFileSource()
+  {
+    var bUpload = $( "#upload" ).prop( "checked" );
+    $( "#preloadBlock" ).css( "display", bUpload ? "none" : "block" );
+    $( "#uploadBlock" ).css( "display", bUpload ? "block" : "none" );
+  }
+
+  function makePreloadPicker()
+  {
+    var picker = $( "#preloadPicker" );
+    var preloadedFiles = <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/input" ), 2 ) )?>;
+
+    for ( var i = 0; i < preloadedFiles.length; i ++ )
+    {
+      var preloadedFile = preloadedFiles[i];
+      var option =
+        '<option value="' + preloadedFile + '">'
+      +
+          preloadedFile
+      +
+        '</option>';
+
+      picker.append( option );
+    }
   }
 
   function onSubmitFile()
@@ -470,7 +503,7 @@
     }
 
     return messages;
-}
+  }
 
   function validateOptionsInput()
   {
@@ -626,17 +659,32 @@
 
   <div id="fileBlock" >
 
-    <?php>
-      error_log( print_r( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/input" ), true ) );
-    ?>
-
     <!-- Metasys File chooser -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="panel panel-default">
           <div class="panel-body">
-            <div class="form-group" >
-              <label class="control-label" for="metasysFile" ><?=METASYS_FILE?></label>
+
+            <div class="form-group">
+              <label class="control-label"><?=METASYS_FILE?></label>
+              <div>
+                <label class="radio-inline" >
+                  <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
+                  Preloaded
+                </label>
+                <label class="radio-inline" >
+                  <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
+                  Uploaded
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group" id="preloadBlock" >
+              <select id="preloadPicker" class="form-control" >
+              </select>
+            </div>
+
+            <div class="form-group" id="uploadBlock" >
               <div class="input-group">
                 <label class="input-group-btn">
                   <span class="btn btn-default">
@@ -647,6 +695,7 @@
                 <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
               </div>
             </div>
+
           </div>
         </div>
       </div>
