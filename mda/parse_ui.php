@@ -133,7 +133,7 @@
     $( "#columnSubstring" ).keypress( onColumnSubstringKey );
     for ( var i in columns )
     {
-      $( "#columnPicker" ).append( makeColumnPickerRow( i, columns[i] ) );
+      $( "#columnPicker" ).append( makeColumnPickerRow( columns[i] ) );
     }
     checkDefault();
 
@@ -322,9 +322,22 @@
     }
   }
 
-  function makeColumnPickerRow( index, colName )
+  function makeColumnPickerRow( colName )
   {
-    return '<li><label class="checkbox checkbox-inline"><input type="checkbox" name="columns-' + index + '" value="' + encodeURI( colName ) + '">' + colName + '</label></li>';
+    var row =
+      '<li>'
+      +
+        '<label class="checkbox checkbox-inline">'
+      +
+          '<input type="checkbox" value="' + encodeURI( colName ) + '">'
+      +
+          colName
+      +
+        '</label>'
+      +
+      '</li>';
+
+    return row;
   }
 
   function onColumnSelChange()
