@@ -343,10 +343,8 @@
   function onColumnSelChange()
   {
     var checkbox = $( event.target );
-    console.log( "change at " + checkbox.parent().text() );
-
     var checkboxIndex = checkbox.closest( "li" ).index();
-    console.log( "index of checkbox=" + checkboxIndex );
+
     if ( checkbox.prop( "checked" ) )
     {
       addEditorColumn( checkboxIndex );
@@ -410,8 +408,6 @@
 
   function removeEditorColumn( checkboxIndex )
   {
-    console.log( "======> in removeEditorColumn(), checkboxIndex=" + checkboxIndex );
-
     $( "#columnEditor ." + makeCheckboxIndexClass( checkboxIndex ) ).remove();
   }
 
@@ -537,9 +533,7 @@
     {
       var column = $( columns[i] );
       var name = column.find( "h5" ).text();
-      console.log( "=====> name=" + name );
       var nickname = column.find( "input" ).val();
-      console.log( "=====> nickname=" + nickname );
 
       columnData.push(
         {
@@ -550,7 +544,6 @@
     }
 
     var json = JSON.stringify( columnData );
-    console.log( "===> json=" . json );
     $( "#columnData" ).val( json );
   }
 
