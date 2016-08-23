@@ -129,13 +129,13 @@
     $( "#checkAll" ).click( checkAll );
     $( "#uncheckAll" ).click( uncheckAll );
     $( "#checkComplement" ).click( checkComplement );
-    $( "#checkContaining" ).click( checkContaining );
-    $( "#columnSubstring" ).keypress( onColumnSubstringKey );
+    $( "#checkSearch" ).keydown( preventDefault );
+    $( "#checkSearch" ).keyup( checkSearch );
     for ( var i in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( columns[i] ) );
     }
-    checkDefault();
+    checkDefault( { target: "fake" } );
 
 
     // Set column-related handlers
@@ -196,7 +196,7 @@
     $( '#' + sFilenameId ).val( sFilename );
   }
 
-  function checkDefault()
+  function checkDefault( event )
   {
     // List of substrings identifying default checkbox selection, in order of preference
     var substrings =
@@ -224,35 +224,30 @@
     // Check the checkboxes that comprise the default selection
     if ( found )
     {
-      checkAllContaining( substrings[index-1] );
+      checkAllContaining( event, substrings[index-1] );
     }
     else
     {
-      checkFirst();
+      checkFirst( event );
     }
   }
 
-  function onColumnSubstringKey( event )
+  function preventDefault( event )
   {
-      if ( event.keyCode == "13" )
-      {
-        event.preventDefault();
-        checkContaining();
-      }
-  }
-
-  function checkContaining()
-  {
-    var substring = $( "#columnSubstring" ).val();
-    if ( substring != "" )
+    if ( event.keyCode == "13" )
     {
-      checkAllContaining( substring );
+      event.preventDefault();
     }
   }
 
-  function checkAllContaining( substring )
+  function checkSearch( event )
   {
-    uncheckAll();
+    checkAllContaining( event, $( "#checkSearch" ).val() );
+  }
+
+  function checkAllContaining( event, substring )
+  {
+    uncheckAll( event );
     var labels = $( "#columnPicker label" );
 
     // Select all labels with the substring
@@ -267,17 +262,19 @@
     }
   }
 
-  function checkFirst()
+  function checkFirst( event )
   {
-    uncheckAll();
+    uncheckAll( event );
 
     var labels = $( "#columnPicker label" );
     $( labels[0] ).find( "input" ).prop( "checked", true );
     addEditorColumn( 0 );
   }
 
-  function checkAll()
+  function checkAll( event )
   {
+    uncheckAll( event );
+
     var all = $( "#columnPicker input[type=checkbox]" );
     all.prop( "checked", true );
     for ( var checkboxIndex = 0; checkboxIndex < all.length; checkboxIndex ++ )
@@ -286,8 +283,14 @@
     }
   }
 
-  function uncheckAll()
+  function uncheckAll( event )
   {
+    // Clear the search input
+    if ( event.target != $( "#checkSearch" )[0] )
+    {
+      $( "#checkSearch" ).val( "" );
+    }
+
     var all = $( "#columnPicker input[type=checkbox]" );
     all.prop( "checked", false );
     for ( var checkboxIndex = 0; checkboxIndex < all.length; checkboxIndex ++ )
@@ -296,24 +299,14 @@
     }
   }
 
-  function checkComplement()
+  function checkComplement( event )
   {
-    var checked = $( "#columnPicker input[type=checkbox]:checked" );
-    var unchecked =  $( "#columnPicker input[type=checkbox]:not(:checked)" );
-
     // Reverse checkbox settings
-    checked.prop( "checked", false );
+    var unchecked =  $( "#columnPicker input[type=checkbox]:not(:checked)" );
+    uncheckAll( event );
     unchecked.prop( "checked", true );
 
-    // Remove newly unchecked items from editor
-    for ( var i = 0; i < checked.length; i ++ )
-    {
-      var checkbox = $( checked[i] );
-      var checkboxIndex = checkbox.closest( "li" ).index();
-      removeEditorColumn( checkboxIndex );
-    }
-
-    // Add newly checked items from editor
+    // Add newly checked items to editor
     for ( var i = 0; i < unchecked.length; i ++ )
     {
       var checkbox = $( unchecked[i] );
@@ -766,7 +759,7 @@
               <div class="panel-body">
 
                 <!-- Accelerator buttons -->
-                <div class="input-group input-group-inline" >
+                <div class="btn-toolbar" role="toolbar" >
                   <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
                     <button type="button" id="checkDefault" class="btn btn-default btn-xs" >Default</button>
                     <button type="button" id="checkAll" class="btn btn-default btn-xs" >All</button>
@@ -774,12 +767,7 @@
                     <button type="button" id="checkComplement" class="btn btn-default btn-xs" >Complement</button>
                   </span>
                   <span class="btn-group btn-group-xs" role="group" >
-                    <span class="input-group">
-                      <span class="input-group-btn">
-                        <button type="button" id="checkContaining" class="btn btn-default btn-xs" >Containing</button>
-                      </span>
-                      <input type="text" id="columnSubstring" class="form-control" style="height:22px" placeholder="Search..." autocomplete="off" >
-                    </span>
+                    <input type="text" id="checkSearch" class="form-control" style="height:22px" placeholder="Search..." autocomplete="off" >
                   </span>
                 </div>
 
