@@ -489,7 +489,8 @@
     // Check column selections
     if ( $( "#columnPicker input[type=checkbox]:checked" ).length == 0 )
     {
-      messages.push( "At least one of the <?=POINTS_OF_INTEREST?> must be selected" );
+      messages.push( "One or more <?=POINTS_OF_INTEREST?> are required" );
+      $( "#columnPicker input[type=checkbox]" ).parent().parent().addClass( "has-error" );
     }
 
     // Check nicknames
