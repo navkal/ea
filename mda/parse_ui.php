@@ -53,7 +53,7 @@
     if ( validateFormInput( validateFileInput ) )
     {
       // Disable upload button
-      $( "#uploadButton" ).prop( "disabled", true );
+      $( "#submitFileButton" ).prop( "disabled", true );
 
       // Set wait cursor
       $( "body" ).css( "cursor", "progress" );
@@ -82,7 +82,7 @@
     console.log( "handlePostResponse, rsp=" + JSON.stringify( rsp ) );
     // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
-    $( "#uploadButton" ).prop( "disabled", false );
+    $( "#submitFileButton" ).prop( "disabled", false );
 
     if ( rsp.messages.length )
     {
@@ -98,7 +98,7 @@
   {
     // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
-    $( "#uploadButton" ).prop( "disabled", false );
+    $( "#submitFileButton" ).prop( "disabled", false );
 
     ajaxFail( tJqXhr, sStatus, sErrorThrown );
   }
@@ -489,7 +489,7 @@
     // Check column selections
     if ( $( "#columnPicker input[type=checkbox]:checked" ).length == 0 )
     {
-      messages.push( "You must select at least one column" );
+      messages.push( "At least one of the <?=POINTS_OF_INTEREST?> must be selected" );
     }
 
     // Check nicknames
@@ -624,6 +624,11 @@
   <?php // include "prototype.php";?>
 
   <div id="fileBlock" >
+
+    <?php>
+      error_log( print_r( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/input" ), true ) );
+    ?>
+
     <!-- Metasys File chooser -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -649,7 +654,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
-          <button id="uploadButton" class="btn btn-primary" onclick="onSubmitFile()" >Upload</button>
+          <button id="submitFileButton" class="btn btn-primary" onclick="onSubmitFile()" >Submit</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpMetasysFile">Help</button>
         </div>
