@@ -83,25 +83,24 @@
 
   function onSubmitFile()
   {
-    var bPreload = $( "#preload" ).prop( "checked" );
-
-    if ( bPreload || validateFormInput( validateFileInput ) )
+    if ( validateFormInput( validateFileInput ) )
     {
       // Disable submit button
       $( "#submitFileButton" ).prop( "disabled", true );
+      $( "#metasysFileFields" ).prop( "disabled", true );
 
       // Set wait cursor
       $( "body" ).css( "cursor", "progress" );
 
       // Post file to server
       var postData = new FormData();
-      if ( bPreload )
+      if ( $( "#upload" ).prop( "checked" ) )
       {
-        postData.append( "metasysFilename", $( "#preloadPicker" ).val() );
+        postData.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
       }
       else
       {
-        postData.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
+        postData.append( "metasysFilename", $( "#preloadPicker" ).val() );
       }
 
       $.ajax(
@@ -125,6 +124,7 @@
     // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
     $( "#submitFileButton" ).prop( "disabled", false );
+    $( "#metasysFileFields" ).prop( "disabled", false );
 
     if ( rsp.messages.length )
     {
@@ -141,6 +141,7 @@
     // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
     $( "#submitFileButton" ).prop( "disabled", false );
+    $( "#metasysFileFields" ).prop( "disabled", false );
 
     ajaxFail( tJqXhr, sStatus, sErrorThrown );
   }
@@ -502,10 +503,10 @@
 
   function validateFileInput()
   {
-      var messages = [];
+    var messages = [];
 
     // Check Metasys File
-    if ( $( "#metasysFile" ).val() == "" )
+    if ( $( "#upload" ).prop( "checked" ) && $( "#metasysFile" ).val() == "" )
     {
       messages.push( "<?=METASYS_FILE?> is required" );
       $( "#uploadFilename" ).parent().parent().addClass( "has-error" );
@@ -673,38 +674,40 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="panel panel-default">
           <div class="panel-body">
+            <fieldset id="metasysFileFields">
 
-            <div class="form-group">
-              <label class="control-label"><?=METASYS_FILE?></label>
-              <div>
-                <label class="radio-inline" >
-                  <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
-                  Preloaded
-                </label>
-                <label class="radio-inline" >
-                  <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
-                  Uploaded
-                </label>
+              <div class="form-group">
+                <label class="control-label"><?=METASYS_FILE?></label>
+                <div>
+                  <label class="radio-inline" >
+                    <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
+                    Preloaded
+                  </label>
+                  <label class="radio-inline" >
+                    <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
+                    Uploaded
+                  </label>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group" id="preloadBlock" >
-              <select id="preloadPicker" class="form-control" >
-              </select>
-            </div>
-
-            <div class="form-group" id="uploadBlock" >
-              <div class="input-group">
-                <label class="input-group-btn">
-                  <span class="btn btn-default">
-                    Browse…
-                    <input type="file" name="metasysFile" id="metasysFile" style="display:none" onchange="showFilename( 'uploadFilename', 'metasysFile' )" >
-                  </span>
-                </label>
-                <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
+              <div class="form-group" id="preloadBlock" >
+                <select id="preloadPicker" class="form-control" >
+                </select>
               </div>
-            </div>
 
+              <div class="form-group" id="uploadBlock" >
+                <div class="input-group">
+                  <label class="input-group-btn">
+                    <span class="btn btn-default">
+                      Browse…
+                      <input type="file" name="metasysFile" id="metasysFile" style="display:none" onchange="showFilename( 'uploadFilename', 'metasysFile' )" >
+                    </span>
+                  </label>
+                  <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
+                </div>
+              </div>
+
+            </fieldset>
           </div>
         </div>
       </div>

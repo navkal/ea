@@ -11,7 +11,6 @@
   if ( isset( $_POST["metasysFilename"] ) )
   {
     $metasysFilename = $_POST["metasysFilename"];
-    error_log( "=========> " . METASYS_FILE . " is " . $metasysFilename );
     copy( "input/" . $metasysFilename, $inputFilename );
   }
   else
