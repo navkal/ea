@@ -298,7 +298,8 @@
     for ( var lbl = 0; lbl < labels.length; lbl ++ )
     {
       var label = $( labels[lbl] );
-      if ( label.text().toLowerCase().indexOf( substring )  != -1 )
+      var span = label.find( "span" );
+      if ( span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
       {
         label.find( "input" ).prop( "checked", true );
         addEditorColumn( lbl );
@@ -368,7 +369,11 @@
       +
           '<input type="checkbox" value="' + encodeURI( colName ) + '">'
       +
-          colName
+          '<span>'
+      +
+            colName
+      +
+          '</span>'
       +
         '</label>'
       +
