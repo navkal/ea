@@ -6,29 +6,43 @@
   $timestamp = $_REQUEST["timestamp"];
   require_once "filenames.php" ;
 
-  $metasysFile = isset( $_FILES["metasysFile"] ) ? $_FILES["metasysFile"] : NULL ;
-
   $messages = [];
 
-  if ( $metasysFile == NULL )
+  if ( isset( $_POST["metasysFilename"] ) )
   {
-    array_push( $messages, "No file was uploaded" );
+    $metasysFilename = $_POST["metasysFilename"];
+    error_log( "=========> USER WANTS TO ANALYZE PRELOADED FILE: " . $metasysFilename );
+    copy( "input/" . $metasysFilename, $inputFilename );
+
+    if ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
+    {
+      array_push( $messages, "Failed to open uploaded file" );
+    }
   }
-  elseif ( $metasysFile["error"] != 0 )
+  else
   {
-    array_push( $messages, "Upload error: " . $metasysFile["error"] );
-  }
-  elseif ( $metasysFile["size"] > 499999999 )
-  {
-    array_push( $messages, "File too large: " . $metasysFile["size"] . " bytes" );
-  }
-  elseif( ! move_uploaded_file ( $metasysFile["tmp_name"], $inputFilename ) )
-  {
-    array_push( $messages, "Failed to move uploaded file" );
-  }
-  elseif ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
-  {
-    array_push( $messages, "Failed to open uploaded file" );
+    $metasysFile = isset( $_FILES["metasysFile"] ) ? $_FILES["metasysFile"] : NULL ;
+
+    if ( $metasysFile == NULL )
+    {
+      array_push( $messages, "No file was uploaded" );
+    }
+    elseif ( $metasysFile["error"] != 0 )
+    {
+      array_push( $messages, "Upload error: " . $metasysFile["error"] );
+    }
+    elseif ( $metasysFile["size"] > 499999999 )
+    {
+      array_push( $messages, "File too large: " . $metasysFile["size"] . " bytes" );
+    }
+    elseif( ! move_uploaded_file ( $metasysFile["tmp_name"], $inputFilename ) )
+    {
+      array_push( $messages, "Failed to move uploaded file" );
+    }
+    elseif ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
+    {
+      array_push( $messages, "Failed to open uploaded file" );
+    }
   }
 
   $columns = [];

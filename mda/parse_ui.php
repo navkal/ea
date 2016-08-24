@@ -83,37 +83,39 @@
 
   function onSubmitFile()
   {
-    if ( $( "#upload" ).prop( "checked" ) )
+    var bPreload = $( "#preload" ).prop( "checked" );
+
+    if ( bPreload || validateFormInput( validateFileInput ) )
     {
-      if ( validateFormInput( validateFileInput ) )
+      // Disable submit button
+      $( "#submitFileButton" ).prop( "disabled", true );
+
+      // Set wait cursor
+      $( "body" ).css( "cursor", "progress" );
+
+      // Post file to server
+      var postData = new FormData();
+      if ( bPreload )
       {
-        // Disable upload button
-        $( "#submitFileButton" ).prop( "disabled", true );
-
-        // Set wait cursor
-        $( "body" ).css( "cursor", "progress" );
-
-        // Post file to server
-        var postData = new FormData();
-        postData.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
-
-        $.ajax(
-          "mda/parse_upload.php?timestamp=" + $( "#timestamp" ).val(),
-          {
-            type: 'POST',
-            processData: false,
-            contentType: false,
-            dataType : 'json',
-            data: postData
-          }
-        )
-        .done( handlePostResponse )
-        .fail( handlePostError );
+        postData.append( "metasysFilename", $( "#preloadPicker" ).val() );
       }
-    }
-    else
-    {
-      alert( $( "#preloadPicker" ).val() );
+      else
+      {
+        postData.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
+      }
+
+      $.ajax(
+        "mda/parse_upload.php?timestamp=" + $( "#timestamp" ).val(),
+        {
+          type: 'POST',
+          processData: false,
+          contentType: false,
+          dataType : 'json',
+          data: postData
+        }
+      )
+      .done( handlePostResponse )
+      .fail( handlePostError );
     }
   }
 
