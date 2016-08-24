@@ -13,11 +13,6 @@
     $metasysFilename = $_POST["metasysFilename"];
     error_log( "=========> USER WANTS TO ANALYZE PRELOADED FILE: " . $metasysFilename );
     copy( "input/" . $metasysFilename, $inputFilename );
-
-    if ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
-    {
-      array_push( $messages, "Failed to open uploaded file" );
-    }
   }
   else
   {
@@ -39,9 +34,13 @@
     {
       array_push( $messages, "Failed to move uploaded file" );
     }
-    elseif ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
+  }
+
+  if ( empty( $messages ) )
+  {
+    if ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
     {
-      array_push( $messages, "Failed to open uploaded file" );
+      array_push( $messages, "Failed to open " . METASYS_FILE );
     }
   }
 
