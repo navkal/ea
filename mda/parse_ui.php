@@ -153,8 +153,9 @@
 
     // Show Analysis Options form
     $( "#optionsForm" ).css( "display", "block" );
-    $( "#uploadName" ).val( $( "#uploadFilename" ).val() );
-    $( "#uploadNameText" ).text( $( "#uploadFilename" ).val() );
+    var inputFilename = $( "#upload" ).prop( "checked" ) ? $( "#uploadFilename" ).val() : $( "#preloadPicker" ).val();
+    $( "#inputName" ).val( inputFilename );
+    $( "#inputNameText" ).text( inputFilename );
 
     // Show first Options tab
     $( "#optionsTabs a[href='#analysisOptionsTab']" ).tab( "show" );
@@ -734,7 +735,7 @@
               <label class="control-label text-right" ><?=METASYS_FILE?></label>
             </div>
             <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
-              <span id="uploadNameText"></span>
+              <span id="inputNameText"></span>
             </div>
           </div>
         </div>
@@ -743,7 +744,7 @@
 
     <!-- Hidden inputs -->
     <input type="hidden" id="timestamp" name="timestamp" >
-    <input type="hidden" id="uploadName" name="uploadName" >
+    <input type="hidden" id="inputName" name="inputName" >
 
     <!-- Options tabs -->
     <ul id="optionsTabs" class="nav nav-tabs">

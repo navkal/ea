@@ -53,7 +53,7 @@
     // Normal: Process results
 
     // Save script parameters in file
-    $params = METASYS_FILE . "," . $_POST["uploadName"];
+    $params = METASYS_FILE . "," . $_POST["inputName"];
     if ( $summarize )
     {
       $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
@@ -82,7 +82,7 @@
   else
   {
     // Failure: Report error
-    showMessage( $_POST["uploadName"], $message );
+    showMessage( $_POST["inputName"], $message );
   }
 ?>
 
