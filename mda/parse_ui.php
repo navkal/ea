@@ -384,6 +384,7 @@
 
   function onColumnSelChange()
   {
+    $( "#checkSearch" ).val( "" );
     var checkbox = $( event.target );
     var checkboxIndex = checkbox.closest( "li" ).index();
 
@@ -399,7 +400,10 @@
 
   function addEditorColumn( checkboxIndex )
   {
-    var colName = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label" ).text();
+    var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span" );
+    span.css( "text-decoration", "underline" );
+
+    var colName = span.text();
 
     var column =
       '<a class="list-group-item ' + makeCheckboxIndexClass( checkboxIndex ) +'" >'
@@ -450,6 +454,9 @@
 
   function removeEditorColumn( checkboxIndex )
   {
+    var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span" );
+    span.css( "text-decoration", "none" );
+
     $( "#columnEditor ." + makeCheckboxIndexClass( checkboxIndex ) ).remove();
   }
 
