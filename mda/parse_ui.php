@@ -401,7 +401,7 @@
   function addEditorColumn( checkboxIndex )
   {
     var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span" );
-    span.css( "text-decoration", "underline" );
+    span.addClass( "bg-info" );
 
     var colName = span.text();
 
@@ -455,7 +455,7 @@
   function removeEditorColumn( checkboxIndex )
   {
     var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span" );
-    span.css( "text-decoration", "none" );
+    span.removeClass( "bg-info" );
 
     $( "#columnEditor ." + makeCheckboxIndexClass( checkboxIndex ) ).remove();
   }
