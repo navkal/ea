@@ -10,10 +10,13 @@
 
   if ( isset( $_POST["metasysFilename"] ) )
   {
-    $metasysFilename = $_POST["metasysFilename"];
-    error_log( "===========> bf copy" );
-    copy( "input/" . $metasysFilename, $inputFilename );
-    error_log( "===========> af copy" );
+    // Overwrite temp input filename with name of selected preload
+    $inputFilename = "input/" . $_POST["metasysFilename"];
+
+    // Save preload filename for future reference
+    $preloadFile = fopen( $preloadFilename, "w" ) or die( "Unable to open file: " . $preloadFilename );
+    fwrite( $preloadFile, $inputFilename );
+    fclose( $preloadFile );
   }
   else
   {
@@ -36,7 +39,7 @@
       array_push( $messages, "Failed to move uploaded file" );
     }
   }
-  
+
   error_log( "===========> BF COLUMNS" );
 
   if ( empty( $messages ) )

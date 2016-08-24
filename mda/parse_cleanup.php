@@ -4,6 +4,7 @@
   $timestamp = $_GET["timestamp"];
   require_once "filenames.php" ;
 
+  @unlink( $preloadFilename );
   @unlink( $columnsFilename );
   @unlink( $resultsFilename );
   @unlink( $paramsFilename );

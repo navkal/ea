@@ -8,6 +8,14 @@
   $timestamp = $_POST["timestamp"];
   require_once "filenames.php";
 
+  // Optionally overwrite temp input filename with preload filename
+  if ( file_exists( $preloadFilename ) )
+  {
+    $preloadFile = fopen( $preloadFilename, "r" );
+    $inputFilename = fgets( $preloadFile );
+    fclose( $preloadFile );
+  }
+
   // Save selected columns in columns file
   $columnData = json_decode( $_POST["columnData"], true );
   $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
@@ -34,7 +42,10 @@
 
   // Execute Python script
   exec( $command, $output, $status );
-  @unlink( $inputFilename );
+  if ( ! file_exists( $preloadFilename ) )
+  {
+    @unlink( $inputFilename );
+  }
 
   // Check whether script generated an output file
   $message = "";
