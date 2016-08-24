@@ -847,7 +847,7 @@
                     <button type="button" id="checkComplement" class="btn btn-default btn-xs" >Complement</button>
                   </span>
                   <span class="btn-group btn-group-xs" role="group" >
-                    <input type="text" id="checkSearch" class="form-control" style="height:22px" placeholder="Search..." autocomplete="off" >
+                    <input type="text" id="checkSearch" class="form-control" style="height:22px; padding-top:0px; padding-bottom:0px;" placeholder="Search..." autocomplete="off" >
                   </span>
                 </div>
 
