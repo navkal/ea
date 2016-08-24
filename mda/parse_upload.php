@@ -11,7 +11,7 @@
   if ( isset( $_POST["metasysFilename"] ) )
   {
     $metasysFilename = $_POST["metasysFilename"];
-    error_log( "=========> USER WANTS TO ANALYZE PRELOADED FILE: " . $metasysFilename );
+    error_log( "=========> " . METASYS_FILE . " is " . $metasysFilename );
     copy( "input/" . $metasysFilename, $inputFilename );
   }
   else
