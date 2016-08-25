@@ -468,6 +468,9 @@
 
   function uncheckColumn( event )
   {
+    // Clear the search box
+    $( "#checkSearch" ).val( "" );
+
     // Find the corresponding column picker entry
     var editorColumn = $( event.target ).closest( "a" )[0];
     var checkboxClass = $.grep( editorColumn.classList, function( s ){ return s.indexOf( "checkboxIndex-" ) == 0; } )[0];
