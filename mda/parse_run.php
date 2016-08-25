@@ -28,72 +28,141 @@
   }
   fclose( $columnsFile );
 
-  // Set up Python command
-  $python = getenv( "PYTHON" );
-  $summarize = isset( $_POST["startTime"] ) ? "-s" : "";
-  $start = $summarize ? "--start " . str_replace( ' ', '', $_POST["startTime"] ) : "";
-  $end = isset( $_POST["endTime"] ) ? "--end " . str_replace( ' ', '', $_POST["endTime"] ) : "";
-  // --> Deprecated parse.py parameter: Cost per kWh -->
-  $cost = $summarize ? "--cost " . $_POST["cost"] : "";
-  // <-- Deprecated parse.py parameter <--
-  $columns = "-c " . $columnsFilename;
-  $command = $python . " parse.py -i " . $inputFilename . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end . " " . $columns;
-  error_log( "===> command=" . $command );
 
-  // Execute Python script
-  exec( $command, $output, $status );
+  if ( $_POST["format"] == "Multiple" )
+  {
+    $split = explode( ".", $resultsFilename );
+    $resultsFilenames = [];
+    $iteration = 0;
+
+    // Loop through multiple-run input file.  Each line represents one analysis run.
+    $multiFile = fopen( "multiple.csv", "r" );
+    while( ( $arglist = fgetcsv( $multiFile ) ) !== false )
+    {
+      error_log( "====> arglist=" . print_r( $arglist, true ) );
+      // Build the argument list
+      $runArgs = [];
+      for ( $index = 0; $index < count( $arglist ); $index += 2 )
+      {
+        $runArgs[$arglist[$index]] = $arglist[$index+1];
+      }
+      $resultsFilename = $split[0] . "_" . ( ++ $iteration ) . "." . $split[1];
+
+      $message = runParseScript( $runArgs, $inputFilename, $columnsFilename, $resultsFilename );
+
+      if ( empty( $message ) )
+      {
+        array_push( $resultsFilenames, $resultsFilename );
+      }
+      else
+      {
+        // Abort with error message
+        showMessage( $_POST["inputName"], $message );
+      }
+    }
+    fclose( $multiFile );
+
+    // Format name of zip file that will be downloaded
+    $zipFilename = basename( $split[0] . ".zip" );
+
+    // Save script parameters in file
+    $params = METASYS_FILE . "," . $_POST["inputName"];
+    $params .= "," . REPORT_FORMAT . "," . MULTIPLE;
+    $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
+    fwrite( $paramsFile, $params . PHP_EOL );
+    fwrite( $paramsFile, $zipFilename . PHP_EOL );
+    fclose( $paramsFile );
+
+    // Put the results files into a zip archive
+    $zip = new ZipArchive();
+    $zipFile = tempnam( ".", "" );
+    $zip->open( $zipFile, ZipArchive::CREATE );
+    foreach( $resultsFilenames as $filename )
+    {
+      $zip->addFromString( basename( $filename ), file_get_contents( $filename ) );
+    }
+    $zip->close();
+
+    // Download the zip file
+    downloadZip( $zipFile, $zipFilename );
+  }
+  else
+  {
+    $message = runParseScript( $_POST, $inputFilename, $columnsFilename, $resultsFilename );
+
+    // Completion
+    if ( empty( $message ) )
+    {
+      // Normal: Process results
+
+      // Save script parameters in file
+      $params = METASYS_FILE . "," . $_POST["inputName"];
+      if ( isset( $_POST["startTime"] ) )
+      {
+        $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
+        if ( $_POST["period"] == FULL_DAY )
+        {
+          $params .= "," . TIME_PERIOD . "," . $_POST["period"];
+        }
+        else
+        {
+          $params .= "," . END_TIME . "," . str_replace( ' ', '', $_POST["endTime"] );
+        }
+        $params .= "," . COST_PER_KWH . ",$" . $_POST["cost"];
+      }
+      else
+      {
+        $params .= "," . REPORT_FORMAT . "," . DETAILED;
+      }
+
+      $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
+      fwrite( $paramsFile, $params . PHP_EOL );
+      fwrite( $paramsFile, basename( $resultsFilename ) . PHP_EOL );
+      fclose( $paramsFile );
+      downloadFile( $resultsFilename );
+    }
+    else
+    {
+      showMessage( $_POST["inputName"], $message );
+    }
+  }
+
+  // Delete copy of uploaded input file
   if ( ! file_exists( $preloadFilename ) )
   {
     @unlink( $inputFilename );
   }
 
-  // Check whether script generated an output file
-  $message = "";
-  if ( ! file_exists( $resultsFilename ) )
+  function runParseScript( $args, $inputFilename, $columnsFilename, $resultsFilename )
   {
-    $message = METASYS_DATA_ANALYSIS . " script failed to generate output file.<br/>";
-    foreach ( $output as $line )
-    {
-      $message .= "<br/>" . $line;
-    }
-  }
+    error_log( "====> args=" . print_r( $args, true ) );
+    // Set up Python command
+    $python = getenv( "PYTHON" );
+    $summarize = isset( $args["startTime"] ) ? "-s" : "";
+    $start = $summarize ? "--start " . str_replace( ' ', '', $args["startTime"] ) : "";
+    $end = isset( $args["endTime"] ) ? "--end " . str_replace( ' ', '', $args["endTime"] ) : "";
+    // --> Deprecated parse.py parameter: Cost per kWh -->
+    $cost = $summarize ? "--cost " . $args["cost"] : "";
+    // <-- Deprecated parse.py parameter <--
+    $columns = "-c " . $columnsFilename;
+    $command = $python . " parse.py -i " . $inputFilename . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end . " " . $columns;
+    error_log( "===> command=" . $command );
 
-  // Completion
-  if ( empty( $message ) )
-  {
-    // Normal: Process results
+    // Execute Python script
+    exec( $command, $output, $status );
 
-    // Save script parameters in file
-    $params = METASYS_FILE . "," . $_POST["inputName"];
-    if ( $summarize )
+    // Check whether script generated an output file
+    $message = "";
+    if ( ! file_exists( $resultsFilename ) )
     {
-      $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
-      if ( $_POST["period"] == FULL_DAY )
+      $message = METASYS_DATA_ANALYSIS . " script failed to generate output file.<br/>";
+      foreach ( $output as $line )
       {
-        $params .= "," . TIME_PERIOD . "," . $_POST["period"];
+        $message .= "<br/>" . $line;
       }
-      else
-      {
-        $params .= "," . END_TIME . "," . str_replace( ' ', '', $_POST["endTime"] );
-      }
-      $params .= "," . COST_PER_KWH . ",$" . $_POST["cost"];
-    }
-    else
-    {
-      $params .= "," . REPORT_FORMAT . "," . DETAILED;
     }
 
-    $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
-    fwrite( $paramsFile, $params . PHP_EOL );
-    fclose( $paramsFile );
-
-    // Download results
-    downloadFile( $resultsFilename );
-  }
-  else
-  {
-    // Failure: Report error
-    showMessage( $_POST["inputName"], $message );
+    return $message;
   }
 ?>
 
@@ -136,5 +205,6 @@ function showMessage( $uploadFilename, $message )
     document.title = "<?=METASYS_DATA_ANALYSIS?>";
   </script>
 <?php
+  exit;
 }
 ?>

@@ -784,6 +784,10 @@
                       <input type="radio" name="format" id="detailed" value="<?=DETAILED?>" onchange="onChangeFormat()" >
                       <?=DETAILED?>
                     </label>
+                    <label class="radio-inline" >
+                      <input type="radio" name="format" id="multiple" value="<?=MULTIPLE?>" onchange="onChangeFormat()" >
+                      <?=MULTIPLE?>
+                    </label>
                   </div>
                 </div>
 

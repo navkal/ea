@@ -9,6 +9,7 @@
 
     $paramsFile = fopen( $paramsFilename, "r" );
     $params = fgetcsv( $paramsFile );
+    $resultsFilename = fgetcsv( $paramsFile )[0];
     fclose( $paramsFile );
 
     $columns = [];
@@ -66,7 +67,7 @@
                   <?=RESULTS_FILE?>
                 </dt>
                 <dd>
-                  <?=basename( $resultsFilename )?>
+                  <?=$resultsFilename?>
                 </dd>
               </dl>
             </li>

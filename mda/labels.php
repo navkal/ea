@@ -5,6 +5,7 @@
   define( REPORT_FORMAT, "Report Format" );
   define( SUMMARY, "Summary" );
   define( DETAILED, "Detailed" );
+  define( MULTIPLE, "Multiple" );
   define( START_TIME, "Start Time" );
   define( TIME_PERIOD, "Time Period" );
   define( FULL_DAY, "Full Day" );
