@@ -12,7 +12,7 @@
   if ( file_exists( $preloadFilename ) )
   {
     $preloadFile = fopen( $preloadFilename, "r" );
-    $inputFilename = fgets( $preloadFile );
+    $inputFilename = '"' . fgets( $preloadFile ) . '"';
     fclose( $preloadFile );
   }
 
