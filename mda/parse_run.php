@@ -75,7 +75,7 @@
 
     // Put the results files into a zip archive
     $zip = new ZipArchive();
-    $zipFile = tempnam( ".", "" );
+    $zipFile = tempnam( sys_get_temp_dir(), "mda_" . $timestamp . "_" );
     $zip->open( $zipFile, ZipArchive::CREATE );
     foreach( $resultsFilenames as $filename )
     {
