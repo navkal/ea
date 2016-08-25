@@ -31,6 +31,8 @@
 
   if ( $_POST["format"] == "Multiple" )
   {
+    // Perform multiple analyses, as indicated in multiple-run input file
+
     $split = explode( ".", $resultsFilename );
     $resultsFilenames = [];
     $iteration = 0;
@@ -39,7 +41,6 @@
     $multiFile = fopen( "multiple.csv", "r" );
     while( ( $arglist = fgetcsv( $multiFile ) ) !== false )
     {
-      error_log( "====> arglist=" . print_r( $arglist, true ) );
       // Build the argument list
       $runArgs = [];
       for ( $index = 0; $index < count( $arglist ); $index += 2 )
@@ -48,21 +49,24 @@
       }
       $resultsFilename = $split[0] . "_" . ( ++ $iteration ) . "." . $split[1];
 
+      // Run the analysis
       $message = runParseScript( $runArgs, $inputFilename, $columnsFilename, $resultsFilename );
 
+      // Handle completion
       if ( empty( $message ) )
       {
+        // Normal: Save results filename in list
         array_push( $resultsFilenames, $resultsFilename );
       }
       else
       {
-        // Abort with error message
+        // Failure: Abort with error message
         showMessage( $_POST["inputName"], $message );
       }
     }
     fclose( $multiFile );
 
-    // Format name of zip file that will be downloaded
+    // Format name of zip file to be downloaded
     $zipFilename = basename( $split[0] . ".zip" );
 
     // Save script parameters in file
@@ -88,9 +92,12 @@
   }
   else
   {
+    // Perform single analysis
+
+    // Run the script
     $message = runParseScript( $_POST, $inputFilename, $columnsFilename, $resultsFilename );
 
-    // Completion
+    // Handle completion
     if ( empty( $message ) )
     {
       // Normal: Process results
@@ -123,6 +130,7 @@
     }
     else
     {
+      // Failure: Report error
       showMessage( $_POST["inputName"], $message );
     }
   }
@@ -135,7 +143,6 @@
 
   function runParseScript( $args, $inputFilename, $columnsFilename, $resultsFilename )
   {
-    error_log( "====> args=" . print_r( $args, true ) );
     // Set up Python command
     $python = getenv( "PYTHON" );
     $summarize = isset( $args["startTime"] ) ? "-s" : "";
