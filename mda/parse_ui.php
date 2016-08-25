@@ -424,21 +424,25 @@
       +
           '<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">'
       +
-            '<button type="button" class="up btn btn-default" onclick="moveColumnUp(event)" title="Move Up">'
+            '<div class="btn-group" role="group">'
       +
-              '<span class="glyphicon glyphicon-menu-up">'
+              '<button type="button" class="up btn btn-default" onclick="moveColumnUp(event)" title="Move Up">'
       +
-              '</span>'
+                '<span class="glyphicon glyphicon-menu-up">'
       +
-            '</button>'
+                '</span>'
       +
-            '<button type="button" class="dn btn btn-default" onclick="moveColumnDown(event)" title="Move Down">'
+              '</button>'
       +
-              '<span class="glyphicon glyphicon-menu-down">'
+              '<button type="button" class="dn btn btn-default" onclick="moveColumnDown(event)" title="Move Down">'
       +
-              '</span>'
+                '<span class="glyphicon glyphicon-menu-down">'
       +
-            '</button>'
+                '</span>'
+      +
+              '</button>'
+      +
+            '</div>'
       +
           '</div>'
       +
