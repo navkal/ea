@@ -67,28 +67,27 @@
     fclose( $multiFile );
 
     // Format name of zip file to be downloaded
-    $zipFilename = basename( $split[0] . ".zip" );
+    $zipFilename = $split[0] . ".zip";
 
     // Save script parameters in file
     $params = METASYS_FILE . "," . $_POST["inputName"];
     $params .= "," . REPORT_FORMAT . "," . MULTIPLE;
     $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
     fwrite( $paramsFile, $params . PHP_EOL );
-    fwrite( $paramsFile, $zipFilename . PHP_EOL );
+    fwrite( $paramsFile, basename( $zipFilename ). PHP_EOL );
     fclose( $paramsFile );
 
     // Put the results files into a zip archive
-    $zip = new ZipArchive();
-    $zipFile = tempnam( sys_get_temp_dir(), "mda_" . $timestamp . "_" );
-    $zip->open( $zipFile, ZipArchive::CREATE );
+    $zipArchive = new ZipArchive();
+    $zipArchive->open( $zipFilename, ZipArchive::CREATE );
     foreach( $resultsFilenames as $filename )
     {
-      $zip->addFromString( basename( $filename ), file_get_contents( $filename ) );
+      $zipArchive->addFromString( basename( $filename ), file_get_contents( $filename ) );
     }
-    $zip->close();
+    $zipArchive->close();
 
     // Download the zip file
-    downloadZip( $zipFile, $zipFilename );
+    downloadFile( $zipFilename, "zip" );
   }
   else
   {
