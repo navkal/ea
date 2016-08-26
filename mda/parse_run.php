@@ -12,7 +12,7 @@
   if ( file_exists( $preloadFilename ) )
   {
     $preloadFile = fopen( $preloadFilename, "r" );
-    $inputFilename = '"' . fgets( $preloadFile ) . '"';
+    $inputFilename = fgets( $preloadFile );
     fclose( $preloadFile );
   }
 
@@ -141,18 +141,27 @@
     @unlink( $inputFilename );
   }
 
+  function quote( $s )
+  {
+    $s = trim( $s );
+    if ( $s[0] != '"' )
+    {
+      $s = '"' . $s . '"';
+    }
+    return $s;
+  }
+
   function runParseScript( $args, $inputFilename, $columnsFilename, $resultsFilename )
   {
     // Set up Python command
-    $python = getenv( "PYTHON" );
     $summarize = isset( $args["startTime"] ) ? "-s" : "";
     $start = $summarize ? "--start " . str_replace( ' ', '', $args["startTime"] ) : "";
     $end = isset( $args["endTime"] ) ? "--end " . str_replace( ' ', '', $args["endTime"] ) : "";
     // --> Deprecated parse.py parameter: Cost per kWh -->
     $cost = $summarize ? "--cost " . $args["cost"] : "";
     // <-- Deprecated parse.py parameter <--
-    $columns = "-c " . $columnsFilename;
-    $command = $python . " parse.py -i " . $inputFilename . " -o " . $resultsFilename . " " . $summarize . " " . $start . " " . $end . " " . $columns;
+    $columns = "-c " . quote( $columnsFilename );
+    $command = quote( getenv( "PYTHON" ) ) . " parse.py -i " . quote( $inputFilename ) . " -o " . quote( $resultsFilename ) . " " . $summarize . " " . $start . " " . $end . " " . $columns;
     error_log( "===> command=" . $command );
 
     // Execute Python script
