@@ -1,3 +1,5 @@
 format,Summary,startTime,5:00,period,Full Day,cost,0.16
 format,Summary,startTime,5:00,period,Partial Day,endTime,20:00,cost,0.16
+format,Summary,startTime,20:15,period,Partial Day,endTime,4:45,cost,0.16
+format,Summary,startTime,23:00,period,Partial Day,endTime,4:00,cost,0.16
 format,Detailed
