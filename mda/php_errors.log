@@ -1,0 +1,136 @@
+[26-Aug-2016 12:58:09 America/New_York] ====> files=Array
+(
+)
+
+[26-Aug-2016 12:58:09 America/New_York] ====> rq=Array
+(
+    [timestamp] => 1472230685288
+    [metasysFilename] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+)
+
+[26-Aug-2016 12:58:09 America/New_York] ===========> BF COLUMNS
+[26-Aug-2016 12:58:36 America/New_York] ===========> AF COLUMNS
+[26-Aug-2016 12:58:55 America/New_York] ====> files=Array
+(
+    [metasysFile] => Array
+        (
+            [name] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+            [type] => application/vnd.ms-excel
+            [tmp_name] => C:\Users\Ayee\AppData\Local\Temp\phpE5C5.tmp
+            [error] => 0
+            [size] => 338692508
+        )
+
+)
+
+[26-Aug-2016 12:58:55 America/New_York] ====> rq=Array
+(
+    [timestamp] => 1472230726871
+)
+
+[26-Aug-2016 12:58:55 America/New_York] ===========> BF COLUMNS
+[26-Aug-2016 12:59:22 America/New_York] ===========> AF COLUMNS
+[26-Aug-2016 13:00:47 America/New_York] ====> files=Array
+(
+)
+
+[26-Aug-2016 13:00:47 America/New_York] ====> rq=Array
+(
+    [timestamp] => 1472230840518
+    [metasysFilename] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+)
+
+[26-Aug-2016 13:00:47 America/New_York] ===========> BF COLUMNS
+[26-Aug-2016 13:01:14 America/New_York] ===========> AF COLUMNS
+[26-Aug-2016 13:01:15 America/New_York] ====> post=Array
+(
+    [timestamp] => 1472230840518
+    [inputName] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+    [format] => Summary
+    [startTime] => 05 : 00
+    [period] => Full Day
+    [cost] => 0.16
+    [columnData] => [{"name":"Energy.AHS_N1-DE-ATS-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DG-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DHB - kWh Total (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DL-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.AHS_N1-Main-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.CollinCtr-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.M1-kWh-Energy (Trend1)","nickname":""}]
+)
+
+[26-Aug-2016 13:01:16 America/New_York] ===> command=C:\Users\Ayee\Anaconda3\python.exe parse.py -i "input/2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv" -o C:\Users\Ayee\AppData\Local\Temp/mdaResults_1472230840518.csv -s --start 05:00  -c C:\Users\Ayee\AppData\Local\Temp/mdaColumns_1472230840518.csv
+[26-Aug-2016 13:01:46 America/New_York] ====> files=Array
+(
+    [metasysFile] => Array
+        (
+            [name] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+            [type] => application/vnd.ms-excel
+            [tmp_name] => C:\Users\Ayee\AppData\Local\Temp\php8095.tmp
+            [error] => 0
+            [size] => 338692508
+        )
+
+)
+
+[26-Aug-2016 13:01:46 America/New_York] ====> rq=Array
+(
+    [timestamp] => 1472230898410
+)
+
+[26-Aug-2016 13:01:46 America/New_York] ===========> BF COLUMNS
+[26-Aug-2016 13:02:12 America/New_York] ===========> AF COLUMNS
+[26-Aug-2016 13:02:24 America/New_York] ====> post=Array
+(
+    [timestamp] => 1472230898410
+    [inputName] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+    [format] => Summary
+    [startTime] => 05 : 00
+    [period] => Full Day
+    [cost] => 0.16
+    [columnData] => [{"name":"Energy.AHS_N1-DE-ATS-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DG-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DHB - kWh Total (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DL-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.AHS_N1-Main-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.CollinCtr-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.M1-kWh-Energy (Trend1)","nickname":""}]
+)
+
+[26-Aug-2016 13:02:24 America/New_York] ===> command=C:\Users\Ayee\Anaconda3\python.exe parse.py -i C:\Users\Ayee\AppData\Local\Temp/mdaInput_1472230898410.csv -o C:\Users\Ayee\AppData\Local\Temp/mdaResults_1472230898410.csv -s --start 05:00  -c C:\Users\Ayee\AppData\Local\Temp/mdaColumns_1472230898410.csv
+[26-Aug-2016 13:07:52 America/New_York] ====> files=Array
+(
+)
+
+[26-Aug-2016 13:07:52 America/New_York] ====> rq=Array
+(
+    [timestamp] => 1472231269272
+    [metasysFilename] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+)
+
+[26-Aug-2016 13:07:52 America/New_York] ===========> BF COLUMNS
+[26-Aug-2016 13:08:18 America/New_York] ===========> AF COLUMNS
+[26-Aug-2016 13:08:21 America/New_York] ====> post=Array
+(
+    [timestamp] => 1472231269272
+    [inputName] => 2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv
+    [format] => Summary
+    [startTime] => 05 : 00
+    [period] => Full Day
+    [cost] => 0.16
+    [columnData] => [{"name":"Energy.AHS_N1-DE-ATS-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DG-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DHB - kWh Total (Trend1)","nickname":""},{"name":"Energy.AHS_N1-DL-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.AHS_N1-Main-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.CollinCtr-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.M1-kWh-Energy (Trend1)","nickname":""}]
+)
+
+[26-Aug-2016 13:08:21 America/New_York] ===> command=C:\Users\Ayee\Anaconda3\python.exe parse.py -i "input/2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv" -o C:\Users\Ayee\AppData\Local\Temp/mdaResults_1472231269272.csv -s --start 05:00  -c C:\Users\Ayee\AppData\Local\Temp/mdaColumns_1472231269272.csv
+[26-Aug-2016 13:19:24 America/New_York] ====> files=Array
+(
+)
+
+[26-Aug-2016 13:19:24 America/New_York] ====> rq=Array
+(
+    [timestamp] => 1472231962305
+    [metasysFilename] => 0.csv
+)
+
+[26-Aug-2016 13:19:24 America/New_York] ===========> BF COLUMNS
+[26-Aug-2016 13:19:24 America/New_York] ===========> AF COLUMNS
+[26-Aug-2016 13:19:26 America/New_York] ====> post=Array
+(
+    [timestamp] => 1472231962305
+    [inputName] => 0.csv
+    [format] => Summary
+    [startTime] => 05 : 00
+    [period] => Full Day
+    [cost] => 0.16
+    [columnData] => [{"name":"Energy.CollinCtr-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.DE-ATS-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.DG-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.DHB - kWh Total (Trend1)","nickname":""},{"name":"Energy.DL-Energy-kWh (Trend1)","nickname":""},{"name":"Energy.M1-kWh-Energy (Trend1)","nickname":""},{"name":"Energy.Main-kWh-Energy (Trend1)","nickname":""}]
+)
+
+[26-Aug-2016 13:19:26 America/New_York] ===> command="C:\Users\Ayee\Anaconda3\python.exe" parse.py -i "input/0.csv" -o C:\Users\Ayee\AppData\Local\Temp/mdaResults_1472231962305.csv -s --start 05:00  -c C:\Users\Ayee\AppData\Local\Temp/mdaColumns_1472231962305.csv
