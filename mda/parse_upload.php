@@ -40,7 +40,6 @@
     }
   }
 
-  error_log( "===========> BF COLUMNS" );
 
   if ( empty( $messages ) )
   {
@@ -77,7 +76,6 @@
       array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
     }
   }
-  error_log( "===========> AF COLUMNS" );
 
   $rsp =
   [
