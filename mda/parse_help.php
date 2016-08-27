@@ -9,7 +9,7 @@
       <div class="modal-body bg-info">
         <dl>
           <dd>
-            Enter a .csv file exported from Metasys.
+            Select a .csv file exported from Metasys.
           </dd>
         </dl>
        <dl>
@@ -19,10 +19,7 @@
           <dd>
             <ol>
               <li>
-                You click <i>OK</i>.
-              </li>
-              <li>
-                Browser uploads <?=METASYS_FILE?> to server.
+                You click <i>Submit</i>.
               </li>
               <li>
                 <?=METASYS_DATA_ANALYSIS?> script analyzes contents of <?=METASYS_FILE?>.
