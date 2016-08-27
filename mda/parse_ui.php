@@ -286,7 +286,10 @@
 
   function checkSearch( event )
   {
-    checkAllContaining( event, $( "#checkSearch" ).val() );
+    if ( event.keyCode != "9" /* tab */ )
+    {
+      checkAllContaining( event, $( "#checkSearch" ).val() );
+    }
   }
 
   function checkAllContaining( event, substring )

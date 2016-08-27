@@ -59,9 +59,9 @@
     fgetcsv( $inputFile );
     while( ( $line = fgetcsv( $inputFile ) ) !== false )
     {
-      if ( $name = $line[2] )
+      if ( isset( $line[2] ) )
       {
-        $colMap[$name] = "";
+        $colMap[$line[2]] = "";
       }
     }
 
