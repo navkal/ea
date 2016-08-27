@@ -38,7 +38,7 @@
   function initFileView()
   {
     // Initialize identifying timestamp
-    $( "#timestamp" ).val( Date.now() );
+    $( "#timestamp" ).val( Date.now().toString( 36 ) );
 
     // Initialize file source radio buttons
     $( "#preload" ).prop( "checked", true );
