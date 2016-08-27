@@ -892,13 +892,13 @@
                 <!-- Accelerator buttons -->
                 <div class="btn-toolbar" role="toolbar" >
                   <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
-                    <button type="button" id="checkDefault" class="btn btn-default btn-xs" >Default</button>
-                    <button type="button" id="checkAll" class="btn btn-default btn-xs" >All</button>
-                    <button type="button" id="uncheckAll" class="btn btn-default btn-xs" >None</button>
-                    <button type="button" id="checkComplement" class="btn btn-default btn-xs" >Complement</button>
+                    <button type="button" id="checkDefault" class="btn btn-default btn-xs" title="Select Default" >Default</button>
+                    <button type="button" id="checkAll" class="btn btn-default btn-xs" title="Select All" >All</button>
+                    <button type="button" id="uncheckAll" class="btn btn-default btn-xs" title="Deselect All" >None</button>
+                    <button type="button" id="checkComplement" class="btn btn-default btn-xs" title="Select Complement" >Complement</button>
                   </span>
                   <span class="btn-group btn-group-xs" role="group" >
-                    <input type="text" id="checkSearch" class="form-control" style="height:22px; padding-top:0px; padding-bottom:0px;" placeholder="Search..." autocomplete="off" >
+                    <input type="text" id="checkSearch" class="form-control" style="height:22px; padding-top:0px; padding-bottom:0px;" placeholder="Search..." autocomplete="off"  title="Select Matches">
                   </span>
                 </div>
 

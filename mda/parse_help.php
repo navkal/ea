@@ -132,22 +132,91 @@
         <h4 class="modal-title" id="helpColumnsLabel"><?=POINTS_OF_INTEREST?></h4>
       </div>
       <div class="modal-body bg-info">
-       <dl>
+        <dl>
           <dt>
-            <?=POINTS_OF_INTEREST?>
+            Available <?=POINTS_OF_INTEREST?>
           </dt>
+        </dl>
+        <dl class="padLeftSmall">
           <dd>
-            <ol>
-              <li>
-                blah blah blah
-              </li>
-              <li>
-                foo moo goo
-              </li>
-              <li>
-                and other stuff
-              </li>
-            </ol>
+            <dl class="dl-horizontal" >
+              <dt>
+                Default
+              </dt>
+              <dd>
+                Selects default <?=POINTS_OF_INTEREST?>.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                All
+              </dt>
+              <dd>
+                Selects all <?=POINTS_OF_INTEREST?>.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                None
+              </dt>
+              <dd>
+                Deselects all <?=POINTS_OF_INTEREST?>.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                Complement
+              </dt>
+              <dd>
+                Reverses current <?=POINTS_OF_INTEREST?> selections.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                Search...
+              </dt>
+              <dd>
+                Selects all <?=POINTS_OF_INTEREST?> containing a match.
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Selected <?=POINTS_OF_INTEREST?>
+          </dt>
+        </dl>
+
+
+        <dl class="padLeftSmall">
+          <dd>
+            <dl class="dl-horizontal" >
+              <dt>
+                Nickname
+              </dt>
+              <dd>
+                Replaces <?=POINT_OF_INTEREST?> name in <?=RESULTS_FILE?>.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                Move Up
+              </dt>
+              <dt>
+                Move Down
+              </dt>
+              <dd>
+                Changes column order in <?=RESULTS_FILE?>.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                Remove
+              </dt>
+              <dd>
+                Deselects <?=POINT_OF_INTEREST?>.
+              </dd>
+            </dl>
           </dd>
         </dl>
       </div>

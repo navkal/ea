@@ -12,6 +12,7 @@
   define( "PARTIAL_DAY", "Partial Day" );
   define( "END_TIME", "End Time" );
   define( "COST_PER_KWH", "Cost per kWh" );
+  define( "POINT_OF_INTEREST", "Point of Interest" );
   define( "POINTS_OF_INTEREST", "Points of Interest" );
   define( "RESULTS_FILE", "Results File" );
 ?>
