@@ -20,7 +20,7 @@
     }
     fclose( $columnsFile );
 
-    require_once "labels.php" ;
+    require_once "labels.php";
   ?>
 
   <body>
@@ -75,9 +75,14 @@
         </div>
       </div>
 
-      <div style="text-align:center;" >
+      <div>
         <?php
-          include "parse_display.php";
+          // If single-run, display more
+          $split = explode( ".", $resultsFilename );
+          if ( $split[ count( $split ) - 1 ] == "csv" )
+          {
+            // include "parse_display.php";
+          }
         ?>
       </div>
 

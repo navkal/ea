@@ -132,7 +132,6 @@
         {
           $params .= "," . END_TIME . "," . str_replace( ' ', '', $_POST["endTime"] );
         }
-        $params .= "," . COST_PER_KWH . ",$" . $_POST["cost"];
       }
       else
       {
@@ -174,9 +173,6 @@
     $summarize = isset( $args["startTime"] ) ? "-s" : "";
     $start = $summarize ? "--start " . str_replace( ' ', '', $args["startTime"] ) : "";
     $end = isset( $args["endTime"] ) ? "--end " . str_replace( ' ', '', $args["endTime"] ) : "";
-    // --> Deprecated parse.py parameter: Cost per kWh -->
-    $cost = $summarize ? "--cost " . $args["cost"] : "";
-    // <-- Deprecated parse.py parameter <--
     $columns = "-c " . quote( $columnsFilename );
     $command = quote( getenv( "PYTHON" ) ) . " parse.py -i " . quote( $inputFilename ) . " -o " . quote( $resultsFilename ) . " " . $summarize . " " . $start . " " . $end . " " . $columns;
     error_log( "===> command=" . $command );
@@ -208,7 +204,7 @@ function showMessage( $uploadFilename, $message )
     <?php
       include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
       initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
-      include "labels.php" ;
+      include "labels.php";
     ?>
 
     <body>

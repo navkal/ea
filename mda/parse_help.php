@@ -115,18 +115,6 @@
             </ul>
           </dd>
         </dl>
-        <dl>
-          <dt>
-            <?=COST_PER_KWH?>
-          </dt>
-          <dd>
-            <ul style="list-style-type:none" >
-              <li>
-                Cost of electricity in dollars.
-              </li>
-            </ul>
-          </dd>
-        </dl>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

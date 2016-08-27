@@ -207,11 +207,6 @@
     disableTimeInput( "startTime", bDisable );
 
     onChangePeriod();
-
-    $( "#cost" ).prop( "disabled", bDisable );
-    $( "#cost" ).val( bDisable ? "" : "0.16" );
-    $( "label[for=cost]" ).css( "color", bDisable ? "lightgray" : "" );
-    $( "#dollars" ).css( "color", bDisable ? "lightgray" : "" );
   }
 
   // Handle change of Period radio buttons
@@ -876,15 +871,6 @@
                 <div class="form-group" >
                   <label class="control-label" for="endTime" ><?=END_TIME?></label>
                   <input type="text" id="endTime" name="endTime" class="form-control timepicker" style="border-radius:4px" readonly >
-                </div>
-
-                <br/>
-                <div class="form-group">
-                  <label for="cost"><?=COST_PER_KWH?></label>
-                  <div class="input-group">
-                    <span class="input-group-addon" id="dollars">$</span>
-                    <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
-                  </div>
                 </div>
 
               </div>
