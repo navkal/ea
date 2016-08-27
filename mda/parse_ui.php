@@ -120,7 +120,6 @@
 
   function handlePostResponse( rsp, sStatus, tJqXhr )
   {
-    console.log( "handlePostResponse, rsp=" + JSON.stringify( rsp ) );
     // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
     $( "#submitFileButton" ).prop( "disabled", false );
@@ -295,17 +294,21 @@
   function checkAllContaining( event, substring )
   {
     uncheckAll( event );
-    var labels = $( "#columnPicker label" );
 
-    // Select all labels with the substring
-    for ( var lbl = 0; lbl < labels.length; lbl ++ )
+    if ( substring.length > 0 )
     {
-      var label = $( labels[lbl] );
-      var span = label.find( "span" );
-      if ( span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+      var labels = $( "#columnPicker label" );
+
+      // Select all labels with the substring
+      for ( var lbl = 0; lbl < labels.length; lbl ++ )
       {
-        label.find( "input" ).prop( "checked", true );
-        addEditorColumn( lbl );
+        var label = $( labels[lbl] );
+        var span = label.find( "span" );
+        if ( span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+        {
+          label.find( "input" ).prop( "checked", true );
+          addEditorColumn( lbl );
+        }
       }
     }
   }
