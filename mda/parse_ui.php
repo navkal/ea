@@ -464,6 +464,22 @@
     $( "#columnEditor" ).append( column );
 
     setColumnButtonSize();
+    setNicknameTabindex();
+  }
+
+  function setNicknameTabindex()
+  {
+    var tabindexBase = 5000;
+    var inputs = $( "#columnEditor input" );
+
+    for ( var i = 0; i < inputs.length; i ++ )
+    {
+       $( inputs[i] ).attr( "tabindex", tabindexBase + i );
+    }
+
+    $( "#analyzeButton" ).attr( "tabindex", tabindexBase + ( i++ ) );
+    $( "#optionsCancel" ).attr( "tabindex", tabindexBase + ( i++ ) );
+    $( "#multiHelp" ).attr( "tabindex", tabindexBase + ( i++ ) );
   }
 
   function uncheckColumn( event )
@@ -506,12 +522,14 @@
   {
     var item = $( event.target ).closest( "a" );
     item.prev().before( item );
+    setNicknameTabindex();
   }
 
   function moveColumnDown( event )
   {
     var item = $( event.target ).closest( "a" );
     item.next().after( item );
+    setNicknameTabindex();
   }
 
   function setColumnButtonSize()
@@ -923,7 +941,7 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
           <button id="analyzeButton" type="submit" form="optionsForm" class="btn btn-primary" >Analyze</button>
-          <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+          <button id="optionsCancel" type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
           <button id="multiHelp" type="button" class="btn btn-info" data-toggle="modal">Help</button>
         </div>
       </div>
