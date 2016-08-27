@@ -49,7 +49,15 @@
                 <?=DETAILED?>
               </dt>
               <dd>
-                Includes a result for each distinct timestamp found in Metasys File.
+                Includes a result for each distinct timestamp found in the Metasys File.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                <?=MULTIPLE?>
+              </dt>
+              <dd>
+                Runs a predetermined series of analyses.
               </dd>
             </dl>
           </dd>
