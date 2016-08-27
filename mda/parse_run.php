@@ -47,7 +47,25 @@
       {
         $runArgs[$arglist[$index]] = $arglist[$index+1];
       }
-      $resultsFilename = $split[0] . "_" . ( ++ $iteration ) . "." . $split[1];
+      $tag = "";
+      if ( isset( $runArgs["startTime"] ) )
+      {
+        $tag .= str_replace( ":", "_", $runArgs["startTime"] );
+        $tag .= "-";
+        if ( isset( $runArgs["endTime"] ) )
+        {
+          $tag .= str_replace( ":", "_", $runArgs["endTime"] );
+        }
+        else
+        {
+          $tag .= "full";
+        }
+      }
+      else
+      {
+        $tag .= "detail";
+      }
+      $resultsFilename = $split[0] . "_" . ( ++ $iteration ) . "_" . $tag . "." . $split[1];
 
       // Run the analysis
       $message = runParseScript( $runArgs, $inputFilename, $columnsFilename, $resultsFilename );
