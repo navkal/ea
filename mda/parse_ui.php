@@ -418,7 +418,7 @@
       +
           '<div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">'
       +
-            '<input type="text" class="form-control" placeholder="Nickname" >'
+            '<input type="text" class="form-control" maxlength="32" placeholder="Nickname" >'
       +
           '</div>'
       +
