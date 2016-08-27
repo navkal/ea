@@ -9,25 +9,7 @@
       <div class="modal-body bg-info">
         <dl>
           <dd>
-            Select a .csv file exported from Metasys.
-          </dd>
-        </dl>
-       <dl>
-          <dt>
-            How <?=METASYS_FILE?> is used:
-          </dt>
-          <dd>
-            <ol>
-              <li>
-                You click <i>Submit</i>.
-              </li>
-              <li>
-                <?=METASYS_DATA_ANALYSIS?> script analyzes contents of <?=METASYS_FILE?>.
-              </li>
-              <li>
-                Browser downloads analysis results to your computer.
-              </li>
-            </ol>
+            Select a .csv file exported from Metasys and click <i>Submit</i>.
           </dd>
         </dl>
       </div>
