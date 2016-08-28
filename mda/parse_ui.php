@@ -29,7 +29,10 @@
     padding-bottom: 10px;
   }
 }
-
+.dragover
+{
+  background-color: #dff0d8;
+}
 </style>
 
 <script>
@@ -407,7 +410,7 @@
     var colName = span.text();
 
     var column =
-      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" >'
+      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondragleave="onDragLeaveColumn(event)" ondrop="onDropColumn(event)" >'
       +
         '<div class="row">'
       +
@@ -466,6 +469,48 @@
 
     setColumnButtonSize();
     setNicknameTabindex();
+  }
+
+  function onStartDragColumn( event )
+  {
+    var data = JSON.stringify( { checkboxIndex: $( event.target ).attr( "checkboxIndex" ) } );
+    event.dataTransfer.setData( "text", data );
+  }
+
+  function onDragOverColumn( event )
+  {
+    event.preventDefault();
+    $( event.target ).closest( "a" ).addClass( "dragover" );
+  }
+
+  function onDragLeaveColumn( event )
+  {
+    $( event.target ).closest( "a" ).removeClass( "dragover" );
+  }
+
+  function onDropColumn( event )
+  {
+    event.preventDefault();
+
+    $( event.target ).closest( "a" ).removeClass( "dragover" );
+
+    try
+    {
+      var dragData = JSON.parse( event.dataTransfer.getData( "text" ) );
+      if ( ( typeof dragData == "object" ) && dragData.hasOwnProperty( "checkboxIndex" )  )
+      {
+        console.log( "Drag from: " + dragData.checkboxIndex );
+        console.log( "Drop to: " + $( event.target ).closest( "a" ).attr( "checkboxIndex" ) );
+        var dragElement = $( "#columnEditor a[checkboxIndex=" + dragData.checkboxIndex + "]" );
+        var dropElement = $( event.target ).closest( "a" );
+        dragElement.insertBefore( dropElement );
+      }
+      setNicknameTabindex();
+    }
+    catch( e )
+    {
+      // Do nothing
+    }
   }
 
   function setNicknameTabindex()
