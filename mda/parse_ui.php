@@ -504,8 +504,8 @@
         var dragElement = $( "#columnEditor a[checkboxIndex=" + dragData.checkboxIndex + "]" );
         var dropElement = $( event.target ).closest( "a" );
         dragElement.insertBefore( dropElement );
+        setNicknameTabindex();
       }
-      setNicknameTabindex();
     }
     catch( e )
     {
