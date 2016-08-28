@@ -407,7 +407,7 @@
     var colName = span.text();
 
     var column =
-      '<a class="list-group-item ' + makeCheckboxIndexClass( checkboxIndex ) +'" >'
+      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" >'
       +
         '<div class="row">'
       +
@@ -489,9 +489,8 @@
     $( "#checkSearch" ).val( "" );
 
     // Find the corresponding column picker entry
-    var editorColumn = $( event.target ).closest( "a" )[0];
-    var checkboxClass = $.grep( editorColumn.classList, function( s ){ return s.indexOf( "checkboxIndex-" ) == 0; } )[0];
-    var checkboxIndex = parseInt( checkboxClass.split( "-" )[1] ) + 1;
+    var editorColumn = $( $( event.target ).closest( "a" )[0] );
+    var checkboxIndex = parseInt( editorColumn.attr( "checkboxIndex" ) ) + 1;
     var li = $( "#columnPicker li:nth-child(" + checkboxIndex + ")" );
 
     // Uncheck the checkbox
@@ -503,7 +502,7 @@
     span.removeClass( "bg-info" );
 
     // Remove the column from the editor
-    $( editorColumn ).remove();
+    editorColumn.remove();
   }
 
   function removeEditorColumn( checkboxIndex )
@@ -511,12 +510,7 @@
     var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span" );
     span.removeClass( "bg-info" );
 
-    $( "#columnEditor ." + makeCheckboxIndexClass( checkboxIndex ) ).remove();
-  }
-
-  function makeCheckboxIndexClass( checkboxIndex )
-  {
-    return "checkboxIndex-" + checkboxIndex;
+    $( "#columnEditor a[checkboxIndex=" + checkboxIndex + "]" ).remove();
   }
 
   function moveColumnUp( event )
