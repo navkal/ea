@@ -475,7 +475,8 @@
   {
     var data = JSON.stringify( { checkboxIndex: $( event.target ).attr( "checkboxIndex" ) } );
     event.dataTransfer.setData( "text", data );
-}
+    event.dataTransfer.setDragImage( $( event.target ).find( "h5" )[0], -25, -10);
+  }
 
   function onDragOverColumn( event )
   {
