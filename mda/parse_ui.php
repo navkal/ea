@@ -410,7 +410,7 @@
     var colName = span.text();
 
     var column =
-      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondragleave="onDragLeaveColumn(event)" ondrop="onDropColumn(event)" >'
+      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondragleave="onDragLeaveColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
       +
         '<div class="row">'
       +
@@ -475,7 +475,7 @@
   {
     var data = JSON.stringify( { checkboxIndex: $( event.target ).attr( "checkboxIndex" ) } );
     event.dataTransfer.setData( "text", data );
-  }
+}
 
   function onDragOverColumn( event )
   {
@@ -485,14 +485,14 @@
 
   function onDragLeaveColumn( event )
   {
-    $( event.target ).closest( "a" ).removeClass( "dragover" );
+    $( ".dragover" ).removeClass( "dragover" );
   }
 
   function onDropColumn( event )
   {
     event.preventDefault();
 
-    $( event.target ).closest( "a" ).removeClass( "dragover" );
+    $( ".dragover" ).removeClass( "dragover" );
 
     try
     {
@@ -511,6 +511,11 @@
     {
       // Do nothing
     }
+  }
+
+  function onDragEndColumn( event )
+  {
+    $( ".dragover" ).removeClass( "dragover" );
   }
 
   function setNicknameTabindex()
