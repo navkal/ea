@@ -423,10 +423,12 @@
 
     var colName = span.text();
 
+    var styleCursorMove = ( navigator.userAgent.indexOf( "Edge" ) == -1 ) ? ' style="cursor:move" ' : "" ;
+
     var column =
-      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onDragStartColumn(event)" ondragover="onDragOverColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
+      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onDragStartColumn(event)" ondragover="onDragOverColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" ' + styleCursorMove + ' >'
       +
-        '<div class="row" draggable="true" ondragstart="onDragStartColumn(event)" >'
+        '<div class="row" draggable="true" ondragstart="onDragStartColumn(event)" style="cursor:move" >'
       +
           '<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">'
       +
