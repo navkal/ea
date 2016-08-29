@@ -200,10 +200,13 @@
             </dl>
             <dl class="dl-horizontal" >
               <dt>
-                Move Up
+                 Move Up (<span class="glyphicon glyphicon-menu-up"></span>)
               </dt>
               <dt>
-                Move Down
+                 Move Down (<span class="glyphicon glyphicon-menu-down"></span>)
+              </dt>
+              <dt>
+                Drag <?=POINT_OF_INTEREST?>
               </dt>
               <dd>
                 Changes column order in <?=RESULTS_FILE?>.
@@ -211,7 +214,7 @@
             </dl>
             <dl class="dl-horizontal" >
               <dt>
-                Remove
+                Remove (<span style="font-size:20px" >&times;</span>)
               </dt>
               <dd>
                 Deselects <?=POINT_OF_INTEREST?>.
