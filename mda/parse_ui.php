@@ -32,6 +32,13 @@
   }
 }
 
+[draggable=true]
+{
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+}
 </style>
 
 <script>
