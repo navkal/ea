@@ -16,12 +16,14 @@
     padding-left: 20px;
   }
 }
+
 #columnPicker
 {
   -webkit-column-width: 270px; /* Chrome, Safari, Opera */
   -moz-column-width: 270px; /* Firefox */
   column-width: 270px;
 }
+
 @media( max-width: 991px )
 {
   .padBottomSmall
@@ -29,10 +31,7 @@
     padding-bottom: 10px;
   }
 }
-.dragover
-{
-  background-color: #dff0d8;
-}
+
 </style>
 
 <script>
@@ -410,7 +409,7 @@
     var colName = span.text();
 
     var column =
-      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondragleave="onDragLeaveColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
+      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
       +
         '<div class="row">'
       +
@@ -471,52 +470,43 @@
     setNicknameTabindex();
   }
 
+  var DRAG_TARGET = null;
   function onStartDragColumn( event )
   {
-    var data = JSON.stringify( { checkboxIndex: $( event.target ).attr( "checkboxIndex" ) } );
-    event.dataTransfer.setData( "text", data );
-    event.dataTransfer.setDragImage( $( event.target ).find( "h5" )[0], -25, -10);
+    console.log( "===> onStartDragColumn()" );
+    DRAG_TARGET = $( event.target ).closest( "a" );
+    event.dataTransfer.setDragImage( DRAG_TARGET.find( "h5" )[0], -25, -10);
   }
 
   function onDragOverColumn( event )
   {
-    event.preventDefault();
-    $( event.target ).closest( "a" ).addClass( "dragover" );
-  }
+    console.log( "===> onDragOverColumn()" );
 
-  function onDragLeaveColumn( event )
-  {
-    $( ".dragover" ).removeClass( "dragover" );
-  }
-
-  function onDropColumn( event )
-  {
-    event.preventDefault();
-
-    $( ".dragover" ).removeClass( "dragover" );
-
-    try
+    if ( DRAG_TARGET != null )
     {
-      var dragData = JSON.parse( event.dataTransfer.getData( "text" ) );
-      if ( ( typeof dragData == "object" ) && dragData.hasOwnProperty( "checkboxIndex" )  )
+      event.preventDefault();
+      var target = $( event.target ).closest( "a" );
+
+      if ( DRAG_TARGET.index() != target.index() )
       {
-        console.log( "Drag from: " + dragData.checkboxIndex );
-        console.log( "Drop to: " + $( event.target ).closest( "a" ).attr( "checkboxIndex" ) );
-        var dragElement = $( "#columnEditor a[checkboxIndex=" + dragData.checkboxIndex + "]" );
-        var dropElement = $( event.target ).closest( "a" );
-        dragElement.insertBefore( dropElement );
+        console.log( "====> DRAG_TARGET.offset().top=" + DRAG_TARGET.offset().top );
+        console.log( "====> target.offset().top=" + target.offset().top );
+        if ( DRAG_TARGET.offset().top > target.offset().top )
+        {
+          target.next().after( target );
+        }
+        else
+        {
+          target.prev().before( target );
+        }
         setNicknameTabindex();
       }
-    }
-    catch( e )
-    {
-      // Do nothing
     }
   }
 
   function onDragEndColumn( event )
   {
-    $( ".dragover" ).removeClass( "dragover" );
+    DRAG_TARGET = null;
   }
 
   function setNicknameTabindex()
