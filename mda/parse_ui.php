@@ -424,9 +424,9 @@
     var colName = span.text();
 
     var column =
-      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
+      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onDragStartColumn(event)" ondragover="onDragOverColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
       +
-        '<div class="row" draggable="true" ondragstart="onStartDragColumn(event)" >'
+        '<div class="row" draggable="true" ondragstart="onDragStartColumn(event)" >'
       +
           '<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">'
       +
@@ -486,9 +486,9 @@
   }
 
   var DRAG_TARGET = null;
-  function onStartDragColumn( event )
+  function onDragStartColumn( event )
   {
-    console.log( "===> onStartDragColumn()" );
+    console.log( "===> onDragStartColumn()" );
     DRAG_TARGET = $( event.target ).closest( "a" );
     event.dataTransfer.setData( "text", "" );
     event.dataTransfer.setDragImage( DRAG_TARGET.find( "h5" )[0], -25, -10);
@@ -496,13 +496,14 @@
 
   function onDragOverColumn( event )
   {
-    $( ".columnHover" ).removeClass( "columnHover" );
     console.log( "===> onDragOverColumn()" );
 
     if ( DRAG_TARGET != null )
     {
       event.preventDefault();
+
       var target = $( event.target ).closest( "a" );
+      $( ".columnHover" ).removeClass( "columnHover" );
       target.addClass( "columnHover" );
 
       if ( DRAG_TARGET.index() != target.index() )
