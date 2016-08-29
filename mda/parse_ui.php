@@ -912,6 +912,7 @@
                   </div>
                 </div>
 
+                <br/>
                 <div class="form-group">
                   <label class="control-label" for="period" ><?=TIME_PERIOD?></label>
                   <div>
