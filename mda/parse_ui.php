@@ -912,13 +912,6 @@
                   </div>
                 </div>
 
-                <br/>
-                <div class="form-group" >
-                  <label class="control-label" for="startTime" ><?=START_TIME?></label>
-                  <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
-                </div>
-
-                <br/>
                 <div class="form-group">
                   <label class="control-label" for="period" ><?=TIME_PERIOD?></label>
                   <div>
@@ -931,6 +924,12 @@
                       <?=PARTIAL_DAY?>
                     </label>
                   </div>
+                </div>
+
+                <br/>
+                <div class="form-group" >
+                  <label class="control-label" for="startTime" ><?=START_TIME?></label>
+                  <input type="text" id="startTime" name="startTime" class="form-control timepicker" style="border-radius:4px" readonly >
                 </div>
 
                 <div class="form-group" >
