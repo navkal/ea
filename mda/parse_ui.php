@@ -39,6 +39,14 @@
   -khtml-user-select: none;
   -webkit-user-select: none;
 }
+
+.columnHover
+{
+  color: #555;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
 </style>
 
 <script>
@@ -488,12 +496,14 @@
 
   function onDragOverColumn( event )
   {
+    $( ".columnHover" ).removeClass( "columnHover" );
     console.log( "===> onDragOverColumn()" );
 
     if ( DRAG_TARGET != null )
     {
       event.preventDefault();
       var target = $( event.target ).closest( "a" );
+      target.addClass( "columnHover" );
 
       if ( DRAG_TARGET.index() != target.index() )
       {
@@ -514,6 +524,7 @@
 
   function onDropColumn( event )
   {
+    $( ".columnHover" ).removeClass( "columnHover" );
     event.preventDefault();
     DRAG_TARGET = null;
   }
@@ -521,6 +532,7 @@
 
   function onDragEndColumn( event )
   {
+    $( ".columnHover" ).removeClass( "columnHover" );
     DRAG_TARGET = null;
   }
 
