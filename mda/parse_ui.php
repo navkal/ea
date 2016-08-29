@@ -409,7 +409,7 @@
     var colName = span.text();
 
     var column =
-      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
+      '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onStartDragColumn(event)" ondragover="onDragOverColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" style="cursor:move" >'
       +
         '<div class="row">'
       +
@@ -475,6 +475,7 @@
   {
     console.log( "===> onStartDragColumn()" );
     DRAG_TARGET = $( event.target ).closest( "a" );
+    event.dataTransfer.setData( "text", "" );
     event.dataTransfer.setDragImage( DRAG_TARGET.find( "h5" )[0], -25, -10);
   }
 
@@ -503,6 +504,13 @@
       }
     }
   }
+
+  function onDropColumn( event )
+  {
+    event.preventDefault();
+    DRAG_TARGET = null;
+  }
+
 
   function onDragEndColumn( event )
   {
