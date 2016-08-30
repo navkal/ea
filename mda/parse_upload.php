@@ -53,16 +53,66 @@
 
   if ( empty( $messages ) )
   {
+    error_log( "===========> BF COLUMNS" );
+
     $colMap = [];
 
+    // Skip the column headings
     fgetcsv( $inputFile );
+
+
+    // Loop through the data
     while( ( $line = fgetcsv( $inputFile ) ) !== false )
     {
-      if ( isset( $line[2] ) )
+      if ( isset( $line[2] ) && isset( $line[3] ) )
       {
-        $colMap[$line[2]] = "";
+        $name = $line[2];
+        $value = floatval( $line[3] );
+
+        if ( isset( $colMap[$name] ) )
+        {
+          // We've seen this column name before
+
+          // Update count
+          if ( $value > $colMap[$name]["value"] )
+          {
+            // Value decreased; increment count
+            $colMap[$name]["less"][0]++;
+          }
+          else
+          {
+            // Value did not decrease
+
+            // If current count is non-zero, start a new one
+            if ( $colMap[$name]["less"][0] > 0 )
+            {
+              array_unshift( $colMap[$name]["less"], 0 );
+            }
+          }
+
+          // Save value
+          $colMap[$name]["value"] = $value;
+        }
+        else
+        {
+          // First occurrence of this column name
+          $colMap[$name] = [ "first" => $value, "value" => $value, "less" => [0] ];
+        }
       }
     }
+
+    $summarizable = [];
+    foreach( $colMap as $key => $profile )
+    {
+      if ( ( count( $profile["less"] ) == 1 ) && ( $profile["less"][0] == 0 ) && ( $profile["first"] != $profile["value"] ) )
+      {
+        array_push( $summarizable, $key );
+      }
+    }
+
+    error_log( "===========> AF COLUMNS" );
+    //error_log( "===> map=" . print_r( $colMap, true ) );
+    error_log( "===> summarizable=" . print_r( $summarizable, true ) );
 
     fclose( $inputFile );
 
