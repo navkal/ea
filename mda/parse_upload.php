@@ -100,16 +100,31 @@
 
     error_log( "===========> AF COLUMNS" );
 
-    // Replace properties with information for client
-    define( "THRESHOLD", 2 );
+    // Replace properties with format used by client
     foreach( $colMap as $key => $properties )
     {
-      $summarizable =
-        ( ( ( $properties["lt"] ) <= THRESHOLD ) && ( $properties["first"] < $properties["value"] ) )
-        ||
-        ( ( ( $properties["gt"] ) <= THRESHOLD ) && ( $properties["first"] > $properties["value"] ) )
-        ;
+      $volatility = 1;
+      $total =  $properties["lt"] + $properties["gt"] + $properties["eq"];
+      if ( $properties["first"] < $properties["value"] )
+      {
+        $volatility = $properties["lt"] / $total;
+      }
+      else if ( $properties["first"] > $properties["value"] )
+      {
+        $volatility = $properties["gt"] / $total;
+      }
+
+      $summarizable = $volatility < 0.0005;  // 0.00037950664136623 is sufficient based on testing
+      error_log( "=========> key=" . $key . " volatility=" . $volatility . " regressions=" . ( $volatility * $total ) . " summarizable=" . $summarizable );
+
       $colMap[$key] = ["summarizable" => $summarizable ];
+      $old =
+        ( ( ( $properties["lt"] ) <= 2 ) && ( $properties["first"] < $properties["value"] ) )
+        ||
+        ( ( ( $properties["gt"] ) <= 2 ) && ( $properties["first"] > $properties["value"] ) )
+        ;
+
+      if ( $old != $summarizable ) error_log( "============DIFFERENT!================" );
     }
 
     ksort( $colMap );
