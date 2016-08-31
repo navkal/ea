@@ -46,7 +46,6 @@
   text-decoration: none;
   background-color: #f5f5f5;
 }
-
 </style>
 
 <script>
@@ -191,9 +190,9 @@
     $( "#checkComplement" ).click( checkComplement );
     $( "#checkSearch" ).keydown( preventDefault );
     $( "#checkSearch" ).keyup( checkSearch );
-    for ( var i in columns )
+    for ( var colName in columns )
     {
-      $( "#columnPicker" ).append( makeColumnPickerRow( columns[i] ) );
+      $( "#columnPicker" ).append( makeColumnPickerRow( colName, columns[colName] ) );
     }
     checkDefault( { target: "fake" } );
 
@@ -224,6 +223,10 @@
     disableTimeInput( "startTime", bDisable );
 
     onChangePeriod();
+
+    // Change look of Points of Interest checkboxes
+    console.log( "========> summarizable color" );
+    $( "label[summarizable=false]" ).css( "color", bDisable ? "" : "lightgray" );
   }
 
   // Handle change of Period radio buttons
@@ -378,12 +381,13 @@
     }
   }
 
-  function makeColumnPickerRow( colName )
+  function makeColumnPickerRow( colName, props )
   {
+    console.log( "===> Is " + colName + " summarizable ? " + props.summarizable );
     var row =
       '<li>'
       +
-        '<label class="checkbox checkbox-inline">'
+        '<label class="checkbox checkbox-inline" summarizable=' + props.summarizable + ' >'
       +
           '<input type="checkbox" value="' + encodeURI( colName ) + '">'
       +

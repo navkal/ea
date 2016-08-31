@@ -116,7 +116,7 @@
 
     if ( count( $colMap ) )
     {
-      $columns = array_keys( $colMap );
+      $columns = $colMap;
     }
     else
     {
@@ -127,8 +127,7 @@
   $rsp =
   [
     "messages" => $messages,
-    "columns" => $columns,
-    "colMap" => $colMap
+    "columns" => $columns
   ];
 
   echo json_encode( $rsp );
