@@ -394,7 +394,7 @@
       +
           '<span columnAsterisk >'
       +
-            ( ( $( "#summary" ).prop( "checked" ) && ! props.summarizable ) ? ' *' : '' )
+            ( ( ! $( "#detailed" ).prop( "checked" ) && ! props.summarizable ) ? ' *' : '' )
       +
           '</span>'
       +
@@ -792,13 +792,13 @@
   function onShowColumnsTab()
   {
     // Column Picker checkbox labels
-    var summaryChecked = $( "#summary" ).prop( "checked" );
-    $( "label[summarizable=false] span[columnName]" ).css( "color", summaryChecked ? "lightgray" : "" );
-    $( "label[summarizable=false] span[columnAsterisk]" ).css( "display", summaryChecked ? "inline" : "none" );
+    var showUnsummarizable = ! $( "#detailed" ).prop( "checked" );
+    $( "label[summarizable=false] span[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
+    $( "label[summarizable=false] span[columnAsterisk]" ).css( "display", showUnsummarizable ? "inline" : "none" );
 
     // Column Picker summarizability footnote
     var haveAsterisks = $( "label[summarizable=false]" ).length > 0;
-    var displayFootnote = summaryChecked && haveAsterisks;
+    var displayFootnote = showUnsummarizable && haveAsterisks;
     $( "#summarizableFootnote" ).css( "display", displayFootnote ? "block" : "none" );
 
     // Attach corresponding Help dialog
