@@ -314,7 +314,7 @@
       for ( var lbl = 0; lbl < labels.length; lbl ++ )
       {
         var label = $( labels[lbl] );
-        var span = label.find( "span" );
+        var span = label.find( "span[columnName]" );
         if ( span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
         {
           label.find( "input" ).prop( "checked", true );
@@ -379,7 +379,6 @@
 
   function makeColumnPickerRow( colName, props )
   {
-    console.log( "===> Is " + colName + " summarizable ? " + props.summarizable );
     var row =
       '<li>'
       +
@@ -387,13 +386,17 @@
       +
           '<input type="checkbox" value="' + encodeURI( colName ) + '">'
       +
-          '<span>'
+          '<span columnName >'
       +
             colName
       +
           '</span>'
       +
-          ( props.summarizable ? '' : '*' )
+          '<span columnAsterisk >'
+      +
+            ( ( $( "#summary" ).prop( "checked" ) && ! props.summarizable ) ? ' *' : '' )
+      +
+          '</span>'
       +
         '</label>'
       +
@@ -420,7 +423,7 @@
 
   function addEditorColumn( checkboxIndex )
   {
-    var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span" );
+    var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span[columnName]" );
     span.addClass( "bg-info" );
 
     var colName = span.text();
@@ -571,7 +574,7 @@
     checkbox.prop( "checked", false );
 
     // Remove the highlighting
-    var span = li.find( "span" );
+    var span = li.find( "span[columnName]" );
     span.removeClass( "bg-info" );
 
     // Remove the column from the editor
@@ -580,7 +583,7 @@
 
   function removeEditorColumn( checkboxIndex )
   {
-    var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span" );
+    var span = $( "#columnPicker li:nth-child(" + (  checkboxIndex + 1 ) + ") label span[columnName]" );
     span.removeClass( "bg-info" );
 
     $( "#columnEditor a[checkboxIndex=" + checkboxIndex + "]" ).remove();
@@ -793,8 +796,15 @@
 
   function onShowColumnsTab()
   {
-    // Change look of Points of Interest checkboxes
-    $( "label[summarizable=false]" ).css( "color", $( "#summary" ).prop( "checked" ) ? "lightgray" : "" );
+    // Column Picker checkbox labels
+    var summaryChecked = $( "#summary" ).prop( "checked" );
+    $( "label[summarizable=false] span[columnName]" ).css( "color", summaryChecked ? "lightgray" : "" );
+    $( "label[summarizable=false] span[columnAsterisk]" ).css( "display", summaryChecked ? "inline" : "none" );
+
+    // Column Picker summarizability footnote
+    var haveAsterisks = $( "label[summarizable=false]" ).length > 0;
+    var displayFootnote = summaryChecked && haveAsterisks;
+    $( "#summarizableFootnote" ).css( "display", displayFootnote ? "block" : "none" );
 
     // Attach corresponding Help dialog
     $( "#multiHelp" ).attr( "data-target", "#helpColumns" );
@@ -977,6 +987,9 @@
                 <!-- Checkboxes -->
                 <ul id="columnPicker" class="list-unstyled" >
                 </ul>
+                <div id="summarizableFootnote" class="text-center" >
+                  * <?=POINT_OF_INTEREST?> not suitable for <?=SUMMARY?> Report
+                </div>
 
               </div>
             </div>
