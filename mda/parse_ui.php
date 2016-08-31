@@ -393,6 +393,8 @@
       +
           '</span>'
       +
+          ( props.summarizable ? '' : '*' )
+      +
         '</label>'
       +
       '</li>';
