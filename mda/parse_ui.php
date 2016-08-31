@@ -982,9 +982,9 @@
                 <!-- Checkboxes -->
                 <ul id="columnPicker" class="list-unstyled" >
                 </ul>
-                <div id="summarizableFootnote" class="text-center" >
+                <small id="summarizableFootnote" class="text-center" style="padding-top:10px" >
                   * <?=POINT_OF_INTEREST?> not suitable for <i><?=SUMMARY?></i> or <i><?=MULTIPLE?></i> <?=REPORT_FORMAT?>
-                </div>
+                </small>
 
               </div>
             </div>
