@@ -99,7 +99,6 @@
     fclose( $inputFile );
 
     error_log( "===========> AF COLUMNS" );
-    error_log( "===> map=" . print_r( $colMap, true ) );
 
     // Replace properties with information for client
     define( "THRESHOLD", 2 );
@@ -114,7 +113,7 @@
     }
 
     ksort( $colMap );
-    error_log( "===> map=" . print_r( $colMap, true ) );
+    // error_log( "===> map=" . print_r( $colMap, true ) );
 
     if ( count( $colMap ) )
     {

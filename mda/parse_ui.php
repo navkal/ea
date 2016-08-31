@@ -495,7 +495,6 @@
   var DRAG_TARGET = null;
   function onDragStartColumn( event )
   {
-    console.log( "===> onDragStartColumn()" );
     DRAG_TARGET = $( event.target ).closest( "a" );
     event.dataTransfer.setData( "text", "" );
     event.dataTransfer.setDragImage( DRAG_TARGET.find( "h5" )[0], -25, -10);
@@ -503,8 +502,6 @@
 
   function onDragOverColumn( event )
   {
-    console.log( "===> onDragOverColumn()" );
-
     if ( DRAG_TARGET != null )
     {
       event.preventDefault();
@@ -515,8 +512,6 @@
 
       if ( DRAG_TARGET.index() != target.index() )
       {
-        console.log( "====> DRAG_TARGET.offset().top=" + DRAG_TARGET.offset().top );
-        console.log( "====> target.offset().top=" + target.offset().top );
         if ( DRAG_TARGET.offset().top > target.offset().top )
         {
           target.next().after( target );
