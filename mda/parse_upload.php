@@ -72,21 +72,18 @@
         {
           // We've seen this column name before
 
-          // Update count
-          if ( $value > $colMap[$name]["value"] )
+          // Increment the appropriate counter
+          if ( $value < $colMap[$name]["value"] )
           {
-            // Value decreased; increment count
-            $colMap[$name]["less"][0]++;
+            $colMap[$name]["lt"]++;
+          }
+          else if ( $value > $colMap[$name]["value"] )
+          {
+            $colMap[$name]["gt"]++;
           }
           else
           {
-            // Value did not decrease
-
-            // If current count is non-zero, start a new one
-            if ( $colMap[$name]["less"][0] > 0 )
-            {
-              array_unshift( $colMap[$name]["less"], 0 );
-            }
+            $colMap[$name]["eq"]++;
           }
 
           // Save value
@@ -95,19 +92,24 @@
         else
         {
           // First occurrence of this column name
-          $colMap[$name] = [ "first" => $value, "value" => $value, "less" => [0] ];
+          $colMap[$name] = [ "first" => $value, "value" => $value, "lt" => 0, "gt" => 0, "eq" => 0 ];
         }
       }
     }
     fclose( $inputFile );
 
     error_log( "===========> AF COLUMNS" );
-    // error_log( "===> map=" . print_r( $colMap, true ) );
+    error_log( "===> map=" . print_r( $colMap, true ) );
 
     // Replace properties with information for client
+    define( "THRESHOLD", 2 );
     foreach( $colMap as $key => $properties )
     {
-      $summarizable = ( ( array_sum( $properties["less"] ) <= 2 ) && ( $properties["first"] != $properties["value"] ) );
+      $summarizable =
+        ( ( ( $properties["lt"] ) <= THRESHOLD ) && ( $properties["first"] < $properties["value"] ) )
+        ||
+        ( ( ( $properties["gt"] ) <= THRESHOLD ) && ( $properties["first"] > $properties["value"] ) )
+        ;
       $colMap[$key] = ["summarizable" => $summarizable ];
     }
 

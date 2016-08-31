@@ -202,9 +202,9 @@
     $( window ).on( "resize", setColumnButtonSize );
 
     // Set handlers to update Help button targets
-    $( "#optionsTabs a[href='#analysisOptionsTab']" ).on( "shown.bs.tab", setOptionsHelp );
-    $( "#optionsTabs a[href='#columnsTab']" ).on( "shown.bs.tab", setColumnsHelp );
-    setOptionsHelp();
+    $( "#optionsTabs a[href='#analysisOptionsTab']" ).on( "shown.bs.tab", onShowOptionsTab );
+    $( "#optionsTabs a[href='#columnsTab']" ).on( "shown.bs.tab", onShowColumnsTab );
+    onShowOptionsTab();
   }
 
   // Handle change of Report Format radio buttons
@@ -223,10 +223,6 @@
     disableTimeInput( "startTime", bDisable );
 
     onChangePeriod();
-
-    // Change look of Points of Interest checkboxes
-    console.log( "========> summarizable color" );
-    $( "label[summarizable=false]" ).css( "color", bDisable ? "" : "lightgray" );
   }
 
   // Handle change of Period radio buttons
@@ -787,13 +783,18 @@
     showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
   }
 
-  function setOptionsHelp()
+  function onShowOptionsTab()
   {
+    // Attach corresponding Help dialog
     $( "#multiHelp" ).attr( "data-target", "#helpOptions" );
   }
 
-  function setColumnsHelp()
+  function onShowColumnsTab()
   {
+    // Change look of Points of Interest checkboxes
+    $( "label[summarizable=false]" ).css( "color", $( "#summary" ).prop( "checked" ) ? "lightgray" : "" );
+
+    // Attach corresponding Help dialog
     $( "#multiHelp" ).attr( "data-target", "#helpColumns" );
   }
 </script>
