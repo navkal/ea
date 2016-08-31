@@ -983,7 +983,7 @@
                 <ul id="columnPicker" class="list-unstyled" >
                 </ul>
                 <div id="summarizableFootnote" class="text-center" >
-                  * <?=POINT_OF_INTEREST?> not suitable for <?=SUMMARY?> Report
+                  * <?=POINT_OF_INTEREST?> not suitable for <i><?=SUMMARY?></i> or <i><?=MULTIPLE?></i> <?=REPORT_FORMAT?>
                 </div>
 
               </div>
