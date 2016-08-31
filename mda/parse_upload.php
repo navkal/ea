@@ -65,9 +65,6 @@
     {
       if ( isset( $line[2] ) && isset( $line[3] ) )
       {
-        /*************************************************** /
-        $colMap[$line[2]] = "";
-        /***************************************************/
         $name = $line[2];
         $value = floatval( $line[3] );
 
@@ -100,31 +97,26 @@
           // First occurrence of this column name
           $colMap[$name] = [ "first" => $value, "value" => $value, "less" => [0] ];
         }
-        /***************************************************/
       }
     }
-    error_log( "===========> AF COLUMNS" );
-    error_log( "===> map=" . print_r( $colMap, true ) );
-
-    /***************************************************/
-    $summarizable = [];
-    foreach( $colMap as $key => $profile )
-    {
-      if ( ( array_sum( $profile["less"] ) <= 2 ) && ( $profile["first"] != $profile["value"] ) )
-      {
-        array_push( $summarizable, $key );
-      }
-      else{error_log("==>$key not summarizable");}
-    }
-    error_log( "===> summarizable=" . print_r( $summarizable, true ) );
-    /***************************************************/
-
     fclose( $inputFile );
+
+    error_log( "===========> AF COLUMNS" );
+    // error_log( "===> map=" . print_r( $colMap, true ) );
+
+    // Replace properties with information for client
+    foreach( $colMap as $key => $properties )
+    {
+      $summarizable = ( ( array_sum( $properties["less"] ) <= 2 ) && ( $properties["first"] != $properties["value"] ) );
+      $colMap[$key] = ["summarizable" => $summarizable ];
+    }
+
+    ksort( $colMap );
+    error_log( "===> map=" . print_r( $colMap, true ) );
 
     if ( count( $colMap ) )
     {
       $columns = array_keys( $colMap );
-      sort( $columns );
     }
     else
     {
@@ -135,7 +127,8 @@
   $rsp =
   [
     "messages" => $messages,
-    "columns" => $columns
+    "columns" => $columns,
+    "colMap" => $colMap
   ];
 
   echo json_encode( $rsp );
