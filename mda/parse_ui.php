@@ -506,7 +506,7 @@
   {
     DRAG_TARGET = $( event.target ).closest( "a" );
     event.dataTransfer.setData( "text", "" );
-    event.dataTransfer.setDragImage( DRAG_TARGET.find( "*[columnName]" )[0], -25, -10);
+    event.dataTransfer.setDragImage( DRAG_TARGET.find( "span[columnName]" )[0], -25, -10);
   }
 
   function onDragOverColumn( event )
@@ -712,7 +712,7 @@
     for ( var i = 0; i < columns.length; i ++ )
     {
       var column = $( columns[i] );
-      var name = column.find( "*[columnName]" ).text();
+      var name = column.find( "span[columnName]" ).text();
       var nickname = column.find( "input" ).val();
 
       columnData.push(
@@ -810,8 +810,8 @@
   {
     // Column Picker checkbox labels
     var showUnsummarizable = ! $( "#detailed" ).prop( "checked" );
-    $( "#columnsTab *[summarizable=false] *[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
-    $( "#columnsTab *[summarizable=false] *[columnAsterisk]" ).css( "display", showUnsummarizable ? "inline" : "none" );
+    $( "#columnsTab *[summarizable=false] span[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
+    $( "#columnsTab *[summarizable=false] span[columnAsterisk]" ).css( "display", showUnsummarizable ? "inline" : "none" );
 
     // Column Picker summarizability footnote
     var haveAsterisks = $( "label[summarizable=false]" ).length > 0;
