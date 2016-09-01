@@ -793,8 +793,8 @@
   {
     // Column Picker checkbox labels
     var showUnsummarizable = ! $( "#detailed" ).prop( "checked" );
-    $( "label[summarizable=false] span[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
-    $( "label[summarizable=false] span[columnAsterisk]" ).css( "display", showUnsummarizable ? "inline" : "none" );
+    $( "#columnsTab *[summarizable=false] *[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
+    $( "#columnsTab *[summarizable=false] *[columnAsterisk]" ).css( "display", showUnsummarizable ? "inline" : "none" );
 
     // Column Picker summarizability footnote
     var haveAsterisks = $( "label[summarizable=false]" ).length > 0;
