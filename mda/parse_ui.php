@@ -428,6 +428,8 @@
 
     var colName = span.text();
 
+    var summarizable = eval( span.parent().attr( "summarizable" ) );
+
     var styleCursorMove = ( navigator.userAgent.indexOf( "Edge" ) == -1 ) ? ' style="cursor:move" ' : "" ;
 
     var column =
@@ -435,9 +437,15 @@
       +
         '<div class="row" draggable="true" ondragstart="onDragStartColumn(event)" style="cursor:move" >'
       +
-          '<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall">'
+          '<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 padBottomSmall" summarizable=' + summarizable + ' style="padding-top:8px;" >'
       +
-            '<h5 class="list-group-item-text">' + colName + '</h5>'
+            '<span class="list-group-item-text" columnName >' + colName + '</span>'
+      +
+            '<span columnAsterisk >'
+      +
+              ( summarizable ? '' : ' *' )
+      +
+            '</span>'
       +
           '</div>'
       +
@@ -490,6 +498,7 @@
 
     setColumnButtonSize();
     setNicknameTabindex();
+    showSummarizable();
   }
 
   var DRAG_TARGET = null;
@@ -497,7 +506,7 @@
   {
     DRAG_TARGET = $( event.target ).closest( "a" );
     event.dataTransfer.setData( "text", "" );
-    event.dataTransfer.setDragImage( DRAG_TARGET.find( "h5" )[0], -25, -10);
+    event.dataTransfer.setDragImage( DRAG_TARGET.find( "*[columnName]" )[0], -25, -10);
   }
 
   function onDragOverColumn( event )
@@ -703,7 +712,7 @@
     for ( var i = 0; i < columns.length; i ++ )
     {
       var column = $( columns[i] );
-      var name = column.find( "h5" ).text();
+      var name = column.find( "*[columnName]" ).text();
       var nickname = column.find( "input" ).val();
 
       columnData.push(
@@ -791,6 +800,14 @@
 
   function onShowColumnsTab()
   {
+    showSummarizable();
+
+    // Attach corresponding Help dialog
+    $( "#multiHelp" ).attr( "data-target", "#helpColumns" );
+  }
+
+  function showSummarizable()
+  {
     // Column Picker checkbox labels
     var showUnsummarizable = ! $( "#detailed" ).prop( "checked" );
     $( "#columnsTab *[summarizable=false] *[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
@@ -800,9 +817,6 @@
     var haveAsterisks = $( "label[summarizable=false]" ).length > 0;
     var displayFootnote = showUnsummarizable && haveAsterisks;
     $( "#summarizableFootnote" ).css( "display", displayFootnote ? "block" : "none" );
-
-    // Attach corresponding Help dialog
-    $( "#multiHelp" ).attr( "data-target", "#helpColumns" );
   }
 </script>
 
