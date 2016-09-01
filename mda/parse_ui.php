@@ -394,7 +394,7 @@
       +
           '<span columnAsterisk >'
       +
-            ( ( ! $( "#detailed" ).prop( "checked" ) && ! props.summarizable ) ? ' *' : '' )
+            ( props.summarizable ? '' : ' *' )
       +
           '</span>'
       +
