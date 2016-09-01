@@ -83,7 +83,10 @@
         $split = explode( ".", $resultsFilename );
         if ( $split[ count( $split ) - 1 ] == "csv" )
         {
-           echo '<a class="btn btn-default" href="parse_graph.php?timestamp=' . $timestamp . '" role="button">Graph</a>';
+if ( getenv( "AYEE" ) == "ayee" )
+{
+            echo '<a class="btn btn-default" href="parse_graph.php?timestamp=' . $timestamp . '" role="button">Graph</a>';
+}
         }
       ?>
       </div>
