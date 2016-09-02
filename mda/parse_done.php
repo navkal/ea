@@ -79,15 +79,14 @@
       <div style="text-align:center;" >
        <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
       <?php
+      /****************** /
         // If single-run, display more
         $split = explode( ".", $resultsFilename );
         if ( $split[ count( $split ) - 1 ] == "csv" )
         {
-if ( getenv( "AYEE" ) == "ayee" )
-{
-            echo '<a class="btn btn-default" href="parse_graph.php?timestamp=' . $timestamp . '" role="button">Graph</a>';
-}
+          echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Graph</a>';
         }
+      /******************/
       ?>
       </div>
     </div>

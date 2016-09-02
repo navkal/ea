@@ -825,7 +825,14 @@
     <p class="h3"><?=METASYS_DATA_ANALYSIS?></p>
   </div>
 
-  <?php // include "prototype.php";?>
+  <?php
+    $timestamp = "0000000000";
+    include( "filenames.php" );
+    if ( file_exists( $resultsFilename ) )
+    {
+      include "graph.php";
+    }
+  ?>
 
   <div id="fileBlock" >
 
