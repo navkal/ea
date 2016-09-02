@@ -826,11 +826,13 @@
   </div>
 
   <?php
-    $timestamp = "0000000000";
-    include( "filenames.php" );
-    if ( file_exists( $resultsFilename ) )
+    if ( $timestamp = getenv( "TIMESTAMP" ) )
     {
-      include "graph.php";
+      include( "filenames.php" );
+      if ( file_exists( $resultsFilename ) )
+      {
+        include "graph.php";
+      }
     }
   ?>
 
