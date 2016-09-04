@@ -820,21 +820,32 @@
   }
 </script>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <?php
+        if ( $timestamp = getenv( "TIMESTAMP" ) )
+        {
+          include( "filenames.php" );
+          if ( file_exists( $resultsFilename ) )
+          {
+            ?>
+<script language="javascript" type="text/javascript" src="mda/flotPlot/scr/analyzer.js"></script>
+<script language="javascript" type="text/javascript" src="mda/flotPlot/scr/scrollbar.js"></script>
+<script language="javascript" type="text/javascript" src="mda/flotPlot/context.js"></script>
+            <?php
+            //include "graph.php";
+          }
+        }
+      ?>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="page-header">
     <p class="h3"><?=METASYS_DATA_ANALYSIS?></p>
   </div>
-
-  <?php
-    if ( $timestamp = getenv( "TIMESTAMP" ) )
-    {
-      include( "filenames.php" );
-      if ( file_exists( $resultsFilename ) )
-      {
-        include "graph.php";
-      }
-    }
-  ?>
 
   <div id="fileBlock" >
 
