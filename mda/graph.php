@@ -1,4 +1,9 @@
 <?php
+  function compareDates( $a, $b )
+  {
+    return strcmp( $a[0], $b[0] );
+  }
+
   $lines = [];
   $heads = [];
   if ( $resultsFile = @fopen( $resultsFilename, "r" ) )
@@ -28,6 +33,7 @@
     fclose( $resultsFile );
   }
 
+  usort( $lines, "compareDates" );
   error_log( "======> heads=" . print_r( $heads, true ) );
   error_log( "======> lines=" . print_r( $lines, true ) );
 ?>
@@ -45,6 +51,8 @@ function loadPlot()
   for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
   {
     var line = lines[lineIndex];
+    var timestamp = new Date( line[0] ).valueOf()
+    console.log( "===> " + line[0] + " = " + timestamp );
 
     for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
     {
@@ -53,7 +61,7 @@ function loadPlot()
           names[nameIndex],
           "",
           1,
-          new Date( line[0] ).valueOf(),
+          timestamp,
           Number( line[nameIndex] )
         ];
         samples.push( sample );
