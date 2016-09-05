@@ -179,10 +179,6 @@
     $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
     $( '#endTime' ).wickedpicker( { now: "20:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
 
-    // Initialize Analysis Options
-    $( "#summary" ).prop( "checked", true );
-    onChangeFormat();
-
     // Initialize Columns
     $( "#checkDefault" ).click( checkDefault );
     $( "#checkAll" ).click( checkAll );
@@ -194,8 +190,10 @@
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( colName, columns[colName] ) );
     }
-    checkDefault( { target: "fake" } );
 
+    // Initialize Analysis Options
+    $( "#summary" ).prop( "checked", true );
+    onChangeFormat();
 
     // Set column-related handlers
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
@@ -223,6 +221,8 @@
     disableTimeInput( "startTime", bDisable );
 
     onChangePeriod();
+
+    checkDefault( { target: "fake" } );
   }
 
   // Handle change of Period radio buttons
@@ -254,15 +254,23 @@
   {
     // List of substrings identifying default checkbox selection, in order of preference
     var substrings =
-    [
-      "energy",
-      "kwh",
-      "kvrh",
-      "kvarh",
-      "kw",
-      "kvr",
-      "kvar"
-    ];
+      $( "#detailed" ).prop( "checked" ) ?
+        [
+          "kw_",
+          "kvr_",
+          "kvar_"
+        ]
+      :
+        [
+          "energy",
+          "kwh",
+          "kvrh",
+          "kvarh",
+          "kw",
+          "kvr",
+          "kvar"
+        ];
+
 
     // Concatenate all checkbox labels into one lowercase string
     var labels = $( "#columnPicker label" );
