@@ -22,35 +22,37 @@ error_log( "=========> IN IT!!1 GRAPH.PHP" );
 
   error_log( "======> heads=" . print_r( $heads, true ) );
   error_log( "======> lines=" . print_r( $lines, true ) );
-
-  $names = $lines[0];
-  $samples = [];
-  array_push( $samples, [ "label", "tick", "tickDecimals", "time", "value" ] );
-  for ( $lineIndex = 1; $lineIndex < count( $lines ); $lineIndex ++ )
-  {
-    $line = $lines[$lineIndex];
-
-    for ( $nameIndex = 1; $nameIndex < count( $names ); $nameIndex ++ )
-    {
-      $sample =
-        [
-          $names[$nameIndex],
-          "",
-          1,
-          strtotime( $line[0] ),
-          $line[$nameIndex]
-        ];
-        array_push( $samples, $sample );
-    }
-  }
-  error_log( "======> samples=" . print_r( $samples, true ) );
 ?>
 
 <script>
-$( document ).ready( init );
-function init()
+$( document ).ready( loadPlot );
+
+function loadPlot()
 {
-  plotInit( <?=json_encode( $samples, JSON_NUMERIC_CHECK )?> );
+  var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
+
+  var names = lines[0];
+  var samples = [];
+  samples.push( [ "label", "tick", "tickDecimals", "time", "value" ] );
+  for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
+  {
+    var line = lines[lineIndex];
+
+    for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
+    {
+      var sample =
+        [
+          names[nameIndex],
+          "",
+          1,
+          new Date( line[0] ).valueOf()/1000,
+          Number( line[nameIndex] )
+        ];
+        samples.push( sample );
+    }
+  }
+
+  plotInit( samples );
 }
 </script>
 
