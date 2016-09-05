@@ -1,24 +1,32 @@
 <?php
-error_log( "=========> IN IT!!1 GRAPH.PHP" );
   $lines = [];
   $heads = [];
-  $resultsFile = fopen( $resultsFilename, "r" );
-  while( ! feof( $resultsFile ) )
+  if ( $resultsFile = @fopen( $resultsFilename, "r" ) )
   {
-    $line = fgetcsv( $resultsFile );
-    if ( count( $line ) > 1 )
+    while( ! feof( $resultsFile ) )
     {
-      array_push( $lines, $line );
-    }
-    else
-    {
-      if ( ( $head = trim( $line[0] ) ) != "" )
+      $line = fgetcsv( $resultsFile );
+      if ( count( $line ) > 1 )
       {
-        array_push( $heads, $head );
+        // Save lines; purge any that have no values
+        $lineVals = $line;
+        array_shift( $lineVals );
+        $implode = trim( implode( $lineVals ) );
+        if ( $implode != "" )
+        {
+          array_push( $lines, $line );
+        }
+      }
+      else
+      {
+        if ( ( $head = trim( $line[0] ) ) != "" )
+        {
+          array_push( $heads, $head );
+        }
       }
     }
+    fclose( $resultsFile );
   }
-  fclose( $resultsFile );
 
   error_log( "======> heads=" . print_r( $heads, true ) );
   error_log( "======> lines=" . print_r( $lines, true ) );
@@ -46,7 +54,7 @@ function loadPlot()
           "",
           1,
           new Date( line[0] ).valueOf()/1000,
-          Number( line[nameIndex] )
+          line[nameIndex]
         ];
         samples.push( sample );
     }
