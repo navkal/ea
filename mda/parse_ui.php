@@ -394,7 +394,7 @@
       +
           '<span columnAsterisk >'
       +
-            ( props.summarizable ? '' : ' *' )
+            ' *'
       +
           '</span>'
       +
@@ -443,7 +443,7 @@
       +
             '<span columnAsterisk >'
       +
-              ( summarizable ? '' : ' *' )
+              ' *'
       +
             '</span>'
       +
@@ -812,10 +812,12 @@
     var showUnsummarizable = ! $( "#detailed" ).prop( "checked" );
     $( "#columnsTab *[summarizable=false] span[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
     $( "#columnsTab *[summarizable=false] span[columnAsterisk]" ).css( "display", showUnsummarizable ? "inline" : "none" );
+    $( "#columnsTab *[summarizable=true] span[columnName]" ).css( "color", showUnsummarizable ? "" : "lightgray" );
+    $( "#columnsTab *[summarizable=true] span[columnAsterisk]" ).css( "display", showUnsummarizable ? "none" : "inline" );
 
     // Column Picker summarizability footnote
-    var haveAsterisks = $( "label[summarizable=false]" ).length > 0;
-    var displayFootnote = showUnsummarizable && haveAsterisks;
+    var haveAsterisks = $( "label[summarizable=" + ! showUnsummarizable + "]" ).length > 0;
+    var displayFootnote = haveAsterisks;
     $( "#summarizableFootnote" ).css( "display", displayFootnote ? "block" : "none" );
   }
 </script>
@@ -1017,7 +1019,7 @@
                 <ul id="columnPicker" class="list-unstyled" >
                 </ul>
                 <small id="summarizableFootnote" class="text-center" style="padding-top:10px" >
-                  * <?=POINT_OF_INTEREST?> not suitable for <i><?=SUMMARY?></i> or <i><?=MULTIPLE?></i> <?=REPORT_FORMAT?>
+                  * <?=POINT_OF_INTEREST?> not suitable for selected <?=REPORT_FORMAT?>
                 </small>
 
               </div>
