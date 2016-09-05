@@ -53,8 +53,8 @@ function loadPlot()
           names[nameIndex],
           "",
           1,
-          new Date( line[0] ).valueOf()/1000,
-          line[nameIndex]
+          new Date( line[0] ).valueOf(),
+          Number( line[nameIndex] )
         ];
         samples.push( sample );
     }
