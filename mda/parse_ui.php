@@ -222,7 +222,7 @@
 
     onChangePeriod();
 
-    checkDefault( { target: "fake" } );
+    updateColumnPicker();
   }
 
   // Handle change of Period radio buttons
@@ -248,6 +248,11 @@
   {
     var sFilename = $( '#' + sFileId ).val().split('\\').pop().split('/').pop();
     $( '#' + sFilenameId ).val( sFilename );
+  }
+
+  function updateColumnPicker()
+  {
+    checkDefault( { target: "fake" } );
   }
 
   function checkDefault( event )
