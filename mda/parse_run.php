@@ -170,8 +170,8 @@
   function runParseScript( $args, $inputFilename, $columnsFilename, $resultsFilename )
   {
     // Set up Python command
-    $summarize = isset( $args["startTime"] ) ? "-s" : "";
-    $start = $summarize ? "--start " . str_replace( ' ', '', $args["startTime"] ) : "";
+    $summarize = $args["format"] == SUMMARY ? "-s" : "";
+    $start = isset( $args["startTime"] ) ? "--start " . str_replace( ' ', '', $args["startTime"] ) : "";
     $end = isset( $args["endTime"] ) ? "--end " . str_replace( ' ', '', $args["endTime"] ) : "";
     $columns = "-c " . quote( $columnsFilename );
     $command = quote( getenv( "PYTHON" ) ) . " parse.py -i " . quote( $inputFilename ) . " -o " . quote( $resultsFilename ) . " " . $summarize . " " . $start . " " . $end . " " . $columns;

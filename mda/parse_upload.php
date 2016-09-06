@@ -118,7 +118,6 @@
       }
 
       $summarizable = $volatility < THRESHOLD;
-      error_log( "=========> key=" . $key . " volatility=" . $volatility . " regressions=" . ( $volatility * $totalDeltas ) . " summarizable=" . $summarizable );
 
       $colMap[$key] = ["summarizable" => $summarizable ];
       $oldMethod =
@@ -127,7 +126,7 @@
         ( ( ( $properties["gt"] ) <= 2 ) && ( $properties["first"] > $properties["value"] ) )
         ;
 
-      if ( $oldMethod != $summarizable ) error_log( "============DIFFERENT!================" );
+      if ( $oldMethod != $summarizable ) error_log( "===> THRESHOLD used in summarizability calculation might be too low.  Current setting is " . THRESHOLD );
     }
 
     ksort( $colMap );
