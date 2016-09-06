@@ -259,6 +259,7 @@
 
   function updateColumnPicker()
   {
+    showSuitable();
     checkDefault( { target: "fake" } );
   }
 
@@ -335,7 +336,7 @@
       {
         var label = $( labels[lbl] );
         var span = label.find( "span[columnName]" );
-        if ( span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+        if ( span.hasClass( "suitable" ) && span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
         {
           label.find( "input" ).prop( "checked", true );
           addEditorColumn( lbl );
