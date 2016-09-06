@@ -228,8 +228,6 @@
   {
     var summary = $( "#summary" ).prop( "checked" );
     var detailed = $( "#detailed" ).prop( "checked" );
-    var multiple = $( "#multiple" ).prop( "checked" );
-    var fullday = $( "#fullday" ).prop( "checked" );
     var partday = $( "#partday" ).prop( "checked" );
 
     var useStartTime = summary || ( detailed && partday );
