@@ -445,6 +445,12 @@
 
     var styleCursorMove = ( navigator.userAgent.indexOf( "Edge" ) == -1 ) ? ' style="cursor:move" ' : "" ;
 
+    var nickname = "";
+    if ( typeof Storage !== "undefined" )
+    {
+      nickname = localStorage.getItem( colName ) || "";
+    }
+
     var column =
       '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onDragStartColumn(event)" ondragover="onDragOverColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" ' + styleCursorMove + ' >'
       +
@@ -464,7 +470,7 @@
       +
           '<div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">'
       +
-            '<input type="text" class="form-control" maxlength="32" placeholder="Nickname" >'
+            '<input type="text" class="form-control" maxlength="32" placeholder="Nickname" onblur="rememberNickname(event)" value="' + nickname + '" >'
       +
           '</div>'
       +
@@ -512,6 +518,17 @@
     setColumnButtonSize();
     setNicknameTabindex();
     showSummarizable();
+  }
+
+  function rememberNickname( event )
+  {
+    if ( typeof Storage !== "undefined" )
+    {
+      var target = $( event.target );
+      var fullname = target.closest( "a" ).find( "span[columnName]" ).text();
+      var nickname = target.val();
+      localStorage.setItem( fullname, nickname );
+    }
   }
 
   var DRAG_TARGET = null;
