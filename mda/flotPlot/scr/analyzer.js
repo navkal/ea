@@ -272,6 +272,8 @@ function plotInit( aPlotOpenData )
     // Enable/disable controls
     plotButtonEnable( "RefreshStart", true );
     plotButtonEnable( "Clear", bShowPlotOpenData );
+    plotButtonEnable( "Save", false );
+    plotButtonEnable( "Open", true );
     plotButtonEnable( "DownSample", true );
     controlEnable( "autoStop", true );
     controlEnable( "autoStopPeriod", true );
@@ -959,6 +961,8 @@ function toggleStartStop()
 
     // Enable/disable other buttons
     plotButtonEnable( "Clear", ! bStarting );
+    plotButtonEnable( "Save", ! bStarting );
+    plotButtonEnable( "Open", ! bStarting );
 
     // Enable/disable other controls
     controlEnable( "autoStop", ! bStarting )

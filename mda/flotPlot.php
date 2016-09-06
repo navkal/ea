@@ -30,34 +30,6 @@
   <center>
             <table>
                 <tr>
-                    <td>
-                        <a href="javascript:void(0)" onclick="return false;" class="mainbtn" id="RefreshStart" tabindex="100">START LIVE SAMPLING</a>
-                    </td>
-                    <td>
-                        <input type="checkbox" name="autoStop" id="autoStop" tabindex="100" value="" checked="checked" onchange="autoStopChkChanged()" />Stop after <input type="text" name="autoStopPeriod" id="autoStopPeriod" size="4" maxlength="4" tabindex="100" value="60" onkeyup="clickStartButton( event )" /> (1-3600 seconds)
-                        <script type="text/javascript">
-                            var g_iAutoStopPeriodMin = 1;
-                            var g_iAutoStopPeriodMax = 3600;
-                            var g_sAutoStopPeriodUnit = "seconds";
-                        </script>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:void(0)" onclick="return false;" class="mainbtn" id="Clear" tabindex="100">CLEAR PLOT</a>
-                    </td>
-                </tr>
-                <tr>
-                   <td>
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
                     <td align="center" colspan="2" class="formlegend">
                         Down Sample
                     </td>
