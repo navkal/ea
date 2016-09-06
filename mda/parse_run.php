@@ -121,21 +121,20 @@
 
       // Save script parameters in file
       $params = METASYS_FILE . "," . $_POST["inputName"];
-      if ( isset( $_POST["startTime"] ) )
+      $params .= "," . REPORT_FORMAT . "," . $_POST["format"];
+      if ( isset ( $_POST["period"] ) )
       {
-        $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
-        if ( $_POST["period"] == FULL_DAY )
+        $params .= "," . TIME_PERIOD . "," . $_POST["period"];
+
+        if ( isset( $_POST["startTime"] ) )
         {
-          $params .= "," . TIME_PERIOD . "," . $_POST["period"];
+          $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
+
+          if ( isset( $_POST["endTime"] ) )
+          {
+            $params .= "," . END_TIME . "," . str_replace( ' ', '', $_POST["endTime"] );
+          }
         }
-        else
-        {
-          $params .= "," . END_TIME . "," . str_replace( ' ', '', $_POST["endTime"] );
-        }
-      }
-      else
-      {
-        $params .= "," . REPORT_FORMAT . "," . DETAILED;
       }
 
       $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
