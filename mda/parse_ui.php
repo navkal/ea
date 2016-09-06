@@ -357,11 +357,12 @@
   {
     uncheckAll( event );
 
-    var all = $( "#columnPicker input[type=checkbox]" );
+    var all = $( "#columnPicker .suitable" ).parent().find( "input[type=checkbox]" );
     all.prop( "checked", true );
-    for ( var checkboxIndex = 0; checkboxIndex < all.length; checkboxIndex ++ )
+
+    for ( var allIndex = 0; allIndex < all.length; allIndex ++ )
     {
-      addEditorColumn( checkboxIndex );
+      addEditorColumn( $( all[allIndex] ).closest( "li" ).index() );
     }
   }
 
@@ -384,7 +385,7 @@
   function checkComplement( event )
   {
     // Reverse checkbox settings
-    var unchecked =  $( "#columnPicker input[type=checkbox]:not(:checked)" );
+    var unchecked =  $( "#columnPicker .suitable" ).parent().find( "input[type=checkbox]:not(:checked)" );
     uncheckAll( event );
     unchecked.prop( "checked", true );
 
@@ -848,9 +849,9 @@
     var detailed = $( "#detailed" ).prop( "checked" );
 
     // Highlight suitable Points of Interest
-    $( "#columnsTab *[summarizable=" + detailed + "] span[columnName]" ).addClass( "notSuitable" );
+    $( "#columnsTab *[summarizable=" + detailed + "] span[columnName]" ).addClass( "notSuitable" ).removeClass( "suitable" );
     $( "#columnsTab *[summarizable=" + detailed + "] span[columnAsterisk]" ).css( "display", "inline" );
-    $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnName]" ).removeClass( "notSuitable" );
+    $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnName]" ).addClass( "suitable" ).removeClass( "notSuitable" );
     $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnAsterisk]" ).css( "display", "none" );
 
     // Show suitability footnote
