@@ -60,7 +60,7 @@ function loadPlot()
         [
           names[nameIndex],
           "",
-          1,
+          0,
           timestamp,
           Number( line[nameIndex] )
         ];
