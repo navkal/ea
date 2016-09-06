@@ -208,7 +208,7 @@
   // Handle change of Report Format radio buttons
   function onChangeFormat()
   {
-    var bDisable = ! $( "#summary" ).prop( "checked" );
+    var bDisable = $( "#multiple" ).prop( "checked" );
 
     var period = $( "input[type=radio][name=period]" );
     period.parent().css( "color", bDisable ? "lightgray" : "" );
@@ -218,8 +218,6 @@
     $( "#partday" ).prop( "checked", false );
     $( "label[for=period]" ).css( "color", bDisable ? "lightgray" : "" );
 
-    disableTimeInput( "startTime", bDisable );
-
     onChangePeriod();
 
     updateColumnPicker();
@@ -228,11 +226,17 @@
   // Handle change of Period radio buttons
   function onChangePeriod()
   {
-    var summaryChecked = $( "#summary" ).prop( "checked" );
-    var fulldayChecked = $( "#fullday" ).prop( "checked" );
+    var summary = $( "#summary" ).prop( "checked" );
+    var detailed = $( "#detailed" ).prop( "checked" );
+    var multiple = $( "#multiple" ).prop( "checked" );
+    var fullday = $( "#fullday" ).prop( "checked" );
+    var partday = $( "#partday" ).prop( "checked" );
 
-    var bDisable = ! summaryChecked || ( summaryChecked && fulldayChecked );
-    disableTimeInput( "endTime", bDisable )
+    var useStartTime = summary || ( detailed && partday );
+    var useEndTime = ( summary || detailed ) && partday;
+
+    disableTimeInput( "startTime", ! useStartTime );
+    disableTimeInput( "endTime", ! useEndTime );
   }
 
   function disableTimeInput( id, bDisable )

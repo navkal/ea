@@ -32,6 +32,11 @@ def parse(input_file):
     return df
 
 
+def subset_to_time_range(df, start_time, end_time):
+    """Return subset consisting of measurements between start_time and end_time"""
+    return df.iloc[df.index.indexer_between_time(start_time, end_time),:]
+
+
 def drop_units(value):
     """Remove the units from a string, e.g. '309.2 kWh' -> 309.2"""
     pattern = re.compile(r"\A(\d*\.?\d+) ?[a-zA-Z]*\Z")
@@ -47,8 +52,6 @@ def summarize(df, start_time=None, end_time=None):
     """Return a table describing daily energy usage"""
     if end_time is not None and start_time is None:
         raise ValueError('end_time should not be specified unless start_time is specified')
-    elif start_time is not None and end_time is not None:
-        df = df.iloc[df.index.indexer_between_time(start_time, end_time),:]
 
     # Sometimes measurements are incorrectly reported as 0
     df = df.replace(to_replace=0, value=np.nan)
@@ -144,8 +147,8 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--summarize', dest='summarize', action='store_true',
                         help='option indicating whether output file should be a summary')
     parser.add_argument('--start', dest='start_time', nargs='?',
-                        help='start time for summary table')
-    parser.add_argument('--end', dest='end_time', nargs='?', help='end time for summary table')
+                        help='start of time range')
+    parser.add_argument('--end', dest='end_time', nargs='?', help='end of time range')
     parser.add_argument('-i', dest='input_file',  help='name of input file')
     parser.add_argument('-o', dest='output_file', help='name of output file')
     parser.add_argument('-c', dest='columns_file', nargs='?', help='name of header file')
@@ -158,6 +161,9 @@ if __name__ == '__main__':
 
     start_time = _string_to_time(args.start_time)
     end_time = _string_to_time(args.end_time)
+
+    if start_time is not None and end_time is not None:
+        transformed = subset_to_time_range(transformed, start_time, end_time)
 
     if args.summarize:
         transformed = summarize(transformed, start_time, end_time)

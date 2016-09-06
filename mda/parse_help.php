@@ -41,7 +41,7 @@
                 <?=SUMMARY?>
               </dt>
               <dd>
-                Aggregates results in specified time periods.
+                Aggregates results in specified <?=TIME_PERIOD?>.
               </dd>
             </dl>
             <dl class="dl-horizontal" >
@@ -49,7 +49,7 @@
                 <?=DETAILED?>
               </dt>
               <dd>
-                Includes a result for each distinct timestamp found in the Metasys File.
+                Includes a result for each distinct timestamp, optionally within specified <?=TIME_PERIOD?>.
               </dd>
             </dl>
             <dl class="dl-horizontal" >
@@ -74,7 +74,14 @@
                 <?=FULL_DAY?>
               </dt>
               <dd>
-                Aggregates results in 24-hour periods beginning with <i><?=START_TIME?></i>.
+                <ul>
+                  <li>
+                    For <i><?=SUMMARY?></i> <?=REPORT_FORMAT?>, aggregates results in 24-hour periods beginning with <i><?=START_TIME?></i>.
+                  </li>
+                  <li>
+                    For <i><?=DETAILED?></i> <?=REPORT_FORMAT?>, includes a result for each distinct timestamp in <?=METASYS_FILE?>.
+                  </li>
+                </ul>
               </dd>
             </dl>
             <dl class="dl-horizontal" >
@@ -82,12 +89,12 @@
                 <?=PARTIAL_DAY?>
               </dt>
               <dd>
-                Aggregates results in periods from <i><?=START_TIME?></i> to <i><?=END_TIME?></i>.
+                Analyzes data in periods from <i><?=START_TIME?></i> to <i><?=END_TIME?></i>.
               </dd>
               <dd>
                 <ul>
                   <li>
-                    If <i><?=START_TIME?></i> is greater than <i><?=END_TIME?></i>, the time periods cross midnight.
+                    If <i><?=START_TIME?></i> is greater than <i><?=END_TIME?></i>, the periods cross midnight.
                   </li>
                   <li>
                     <i><?=START_TIME?></i> and <i><?=END_TIME?></i> must have different values.
