@@ -46,6 +46,11 @@
   text-decoration: none;
   background-color: #f5f5f5;
 }
+
+.notSuitable
+{
+  color: lightgray;
+}
 </style>
 
 <script>
@@ -519,7 +524,7 @@
 
     setColumnButtonSize();
     setNicknameTabindex();
-    showSummarizable();
+    showSuitable();
   }
 
   function rememberNickname( event )
@@ -832,25 +837,25 @@
 
   function onShowColumnsTab()
   {
-    showSummarizable();
+    showSuitable();
 
     // Attach corresponding Help dialog
     $( "#multiHelp" ).attr( "data-target", "#helpColumns" );
   }
 
-  function showSummarizable()
+  function showSuitable()
   {
-    // Column Picker checkbox labels
-    var showUnsummarizable = ! $( "#detailed" ).prop( "checked" );
-    $( "#columnsTab *[summarizable=false] span[columnName]" ).css( "color", showUnsummarizable ? "lightgray" : "" );
-    $( "#columnsTab *[summarizable=false] span[columnAsterisk]" ).css( "display", showUnsummarizable ? "inline" : "none" );
-    $( "#columnsTab *[summarizable=true] span[columnName]" ).css( "color", showUnsummarizable ? "" : "lightgray" );
-    $( "#columnsTab *[summarizable=true] span[columnAsterisk]" ).css( "display", showUnsummarizable ? "none" : "inline" );
+    var detailed = $( "#detailed" ).prop( "checked" );
 
-    // Column Picker summarizability footnote
-    var haveAsterisks = $( "label[summarizable=" + ! showUnsummarizable + "]" ).length > 0;
-    var displayFootnote = haveAsterisks;
-    $( "#summarizableFootnote" ).css( "display", displayFootnote ? "block" : "none" );
+    // Highlight suitable Points of Interest
+    $( "#columnsTab *[summarizable=" + detailed + "] span[columnName]" ).addClass( "notSuitable" );
+    $( "#columnsTab *[summarizable=" + detailed + "] span[columnAsterisk]" ).css( "display", "inline" );
+    $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnName]" ).removeClass( "notSuitable" );
+    $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnAsterisk]" ).css( "display", "none" );
+
+    // Show suitability footnote
+    var showFootnote = $( "#columnsTab .notSuitable" ).length > 0;
+    $( "#summarizableFootnote" ).css( "display", showFootnote ? "block" : "none" );
   }
 </script>
 
