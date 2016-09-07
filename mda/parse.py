@@ -29,6 +29,9 @@ def parse(input_file):
     # Convert index to DatetimeIndex
     df.index = pd.to_datetime(df.index, infer_datetime_format=True)
 
+    # Sort by timestamp
+    df.sort_index(inplace=True)
+
     return df
 
 

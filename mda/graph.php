@@ -1,9 +1,4 @@
 <?php
-  function compareDates( $a, $b )
-  {
-    return strcmp( $a[0], $b[0] );
-  }
-
   $lines = [];
   $heads = [];
   if ( $resultsFile = @fopen( $resultsFilename, "r" ) )
@@ -33,7 +28,6 @@
     fclose( $resultsFile );
   }
 
-  usort( $lines, "compareDates" );
   error_log( "======> heads=" . print_r( $heads, true ) );
   error_log( "======> lines=" . print_r( $lines, true ) );
 ?>
