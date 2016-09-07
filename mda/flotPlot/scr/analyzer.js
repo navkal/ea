@@ -270,13 +270,7 @@ function plotInit( aPlotOpenData )
     }
 
     // Enable/disable controls
-    plotButtonEnable( "RefreshStart", true );
-    plotButtonEnable( "Clear", bShowPlotOpenData );
-    plotButtonEnable( "Save", false );
-    plotButtonEnable( "Open", true );
     plotButtonEnable( "DownSample", true );
-    controlEnable( "autoStop", true );
-    controlEnable( "autoStopPeriod", true );
 }
 
 // Add a set of samples to the plot
@@ -946,162 +940,11 @@ function legendUpdate()
     }
 }
 
-// Toggle button between start and stop functions
-function toggleStartStop()
-{
-    var tStartStopButton = document.getElementById( 'RefreshStart' );
-
-    // Determine content of text fragment
-    var bStarting = tStartStopButton.innerHTML.toLowerCase().indexOf( "start" ) != -1;
-    var sNewText = bStarting ? "op" : "art";
-
-    // Update button properties
-    tStartStopButton.setAttribute( "onclick", "plotRefreshSt" + sNewText + "(); return false;" );
-    tStartStopButton.innerHTML = "ST" + sNewText.toUpperCase() + " LIVE SAMPLING";
-
-    // Enable/disable other buttons
-    plotButtonEnable( "Clear", ! bStarting );
-    plotButtonEnable( "Save", ! bStarting );
-    plotButtonEnable( "Open", ! bStarting );
-
-    // Enable/disable other controls
-    controlEnable( "autoStop", ! bStarting )
-    controlEnable( "autoStopPeriod", ! ( bStarting || ! document.getElementById( "autoStop" ).checked ) )
-
-    // Set focus
-    tStartStopButton.focus();
-}
-
-// Start periodic refresh of plot
-function plotRefreshStart()
-{
-    var sError = "";
-    var bAutoStop = false;
-
-    // Determine auto-stop setting
-    if ( document.getElementById( "autoStop" ).checked )
-    {
-        // Auto-stop checkbox is checked; get time period
-        var tAutoStopPeriod = document.getElementById( "autoStopPeriod" );
-
-        // Trim the text and convert to integer
-        var sAutoStopPeriod = tAutoStopPeriod.value = tAutoStopPeriod.value.trim();
-        var iAutoStopPeriod = parseInt( sAutoStopPeriod );
-
-        if ( sAutoStopPeriod == "" )
-        {
-            sError = "empty";
-        }
-        else if ( ! /^\d+$/.test( sAutoStopPeriod ) || isNaN( iAutoStopPeriod ) )
-        {
-            sError = "not a number";
-        }
-        else if ( iAutoStopPeriod < g_iAutoStopPeriodMin )
-        {
-            sError = "too small";
-        }
-        else if ( iAutoStopPeriod > g_iAutoStopPeriodMax )
-        {
-            sError = "too large";
-        }
-        else
-        {
-            bAutoStop = true;
-        }
-    }
-
-    if ( sError == "" )
-    {
-        // Format confirmation message
-        var sMessage = "Start live sampling";
-        if ( bAutoStop )
-        {
-            sMessage += ", and stop after " + iAutoStopPeriod + " " + g_sAutoStopPeriodUnit;
-        }
-
-        if ( confirm( sMessage + "?" ) )
-        {
-            // Clear plot
-            plotClear( true );
-
-            // Toggle the button
-            toggleStartStop();
-
-            // Start periodic refreshing of plot
-            g_iPlotRefreshAjaxIndex = ajaxStart( "analyzer.html", "plotSample", "plotview", "", 1000, true );
-
-            // Optionally request to stop live sampling automatically
-            if ( bAutoStop )
-            {
-                g_iAutoStopAjaxIndex = ajaxStart( "analyzer.html", "plotDone", "plotview", "plotRefreshStop()", iAutoStopPeriod * 1000 );
-            }
-        }
-    }
-    else
-    {
-        // Specified auto-stop time period is not valid
-        alert( "Can not stop after '" + sAutoStopPeriod + "' " + g_sAutoStopPeriodUnit + "; value is " + sError + "." );
-    }
-}
-
-// Stop periodic refresh of plot
-function plotRefreshStop()
-{
-    // Cancel auto-stop request, if it was made
-    if ( typeof g_iAutoStopAjaxIndex != null )
-    {
-        ajaxDone( g_iAutoStopAjaxIndex );
-        g_iAutoStopAjaxIndex = null;
-    }
-
-    // Stop periodic refreshing of plot
-    ajaxDone( g_iPlotRefreshAjaxIndex );
-    g_iPlotRefreshAjaxIndex = null;
-
-    // Stop the analyzer
-    ajaxGet( "analyzer.html", "plotStop", "plotview", "document.getElementById( 'RefreshStart' ).focus()" );
-
-    // Toggle the start/stop button
-    toggleStartStop();
-}
-
-// Stop plot
-function plotStop()
-{
-    ajaxGet( "analyzer.html", "plotStop", "plotview", "document.getElementById( 'RefreshStart' ).focus()" );
-}
-
 // Handle change of checkbox state
 function autoStopChkChanged()
 {
     // Enable period field only when checkbox is checked
     controlEnable( "autoStopPeriod", document.getElementById( "autoStop" ).checked );
-}
-
-// Clear plot data
-function plotClear( bSilent )
-{
-    if ( ( ( typeof bSilent != "undefined" ) && bSilent ) || confirm( "Clear plot?" ) )
-    {
-        // Restore some initial values
-        g_aSeries = null;
-        g_tPlot = null;
-        g_tOverview = null;
-        zoomRangeSet( null );
-        g_bPlotBindDone = false;
-
-        // Clear the plot chooser
-        chooserClear();
-
-        // Initialize the plot display
-        plotInit();
-
-        // Focus on the Start button
-        document.getElementById( 'RefreshStart' ).focus();
-
-        // Clear debug information
-        debugClear();
-    }
 }
 
 // Clear the plot chooser
@@ -1160,59 +1003,6 @@ function copyPlotTicksTo( aYaxes )
     }
 
     return aYaxes;
-}
-
-// Save plot
-function plotSave()
-{
-    if ( confirm( "Save plot?" ) )
-    {
-        // Reconstruct plot data for save operation
-        var plotSaveData = [];
-        for ( var iSample = 0; iSample < g_aSeries[0].length; iSample ++ )
-        {
-            // Create empty sample
-            plotSaveData[iSample] = [];
-
-            // Load data into sample
-            for ( var iSeries = 0; iSeries < g_aSeries.length; iSeries ++ )
-            {
-                plotSaveData[iSample][iSeries] = [];
-                plotSaveData[iSample][iSeries].push( "\n" + "'" + g_aChoosers[iSeries].label + "'" );
-                plotSaveData[iSample][iSeries].push( "'" + g_aChoosers[iSeries].tick + "'" );
-                plotSaveData[iSample][iSeries].push( g_aChoosers[iSeries].tickDecimals );
-
-                // Load numeric timestamp as string, to work around limitation of MS Excel
-                var iTime = g_aSeries[iSeries][iSample][0];
-                if ( typeof( iTime ) != "number" )
-                {
-                    iTime = parseInt( eval( iTime ) );
-                }
-                g_aSeries[iSeries][iSample][0] = "'" + iTime + "'" ;
-                plotSaveData[iSample][iSeries].push( g_aSeries[iSeries][iSample] );
-
-                // For users who look at saved plot file, load timestamp in human-readable format
-                sDate = $.plot.formatDate( new Date( iTime ), "%m/%d/%y %H:%M:%S" );
-                plotSaveData[iSample][iSeries].push( "'" + sDate + "'" );
-            }
-        }
-
-        // Send data to server
-        submitCommand( "formSave", "plotSave", "'label','tick','tickDecimals','time','value','UTC'," + plotSaveData.toString(), "", "" );
-
-        // Clear cursor
-        clearWaitCursor();
-    }
-}
-
-// Display dialog box to prompt for plot file
-function plotOpen()
-{
-    setDialogSize( 475, 100 );
-    setDialogTitle( "Open Plot" );
-    setDialogLoading();
-    showDialog();
-    ajaxGet( "analyzer.html", "plotOpenDialog", "dialogpage", "document.getElementById( 'plotFile' ).focus()" );
 }
 
 // Read data from opened plot file

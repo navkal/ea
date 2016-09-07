@@ -8,7 +8,6 @@
 
 <script language="javascript" type="text/javascript" src="flotPlot/scr/analyzer.js"></script>
 <script language="javascript" type="text/javascript" src="flotPlot/scr/scrollbar.js"></script>
-<script language="javascript" type="text/javascript" src="flotPlot/context.js"></script>
 
 <div id="mainpane" >
   <div style="width:90%; margin-left:auto; margin-right:auto;" >
