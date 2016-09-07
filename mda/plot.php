@@ -48,24 +48,31 @@
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/scrollbar.js"></script>
 
 <script>
+
   $( document ).ready( loadPlot );
 
   function loadPlot()
   {
-    var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
+    var NOT_USED = "NOT USED";
 
+    var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
     var names = lines[0];
+
+    // Preprocess to fill in empty cells and determine series precision
     var line = Array( names.length ).fill( 0 );
 
-    var samples = [];
-    samples.push( [ "label", "tick", "tickDecimals", "time", "value" ] );
+    var seriesMin = Array( names.length ).fill( Number.MAX_VALUE );
+    seriesMin[0] = NOT_USED;
+    var seriesMax = Array( names.length ).fill( Number.MIN_VALUE );
+    seriesMax[0] = NOT_USED;
+
+    console.log( "=======> BF min=" + JSON.stringify( seriesMin ) );
+    console.log( "=======> BF max=" + JSON.stringify( seriesMax ) );
 
     for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
     {
       var prevLine = line;
       line = lines[lineIndex];
-
-      var timestamp = new Date( line[0] ).valueOf()
 
       for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
       {
@@ -76,12 +83,58 @@
           line[nameIndex] = prevLine[nameIndex];
         }
 
+        seriesMin[nameIndex] = Math.min( seriesMin[nameIndex], line[nameIndex] );
+        seriesMax[nameIndex] = Math.max( seriesMax[nameIndex], line[nameIndex] );
+      }
+    }
+
+    console.log( "=======> AF min=" + JSON.stringify( seriesMin ) );
+    console.log( "=======> AF max=" + JSON.stringify( seriesMax ) );
+    var seriesPrecision = Array( names.length ).fill( 0 );
+    seriesPrecision[0] = NOT_USED;
+
+    for ( var index = 1; index < seriesPrecision.length; index ++ )
+    {
+      var min = seriesMin[index];
+      var max = seriesMax[index];
+      var diff = ( min < 0 ) ? Math.max( Math.abs( min ), max ) : ( max - min );
+      var digits = Math.floor( diff * 100 ).toString().length;
+      switch( digits )
+      {
+        case 1:
+          seriesPrecision[index] = 2;
+          break;
+
+        case 2:
+          seriesPrecision[index] = 1;
+          break;
+
+        case 3:
+        default:
+          seriesPrecision[index] = 0;
+           break;
+      }
+    }
+
+    console.log( "=======> precision=" + JSON.stringify(seriesPrecision) );
+
+    // Build array of samples for plot
+    var samples = [];
+    samples.push( [ "label", "tick", "tickDecimals", "time", "value" ] );
+
+    for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
+    {
+      line = lines[lineIndex];
+      var timestamp = new Date( line[0] ).valueOf()
+
+      for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
+      {
         // Add a sample for this data cell
         var sample =
           [
             names[nameIndex],
             "",
-            1,
+            seriesPrecision[nameIndex],
             timestamp,
             line[nameIndex]
           ];
