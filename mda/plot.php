@@ -1,4 +1,8 @@
 <?php
+  $paramsFile = fopen( $paramsFilename, "r" );
+  $params = fgetcsv( $paramsFile );
+  fclose( $paramsFile );
+
   $lines = [];
   $heads = [];
   if ( $resultsFile = @fopen( $resultsFilename, "r" ) )
@@ -76,12 +80,30 @@
   }
 </script>
 
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <dl class="dl-horizontal list-group-item list-group-item-info" >
+          <?php
+            for ( $index = 0; $index < count( $params ); $index += 2 )
+            {
+              echo "<dt>";
+              echo $params[$index];
+              echo "</dt>";
+              echo "<dd>";
+              echo $params[$index+1];
+              echo "</dd>";
+            }
+          ?>
+        </dl>
+  </div>
+</div>
+
 <div id="mainpane" >
   <div style="width:90%; margin-left:auto; margin-right:auto;" >
     <table>
       <tr>
         <td>
-          <span id="pagestatus" name="pagestatus" class="pageinfo">Test</span>
+          <span id="pagestatus"></span>
         </td>
       </tr>
     </table>
