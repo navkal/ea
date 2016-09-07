@@ -870,10 +870,6 @@
           include( "filenames.php" );
           if ( file_exists( $resultsFilename ) )
           {
-            ?>
-<script language="javascript" type="text/javascript" src="mda/flotPlot/scr/analyzer.js"></script>
-<script language="javascript" type="text/javascript" src="mda/flotPlot/scr/scrollbar.js"></script>
-            <?php
             include "plot.php";
           }
         }
