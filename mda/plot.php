@@ -51,19 +51,15 @@
 
   $( document ).ready( loadPlot );
 
-  function loadPlot()
+  function calculatePrecision( lines, lineLength )
   {
     var NOT_USED = "NOT USED";
 
-    var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
-    var names = lines[0];
-
-    // Preprocess to fill in empty cells and determine series precision
-    var line = Array( names.length ).fill( 0 );
-
-    var seriesMin = Array( names.length ).fill( Number.MAX_VALUE );
+    // Determine min and max values for each series
+    var seriesMin = Array( lineLength ).fill( Number.MAX_VALUE );
     seriesMin[0] = NOT_USED;
-    var seriesMax = Array( names.length ).fill( Number.MIN_VALUE );
+
+    var seriesMax = Array( lineLength ).fill( Number.MIN_VALUE );
     seriesMax[0] = NOT_USED;
 
     console.log( "=======> BF min=" + JSON.stringify( seriesMin ) );
@@ -71,18 +67,10 @@
 
     for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
     {
-      var prevLine = line;
-      line = lines[lineIndex];
+      var line = lines[lineIndex];
 
-      for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
+      for ( var nameIndex = 1; nameIndex < lineLength; nameIndex ++ )
       {
-        // If current cell is empty, revert to value in preceding line
-        if ( line[nameIndex] === "" )
-        {
-          console.log( "========> replacing " + line[nameIndex] +  " with " + prevLine[nameIndex] );
-          line[nameIndex] = prevLine[nameIndex];
-        }
-
         seriesMin[nameIndex] = Math.min( seriesMin[nameIndex], line[nameIndex] );
         seriesMax[nameIndex] = Math.max( seriesMax[nameIndex], line[nameIndex] );
       }
@@ -90,7 +78,9 @@
 
     console.log( "=======> AF min=" + JSON.stringify( seriesMin ) );
     console.log( "=======> AF max=" + JSON.stringify( seriesMax ) );
-    var seriesPrecision = Array( names.length ).fill( 0 );
+
+    // Determine precision for each series
+    var seriesPrecision = Array( lineLength ).fill( 0 );
     seriesPrecision[0] = NOT_USED;
 
     for ( var index = 1; index < seriesPrecision.length; index ++ )
@@ -120,17 +110,36 @@
 
     console.log( "=======> precision=" + JSON.stringify(seriesPrecision) );
 
+    return seriesPrecision;
+  }
+
+
+  function loadPlot()
+  {
+    var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
+    var names = lines[0];
+    var seriesPrecision = calculatePrecision( lines, names.length );
+
     // Build array of samples for plot
+    var line = Array( names.length ).fill( 0 );
     var samples = [];
     samples.push( [ "label", "tick", "tickDecimals", "time", "value" ] );
 
     for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
     {
+      var prevLine = line;
       line = lines[lineIndex];
       var timestamp = new Date( line[0] ).valueOf()
 
       for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
       {
+        // If current cell is empty, revert to value in preceding line
+        if ( line[nameIndex] === "" )
+        {
+          console.log( "========> replacing " + line[nameIndex] +  " with " + prevLine[nameIndex] );
+          line[nameIndex] = prevLine[nameIndex];
+        }
+
         // Add a sample for this data cell
         var sample =
           [
@@ -151,6 +160,7 @@
       $( "#mainpane" ).css( "display", "none" );
     }
   }
+
 </script>
 
 <div class="row">
