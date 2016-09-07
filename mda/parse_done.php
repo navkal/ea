@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <!-- Close and Graph buttons -->
+      <!-- Close and Plot buttons -->
       <div style="text-align:center;" >
         <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
         <?php
@@ -85,7 +85,7 @@
             $split = explode( ".", $resultsFilename );
             if ( $split[ count( $split ) - 1 ] == "csv" )
             {
-              echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Graph</a>';
+              echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a>';
             }
           }
         ?>
