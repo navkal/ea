@@ -46,7 +46,6 @@ function loadPlot()
   {
     var line = lines[lineIndex];
     var timestamp = new Date( line[0] ).valueOf()
-    console.log( "===> " + line[0] + " = " + timestamp );
 
     for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
     {
