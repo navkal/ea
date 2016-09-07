@@ -120,7 +120,7 @@
   <div name="scrollbar" id="scrollbar" style="width:90%; height:20px; margin-left:auto; margin-right:auto;" ></div>
   <br/>
   <center>
-            <table>
+            <table id="downsampleControls" >
                 <tr>
                     <td align="center" colspan="2" class="formlegend">
                         Down Sample
