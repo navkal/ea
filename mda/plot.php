@@ -55,22 +55,35 @@
     var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
 
     var names = lines[0];
+    var line = Array( names.length ).fill( 0 );
+
     var samples = [];
     samples.push( [ "label", "tick", "tickDecimals", "time", "value" ] );
+
     for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
     {
-      var line = lines[lineIndex];
+      var prevLine = line;
+      line = lines[lineIndex];
+
       var timestamp = new Date( line[0] ).valueOf()
 
       for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
       {
+        // If current cell is empty, revert to value in preceding line
+        if ( line[nameIndex] === "" )
+        {
+          console.log( "========> replacing " + line[nameIndex] +  " with " + prevLine[nameIndex] );
+          line[nameIndex] = prevLine[nameIndex];
+        }
+
+        // Add a sample for this data cell
         var sample =
           [
             names[nameIndex],
             "",
             1,
             timestamp,
-            Number( line[nameIndex] )
+            line[nameIndex]
           ];
           samples.push( sample );
       }
