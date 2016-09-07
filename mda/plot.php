@@ -98,21 +98,23 @@
       var min = seriesMin[index];
       var max = seriesMax[index];
       var diff = ( min < 0 ) ? Math.max( Math.abs( min ), max ) : ( max - min );
-      var digits = Math.floor( diff * 100 ).toString().length;
+      var digits = Math.floor( diff * 1000 ).toString().length;
+
       switch( digits )
       {
         case 1:
+          seriesPrecision[index] = 3;
+          break;
+        case 2:
           seriesPrecision[index] = 2;
           break;
-
-        case 2:
+        case 3:
           seriesPrecision[index] = 1;
           break;
-
-        case 3:
+        case 4:
         default:
           seriesPrecision[index] = 0;
-           break;
+          break;
       }
     }
 
