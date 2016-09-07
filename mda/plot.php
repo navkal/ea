@@ -51,6 +51,53 @@
 
   $( document ).ready( loadPlot );
 
+  function loadPlot()
+  {
+    var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
+    var names = lines[0];
+    var seriesPrecision = calculatePrecision( lines, names.length );
+
+    // Build array of samples for plot
+    var line = Array( names.length ).fill( 0 );
+    var samples = [];
+    samples.push( [ "label", "tick", "tickDecimals", "time", "value" ] );
+
+    for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
+    {
+      var prevLine = line;
+      line = lines[lineIndex];
+      var timestamp = new Date( line[0] ).valueOf()
+
+      for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
+      {
+        // If current cell is empty, revert to value in preceding line
+        if ( line[nameIndex] === "" )
+        {
+          console.log( "========> replacing " + line[nameIndex] +  " with " + prevLine[nameIndex] );
+          line[nameIndex] = prevLine[nameIndex];
+        }
+
+        // Add a sample for this data cell
+        var sample =
+          [
+            names[nameIndex],
+            "",
+            seriesPrecision[nameIndex],
+            timestamp,
+            line[nameIndex]
+          ];
+          samples.push( sample );
+      }
+    }
+
+    if ( ! plotInit( samples ) )
+    {
+      $( "#messages" ).append( '<p>Could not decipher plot data</p>' );
+      $( "#messages" ).css( "display", "block" );
+      $( "#mainpane" ).css( "display", "none" );
+    }
+  }
+
   function calculatePrecision( lines, lineLength )
   {
     var NOT_USED = "NOT USED";
@@ -111,54 +158,6 @@
     console.log( "=======> precision=" + JSON.stringify(seriesPrecision) );
 
     return seriesPrecision;
-  }
-
-
-  function loadPlot()
-  {
-    var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
-    var names = lines[0];
-    var seriesPrecision = calculatePrecision( lines, names.length );
-
-    // Build array of samples for plot
-    var line = Array( names.length ).fill( 0 );
-    var samples = [];
-    samples.push( [ "label", "tick", "tickDecimals", "time", "value" ] );
-
-    for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
-    {
-      var prevLine = line;
-      line = lines[lineIndex];
-      var timestamp = new Date( line[0] ).valueOf()
-
-      for ( var nameIndex = 1; nameIndex < names.length; nameIndex ++ )
-      {
-        // If current cell is empty, revert to value in preceding line
-        if ( line[nameIndex] === "" )
-        {
-          console.log( "========> replacing " + line[nameIndex] +  " with " + prevLine[nameIndex] );
-          line[nameIndex] = prevLine[nameIndex];
-        }
-
-        // Add a sample for this data cell
-        var sample =
-          [
-            names[nameIndex],
-            "",
-            seriesPrecision[nameIndex],
-            timestamp,
-            line[nameIndex]
-          ];
-          samples.push( sample );
-      }
-    }
-
-    if ( ! plotInit( samples ) )
-    {
-      $( "#messages" ).append( '<p>Could not decipher plot data</p>' );
-      $( "#messages" ).css( "display", "block" );
-      $( "#mainpane" ).css( "display", "none" );
-    }
   }
 
 </script>
