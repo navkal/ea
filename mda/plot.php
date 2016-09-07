@@ -76,7 +76,12 @@
       }
     }
 
-    plotInit( samples );
+    if ( ! plotInit( samples ) )
+    {
+      $( "#messages" ).append( '<p>Could not decipher plot data</p>' );
+      $( "#messages" ).css( "display", "block" );
+      $( "#mainpane" ).css( "display", "none" );
+    }
   }
 </script>
 
@@ -98,16 +103,15 @@
   </div>
 </div>
 
-<div id="mainpane" >
-  <div style="width:90%; margin-left:auto; margin-right:auto;" >
-    <table>
-      <tr>
-        <td>
-          <span id="pagestatus"></span>
-        </td>
-      </tr>
-    </table>
+<br/>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div id="messages" class="alert alert-danger" style="display:none" role="alert">
+    </div>
   </div>
+</div>
+
+<div id="mainpane" >
   <div name="seriesChooser" id="seriesChooser" style="width:90%; height:30px; margin-left:auto; margin-right:auto; margin-top:20px; text-align:right;" ></div>
   <div name="plotview" id="plotview" style="width:90%; height:350px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
   <br/>
