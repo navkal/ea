@@ -875,7 +875,7 @@
 <script language="javascript" type="text/javascript" src="mda/flotPlot/scr/scrollbar.js"></script>
 <script language="javascript" type="text/javascript" src="mda/flotPlot/context.js"></script>
             <?php
-            //include "graph.php";
+            include "graph.php";
           }
         }
       ?>

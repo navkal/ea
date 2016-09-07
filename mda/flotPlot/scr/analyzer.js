@@ -1162,16 +1162,6 @@ function copyPlotTicksTo( aYaxes )
     return aYaxes;
 }
 
-// Allow user to start sampling by pressing <enter> in auto-stop time period field
-function clickStartButton( tEvent )
-{
-    // If user pressed <Enter>, start sampling
-    if ( tEvent.keyCode == 13 )
-    {
-        plotRefreshStart();
-    }
-}
-
 // Save plot
 function plotSave()
 {
