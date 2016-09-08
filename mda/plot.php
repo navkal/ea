@@ -161,6 +161,16 @@
   }
 
 </script>
+
+<style>
+#seriesChooser
+{
+  -webkit-column-width: 270px; /* Chrome, Safari, Opera */
+  -moz-column-width: 270px; /* Firefox */
+  column-width: 270px;
+}
+</style>
+
 <div class="container" >
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -193,7 +203,7 @@
   <div class="container" >
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div name="seriesChooser" id="seriesChooser" style="text-align:right;" ></div>
+        <ul name="seriesChooser" id="seriesChooser" class="list-unstyled" ></ul>
       </div>
     </div>
   </div>
