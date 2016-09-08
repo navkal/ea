@@ -161,41 +161,56 @@
   }
 
 </script>
-
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <dl class="dl-horizontal list-group-item list-group-item-info" >
-          <?php
-            for ( $index = 0; $index < count( $params ); $index += 2 )
-            {
-              echo "<dt>";
-              echo $params[$index];
-              echo "</dt>";
-              echo "<dd>";
-              echo $params[$index+1];
-              echo "</dd>";
-            }
-          ?>
-        </dl>
+<div class="container" >
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <dl class="dl-horizontal list-group-item list-group-item-info" >
+            <?php
+              for ( $index = 0; $index < count( $params ); $index += 2 )
+              {
+                echo "<dt>";
+                echo $params[$index];
+                echo "</dt>";
+                echo "<dd>";
+                echo $params[$index+1];
+                echo "</dd>";
+              }
+            ?>
+          </dl>
+    </div>
   </div>
-</div>
-
-<br/>
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div id="messages" class="alert alert-danger" style="display:none" role="alert">
+  <br/>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div id="messages" class="alert alert-danger" style="display:none" role="alert">
+      </div>
     </div>
   </div>
 </div>
 
 <div id="mainpane" >
-  <div name="seriesChooser" id="seriesChooser" style="width:90%; height:30px; margin-left:auto; margin-right:auto; margin-top:20px; text-align:right;" ></div>
-  <div name="plotview" id="plotview" style="width:90%; height:350px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
-  <br/>
-  <div name="overview" id="overview" style="width:90%; height:100px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
-  <br/>
-  <div name="scrollbar" id="scrollbar" style="width:90%; height:20px; margin-left:auto; margin-right:auto;" ></div>
-  <br/>
+
+  <div class="container" >
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div name="seriesChooser" id="seriesChooser" style="text-align:right;" ></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid" >
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div name="plotview" id="plotview" style="width:90%; height:350px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
+        <br/>
+        <div name="overview" id="overview" style="width:90%; height:100px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
+        <br/>
+        <div name="scrollbar" id="scrollbar" style="width:90%; height:20px; margin-left:auto; margin-right:auto;" ></div>
+        <br/>
+      </div>
+    </div>
+  </div>
+
   <center>
             <table id="downsampleControls" >
                 <tr>
