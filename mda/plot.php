@@ -213,23 +213,16 @@
     </div>
   </div>
 
-  <center>
-            <table id="downsampleControls" >
-                <tr>
-                    <td align="center" colspan="2" class="formlegend">
-                        Down Sample
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" colspan="2" class="captionline">
-                        Alternately show and hide samples, starting at offset.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>
+  <div class="container" id="downsampleControls" style="text-align:center" >
+  
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4>Down Sample</h4>
+        <p>Alternately show and hide samples, starting at offset.<p/>
+      </div>
+    </div>
+    
+            <center><table>
                 <tr>
                     <td class="formprompt">
                         Status:
@@ -290,7 +283,6 @@
                         <input type="checkbox" name="downSampleZoom" id="downSampleZoom" tabindex="100" value="" checked="checked" onchange="downSampleZoomChanged()" />
                     </td>
                 </tr>
-            </table>
-  </center>
+            </table></center>
+  </div>
 </div>
-
