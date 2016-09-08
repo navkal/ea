@@ -1,0 +1,6 @@
+.checkboxList
+{
+  -webkit-column-width: 270px; /* Chrome, Safari, Opera */
+  -moz-column-width: 270px; /* Firefox */
+  column-width: 270px;
+}

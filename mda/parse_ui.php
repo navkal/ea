@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">
 <script type="text/javascript" src="lib/wickedpicker/dist/wickedpicker.unmin.js"></script>
 <script type="text/javascript" src="../util/util.js"></script>
+<link rel="stylesheet" href="../util/util.css">
 
 <style>
 @media( max-width: 767px )
@@ -15,13 +16,6 @@
   {
     padding-left: 20px;
   }
-}
-
-#columnPicker
-{
-  -webkit-column-width: 270px; /* Chrome, Safari, Opera */
-  -moz-column-width: 270px; /* Firefox */
-  column-width: 270px;
 }
 
 @media( max-width: 991px )
@@ -1046,7 +1040,7 @@
                 </div>
 
                 <!-- Checkboxes -->
-                <ul id="columnPicker" class="list-unstyled" >
+                <ul id="columnPicker" class="list-unstyled checkboxList" >
                 </ul>
                 <small id="summarizableFootnote" class="text-center" style="padding-top:10px" >
                   * <?=POINT_OF_INTEREST?> not suitable for selected <?=REPORT_FORMAT?>

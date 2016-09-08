@@ -46,6 +46,7 @@
 
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/analyzer.js"></script>
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/scrollbar.js"></script>
+<link rel="stylesheet" href="../util/util.css">
 
 <script>
 
@@ -162,15 +163,6 @@
 
 </script>
 
-<style>
-#seriesChooser
-{
-  -webkit-column-width: 270px; /* Chrome, Safari, Opera */
-  -moz-column-width: 270px; /* Firefox */
-  column-width: 270px;
-}
-</style>
-
 <div class="container" >
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -203,7 +195,7 @@
   <div class="container" >
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <ul name="seriesChooser" id="seriesChooser" class="list-unstyled" ></ul>
+        <ul name="seriesChooser" id="seriesChooser" class="list-unstyled checkboxList" ></ul>
       </div>
     </div>
   </div>
