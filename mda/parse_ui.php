@@ -861,22 +861,18 @@
   }
 </script>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <?php
-        if ( $timestamp = getenv( "TIMESTAMP" ) )
-        {
-          include( "filenames.php" );
-          if ( file_exists( $resultsFilename ) )
-          {
-            include "plot.php";
-          }
-        }
-      ?>
-    </div>
-  </div>
-</div>
+
+<?php
+  if ( $timestamp = getenv( "TIMESTAMP" ) )
+  {
+    include( "filenames.php" );
+    if ( file_exists( $resultsFilename ) )
+    {
+      include "plot.php";
+    }
+  }
+?>
+
 
 <div class="container">
   <div class="page-header">
