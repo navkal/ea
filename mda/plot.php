@@ -224,7 +224,7 @@
         <p>Currently showing <b><span id="downSampleShowing"></span></b> of <b><span id="downSampleOf"></span></b> samples.</p>
 
         <label class="checkbox checkbox-inline" >
-          <input type="checkbox" name="downSampleAuto" id="downSampleAuto" tabindex="100" value="" checked="checked" onchange="downSampleAutoChanged()" />
+          <input type="checkbox" name="downSampleAuto" id="downSampleAuto" value="" checked="checked" onchange="downSampleAutoChanged()" />
           Use 'Limit' and 'Offset' to calculate 'Show' and 'Hide' automatically
         </label>
 
@@ -270,7 +270,7 @@
                           &nbsp;Hide&nbsp;
                           <input type="text" size="3" maxlength="3" name="downSampleHide" id="downSampleHide" onkeyup="clickDownSampleButton( event )" />
                           &nbsp;
-                          <a href="javascript:void(0)" onclick="return false;" class="mainbtn" id="DownSample" tabindex="100">APPLY</a>
+                          <a href="javascript:void(0)" onclick="return false;" class="mainbtn" id="DownSample" >APPLY</a>
                       </td>
                   </tr>
                   <tr>
@@ -278,7 +278,7 @@
                           Down-Sample in Zoom view:
                       </td>
                       <td align="center" colspan="1" class="formfieldarea">
-                          <input type="checkbox" name="downSampleZoom" id="downSampleZoom" tabindex="100" value="" checked="checked" onchange="downSampleZoomChanged()" />
+                          <input type="checkbox" name="downSampleZoom" id="downSampleZoom" value="" checked="checked" onchange="downSampleZoomChanged()" />
                       </td>
                   </tr>
             </table>
