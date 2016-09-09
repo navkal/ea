@@ -227,66 +227,68 @@
           <input type="checkbox" name="downSampleAuto" id="downSampleAuto" tabindex="100" value="" checked="checked" onchange="downSampleAutoChanged()" />
           Use 'Limit' and 'Offset' to calculate 'Show' and 'Hide' automatically
         </label>
+
+        <br/>
+        <br/>
+
+
+
+<center>
+
+            <table>
+
+                  <tr>
+                      <td class="formprompt">
+                          Settings:
+                      </td>
+                      <td class="formfieldarea">
+                          &nbsp;Limit&nbsp;
+                          <script type="text/javascript">var g_iDownSampleLimit = 100;</script>
+                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleLimit_current" id="downSampleLimit_current" value="100" />
+                          &nbsp;Offset&nbsp;
+                          <script type="text/javascript">var g_iDownSampleOffset = 0;</script>
+                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleOffset_current" id="downSampleOffset_current" value="0" />
+                          &nbsp;Show&nbsp;
+                          <script type="text/javascript">var g_iDownSampleShow = 1;</script>
+                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleShow_current" id="downSampleShow_current" value="1" />
+                          &nbsp;Hide&nbsp;
+                          <script type="text/javascript">var g_iDownSampleHide = 0;</script>
+                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleHide_current" id="downSampleHide_current" value="0" />
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="formprompt">
+                          Change to:
+                      </td>
+                      <td class="formfieldarea">
+                          &nbsp;Limit&nbsp;
+                          <input type="text" size="3" maxlength="3" name="downSampleLimit" id="downSampleLimit" onkeyup="clickDownSampleButton( event )" />
+                          &nbsp;Offset&nbsp;
+                          <input type="text" size="3" maxlength="3" name="downSampleOffset" id="downSampleOffset" onkeyup="clickDownSampleButton( event )" />
+                          &nbsp;Show&nbsp;
+                          <input type="text" size="3" maxlength="3" name="downSampleShow" id="downSampleShow" onkeyup="clickDownSampleButton( event )" />
+                          &nbsp;Hide&nbsp;
+                          <input type="text" size="3" maxlength="3" name="downSampleHide" id="downSampleHide" onkeyup="clickDownSampleButton( event )" />
+                          &nbsp;
+                          <a href="javascript:void(0)" onclick="return false;" class="mainbtn" id="DownSample" tabindex="100">APPLY</a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="formprompt">
+                          Down-Sample in Zoom view:
+                      </td>
+                      <td align="center" colspan="1" class="formfieldarea">
+                          <input type="checkbox" name="downSampleZoom" id="downSampleZoom" tabindex="100" value="" checked="checked" onchange="downSampleZoomChanged()" />
+                      </td>
+                  </tr>
+            </table>
+
+</center>
+
+
+
       </div>
     </div>
-
-
-    <br/>
-    <center>
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div style="margin-left:auto; margin-right:auto;" >
-          <table>
-
-                <tr>
-                    <td class="formprompt">
-                        Settings:
-                    </td>
-                    <td class="formfieldarea">
-                        &nbsp;Limit&nbsp;
-                        <script type="text/javascript">var g_iDownSampleLimit = 100;</script>
-                        <input type="text" disabled="true" size="3" maxlength="3" name="downSampleLimit_current" id="downSampleLimit_current" value="100" />
-                        &nbsp;Offset&nbsp;
-                        <script type="text/javascript">var g_iDownSampleOffset = 0;</script>
-                        <input type="text" disabled="true" size="3" maxlength="3" name="downSampleOffset_current" id="downSampleOffset_current" value="0" />
-                        &nbsp;Show&nbsp;
-                        <script type="text/javascript">var g_iDownSampleShow = 1;</script>
-                        <input type="text" disabled="true" size="3" maxlength="3" name="downSampleShow_current" id="downSampleShow_current" value="1" />
-                        &nbsp;Hide&nbsp;
-                        <script type="text/javascript">var g_iDownSampleHide = 0;</script>
-                        <input type="text" disabled="true" size="3" maxlength="3" name="downSampleHide_current" id="downSampleHide_current" value="0" />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formprompt">
-                        Change to:
-                    </td>
-                    <td class="formfieldarea">
-                        &nbsp;Limit&nbsp;
-                        <input type="text" size="3" maxlength="3" name="downSampleLimit" id="downSampleLimit" onkeyup="clickDownSampleButton( event )" />
-                        &nbsp;Offset&nbsp;
-                        <input type="text" size="3" maxlength="3" name="downSampleOffset" id="downSampleOffset" onkeyup="clickDownSampleButton( event )" />
-                        &nbsp;Show&nbsp;
-                        <input type="text" size="3" maxlength="3" name="downSampleShow" id="downSampleShow" onkeyup="clickDownSampleButton( event )" />
-                        &nbsp;Hide&nbsp;
-                        <input type="text" size="3" maxlength="3" name="downSampleHide" id="downSampleHide" onkeyup="clickDownSampleButton( event )" />
-                        &nbsp;
-                        <a href="javascript:void(0)" onclick="return false;" class="mainbtn" id="DownSample" tabindex="100">APPLY</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formprompt">
-                        Down-Sample in Zoom view:
-                    </td>
-                    <td align="center" colspan="1" class="formfieldarea">
-                        <input type="checkbox" name="downSampleZoom" id="downSampleZoom" tabindex="100" value="" checked="checked" onchange="downSampleZoomChanged()" />
-                    </td>
-                </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-    </center>
 
   </div>
 </div>
