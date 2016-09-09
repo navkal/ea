@@ -215,33 +215,29 @@
 
   <div class="container" id="downsampleControls" style="text-align:center" >
 
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h4>Down Sample</h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Down Sample</h3>
         <p>Alternately show and hide samples, starting at offset.<p/>
       </div>
-    </div>
+      <div class="panel-body">
+        <p>Currently showing <b><span id="downSampleShowing"></span></b> of <b><span id="downSampleOf"></span></b> samples.</p>
 
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        Currently showing <b><span id="downSampleShowing"></span></b> of <b><span id="downSampleOf"></span></b> samples.
+        <label class="checkbox checkbox-inline" >
+          <input type="checkbox" name="downSampleAuto" id="downSampleAuto" tabindex="100" value="" checked="checked" onchange="downSampleAutoChanged()" />
+          Use 'Limit' and 'Offset' to calculate 'Show' and 'Hide' automatically
+        </label>
       </div>
     </div>
-    <br/>
 
+
+    <br/>
+    <center>
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="margin-left:auto; margin-right:auto;" >
           <table>
 
-                <tr>
-                    <td class="formprompt">
-                        &nbsp;
-                    </td>
-                    <td align="center" colspan="1" class="formfieldarea">
-                        <input type="checkbox" name="downSampleAuto" id="downSampleAuto" tabindex="100" value="" checked="checked" onchange="downSampleAutoChanged()" /> Use 'Limit' and 'Offset' to calculate 'Show' and 'Hide' automatically
-                    </td>
-                </tr>
                 <tr>
                     <td class="formprompt">
                         Settings:
@@ -290,6 +286,7 @@
         </div>
       </div>
     </div>
+    </center>
 
   </div>
 </div>
