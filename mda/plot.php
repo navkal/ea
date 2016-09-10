@@ -252,7 +252,7 @@
       <div class="panel-body">
 
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <div class="form-group">
               <label class="control-label" for="downSampleAuto" >Down Sample by</label>
               <div>
@@ -297,8 +297,9 @@
               <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
             </div>
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-            <a href="javascript:void(0)" onclick="plotDownSample();return false;" id="DownSample" >APPLY</a>
+          <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+            <label class="control-label" >&nbsp;</label>
+            <div><button type="button" class="btn btn-default btn-sm" onclick="plotDownSample();return false;" title="Apply Down Sample settings to Plot" >Apply</button></div>
           </div>
         </div>
 
