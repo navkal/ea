@@ -226,13 +226,13 @@
               <b><span id="downSampleShowing"></span></b>
               of
               <b><span id="downSampleOf"></span></b>
-              samples. 
+              samples.
               <span id="densityCurrent" >
-                <i>Density</i>=<b><span id="downSampleDensity_current"></span></b>
+                <i>Density</i>=<b><span id="downSampleDensity_current"></span></b>,
               </span>
-              <i>Show</i>=<b><span id="downSampleShow_current"></span></b>
-              <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>
-              <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>
+              <i>Show</i>=<b><span id="downSampleShow_current"></span></b>,
+              <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>,
+              <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
             </p>
           </div>
 
