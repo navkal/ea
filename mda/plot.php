@@ -213,79 +213,99 @@
     </div>
   </div>
 
-  <div class="container" id="downsampleControls" style="text-align:center" >
+  <div class="container" id="downsampleControls" >
 
     <div class="panel panel-default">
+
       <div class="panel-heading">
-        <h3 class="panel-title">Down Sample</h3>
-        <p>Alternately show and hide samples, starting at offset.<p/>
+
+        <div class="row">
+
+          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            <p>Showing <b><span id="downSampleShowing"></span></b> of <b><span id="downSampleOf"></span></b> samples.</p>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div>
+              &nbsp;Density&nbsp;
+              <script type="text/javascript">var g_iDownSampleDensity = 100;</script>
+              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleDensity_current" value="100" />
+              &nbsp;Offset&nbsp;
+              <script type="text/javascript">var g_iDownSampleOffset = 0;</script>
+              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleOffset_current" value="0" />
+              &nbsp;Show&nbsp;
+              <script type="text/javascript">var g_iDownSampleShow = 1;</script>
+              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleShow_current" value="1" />
+              &nbsp;Hide&nbsp;
+              <script type="text/javascript">var g_iDownSampleHide = 0;</script>
+              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleHide_current" value="0" />
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            <div class="form-group" >
+              <label class="checkbox checkbox-inline" >
+                <input type="checkbox" id="downSampleZoom" value="" checked="checked" onchange="downSampleZoomChanged()" />
+                Down Sample in Zoom view
+              </label>
+            </div>
+          </div>
+        </div>
+
       </div>
+
       <div class="panel-body">
-        <p>Currently showing <b><span id="downSampleShowing"></span></b> of <b><span id="downSampleOf"></span></b> samples.</p>
 
-        <label class="checkbox checkbox-inline" >
-          <input type="checkbox" name="downSampleAuto" id="downSampleAuto" value="" checked="checked" onchange="downSampleAutoChanged()" />
-          Use 'Limit' and 'Offset' to calculate 'Show' and 'Hide' automatically
-        </label>
-
-        <br/>
-        <br/>
-
-
-
-<center>
-
-            <table>
-
-                  <tr>
-                      <td class="formprompt">
-                          Settings:
-                      </td>
-                      <td class="formfieldarea">
-                          &nbsp;Limit&nbsp;
-                          <script type="text/javascript">var g_iDownSampleLimit = 100;</script>
-                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleLimit_current" id="downSampleLimit_current" value="100" />
-                          &nbsp;Offset&nbsp;
-                          <script type="text/javascript">var g_iDownSampleOffset = 0;</script>
-                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleOffset_current" id="downSampleOffset_current" value="0" />
-                          &nbsp;Show&nbsp;
-                          <script type="text/javascript">var g_iDownSampleShow = 1;</script>
-                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleShow_current" id="downSampleShow_current" value="1" />
-                          &nbsp;Hide&nbsp;
-                          <script type="text/javascript">var g_iDownSampleHide = 0;</script>
-                          <input type="text" disabled="true" size="3" maxlength="3" name="downSampleHide_current" id="downSampleHide_current" value="0" />
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="formprompt">
-                          Change to:
-                      </td>
-                      <td class="formfieldarea">
-                          &nbsp;Limit&nbsp;
-                          <input type="text" size="3" maxlength="3" name="downSampleLimit" id="downSampleLimit" onkeyup="clickDownSampleButton( event )" />
-                          &nbsp;Offset&nbsp;
-                          <input type="text" size="3" maxlength="3" name="downSampleOffset" id="downSampleOffset" onkeyup="clickDownSampleButton( event )" />
-                          &nbsp;Show&nbsp;
-                          <input type="text" size="3" maxlength="3" name="downSampleShow" id="downSampleShow" onkeyup="clickDownSampleButton( event )" />
-                          &nbsp;Hide&nbsp;
-                          <input type="text" size="3" maxlength="3" name="downSampleHide" id="downSampleHide" onkeyup="clickDownSampleButton( event )" />
-                          &nbsp;
-                          <a href="javascript:void(0)" onclick="return false;" class="mainbtn" id="DownSample" >APPLY</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="formprompt">
-                          Down-Sample in Zoom view:
-                      </td>
-                      <td align="center" colspan="1" class="formfieldarea">
-                          <input type="checkbox" name="downSampleZoom" id="downSampleZoom" value="" checked="checked" onchange="downSampleZoomChanged()" />
-                      </td>
-                  </tr>
-            </table>
-
-</center>
-
-
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            <div class="form-group" >
+              <label class="control-label" for="downSampleOffset" >Offset</label>
+              <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            <div class="form-group">
+              <label class="control-label" for="downSampleAuto" >Down Sample by</label>
+              <div>
+                <label class="radio-inline" >
+                  <input type="radio" name="downSampleAuto" id="downSampleAuto" value="" checked="checked" onchange="downSampleControlsEnable()" />
+                  Density
+                </label>
+                <label class="radio-inline" >
+                  <input type="radio" name="downSampleAuto" id="downSampleManual" value="" onchange="downSampleControlsEnable()" />
+                  Pattern
+                </label>
+              </div>
+            </div>
+          </div>
+          <div id="density" >
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="form-group" >
+                <label class="control-label" for="downSampleDensity" >Density</label>
+                <input type="text" id="downSampleDensity" class="form-control" maxlength="3" onkeyup="clickDownSampleButton( event )" />
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            </div>
+          </div>
+          <div id="pattern" >
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="form-group" >
+                <label class="control-label" for="downSampleShow" >Show</label>
+                <input type="text" id="downSampleShow" class="form-control" maxlength="3" onkeyup="clickDownSampleButton( event )" />
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="form-group" >
+                <label class="control-label" for="downSampleHide" >Hide</label>
+                <input type="text" id="downSampleHide" class="form-control" maxlength="3" onkeyup="clickDownSampleButton( event )" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            <a href="javascript:void(0)" onclick="plotDownSample();return false;" id="DownSample" >APPLY</a>
+          </div>
+        </div>
 
       </div>
     </div>
