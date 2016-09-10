@@ -227,18 +227,20 @@
 
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div>
-              &nbsp;Density&nbsp;
-              <script type="text/javascript">var g_iDownSampleDensity = 100;</script>
-              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleDensity_current" value="100" />
-              &nbsp;Offset&nbsp;
-              <script type="text/javascript">var g_iDownSampleOffset = 0;</script>
-              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleOffset_current" value="0" />
+              <span id="densityCurrent" >
+                &nbsp;Density&nbsp;
+                <script type="text/javascript">var g_iDownSampleDensity = 100;</script>
+                <input type="text" disabled="true" size="3" id="downSampleDensity_current" value="100" />
+              </span>
               &nbsp;Show&nbsp;
               <script type="text/javascript">var g_iDownSampleShow = 1;</script>
-              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleShow_current" value="1" />
+              <input type="text" disabled="true" size="3" id="downSampleShow_current" value="1" />
               &nbsp;Hide&nbsp;
               <script type="text/javascript">var g_iDownSampleHide = 0;</script>
-              <input type="text" disabled="true" size="3" maxlength="3" id="downSampleHide_current" value="0" />
+              <input type="text" disabled="true" size="3" id="downSampleHide_current" value="0" />
+              &nbsp;Offset&nbsp;
+              <script type="text/javascript">var g_iDownSampleOffset = 0;</script>
+              <input type="text" disabled="true" size="3" id="downSampleOffset_current" value="0" />
             </div>
           </div>
 
@@ -258,12 +260,6 @@
 
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-            <div class="form-group" >
-              <label class="control-label" for="downSampleOffset" >Offset</label>
-              <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
             <div class="form-group">
               <label class="control-label" for="downSampleAuto" >Down Sample by</label>
               <div>
@@ -282,7 +278,7 @@
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
               <div class="form-group" >
                 <label class="control-label" for="downSampleDensity" >Density</label>
-                <input type="text" id="downSampleDensity" class="form-control" maxlength="3" onkeyup="clickDownSampleButton( event )" />
+                <input type="text" id="downSampleDensity" class="form-control" maxlength="4" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
@@ -292,14 +288,20 @@
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
               <div class="form-group" >
                 <label class="control-label" for="downSampleShow" >Show</label>
-                <input type="text" id="downSampleShow" class="form-control" maxlength="3" onkeyup="clickDownSampleButton( event )" />
+                <input type="text" id="downSampleShow" class="form-control" maxlength="4" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
               <div class="form-group" >
                 <label class="control-label" for="downSampleHide" >Hide</label>
-                <input type="text" id="downSampleHide" class="form-control" maxlength="3" onkeyup="clickDownSampleButton( event )" />
+                <input type="text" id="downSampleHide" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
               </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            <div class="form-group" >
+              <label class="control-label" for="downSampleOffset" >Offset</label>
+              <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
             </div>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
