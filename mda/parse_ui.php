@@ -721,14 +721,22 @@
     {
       var nickname = $( nicknames[i] );
       var val = nickname.val();
-      if ( nicknameMap[val] )
+      if ( val != "" )
       {
-        foundDuplicate = true;
-        nickname.parent().addClass( "has-error" );
-      }
-      else
-      {
-         nicknameMap[val] = val;
+        if ( nicknameMap[val] )
+        {
+          // Set flag
+          foundDuplicate = true;
+
+          // Highlight both offenders
+          nicknameMap[val].parent().addClass( "has-error" );
+          nickname.parent().addClass( "has-error" );
+        }
+        else
+        {
+          // Save entry
+          nicknameMap[val] = nickname;
+        }
       }
 
       if ( val.indexOf( "," ) != -1 )
