@@ -713,12 +713,23 @@
     }
 
     // Check nicknames
+    var nicknameMap = {};
     var nicknames = $( "#columnEditor input" );
     var foundComma = false;
+    var foundDuplicate = false;
     for ( var i = 0; i < nicknames.length; i ++ )
     {
       var nickname = $( nicknames[i] );
       var val = nickname.val();
+      if ( nicknameMap[val] )
+      {
+        foundDuplicate = true;
+        nickname.parent().addClass( "has-error" );
+      }
+      else
+      {
+         nicknameMap[val] = val;
+      }
 
       if ( val.indexOf( "," ) != -1 )
       {
@@ -730,7 +741,12 @@
     {
       messages.push( "Column nicknames must not contain commas" );
     }
-    else
+    if ( foundDuplicate )
+    {
+      messages.push( "Column nicknames must be unique" );
+    }
+
+    if ( ! messages.length )
     {
       buildColumnData();
     }
