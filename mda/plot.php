@@ -220,29 +220,22 @@
       <div class="panel-heading">
 
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
             <p>
               Showing
               <b><span id="downSampleShowing"></span></b>
               of
               <b><span id="downSampleOf"></span></b>
-              samples, based on Down Sample parameters
+              samples. 
               <span id="densityCurrent" >
-                Density=<b><span id="downSampleDensity_current"></span></b>
+                <i>Density</i>=<b><span id="downSampleDensity_current"></span></b>
               </span>
+              <i>Show</i>=<b><span id="downSampleShow_current"></span></b>
+              <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>
+              <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>
             </p>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div>
-              &nbsp;Show&nbsp;
-              <input type="text" disabled="true" size="3" id="downSampleShow_current" />
-              &nbsp;Hide&nbsp;
-              <input type="text" disabled="true" size="3" id="downSampleHide_current" />
-              &nbsp;Offset&nbsp;
-              <input type="text" disabled="true" size="3" id="downSampleOffset_current" />
-            </div>
-          </div>
 
           <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <div class="form-group" >
@@ -300,7 +293,7 @@
           </div>
           <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
             <div class="form-group" >
-              <label class="control-label" for="downSampleOffset" >Start at Offset</label>
+              <label class="control-label" for="downSampleOffset" >Offset</label>
               <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
             </div>
           </div>
