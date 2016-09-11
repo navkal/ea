@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<style>
+@media( max-width: 991px )
+{
+  .plotButton
+  {
+    display: none;
+  }
+}
+</style>
 <html>
   <?php
     include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
@@ -79,14 +88,11 @@
       <div style="text-align:center;" >
         <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
         <?php
-          if ( getenv( "TIMESTAMP" ) )
+          // If single-run, display more
+          $split = explode( ".", $resultsFilename );
+          if ( $split[ count( $split ) - 1 ] == "csv" )
           {
-            // If single-run, display more
-            $split = explode( ".", $resultsFilename );
-            if ( $split[ count( $split ) - 1 ] == "csv" )
-            {
-              echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a>';
-            }
+            echo '<span class="plotButton"><a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a></span>';
           }
         ?>
       </div>
