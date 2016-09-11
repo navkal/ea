@@ -222,7 +222,7 @@
       <div class="panel-heading">
 
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <p>
               Showing
               <b><span id="downSampleShowing"></span></b>
@@ -238,6 +238,15 @@
             </p>
           </div>
 
+
+          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            <div class="form-group" >
+              <label class="checkbox checkbox-inline" >
+                <input type="checkbox" id="showYaxisTicks" onchange="plotShowYaxisTicks()" />
+                Show y-axis ticks
+              </label>
+            </div>
+          </div>
 
           <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <div class="form-group" >
