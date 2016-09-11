@@ -208,7 +208,8 @@
         <br/>
         <div name="overview" id="overview" style="width:90%; height:100px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
         <br/>
-        <div name="scrollbar" id="scrollbar" style="width:90%; height:20px; margin-left:auto; margin-right:auto;" ></div>
+        <div name="scrollbar" id="scrollbar" style="width:90%; height:27px; margin-left:auto; margin-right:auto;" ></div>
+        <br/>
         <br/>
       </div>
     </div>

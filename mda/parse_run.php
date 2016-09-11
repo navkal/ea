@@ -23,7 +23,7 @@
   {
     $name = $columnPair["name"];
     $nickname = $columnPair["nickname"];
-    $line = $name . "," . ( $nickname ? $nickname : $name ) . PHP_EOL;
+    $line = $name . "," . ( $nickname === "" ? $name : $nickname ) . PHP_EOL;
     fwrite( $columnsFile,  $line );
   }
   fclose( $columnsFile );
