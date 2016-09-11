@@ -208,7 +208,7 @@
         <br/>
         <div name="overview" id="overview" style="width:90%; height:100px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
         <br/>
-        <div name="scrollbar" id="scrollbar" style="width:90%; height:27px; margin-left:auto; margin-right:auto;" ></div>
+        <div name="scrollbar" id="scrollbar" style="width:90%; height:28px; margin-left:auto; margin-right:auto;" ></div>
         <br/>
         <br/>
       </div>
@@ -222,13 +222,14 @@
       <div class="panel-heading">
 
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
             <p>
               Showing
               <b><span id="downSampleShowing"></span></b>
               of
               <b><span id="downSampleOf"></span></b>
               samples.
+              <br/>
               <span id="densityCurrent" >
                 <i>Density</i>=<b><span id="downSampleDensity_current"></span></b>,
               </span>
@@ -237,21 +238,18 @@
               <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
             </p>
           </div>
-
-
-          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
             <div class="form-group" >
               <label class="checkbox checkbox-inline" >
                 <input type="checkbox" id="showYaxisTicks" onchange="plotShowYaxisTicks()" />
-                Show y-axis ticks
+                Show Y-axis ticks
               </label>
             </div>
           </div>
-
-          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
             <div class="form-group" >
               <label class="checkbox checkbox-inline" >
-                <input type="checkbox" id="downSampleZoom" value="" checked="checked" onchange="downSampleZoomChanged()" />
+                <input type="checkbox" id="downSampleZoom" checked onchange="downSampleZoomChanged()" />
                 Down Sample in Zoom view
               </label>
             </div>

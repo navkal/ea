@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <style>
-@media( max-width: 991px )
+@media( max-width: 767px )
 {
   .plotButton
   {
