@@ -1050,7 +1050,7 @@
               </div>
               <div class="panel-body">
 
-                <!-- Accelerator buttons -->
+                <!-- Checkbox accelerators -->
                 <div class="btn-toolbar" role="toolbar" >
                   <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
                     <button type="button" id="checkDefault" class="btn btn-default btn-xs" title="Select Default" >Default</button>

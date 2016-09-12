@@ -191,9 +191,23 @@
   </div>
 </div>
 
-<div id="mainpane" >
+<div id="mainpane">
 
   <div class="container" >
+
+    <!-- Checkbox accelerators -->
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="btn-toolbar" role="toolbar" >
+          <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
+            <button type="button" id="seriesCheckAll" class="btn btn-default btn-xs" title="Select All" >All</button>
+            <button type="button" id="seriesCheckNone" class="btn btn-default btn-xs" title="Deselect All" >None</button>
+            <button type="button" id="seriesCheckComplement" class="btn btn-default btn-xs" title="Select Complement" >Complement</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <ul name="seriesChooser" id="seriesChooser" class="list-unstyled checkboxList" ></ul>
