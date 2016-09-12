@@ -198,7 +198,7 @@
     <!-- Checkbox accelerators -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="btn-toolbar" role="toolbar" >
+        <div id="checkboxAccelerators" class="btn-toolbar" role="toolbar" >
           <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
             <button type="button" id="seriesCheckAll" class="btn btn-default btn-xs" title="Select All" >All</button>
             <button type="button" id="seriesCheckNone" class="btn btn-default btn-xs" title="Deselect All" >None</button>
@@ -250,6 +250,11 @@
               <i>Show</i>=<b><span id="downSampleShow_current"></span></b>,
               <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>,
               <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
+              <br/>
+              Time range from
+              <b><span id="timestampFrom"></span></b>
+              to
+              <b><span id="timestampTo"></span></b>.
             </p>
           </div>
           <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
