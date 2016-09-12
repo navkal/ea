@@ -239,6 +239,12 @@
           <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
             <p>
               Showing
+              <b><span id="timestampFrom"></span></b>
+              to
+              <b><span id="timestampTo"></span></b>.
+            </p>
+            <p>
+              Down Sample includes
               <b><span id="downSampleShowing"></span></b>
               of
               <b><span id="downSampleOf"></span></b>
@@ -250,11 +256,6 @@
               <i>Show</i>=<b><span id="downSampleShow_current"></span></b>,
               <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>,
               <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
-              <br/>
-              Time range from
-              <b><span id="timestampFrom"></span></b>
-              to
-              <b><span id="timestampTo"></span></b>.
             </p>
           </div>
           <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
