@@ -46,6 +46,7 @@
 
 
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/analyzer.js"></script>
+<script language="javascript" type="text/javascript" src="../lib/flotPlot/rezoom.js"></script>
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/scrollbar.js"></script>
 <link rel="stylesheet" href="../util/util.css">
 
@@ -75,7 +76,6 @@
         // If current cell is empty, revert to value in preceding line
         if ( line[nameIndex] === "" )
         {
-          console.log( "========> replacing " + line[nameIndex] +  " with " + prevLine[nameIndex] );
           line[nameIndex] = prevLine[nameIndex];
         }
 
@@ -111,9 +111,6 @@
     var seriesMax = Array( lineLength ).fill( Number.MIN_VALUE );
     seriesMax[0] = NOT_USED;
 
-    console.log( "=======> BF min=" + JSON.stringify( seriesMin ) );
-    console.log( "=======> BF max=" + JSON.stringify( seriesMax ) );
-
     for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
     {
       var line = lines[lineIndex];
@@ -124,9 +121,6 @@
         seriesMax[nameIndex] = Math.max( seriesMax[nameIndex], line[nameIndex] );
       }
     }
-
-    console.log( "=======> AF min=" + JSON.stringify( seriesMin ) );
-    console.log( "=======> AF max=" + JSON.stringify( seriesMax ) );
 
     // Determine precision for each series
     var seriesPrecision = Array( lineLength ).fill( 0 );
@@ -156,8 +150,6 @@
           break;
       }
     }
-
-    console.log( "=======> precision=" + JSON.stringify(seriesPrecision) );
 
     return seriesPrecision;
   }
