@@ -43,6 +43,7 @@
 
 
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/analyzer.js"></script>
+<script language="javascript" type="text/javascript" src="../lib/flotPlot/rezoom.js"></script>
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/scrollbar.js"></script>
 <link rel="stylesheet" href="../util/util.css">
 
