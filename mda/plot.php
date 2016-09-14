@@ -252,14 +252,12 @@
                 <input type="checkbox" id="downSampleZoom" checked onchange="downSampleZoomChanged()" />
                 Down Sample in Zoom view
               </label>
-            </div>
-            <div class="form-group" >
+              <br/>
               <label class="checkbox checkbox-inline" >
                 <input type="checkbox" id="showYaxisTicks" onchange="plotShowYaxisTicks()" />
                 Show Y-axis ticks
               </label>
-            </div>
-            <div class="form-group" >
+              <br/>
               <label class="checkbox checkbox-inline" >
                 <input type="checkbox" id="scaleIndependent" checked onchange="plotScaleIndependent()" />
                 Scale series independently
