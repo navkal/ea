@@ -31,9 +31,6 @@
     }
     fclose( $resultsFile );
   }
-
-  error_log( "======> heads=" . print_r( $heads, true ) );
-  error_log( "======> lines=" . print_r( $lines, true ) );
 ?>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.colorhelpers.min.js"></script>
@@ -75,7 +72,6 @@
         // If current cell is empty, revert to value in preceding line
         if ( line[nameIndex] === "" )
         {
-          console.log( "========> replacing " + line[nameIndex] +  " with " + prevLine[nameIndex] );
           line[nameIndex] = prevLine[nameIndex];
         }
 
@@ -111,9 +107,6 @@
     var seriesMax = Array( lineLength ).fill( Number.MIN_VALUE );
     seriesMax[0] = NOT_USED;
 
-    console.log( "=======> BF min=" + JSON.stringify( seriesMin ) );
-    console.log( "=======> BF max=" + JSON.stringify( seriesMax ) );
-
     for ( var lineIndex = 1; lineIndex < lines.length; lineIndex ++ )
     {
       var line = lines[lineIndex];
@@ -124,9 +117,6 @@
         seriesMax[nameIndex] = Math.max( seriesMax[nameIndex], line[nameIndex] );
       }
     }
-
-    console.log( "=======> AF min=" + JSON.stringify( seriesMin ) );
-    console.log( "=======> AF max=" + JSON.stringify( seriesMax ) );
 
     // Determine precision for each series
     var seriesPrecision = Array( lineLength ).fill( 0 );
@@ -156,8 +146,6 @@
           break;
       }
     }
-
-    console.log( "=======> precision=" + JSON.stringify(seriesPrecision) );
 
     return seriesPrecision;
   }
