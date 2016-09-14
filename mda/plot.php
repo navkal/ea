@@ -259,6 +259,12 @@
                 Show Y-axis ticks
               </label>
             </div>
+            <div class="form-group" >
+              <label class="checkbox checkbox-inline" >
+                <input type="checkbox" id="scaleIndependent" checked onchange="plotScaleIndependent()" />
+                Scale series independently
+              </label>
+            </div>
           </div>
         </div>
 
