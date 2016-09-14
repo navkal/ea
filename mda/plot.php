@@ -290,7 +290,7 @@
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
               <div class="form-group" >
                 <label class="control-label" for="downSampleDensity" >Density</label>
-                <input type="text" id="downSampleDensity" class="form-control" maxlength="4" onkeyup="clickDownSampleButton( event )" />
+                <input type="text" id="downSampleDensity" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
@@ -300,7 +300,7 @@
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
               <div class="form-group" >
                 <label class="control-label" for="downSampleShow" >Show</label>
-                <input type="text" id="downSampleShow" class="form-control" maxlength="4" onkeyup="clickDownSampleButton( event )" />
+                <input type="text" id="downSampleShow" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
