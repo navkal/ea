@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<style>
-@media( max-width: 767px )
-{
-  .plotButton
-  {
-    /*display: none;*/
-  }
-}
-</style>
 <html>
   <?php
     include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
@@ -92,7 +83,7 @@
           $split = explode( ".", $resultsFilename );
           if ( $split[ count( $split ) - 1 ] == "csv" )
           {
-            echo '<span class="plotButton"><a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a></span>';
+            echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a>';
           }
         ?>
       </div>
