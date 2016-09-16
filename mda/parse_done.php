@@ -4,7 +4,7 @@
 {
   .plotButton
   {
-    display: none;
+    /*display: none;*/
   }
 }
 </style>
