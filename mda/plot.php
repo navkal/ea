@@ -271,17 +271,21 @@
       <div class="panel-body">
 
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="form-group">
               <label class="control-label" for="downSampleAuto" >Down Sample by</label>
               <div>
                 <label class="radio-inline" >
-                  <input type="radio" name="downSampleAuto" id="downSampleAuto" value="" checked="checked" onchange="downSampleControlsEnable()" />
+                  <input type="radio" name="downSampleAuto" id="downSampleAuto" value="" checked onchange="downSampleControlsEnable()" />
                   Density
                 </label>
                 <label class="radio-inline" >
                   <input type="radio" name="downSampleAuto" id="downSampleManual" value="" onchange="downSampleControlsEnable()" />
                   Pattern
+                </label>
+                <label class="radio-inline" >
+                  <input type="radio" name="downSampleAuto" id="downSampleRange" value="" onchange="downSampleControlsEnable()" />
+                  Zoom Range
                 </label>
               </div>
             </div>
