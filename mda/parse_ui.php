@@ -888,7 +888,7 @@
     {
       include "plot.php";
     }
-    include "colortest.php";
+    // include "colortest.php";
   }
 ?>
 
