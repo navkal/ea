@@ -217,7 +217,7 @@
     </div>
   </div>
 
-  <div class="container" id="downsampleControls" >
+  <div class="container" id="downSampleControls" >
 
     <div class="panel panel-default">
 
@@ -270,71 +270,69 @@
 
       <div class="panel-body">
 
-        <div id="downSampleControls">
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-              <div class="form-group">
-                <label class="control-label" for="downSampleMode" >Down Sample by</label>
-                <div>
-                  <label class="radio-inline" >
-                    <input type="radio" name="downSampleMode" id="downSampleAuto" value="" checked onchange="downSampleControlsEnable(event)" />
-                    Density
-                  </label>
-                  <label class="radio-inline" >
-                    <input type="radio" name="downSampleMode" id="downSampleManual" value="" onchange="downSampleControlsEnable(event)" />
-                    Pattern
-                  </label>
-                  <label class="radio-inline" >
-                    <input type="radio" name="downSampleMode" id="downSampleByZoom" value="" onchange="downSampleControlsEnable(event)" />
-                    Zoom
-                  </label>
-                </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label" for="downSampleMode" >Down Sample by</label>
+              <div>
+                <label class="radio-inline" >
+                  <input type="radio" name="downSampleMode" id="downSampleAuto" value="auto" checked onchange="downSampleControlsEnable(event)" />
+                  Density
+                </label>
+                <label class="radio-inline" >
+                  <input type="radio" name="downSampleMode" id="downSampleManual" value="manual" onchange="downSampleControlsEnable(event)" />
+                  Pattern
+                </label>
+                <label class="radio-inline" >
+                  <input type="radio" name="downSampleMode" id="downSampleByZoom" value="zoom" onchange="downSampleControlsEnable(event)" />
+                  Zoom
+                </label>
               </div>
             </div>
-            <div id="density" >
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                <div class="form-group" >
-                  <label class="control-label" for="downSampleDensity" >Density</label>
-                  <input type="text" id="downSampleDensity" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+          </div>
+          <div id="density" >
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="form-group" >
+                <label class="control-label" for="downSampleDensity" >Density</label>
+                <input type="text" id="downSampleDensity" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
-            <div id="pattern" >
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                <div class="form-group" >
-                  <label class="control-label" for="downSampleShow" >Show</label>
-                  <input type="text" id="downSampleShow" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                <div class="form-group" >
-                  <label class="control-label" for="downSampleHide" >Hide</label>
-                  <input type="text" id="downSampleHide" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
-                </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            </div>
+          </div>
+          <div id="pattern" >
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="form-group" >
+                <label class="control-label" for="downSampleShow" >Show</label>
+                <input type="text" id="downSampleShow" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
-            <div id="offset" >
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                <div class="form-group" >
-                  <label class="control-label" for="downSampleOffset" >Offset</label>
-                  <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
-                </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="form-group" >
+                <label class="control-label" for="downSampleHide" >Hide</label>
+                <input type="text" id="downSampleHide" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
-            <div id="zoom" >
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+          </div>
+          <div id="offset" >
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="form-group" >
+                <label class="control-label" for="downSampleOffset" >Offset</label>
+                <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
-              <label class="control-label" >&nbsp;</label>
-              <div><button type="button" class="btn btn-default btn-sm" onclick="plotDownSample();return false;" title="Apply Down Sample settings to Plot" >Apply</button></div>
+          </div>
+          <div id="zoom" >
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+            <label class="control-label" >&nbsp;</label>
+            <div><button type="button" class="btn btn-default btn-sm" onclick="plotDownSample();return false;" title="Apply Down Sample settings to Plot" >Apply</button></div>
           </div>
         </div>
 
