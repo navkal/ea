@@ -270,57 +270,71 @@
 
       <div class="panel-body">
 
-        <div class="row">
-          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-            <div class="form-group">
-              <label class="control-label" for="downSampleMode" >Down Sample by</label>
-              <div>
-                <label class="radio-inline" >
-                  <input type="radio" name="downSampleMode" id="downSampleAuto" value="" checked onchange="downSampleControlsEnable()" />
-                  Density
-                </label>
-                <label class="radio-inline" >
-                  <input type="radio" name="downSampleMode" id="downSampleManual" value="" onchange="downSampleControlsEnable()" />
-                  Pattern
-                </label>
+        <div id="downSampleControls">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label" for="downSampleMode" >Down Sample by</label>
+                <div>
+                  <label class="radio-inline" >
+                    <input type="radio" name="downSampleMode" id="downSampleAuto" value="" checked onchange="downSampleControlsEnable()" />
+                    Density
+                  </label>
+                  <label class="radio-inline" >
+                    <input type="radio" name="downSampleMode" id="downSampleManual" value="" onchange="downSampleControlsEnable()" />
+                    Pattern
+                  </label>
+                  <label class="radio-inline" >
+                    <input type="radio" name="downSampleMode" id="downSampleByZoom" value="" onchange="downSampleControlsEnable()" />
+                    Zoom
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
-          <div id="density" >
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-              <div class="form-group" >
-                <label class="control-label" for="downSampleDensity" >Density</label>
-                <input type="text" id="downSampleDensity" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+            <div id="density" >
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleDensity" >Density</label>
+                  <input type="text" id="downSampleDensity" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
               </div>
             </div>
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-            </div>
-          </div>
-          <div id="pattern" >
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-              <div class="form-group" >
-                <label class="control-label" for="downSampleShow" >Show</label>
-                <input type="text" id="downSampleShow" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+            <div id="pattern" >
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleShow" >Show</label>
+                  <input type="text" id="downSampleShow" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleHide" >Hide</label>
+                  <input type="text" id="downSampleHide" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+                </div>
               </div>
             </div>
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-              <div class="form-group" >
-                <label class="control-label" for="downSampleHide" >Hide</label>
-                <input type="text" id="downSampleHide" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+            <div id="offset" >
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleOffset" >Offset</label>
+                  <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-            <div class="form-group" >
-              <label class="control-label" for="downSampleOffset" >Offset</label>
-              <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+            <div id="zoom" >
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              </div>
             </div>
-          </div>
-          <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
-          </div>
-          <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
-            <label class="control-label" >&nbsp;</label>
-            <div><button type="button" class="btn btn-default btn-sm" onclick="plotDownSample();return false;" title="Apply Down Sample settings to Plot" >Apply</button></div>
+            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+              <label class="control-label" >&nbsp;</label>
+              <div><button type="button" class="btn btn-default btn-sm" onclick="plotDownSample();return false;" title="Apply Down Sample settings to Plot" >Apply</button></div>
+            </div>
           </div>
         </div>
 
