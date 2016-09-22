@@ -277,15 +277,15 @@
                 <label class="control-label" for="downSampleMode" >Down Sample by</label>
                 <div>
                   <label class="radio-inline" >
-                    <input type="radio" name="downSampleMode" id="downSampleAuto" value="" checked onchange="downSampleControlsEnable()" />
+                    <input type="radio" name="downSampleMode" id="downSampleAuto" value="" checked onchange="downSampleControlsEnable(event)" />
                     Density
                   </label>
                   <label class="radio-inline" >
-                    <input type="radio" name="downSampleMode" id="downSampleManual" value="" onchange="downSampleControlsEnable()" />
+                    <input type="radio" name="downSampleMode" id="downSampleManual" value="" onchange="downSampleControlsEnable(event)" />
                     Pattern
                   </label>
                   <label class="radio-inline" >
-                    <input type="radio" name="downSampleMode" id="downSampleByZoom" value="" onchange="downSampleControlsEnable()" />
+                    <input type="radio" name="downSampleMode" id="downSampleByZoom" value="" onchange="downSampleControlsEnable(event)" />
                     Zoom
                   </label>
                 </div>
