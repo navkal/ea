@@ -8,13 +8,14 @@
     require_once "filenames.php" ;
 
     require_once "labels.php";
-  ?>
+    require_once "parse_help.php";
+?>
 
   <body>
 
     <div class="container">
       <div class="page-header">
-        <p class="h3"><?=METASYS_DATA_ANALYSIS?> results</p>
+        <p class="h3"><?=METASYS_DATA_ANALYSIS_RESULTS?></p>
       </div>
     </div>
 
@@ -36,7 +37,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <!-- Close button -->
           <div style="text-align:center;" >
-           <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
+            <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpPlot">Help</button>
           </div>
         </div>
       </div>

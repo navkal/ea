@@ -1,5 +1,6 @@
 <?php
   define( "METASYS_DATA_ANALYSIS", "Metasys Data Analysis" );
+  define( "METASYS_DATA_ANALYSIS_RESULTS", "Metasys Data Analysis Results" );
   define( "METASYS_FILE", "Metasys File" );
   define( "ANALYSIS_OPTIONS", "Analysis Options" );
   define( "REPORT_FORMAT", "Report Format" );
