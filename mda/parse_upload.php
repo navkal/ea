@@ -53,8 +53,6 @@
 
   if ( empty( $messages ) )
   {
-    error_log( "===========> BF COLUMNS" );
-
     $colMap = [];
 
     // Skip the column headings
@@ -97,8 +95,6 @@
       }
     }
     fclose( $inputFile );
-
-    error_log( "===========> AF COLUMNS" );
 
     // Replace properties with format used by client
     define( "THRESHOLD", 0.0005 );  // 0.00037950664136623 is sufficiently small according to available sample input files

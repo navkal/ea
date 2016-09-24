@@ -11,9 +11,7 @@
     $_SESSION["resultsFilename"] = $resultsFilename;
 
     // Get analysis parameters for completion display
-    error_log( "==> sess completion params=" . $_SESSION["completion"]["params"] );
     $params = str_getcsv( $_SESSION["completion"]["params"] );
-    error_log( "==> str_getcsv returned params=" . $params );
     $resultsFilename = $_SESSION["completion"]["resultsFilename"];
 
     $columns = [];

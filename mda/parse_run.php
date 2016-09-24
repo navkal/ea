@@ -91,13 +91,11 @@
     $params .= "," . REPORT_FORMAT . "," . MULTIPLE;
 
     // Save information for Analysis completion report
-    error_log( "==> BF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
     $_SESSION["completion"] =
       [
         "params" => $params,
         "resultsFilename" => basename( $zipFilename )
       ];
-    error_log( "==> AF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
 
     // Put the results files into a zip archive
     $zipArchive = new ZipArchive();
@@ -124,13 +122,11 @@
       // Normal: Process results
 
       // Save information for Analysis completion report
-      error_log( "==> BF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
       $_SESSION["completion"] =
         [
           "params" => formatParams( $_POST ),
           "resultsFilename" => basename( $resultsFilename )
         ];
-      error_log( "==> AF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
 
       downloadFile( $resultsFilename );
     }
