@@ -18,6 +18,10 @@
     // Save preload filename for future reference
     $_SESSION["inputFilename"] = $inputFilename;
   }
+  else if ( isset( $_FILES["resultsFile"] ) )
+  {
+    array_push( $messages, "=========> got results file " . print_r( $_FILES["resultsFile"], true ) );
+  }
   else
   {
     $metasysFile = isset( $_FILES["metasysFile"] ) ? $_FILES["metasysFile"] : NULL ;

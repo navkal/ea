@@ -1,5 +1,5 @@
 <!-- Modal dialog for Metasys File help -->
-<div class="modal fade" id="helpMetasysFile" tabindex="-1" role="dialog" aria-labelledby="helpMetasysFileLabel">
+<div class="modal fade" id="helpInputFile" tabindex="-1" role="dialog" aria-labelledby="helpMetasysFileLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -67,6 +67,7 @@
 
     // Initialize the file upload chooser
     $( "#metasysFile" ).val( "" );
+    $( "#resultsFile" ).val( "" );
     $( "#uploadFilename" ).val( "" );
 
     // Hide Analysis Options form
@@ -75,9 +76,9 @@
 
   function onChangeFileSource()
   {
-    var bUpload = $( "#upload" ).prop( "checked" );
-    $( "#preloadBlock" ).css( "display", bUpload ? "none" : "block" );
-    $( "#uploadBlock" ).css( "display", bUpload ? "block" : "none" );
+    $( "#uploadBlock" ).css( "display", $( "#upload" ).prop( "checked" ) ? "block" : "none" );
+    $( "#preloadBlock" ).css( "display", $( "#preload" ).prop( "checked" ) ? "block" : "none" );
+    $( "#resultsBlock" ).css( "display", $( "#results" ).prop( "checked" ) ? "block" : "none" );
   }
 
   function makePreloadPicker()
@@ -105,7 +106,7 @@
     {
       // Disable submit button
       $( "#submitFileButton" ).prop( "disabled", true );
-      $( "#metasysFileFields" ).prop( "disabled", true );
+      $( "#inputFileFields" ).prop( "disabled", true );
 
       // Set wait cursor
       $( "body" ).css( "cursor", "progress" );
@@ -115,6 +116,10 @@
       if ( $( "#upload" ).prop( "checked" ) )
       {
         postData.append( "metasysFile", $( "#metasysFile" ).prop( "files" )[0] );
+      }
+      else if ( $( "#results" ).prop( "checked" ) )
+      {
+        postData.append( "resultsFile", $( "#resultsFile" ).prop( "files" )[0] );
       }
       else
       {
@@ -141,7 +146,7 @@
     // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
     $( "#submitFileButton" ).prop( "disabled", false );
-    $( "#metasysFileFields" ).prop( "disabled", false );
+    $( "#inputFileFields" ).prop( "disabled", false );
 
     if ( rsp.messages.length )
     {
@@ -158,7 +163,7 @@
     // Restore cursor and button states
     $( "body" ).css( "cursor", "default" );
     $( "#submitFileButton" ).prop( "disabled", false );
-    $( "#metasysFileFields" ).prop( "disabled", false );
+    $( "#inputFileFields" ).prop( "disabled", false );
 
     ajaxFail( tJqXhr, sStatus, sErrorThrown );
   }
@@ -690,6 +695,11 @@
       messages.push( "<?=METASYS_FILE?> is required" );
       $( "#uploadFilename" ).parent().parent().addClass( "has-error" );
     }
+    else if ( $( "#results" ).prop( "checked" ) && $( "#resultsFile" ).val() == "" )
+    {
+      messages.push( "<?=RESULTS_FILE?> is required" );
+      $( "#resultsFilename" ).parent().parent().addClass( "has-error" );
+    }
 
     return messages;
   }
@@ -908,19 +918,28 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="panel panel-default">
           <div class="panel-body">
-            <fieldset id="metasysFileFields">
+            <fieldset id="inputFileFields">
 
               <div class="form-group">
-                <label class="control-label"><?=METASYS_FILE?></label>
                 <div>
-                  <label class="radio-inline" >
-                    <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
-                    Preloaded
-                  </label>
-                  <label class="radio-inline" >
-                    <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
-                    Uploaded
-                  </label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
+                      Analyze <b>preloaded</b> <?=METASYS_FILE?>
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
+                      Analyze <b>uploaded</b> <?=METASYS_FILE?>
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="results" name="fileSource" onchange="onChangeFileSource()" >
+                      Plot previous <?=METASYS_DATA_ANALYSIS_RESULTS?>
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -941,6 +960,18 @@
                 </div>
               </div>
 
+              <div class="form-group" id="resultsBlock" >
+                <div class="input-group">
+                  <label class="input-group-btn">
+                    <span class="btn btn-default">
+                      Browse…
+                      <input type="file" name="resultsFile" id="resultsFile" style="display:none" onchange="showFilename( 'resultsFilename', 'resultsFile' )" >
+                    </span>
+                  </label>
+                  <input id="resultsFilename" type="text" class="form-control" onclick="$('#resultsFile').click();" readonly >
+                </div>
+              </div>
+
             </fieldset>
           </div>
         </div>
@@ -952,7 +983,7 @@
         <div style="text-align:center;" >
           <button id="submitFileButton" class="btn btn-primary" onclick="onSubmitFile()" >Submit</button>
           <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpMetasysFile">Help</button>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpInputFile">Help</button>
         </div>
       </div>
     </div>
