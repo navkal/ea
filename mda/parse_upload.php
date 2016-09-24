@@ -16,10 +16,7 @@
     $inputFilename = "input/" . $_POST["metasysFilename"];
 
     // Save preload filename for future reference
-    error_log( "========> SAVING PRELOAD" );
-  error_log( "======> bf SAVING PRELOAD, session=" . print_r( $_SESSION, true ) );
     $_SESSION["inputFilename"] = $inputFilename;
-  error_log( "======> af SAVING PRELOAD, session=" . print_r( $_SESSION, true ) );
   }
   else
   {

@@ -1,5 +1,4 @@
 <?php
-    error_log( "=====> plot.php, session=" . print_r( $_SESSION, true ) );
   $lines = [];
   $heads = [];
   if ( $resultsFile = @fopen( $_SESSION["resultsFilename"], "r" ) )

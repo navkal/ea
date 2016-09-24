@@ -9,12 +9,10 @@
   require_once "filenames.php";
 
   // Optionally overwrite temp input filename with preload filename
-  error_log( "======> Looking for preload: SESSION=" . print_r( $_SESSION, true ) );
   if ( isset( $_SESSION["inputFilename"] ) )
   {
     $inputFilename = $_SESSION["inputFilename"];
   }
-else error_log( "====> NOT using preload" );
 
   // Save selected columns in columns file
   $columnData = json_decode( $_POST["columnData"], true );
@@ -202,8 +200,6 @@ else error_log( "====> NOT using preload" );
         }
       }
     }
-
-    error_log( "===> formatParams returning params=" . $params );
 
     return $params;
   }

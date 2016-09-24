@@ -2,7 +2,9 @@
   require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
   require_once "labels.php";
   require_once "parse_help.php";
-  $_SESSION = [];
+  error_log( "========> parse_ui.php, BF session_unset, SESSION=" . print_r( $_SESSION, true ) );
+  session_unset();
+  error_log( "========> parse_ui.php, AF session_unset, SESSION=" . print_r( $_SESSION, true ) );
 ?>
 
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">

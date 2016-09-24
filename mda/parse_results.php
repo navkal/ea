@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <?php
-    error_log( "=====> parse_results.php, session=" . print_r( $_SESSION, true ) );
     include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
     initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
 
