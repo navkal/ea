@@ -9,12 +9,12 @@
   require_once "filenames.php";
 
   // Optionally overwrite temp input filename with preload filename
-  if ( file_exists( $preloadFilename ) )
+  error_log( "======> Looking for preload: SESSION=" . print_r( $_SESSION, true ) );
+  if ( isset( $_SESSION["inputFilename"] ) )
   {
-    $preloadFile = fopen( $preloadFilename, "r" );
-    $inputFilename = fgets( $preloadFile );
-    fclose( $preloadFile );
+    $inputFilename = $_SESSION["inputFilename"];
   }
+else error_log( "====> NOT using preload" );
 
   // Save selected columns in columns file
   $columnData = json_decode( $_POST["columnData"], true );
@@ -135,7 +135,7 @@
   }
 
   // Delete copy of uploaded input file
-  if ( ! file_exists( $preloadFilename ) )
+  if ( ! isset( $_SESSION["inputFilename"] ) )
   {
     @unlink( $inputFilename );
   }

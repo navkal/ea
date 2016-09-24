@@ -1,4 +1,6 @@
 <?php
+  require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
+
   error_log( "====> files=" . print_r( $_FILES, true ) );
   error_log( "====> rq=" . print_r( $_REQUEST, true ) );
   require_once "labels.php";
@@ -14,9 +16,10 @@
     $inputFilename = "input/" . $_POST["metasysFilename"];
 
     // Save preload filename for future reference
-    $preloadFile = fopen( $preloadFilename, "w" ) or die( "Unable to open file: " . $preloadFilename );
-    fwrite( $preloadFile, $inputFilename );
-    fclose( $preloadFile );
+    error_log( "========> SAVING PRELOAD" );
+  error_log( "======> bf SAVING PRELOAD, session=" . print_r( $_SESSION, true ) );
+    $_SESSION["inputFilename"] = $inputFilename;
+  error_log( "======> af SAVING PRELOAD, session=" . print_r( $_SESSION, true ) );
   }
   else
   {

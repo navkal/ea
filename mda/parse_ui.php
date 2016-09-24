@@ -2,6 +2,7 @@
   require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
   require_once "labels.php";
   require_once "parse_help.php";
+  $_SESSION = [];
 ?>
 
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">

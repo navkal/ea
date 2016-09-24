@@ -7,8 +7,10 @@
     $timestamp = $_GET["timestamp"];
     require_once "filenames.php" ;
 
+    // Save results filename with full path for use by Plot view
     $_SESSION["resultsFilename"] = $resultsFilename;
 
+    // Read analysis parameters for completion display
     $paramsFile = fopen( $paramsFilename, "r" );
     $params = fgetcsv( $paramsFile );
     $resultsFilename = fgetcsv( $paramsFile )[0];
