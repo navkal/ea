@@ -163,12 +163,13 @@
     // Execute Python script
     exec( $command, $output, $status );
 
-    // Check whether script generated an output file
+    // If Python script generated an output file, append parameter information to it
     $message = "";
     if ( file_exists( $resultsFilename ) )
     {
-      $params = formatParams( $args );
-      error_log( "===> params=" . $params );
+      $resultsFile = fopen( $resultsFilename, "a" );
+      fwrite( $resultsFile, formatParams( $args ) );
+      fclose( $resultsFile );
     }
     else
     {
@@ -201,6 +202,8 @@
         }
       }
     }
+
+    error_log( "===> formatParams returning params=" . $params );
 
     return $params;
   }

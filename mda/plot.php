@@ -1,8 +1,4 @@
 <?php
-  $paramsFile = fopen( $paramsFilename, "r" );
-  $params = fgetcsv( $paramsFile );
-  fclose( $paramsFile );
-
   $lines = [];
   $heads = [];
   if ( $resultsFile = @fopen( $resultsFilename, "r" ) )
@@ -29,6 +25,7 @@
         }
       }
     }
+    $params = array_pop( $lines );
     fclose( $resultsFile );
   }
 ?>
