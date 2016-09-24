@@ -4,8 +4,12 @@
     include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
     initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
 
+    $timestamp = $_GET["timestamp"];
+
     require_once "labels.php";
     require_once "parse_help.php";
+
+    error_log( "=========> In parse_results.php, timestamp=" . $timestamp . " filename=" .$_SESSION["resultsFilename"] );
   ?>
 
   <body>

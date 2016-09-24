@@ -1,8 +1,13 @@
+<script type="text/javascript">console.log('moo');</script>
 <?php
+  error_log( "====> in plot.php, timestamp=" . $timestamp );
+  error_log( "=========> In plot.php, filename=" .$_SESSION["resultsFilename"] );
+
   $lines = [];
   $heads = [];
   if ( $resultsFile = @fopen( $_SESSION["resultsFilename"], "r" ) )
   {
+    error_log( "=========> In plot.php, OPENED filename=" .$_SESSION["resultsFilename"] );
     while( ! feof( $resultsFile ) )
     {
       $line = fgetcsv( $resultsFile );
@@ -28,6 +33,9 @@
     $params = array_pop( $lines );
     fclose( $resultsFile );
   }
+      else error_log( "=========> In plot.php, FAILED TO OPEN filename=" .$_SESSION["resultsFilename"] );
+
+  error_log( "=======> plot.php, read to end of Results File.  $params=" . print_r( $params, true ) );
 ?>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.colorhelpers.min.js"></script>
@@ -44,11 +52,11 @@
 <link rel="stylesheet" href="../util/util.css">
 
 <script>
-
   $( document ).ready( loadPlot );
 
   function loadPlot()
   {
+    console.log( "======> in loadPlot" );
     var lines = <?=json_encode( $lines, JSON_NUMERIC_CHECK )?>;
     var names = lines[0];
     var seriesPrecision = calculatePrecision( lines, names.length );

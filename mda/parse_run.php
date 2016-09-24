@@ -249,6 +249,6 @@ function showMessage( $uploadFilename, $message )
     document.title = "<?=METASYS_DATA_ANALYSIS?>";
   </script>
 <?php
-  exit;
+  exit();
 }
 ?>

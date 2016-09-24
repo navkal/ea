@@ -152,6 +152,10 @@
     {
        showMessages( rsp.messages );
     }
+    else if ( rsp.redirect )
+    {
+      window.location.assign( rsp.redirect  );
+    }
     else
     {
       showOptionsView( rsp.columns );
