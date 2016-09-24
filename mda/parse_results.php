@@ -4,9 +4,6 @@
     include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
     initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
 
-    $timestamp = $_GET["timestamp"];
-    require_once "filenames.php" ;
-
     require_once "labels.php";
     require_once "parse_help.php";
 ?>

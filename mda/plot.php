@@ -1,7 +1,7 @@
 <?php
   $lines = [];
   $heads = [];
-  if ( $resultsFile = @fopen( $resultsFilename, "r" ) )
+  if ( $resultsFile = @fopen( $_SESSION["resultsFilename"], "r" ) )
   {
     while( ! feof( $resultsFile ) )
     {

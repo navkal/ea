@@ -7,6 +7,8 @@
     $timestamp = $_GET["timestamp"];
     require_once "filenames.php" ;
 
+    $_SESSION["resultsFilename"] = $resultsFilename;
+
     $paramsFile = fopen( $paramsFilename, "r" );
     $params = fgetcsv( $paramsFile );
     $resultsFilename = fgetcsv( $paramsFile )[0];
