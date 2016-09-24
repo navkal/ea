@@ -43,6 +43,7 @@
     {
       // Build the argument list
       $runArgs = [];
+      $runArgs["inputName"] = $_POST["inputName"];
       for ( $index = 0; $index < count( $arglist ); $index += 2 )
       {
         $runArgs[$arglist[$index]] = $arglist[$index+1];
@@ -120,25 +121,8 @@
       // Normal: Process results
 
       // Save script parameters in file
-      $params = METASYS_FILE . "," . $_POST["inputName"];
-      $params .= "," . REPORT_FORMAT . "," . $_POST["format"];
-      if ( isset ( $_POST["period"] ) )
-      {
-        $params .= "," . TIME_PERIOD . "," . $_POST["period"];
-
-        if ( isset( $_POST["startTime"] ) )
-        {
-          $params .= "," . START_TIME . "," . str_replace( ' ', '', $_POST["startTime"] );
-
-          if ( isset( $_POST["endTime"] ) )
-          {
-            $params .= "," . END_TIME . "," . str_replace( ' ', '', $_POST["endTime"] );
-          }
-        }
-      }
-
       $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
-      fwrite( $paramsFile, $params . PHP_EOL );
+      fwrite( $paramsFile, formatParams( $_POST ) . PHP_EOL );
       fwrite( $paramsFile, basename( $resultsFilename ) . PHP_EOL );
       fclose( $paramsFile );
       downloadFile( $resultsFilename );
@@ -181,7 +165,12 @@
 
     // Check whether script generated an output file
     $message = "";
-    if ( ! file_exists( $resultsFilename ) )
+    if ( file_exists( $resultsFilename ) )
+    {
+      $params = formatParams( $args );
+      error_log( "===> params=" . $params );
+    }
+    else
     {
       $message = METASYS_DATA_ANALYSIS . " script failed to generate output file.<br/>";
       foreach ( $output as $line )
@@ -191,6 +180,29 @@
     }
 
     return $message;
+  }
+
+  // Format list of input parameters
+  function formatParams( $args )
+  {
+    $params = METASYS_FILE . "," . $args["inputName"];
+    $params .= "," . REPORT_FORMAT . "," . $args["format"];
+    if ( isset ( $args["period"] ) )
+    {
+      $params .= "," . TIME_PERIOD . "," . $args["period"];
+
+      if ( isset( $args["startTime"] ) )
+      {
+        $params .= "," . START_TIME . "," . str_replace( ' ', '', $args["startTime"] );
+
+        if ( isset( $args["endTime"] ) )
+        {
+          $params .= "," . END_TIME . "," . str_replace( ' ', '', $args["endTime"] );
+        }
+      }
+    }
+
+    return $params;
   }
 ?>
 
