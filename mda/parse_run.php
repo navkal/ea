@@ -89,10 +89,15 @@
     // Save script parameters in file
     $params = METASYS_FILE . "," . $_POST["inputName"];
     $params .= "," . REPORT_FORMAT . "," . MULTIPLE;
-    $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
-    fwrite( $paramsFile, $params . PHP_EOL );
-    fwrite( $paramsFile, basename( $zipFilename ). PHP_EOL );
-    fclose( $paramsFile );
+
+    // Save information for Analysis completion report
+    error_log( "==> BF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
+    $_SESSION["completion"] =
+      [
+        "params" => $params,
+        "resultsFilename" => basename( $zipFilename )
+      ];
+    error_log( "==> AF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
 
     // Put the results files into a zip archive
     $zipArchive = new ZipArchive();
@@ -118,11 +123,15 @@
     {
       // Normal: Process results
 
-      // Save script parameters in file
-      $paramsFile = fopen( $paramsFilename, "w" ) or die( "Unable to open file: " . $paramsFilename );
-      fwrite( $paramsFile, formatParams( $_POST ) . PHP_EOL );
-      fwrite( $paramsFile, basename( $resultsFilename ) . PHP_EOL );
-      fclose( $paramsFile );
+      // Save information for Analysis completion report
+      error_log( "==> BF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
+      $_SESSION["completion"] =
+        [
+          "params" => formatParams( $_POST ),
+          "resultsFilename" => basename( $resultsFilename )
+        ];
+      error_log( "==> AF saving sess completion=" . print_r( $_SESSION["completion"], true ) );
+
       downloadFile( $resultsFilename );
     }
     else

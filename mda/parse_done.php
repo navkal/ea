@@ -10,11 +10,11 @@
     // Save results filename with full path for use by Plot view
     $_SESSION["resultsFilename"] = $resultsFilename;
 
-    // Read analysis parameters for completion display
-    $paramsFile = fopen( $paramsFilename, "r" );
-    $params = fgetcsv( $paramsFile );
-    $resultsFilename = fgetcsv( $paramsFile )[0];
-    fclose( $paramsFile );
+    // Get analysis parameters for completion display
+    error_log( "==> sess completion params=" . $_SESSION["completion"]["params"] );
+    $params = str_getcsv( $_SESSION["completion"]["params"] );
+    error_log( "==> str_getcsv returned params=" . $params );
+    $resultsFilename = $_SESSION["completion"]["resultsFilename"];
 
     $columns = [];
     $columnsFile = fopen( $columnsFilename, "r" );

@@ -4,9 +4,8 @@
   $timestamp = $_GET["timestamp"];
   require_once "filenames.php" ;
 
-  if ( $paramsFile = @fopen( $paramsFilename, "r" ) )
+  if ( isset( $_SESSION["completion"] ) )
   {
-    fclose( $paramsFile );
     $rsp = "ready";
   }
   else
