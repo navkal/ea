@@ -173,6 +173,7 @@
       $resultsFile = fopen( $resultsFilename, "a" );
       fwrite( $resultsFile, formatParams( $args ) );
       fclose( $resultsFile );
+      markFile( $resultsFilename );
     }
     else
     {
@@ -206,7 +207,7 @@
       }
     }
 
-    return $params;
+    return $params . PHP_EOL;
   }
 ?>
 

@@ -64,11 +64,15 @@
   {
     if ( $gotResultsFile )
     {
-      // Save name of results file for use by plot
-      $_SESSION["resultsFilename"] = $resultsFilename;
+      $messages = unmarkFile( $resultsFilename );
+      if ( empty( $messages ) )
+      {
+        // Save name of results file for use by plot
+        $_SESSION["resultsFilename"] = $resultsFilename;
 
-      // Set redirect URL
-      $redirect = "mda/parse_results.php?timestamp=" . $timestamp;
+        // Set redirect URL
+        $redirect = "mda/parse_results.php?timestamp=" . $timestamp;
+      }
     }
     else
     {
