@@ -4,7 +4,7 @@
   require_once "parse_help.php";
 
   // Reinitialize session variables
-  /////////////session_unset();
+  session_unset();
 ?>
 
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">
