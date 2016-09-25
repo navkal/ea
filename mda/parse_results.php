@@ -8,8 +8,6 @@
 
     require_once "labels.php";
     require_once "parse_help.php";
-
-    error_log( "=========> In parse_results.php, timestamp=" . $timestamp . " filename=" .$_SESSION["resultsFilename"] );
   ?>
 
   <body>
