@@ -1,27 +1,20 @@
 <?php
   $lines = [];
-  $heads = [];
   if ( $resultsFile = @fopen( $_SESSION["resultsFilename"], "r" ) )
   {
     while( ! feof( $resultsFile ) )
     {
       $line = fgetcsv( $resultsFile );
+
+      // Save lines that have commas and contain non-empty values
       if ( count( $line ) > 1 )
       {
-        // Save lines; purge any that have no values
         $lineVals = $line;
         array_shift( $lineVals );
         $implode = trim( implode( $lineVals ) );
         if ( $implode != "" )
         {
           array_push( $lines, $line );
-        }
-      }
-      else
-      {
-        if ( ( $head = trim( $line[0] ) ) != "" )
-        {
-          array_push( $heads, $head );
         }
       }
     }
