@@ -31,7 +31,7 @@
     </div>
     <!-------------------------------------------->
 
-    <div class="container">
+    <div class="container" style="padding-top:10px;padding-bottom:80px">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <!-- Close button -->
@@ -42,6 +42,11 @@
         </div>
       </div>
     </div>
+
+    <?php
+      // Sticky footer
+      include $_SERVER["DOCUMENT_ROOT"]."/../common/footer.php";
+    ?>
 
   </body>
 </html>
