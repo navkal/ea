@@ -256,7 +256,7 @@
       <div class="panel-body">
 
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <div class="form-group">
               <label class="control-label" for="downSampleMode" >Down Sample by</label>
               <div>
@@ -306,6 +306,8 @@
                 <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
               </div>
             </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
           </div>
           <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
             <label class="control-label" >&nbsp;</label>
