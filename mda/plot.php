@@ -250,26 +250,7 @@
     <div class="panel panel-default">
 
       <div class="panel-heading">
-
-        <div class="row">
-          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <p>
-              Down Sample includes
-              <b><span id="downSampleShowing"></span></b>
-              of
-              <b><span id="downSampleOf"></span></b>
-              samples.
-              <br/>
-              <span id="densityCurrent" >
-                <i>Density</i>=<b><span id="downSampleDensity_current"></span></b>,
-              </span>
-              <i>Show</i>=<b><span id="downSampleShow_current"></span></b>,
-              <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>,
-              <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
-            </p>
-          </div>
-        </div>
-
+        <h3 class="panel-title">Advanced</h3>
       </div>
 
       <div class="panel-body">
@@ -340,6 +321,26 @@
           </div>
         </div>
 
+      </div>
+      
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            Down Sample includes
+            <b><span id="downSampleShowing"></span></b>
+            of
+            <b><span id="downSampleOf"></span></b>
+            samples.
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <span id="densityCurrent" >
+              <i>Density</i>=<b><span id="downSampleDensity_current"></span></b>,
+            </span>
+            <i>Show</i>=<b><span id="downSampleShow_current"></span></b>,
+            <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>,
+            <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
+          </div>
+        </div>
       </div>
     </div>
 
