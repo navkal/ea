@@ -190,6 +190,16 @@
         <ul name="seriesChooser" id="seriesChooser" class="list-unstyled checkboxList" ></ul>
       </div>
     </div>
+
+    <br/>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="text-center" >
+          <small><span id="timestampFrom"></span> - <span id="timestampTo"></span></small>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="container-fluid" >
@@ -214,12 +224,6 @@
 
         <div class="row">
           <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <p>
-              Showing
-              <b><span id="timestampFrom"></span></b>
-              to
-              <b><span id="timestampTo"></span></b>.
-            </p>
             <p>
               Down Sample includes
               <b><span id="downSampleShowing"></span></b>
