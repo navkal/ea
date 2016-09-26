@@ -217,6 +217,16 @@
   </div>
 
   <div class="container" id="downSampleControls" >
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <button type="button" id="downSampleToDefault" class="btn btn-default btn-sm" onclick="plotDownSampleToDefault();return false;" title="Show default plot view" >Show Default View</button>
+            <button type="button" id="downSampleToRange" class="btn btn-default btn-sm" onclick="plotDownSampleToRange();return false;" title="Zoom overview plot to selected range" >Zoom to Selected Range</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="panel panel-default">
 
@@ -243,7 +253,7 @@
             <div class="form-group" >
               <label class="checkbox checkbox-inline" >
                 <input type="checkbox" id="downSampleZoom" checked onchange="downSampleZoomChanged()" />
-                Down Sample in Zoom view
+                Reduce Density in Selected Range
               </label>
               <br/>
               <label class="checkbox checkbox-inline" >
