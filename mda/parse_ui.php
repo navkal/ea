@@ -903,6 +903,7 @@
     include( "filenames.php" );
     if ( file_exists( $resultsFilename ) )
     {
+      $_SESSION["resultsFilename"] = $resultsFilename;
       include "plot.php";
     }
     // include "colortest.php";
