@@ -220,8 +220,8 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-              <button type="button" id="downSampleToDefault" class="btn btn-default btn-sm" style="margin:6px" onclick="plotDownSampleToDefault();return false;" title="Show default plot view" >Show Default</button>
-              <button type="button" id="downSampleToRange" class="btn btn-default btn-sm" style="margin:6px" onclick="plotDownSampleToRange();return false;" title="Zoom overview plot to selected range" >Zoom to Selected Range</button>
+              <button type="button" id="downSampleToDefault" class="btn btn-default btn-sm" style="margin:6px" onclick="plotDownSampleToDefault();return false;" title="Show default plot view" >Zoom Out to Full Range</button>
+              <button type="button" id="downSampleToRange" class="btn btn-default btn-sm" style="margin:6px" onclick="plotDownSampleToRange();return false;" title="Zoom overview plot to selected range" >Zoom In to Selected Range</button>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="checkbox" >
@@ -268,7 +268,7 @@
                   <input type="radio" name="downSampleMode" id="downSampleManual" value="manual" onchange="downSampleControlsEnable(event)" />
                   Pattern
                 </label>
-                <label class="radio-inline" >
+                <label class="radio-inline" style="display:none" >
                   <input type="radio" name="downSampleMode" id="downSampleByZoom" value="zoom" onchange="downSampleControlsEnable(event)" />
                   Zoom
                 </label>
@@ -305,14 +305,6 @@
                 <label class="control-label" for="downSampleOffset" >Offset</label>
                 <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
               </div>
-            </div>
-          </div>
-          <div id="zoom" >
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
             </div>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
