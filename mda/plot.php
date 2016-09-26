@@ -217,12 +217,32 @@
   </div>
 
   <div class="container" id="downSampleControls" >
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <button type="button" id="downSampleToDefault" class="btn btn-default btn-sm" onclick="plotDownSampleToDefault();return false;" title="Show default plot view" >Show Default View</button>
-            <button type="button" id="downSampleToRange" class="btn btn-default btn-sm" onclick="plotDownSampleToRange();return false;" title="Zoom overview plot to selected range" >Zoom to Selected Range</button>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <button type="button" id="downSampleToDefault" class="btn btn-default btn-sm" style="margin:6px" onclick="plotDownSampleToDefault();return false;" title="Show default plot view" >Show Default View</button>
+              <button type="button" id="downSampleToRange" class="btn btn-default btn-sm" style="margin:6px" onclick="plotDownSampleToRange();return false;" title="Zoom overview plot to selected range" >Zoom to Selected Range</button>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="checkbox" >
+              <label>
+                <input type="checkbox" id="downSampleZoom" checked onchange="downSampleZoomChanged()" />
+                Reduce Density in Selected Range
+              </label>
+            </div>
+            <div class="checkbox" >
+              <label>
+                <input type="checkbox" id="showYaxisTicks" onchange="plotShowYaxisTicks()" />
+                Show Y-axis ticks
+              </label>
+            </div>
+            <div class="checkbox" >
+              <label>
+                <input type="checkbox" id="scaleIndependent" checked onchange="plotScaleIndependent()" />
+                Scale series independently
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -248,24 +268,6 @@
               <i>Hide</i>=<b><span id="downSampleHide_current"></span></b>,
               <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
             </p>
-          </div>
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <div class="form-group" >
-              <label class="checkbox checkbox-inline" >
-                <input type="checkbox" id="downSampleZoom" checked onchange="downSampleZoomChanged()" />
-                Reduce Density in Selected Range
-              </label>
-              <br/>
-              <label class="checkbox checkbox-inline" >
-                <input type="checkbox" id="showYaxisTicks" onchange="plotShowYaxisTicks()" />
-                Show Y-axis ticks
-              </label>
-              <br/>
-              <label class="checkbox checkbox-inline" >
-                <input type="checkbox" id="scaleIndependent" checked onchange="plotScaleIndependent()" />
-                Scale series independently
-              </label>
-            </div>
           </div>
         </div>
 
