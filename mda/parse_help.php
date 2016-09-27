@@ -4,12 +4,27 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="helpMetasysFileLabel"><?=METASYS_FILE?></h4>
+        <h4 class="modal-title" id="helpMetasysFileLabel"><?=METASYS_DATA_ANALYSIS?></h4>
       </div>
       <div class="modal-body bg-info">
         <dl>
           <dd>
-            Select a .csv file exported from Metasys and click <i>Submit</i>.
+            A <i><?=METASYS_FILE?></i> is a .csv file exported from Metasys.    
+          </dd>            
+        </dl>
+        <dl>
+          <dd>
+            <ol>
+              <li>
+                Choose to analyze a <?=METASYS_FILE?> or plot downloaded results from a past analysis.
+              </li>
+              <li>
+                Select a file.
+              </li>
+              <li>
+                Click <i>Submit</i>.
+              </li>
+            </ol>
           </dd>
         </dl>
       </div>
