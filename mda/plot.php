@@ -248,77 +248,109 @@
       </div>
     </div>
 
-    <div class="panel panel-default">
 
-      <div class="panel-heading">
-        <h3 class="panel-title">Advanced</h3>
-      </div>
 
-      <div class="panel-body">
 
-        <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            <div class="form-group">
-              <label class="control-label" for="downSampleMode" >Down Sample by</label>
-              <div>
-                <label class="radio-inline" >
-                  <input type="radio" name="downSampleMode" id="downSampleAuto" value="auto" checked onchange="downSampleControlsEnable(event)" />
-                  Density
-                </label>
-                <label class="radio-inline" >
-                  <input type="radio" name="downSampleMode" id="downSampleManual" value="manual" onchange="downSampleControlsEnable(event)" />
-                  Pattern
-                </label>
-                <label class="radio-inline" style="display:none" >
-                  <input type="radio" name="downSampleMode" id="downSampleByZoom" value="zoom" onchange="downSampleControlsEnable(event)" />
-                  Zoom
-                </label>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel-group" role="tablist">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="collapseListGroupHeading1">
+      <h4 class="panel-title">
+        <a href="#collapseListGroup1" class="collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseListGroup1">
+          Advanced
+        </a>
+      </h4>
+    </div>
+    <div class="collapse panel-collapse" role="tabpanel" id="collapseListGroup1" aria-labelledby="collapseListGroupHeading1">
+      <ul class="list-group">
+        <li class="list-group-item">
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+              <div class="form-group">
+                <label class="control-label" for="downSampleMode" >Down Sample by</label>
+                <div>
+                  <label class="radio-inline" >
+                    <input type="radio" name="downSampleMode" id="downSampleAuto" value="auto" checked onchange="downSampleControlsEnable(event)" />
+                    Density
+                  </label>
+                  <label class="radio-inline" >
+                    <input type="radio" name="downSampleMode" id="downSampleManual" value="manual" onchange="downSampleControlsEnable(event)" />
+                    Pattern
+                  </label>
+                  <label class="radio-inline" style="display:none" >
+                    <input type="radio" name="downSampleMode" id="downSampleByZoom" value="zoom" onchange="downSampleControlsEnable(event)" />
+                    Zoom
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
-          <div id="density" >
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-              <div class="form-group" >
-                <label class="control-label" for="downSampleDensity" >Density</label>
-                <input type="text" id="downSampleDensity" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+            <div id="density" >
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleDensity" >Density</label>
+                  <input type="text" id="downSampleDensity" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
               </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-            </div>
-          </div>
-          <div id="pattern" >
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-              <div class="form-group" >
-                <label class="control-label" for="downSampleShow" >Show</label>
-                <input type="text" id="downSampleShow" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+            <div id="pattern" >
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleShow" >Show</label>
+                  <input type="text" id="downSampleShow" class="form-control" maxlength="5" onkeyup="clickDownSampleButton( event )" />
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleHide" >Hide</label>
+                  <input type="text" id="downSampleHide" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+                </div>
               </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-              <div class="form-group" >
-                <label class="control-label" for="downSampleHide" >Hide</label>
-                <input type="text" id="downSampleHide" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+            <div id="offset" >
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <div class="form-group" >
+                  <label class="control-label" for="downSampleOffset" >Offset</label>
+                  <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
+                </div>
               </div>
             </div>
-          </div>
-          <div id="offset" >
-            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-              <div class="form-group" >
-                <label class="control-label" for="downSampleOffset" >Offset</label>
-                <input type="text" id="downSampleOffset" class="form-control" maxlength="10" onkeyup="clickDownSampleButton( event )" />
-              </div>
+            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+              <label class="control-label" >&nbsp;</label>
+              <div><button type="button" class="btn btn-default btn-sm" onclick="plotDownSample();return false;" title="Apply Down Sample settings to Plot" >Apply</button></div>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
-          </div>
-          <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
-            <label class="control-label" >&nbsp;</label>
-            <div><button type="button" class="btn btn-default btn-sm" onclick="plotDownSample();return false;" title="Apply Down Sample settings to Plot" >Apply</button></div>
-          </div>
-        </div>
 
-      </div>
-
+        </li>
+      </ul>
       <div class="panel-footer">
+
+
+
+
+
+
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             Down Sample includes
@@ -336,8 +368,25 @@
             <i>Offset</i>=<b><span id="downSampleOffset_current"></span></b>.
           </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     </div>
+  </div>
+</div>
+
+
+
 
   </div>
 </div>
