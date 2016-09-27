@@ -236,7 +236,7 @@
             <div class="checkbox" >
               <label>
                 <input type="checkbox" id="downSampleZoom" onchange="downSampleZoomChanged()" />
-                Show all Samples in Selected Range
+                Show all samples in selected range
               </label>
             </div>
             <div class="checkbox" >
