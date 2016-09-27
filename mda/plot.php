@@ -193,18 +193,22 @@
       </div>
     </div>
 
-    <br/>
+  </div>
+
+  <div class="container-fluid" >
+
+    <!-- Timestamp bounds -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="text-center" >
-          <small><span id="timestampFrom"></span> - <span id="timestampTo"></span></small>
+        <div style="width:82%; margin-left:auto; margin-right:auto;" class="text-right" >
+          <small>
+            <span id="timestampFrom"></span> - <span id="timestampTo"></span>
+          </small>
         </div>
       </div>
     </div>
 
-  </div>
-
-  <div class="container-fluid" >
+    <!-- Plot -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div name="plotview" id="plotview" style="width:90%; height:350px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
@@ -215,6 +219,7 @@
         <br/>
       </div>
     </div>
+
   </div>
 
   <div class="container" id="downSampleControls" >
