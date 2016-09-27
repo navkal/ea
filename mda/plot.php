@@ -172,6 +172,8 @@
 
   <div class="container" >
 
+    <h4><?=POINTS_OF_INTEREST?></h4>
+
     <!-- Checkbox accelerators -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
