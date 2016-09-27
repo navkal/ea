@@ -16,7 +16,7 @@
           <dd>
             <ol>
               <li>
-                Choose to analyze a <?=METASYS_FILE?> or plot downloaded results from a past analysis.
+                Choose to analyze a <?=METASYS_FILE?> or to plot results from a past analysis.
               </li>
               <li>
                 Select a file.
