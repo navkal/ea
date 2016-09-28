@@ -32,7 +32,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.min.js"></script>
 
 
-<script language="javascript" type="text/javascript" src="../lib/flotPlot/analyzer.js"></script>
+<script language="javascript" type="text/javascript" src="../lib/flotPlot/analyzer.js?version=<?=$timestamp?>"></script>
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/scrollbar.js"></script>
 <link rel="stylesheet" href="../util/util.css">
 
