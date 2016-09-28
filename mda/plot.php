@@ -227,13 +227,16 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-            <button type="button" id="downSampleToSelectedRange" class="btn btn-default" style="margin:6px" onclick="plotDownSampleToSelectedRange();return false;" title="Zoom overview plot to selected range" >
+            <p class="small text-muted" style="margin-top:6px" >
+              Drag mouse across plot to select range; click plot to deselect.
+            </p>
+            <button type="button" id="downSampleToSelectedRange" class="btn btn-default" style="margin-top:6px" onclick="plotDownSampleToSelectedRange();return false;" title="Zoom overview plot to selected range" >
               <span class="glyphicon glyphicon-zoom-in"></span> Zoom in to selected range
             </button>
-            <button type="button" id="downSampleToPreviousRange" class="btn btn-default" style="margin:6px" onclick="plotDownSampleToPreviousRange();return false;" title="Zoom out" >
+            <button type="button" id="downSampleToPreviousRange" class="btn btn-default" style="margin-top:6px" onclick="plotDownSampleToPreviousRange();return false;" title="Zoom out" >
               <span class="glyphicon glyphicon-zoom-out"></span> Zoom out
             </button>
-            <button type="button" id="downSampleToFullRange" class="btn btn-default" style="margin:6px" onclick="plotDownSampleToFullRange();return false;" title="Show default plot view" >
+            <button type="button" id="downSampleToFullRange" class="btn btn-default" style="margin-top:6px" onclick="plotDownSampleToFullRange();return false;" title="Show default plot view" >
               <span class="glyphicon glyphicon-zoom-out"></span> Zoom out to full range
             </button>
           </div>
