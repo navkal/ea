@@ -1,4 +1,10 @@
 <?php
+  /////////////////////////////////////////////////////////
+  // Copyright 2016 Energize Apps.  All rights reserved. //
+  /////////////////////////////////////////////////////////
+?>
+
+<?php
   define( "METASYS_DATA_ANALYSIS", "Metasys Data Analysis" );
   define( "METASYS_DATA_ANALYSIS_RESULTS", "Metasys Data Analysis Results" );
   define( "METASYS_FILE", "Metasys File" );
