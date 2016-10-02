@@ -1,12 +1,6 @@
 <!-- Copyright 2016 Energize Apps.  All rights reserved. -->
 
 <?php
-  /////////////////////////////////////////////////////////
-  // Copyright 2016 Energize Apps.  All rights reserved. //
-  /////////////////////////////////////////////////////////
-?>
-
-<?php
   $lines = [];
   if ( $resultsFile = @fopen( $_SESSION["resultsFilename"], "r" ) )
   {
