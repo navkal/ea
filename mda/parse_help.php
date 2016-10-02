@@ -1,8 +1,4 @@
-<?php
-  /////////////////////////////////////////////////////////
-  // Copyright 2016 Energize Apps.  All rights reserved. //
-  /////////////////////////////////////////////////////////
-?>
+<!-- Copyright 2016 Energize Apps.  All rights reserved. -->
 
 <!-- Modal dialog for Metasys File help -->
 <div class="modal fade" id="helpInputFile" tabindex="-1" role="dialog" aria-labelledby="helpMetasysFileLabel">

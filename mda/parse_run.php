@@ -1,10 +1,6 @@
 <?php
-  /////////////////////////////////////////////////////////
-  // Copyright 2016 Energize Apps.  All rights reserved. //
-  /////////////////////////////////////////////////////////
-?>
+  // Copyright 2016 Energize Apps.  All rights reserved.
 
-<?php
   require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
   include "labels.php";
 

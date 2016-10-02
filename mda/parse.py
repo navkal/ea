@@ -1,9 +1,4 @@
-"""
-  /////////////////////////////////////////////////////////
-  // Copyright 2016 Energize Apps.  All rights reserved. //
-  /////////////////////////////////////////////////////////
-"""
-
+# Copyright 2016 Energize Apps.  All rights reserved.
 import argparse
 import pandas as pd
 import numpy as np

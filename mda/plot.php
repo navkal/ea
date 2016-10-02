@@ -1,3 +1,5 @@
+<!-- Copyright 2016 Energize Apps.  All rights reserved. -->
+
 <?php
   /////////////////////////////////////////////////////////
   // Copyright 2016 Energize Apps.  All rights reserved. //
@@ -370,9 +372,6 @@
         </div>
       </div>
     </div>
-
-
-
 
   </div>
 </div>

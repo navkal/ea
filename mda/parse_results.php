@@ -1,8 +1,4 @@
-<?php
-  /////////////////////////////////////////////////////////
-  // Copyright 2016 Energize Apps.  All rights reserved. //
-  /////////////////////////////////////////////////////////
-?>
+<!-- Copyright 2016 Energize Apps.  All rights reserved. -->
 
 <!DOCTYPE html>
 <html>
