@@ -274,8 +274,8 @@
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
-                  <span class="input-group-addon">per kWh</span>
+                  <input class="form-control" type="number" min="0.01" step="0.01" id="cost" />
+                  <span class="input-group-addon">per unit</span>
                 </div>
               </div>
             </div>
