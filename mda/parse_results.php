@@ -23,15 +23,6 @@
     <?php
       include( "plot.php" );
     ?>
-    <!-------------------------------------------- >
-    <div class="form-group">
-      <label class="control-label" for="cost"><?=COST_PER_KWH?></label>
-      <div class="input-group">
-        <span class="input-group-addon" id="dollars">$</span>
-        <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
-      </div>
-    </div>
-    <!-------------------------------------------->
 
     <div class="container" style="padding-top:10px;padding-bottom:80px">
       <div class="row">

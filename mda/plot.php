@@ -38,6 +38,13 @@
 <script language="javascript" type="text/javascript" src="../lib/flotPlot/scrollbar.js"></script>
 <link rel="stylesheet" href="../util/util.css">
 
+<style>
+  .controlsMargin
+  {
+    margin: 6px;
+  }
+</style>
+
 <script>
   $( document ).ready( loadPlot );
 
@@ -224,42 +231,53 @@
 
   </div>
 
-  <div class="container" id="downSampleControls" >
+  <div class="container" id="plotControls" >
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-            <p class="small text-muted" style="margin-top:6px" >
+            <p class="small text-muted controlsMargin" >
               Drag mouse across plot to select range; click plot to deselect.
             </p>
-            <button type="button" id="downSampleToSelectedRange" class="btn btn-default" style="margin-top:6px" onclick="plotDownSampleToSelectedRange();return false;" title="Zoom overview plot to selected range" >
+            <button type="button" id="downSampleToSelectedRange" class="btn btn-default controlsMargin" onclick="plotDownSampleToSelectedRange();return false;" title="Zoom overview plot to selected range" >
               <span class="glyphicon glyphicon-zoom-in"></span> Zoom in to selected range
             </button>
-            <button type="button" id="downSampleToPreviousRange" class="btn btn-default" style="margin-top:6px" onclick="plotDownSampleToPreviousRange();return false;" title="Zoom out" >
+            <button type="button" id="downSampleToPreviousRange" class="btn btn-default controlsMargin" onclick="plotDownSampleToPreviousRange();return false;" title="Zoom out" >
               <span class="glyphicon glyphicon-zoom-out"></span> Zoom out
             </button>
-            <button type="button" id="downSampleToFullRange" class="btn btn-default" style="margin-top:6px" onclick="plotDownSampleToFullRange();return false;" title="Show default plot view" >
+            <button type="button" id="downSampleToFullRange" class="btn btn-default controlsMargin" onclick="plotDownSampleToFullRange();return false;" title="Show default plot view" >
               <span class="glyphicon glyphicon-zoom-out"></span> Zoom out to full range
             </button>
           </div>
           <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-            <div class="checkbox" >
-              <label>
-                <input type="checkbox" id="downSampleZoom" onchange="downSampleZoomChanged()" />
-                Show all samples in selected range
-              </label>
+            <div class="controlsMargin" >
+              <div class="checkbox" >
+                <label>
+                  <input type="checkbox" id="downSampleZoom" onchange="downSampleZoomChanged()" />
+                  Show all samples in selected range
+                </label>
+              </div>
+              <div class="checkbox" >
+                <label>
+                  <input type="checkbox" id="showYaxisTicks" onchange="plotShowYaxisTicks()" />
+                  Show Y-axis ticks
+                </label>
+              </div>
+              <div class="checkbox" >
+                <label>
+                  <input type="checkbox" id="scaleIndependent" checked onchange="plotScaleIndependent()" />
+                  Scale series independently
+                </label>
+              </div>
             </div>
-            <div class="checkbox" >
-              <label>
-                <input type="checkbox" id="showYaxisTicks" onchange="plotShowYaxisTicks()" />
-                Show Y-axis ticks
-              </label>
-            </div>
-            <div class="checkbox" >
-              <label>
-                <input type="checkbox" id="scaleIndependent" checked onchange="plotScaleIndependent()" />
-                Scale series independently
-              </label>
+            <div class="form-inline controlsMargin">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="number" value="0.16" min="0.01" step="0.01" class="form-control" id="cost" name="cost" />
+                  <span class="input-group-addon">per kWh</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
