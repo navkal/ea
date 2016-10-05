@@ -295,6 +295,15 @@
               <li>
                 Use checkboxes below plot to customize display.
               </li>
+              <li>
+                Hover mouse over plot to view interpolated values in legend.
+              </li>
+              <li>
+                Hover mouse over plot points to view sample values tooltips.
+              </li>
+              <li>
+                Enter dollars per unit below plot to show cost in tooltips and legend.
+              </li>
             </ul>
           </dd>
         </dl>
