@@ -284,25 +284,35 @@
                 Drag mouse across plot to select range.
               </li>
               <li>
-                Click plot to deselect range.
-              </li>
-              <li>
                 Use scrollbar to pan selected range.
               </li>
               <li>
-                Use buttons below plot to zoom in and out of selected range.
-              </li>
-              <li>
-                Use checkboxes below plot to customize display.
+                Click plot to deselect range.
               </li>
               <li>
                 Hover mouse over plot to view interpolated values in legend.
               </li>
               <li>
-                Hover mouse over plot points to view sample values tooltips.
+                Hover mouse over plot points to view sample values in tooltips.
+              </li>
+            </ul>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>
+            Controls
+          </dt>
+          <dd>
+            <ul>
+              <li>
+                Use buttons to zoom in and out of selected range.
               </li>
               <li>
-                Enter dollars per unit below plot to show cost in tooltips and legend.
+                Use checkboxes to customize plot display.
+              </li>
+              <li>
+                Enter dollars per unit to show cost in tooltips and legend.
               </li>
             </ul>
           </dd>
