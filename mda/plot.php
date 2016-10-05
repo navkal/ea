@@ -160,7 +160,7 @@
           <div class="panel-heading" role="tab" id="paramsHeading">
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" href="#paramsCollapse" aria-expanded="true" aria-controls="paramsCollapse">
-                Analysis Parameters
+                <span class="glyphicon glyphicon-stats">&nbsp;</span>Analysis Parameters
               </a>
             </h4>
           </div>
@@ -202,7 +202,7 @@
         <div class="panel-heading" role="tab" id="pointsHeading">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" href="#pointsCollapse" aria-expanded="true" aria-controls="pointsCollapse">
-              <?=POINTS_OF_INTEREST?>
+              <span class="glyphicon glyphicon-check">&nbsp;</span><?=POINTS_OF_INTEREST?>
             </a>
           </h4>
         </div>
@@ -262,9 +262,6 @@
 
   </div>
 
-
-
-
   <div class="container" id="plotControls" >
 
     <!-- Collapsible "Controls" section -->
@@ -273,7 +270,7 @@
         <div class="panel-heading" role="tab" id="controlsHeading">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" href="#controlsCollapse" aria-expanded="true" aria-controls="controlsCollapse">
-              Interactive Controls
+              <span class="glyphicon glyphicon-cog">&nbsp;</span>Controls
             </a>
           </h4>
         </div>
@@ -337,7 +334,7 @@
         <div class="panel-heading" role="tab" id="advancedHeading">
           <h4 class="panel-title">
             <a href="#advancedCollapse" class="collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="advancedCollapse">
-              Advanced
+              <span class="glyphicon glyphicon-wrench">&nbsp;</span>Advanced
             </a>
           </h4>
         </div>
