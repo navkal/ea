@@ -46,6 +46,7 @@
 </style>
 
 <script>
+
   $( document ).ready( loadPlot );
 
   function loadPlot()
@@ -86,8 +87,26 @@
       }
     }
 
-    if ( ! plotInit( samples ) )
+    if ( plotInit( samples ) )
     {
+      // Set handlers to show plus and minus icons on collapse panel heads
+      $( ".collapse" ).on(
+        "shown.bs.collapse",
+        function()
+        {
+          $(this).parent().find( ".glyphicon-plus" ).removeClass( "glyphicon-plus" ).addClass( "glyphicon-minus" );
+        }
+      ).on(
+        "hidden.bs.collapse",
+        function()
+        {
+          $(this).parent().find( ".glyphicon-minus" ).removeClass( "glyphicon-minus" ).addClass( "glyphicon-plus" );
+        }
+      );
+    }
+    else
+    {
+      // Report error and hide everything
       $( "#messages" ).append( '<p>Could not decipher plot data</p>' );
       $( "#messages" ).css( "display", "block" );
       $( "#mainpane" ).css( "display", "none" );
@@ -161,6 +180,7 @@
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" href="#paramsCollapse" aria-expanded="true" aria-controls="paramsCollapse">
                 <span class="glyphicon glyphicon-stats">&nbsp;</span>Analysis Parameters
+                <span class="glyphicon glyphicon-plus pull-right">
               </a>
             </h4>
           </div>
@@ -203,6 +223,7 @@
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" href="#pointsCollapse" aria-expanded="true" aria-controls="pointsCollapse">
               <span class="glyphicon glyphicon-check">&nbsp;</span><?=POINTS_OF_INTEREST?>
+              <span class="glyphicon glyphicon-minus pull-right">
             </a>
           </h4>
         </div>
@@ -271,6 +292,7 @@
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" href="#controlsCollapse" aria-expanded="true" aria-controls="controlsCollapse">
               <span class="glyphicon glyphicon-cog">&nbsp;</span>Controls
+              <span class="glyphicon glyphicon-minus pull-right">
             </a>
           </h4>
         </div>
@@ -335,6 +357,7 @@
           <h4 class="panel-title">
             <a href="#advancedCollapse" class="collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="advancedCollapse">
               <span class="glyphicon glyphicon-wrench">&nbsp;</span>Advanced
+              <span class="glyphicon glyphicon-plus pull-right">
             </a>
           </h4>
         </div>
