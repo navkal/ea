@@ -160,24 +160,24 @@
           <div class="panel-heading" role="tab" id="paramsHeading">
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" href="#paramsCollapse" aria-expanded="true" aria-controls="paramsCollapse">
-                Parameters
+                Analysis Parameters
               </a>
             </h4>
           </div>
           <div id="paramsCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="paramsHeading">
-                <dl class="dl-horizontal list-group-item list-group-item-info" >
-                  <?php
-                    for ( $index = 0; $index < count( $params ); $index += 2 )
-                    {
-                      echo "<dt>";
-                      echo $params[$index];
-                      echo "</dt>";
-                      echo "<dd>";
-                      echo $params[$index+1];
-                      echo "</dd>";
-                    }
-                  ?>
-                </dl>
+            <dl class="dl-horizontal list-group-item list-group-item-info" >
+              <?php
+                for ( $index = 0; $index < count( $params ); $index += 2 )
+                {
+                  echo "<dt>";
+                  echo $params[$index];
+                  echo "</dt>";
+                  echo "<dd>";
+                  echo $params[$index+1];
+                  echo "</dd>";
+                }
+              ?>
+            </dl>
           </div>
         </div>
       </div>
@@ -196,24 +196,40 @@
 
   <div class="container" >
 
-    <h4><?=POINTS_OF_INTEREST?></h4>
-
-    <!-- Checkbox accelerators -->
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="checkboxAccelerators" class="btn-toolbar" role="toolbar" >
-          <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
-            <button type="button" id="seriesCheckAll" class="btn btn-default btn-xs" title="Select All" >All</button>
-            <button type="button" id="seriesCheckNone" class="btn btn-default btn-xs" title="Deselect All" >None</button>
-            <button type="button" id="seriesCheckComplement" class="btn btn-default btn-xs" title="Select Complement" >Complement</button>
-          </span>
+    <!-- Collapsible "Parameters" section -->
+    <div class="panel-group" role="tablist" >
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="pointsHeading">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" href="#pointsCollapse" aria-expanded="true" aria-controls="pointsCollapse">
+              <?=POINTS_OF_INTEREST?>
+            </a>
+          </h4>
         </div>
-      </div>
-    </div>
+        <div id="pointsCollapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="pointsHeading">
+          <div class="panel-body">
 
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <ul name="seriesChooser" id="seriesChooser" class="list-unstyled checkboxList" ></ul>
+            <!-- Checkbox accelerators -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div id="checkboxAccelerators" class="btn-toolbar" role="toolbar" >
+                  <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
+                    <button type="button" id="seriesCheckAll" class="btn btn-default btn-xs" title="Select All" >All</button>
+                    <button type="button" id="seriesCheckNone" class="btn btn-default btn-xs" title="Deselect All" >None</button>
+                    <button type="button" id="seriesCheckComplement" class="btn btn-default btn-xs" title="Select Complement" >Complement</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul name="seriesChooser" id="seriesChooser" class="list-unstyled checkboxList" ></ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
 
