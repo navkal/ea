@@ -1089,7 +1089,7 @@
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                Available <?=POINTS_OF_INTEREST?>
+                <span class="glyphicon glyphicon-check">&nbsp;</span>Available <?=POINTS_OF_INTEREST?>
               </div>
               <div class="panel-body">
 
@@ -1119,7 +1119,7 @@
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    Selected <?=POINTS_OF_INTEREST?>
+                    <span class="glyphicon glyphicon-ok">&nbsp;</span>Selected <?=POINTS_OF_INTEREST?>
                   </div>
                   <div class="panel-body">
                     <input type="hidden" id="columnData" name="columnData" >
