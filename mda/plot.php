@@ -151,24 +151,39 @@
 </script>
 
 <div class="container" >
+
+  <!-- Collapsible "Parameters" section -->
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <dl class="dl-horizontal list-group-item list-group-item-info" >
-            <?php
-              for ( $index = 0; $index < count( $params ); $index += 2 )
-              {
-                echo "<dt>";
-                echo $params[$index];
-                echo "</dt>";
-                echo "<dd>";
-                echo $params[$index+1];
-                echo "</dd>";
-              }
-            ?>
-          </dl>
+      <div class="panel-group" role="tablist" >
+        <div class="panel panel-default panel-info">
+          <div class="panel-heading" role="tab" id="paramsHeading">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" href="#paramsCollapse" aria-expanded="true" aria-controls="paramsCollapse">
+                Parameters
+              </a>
+            </h4>
+          </div>
+          <div id="paramsCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="paramsHeading">
+                <dl class="dl-horizontal list-group-item list-group-item-info" >
+                  <?php
+                    for ( $index = 0; $index < count( $params ); $index += 2 )
+                    {
+                      echo "<dt>";
+                      echo $params[$index];
+                      echo "</dt>";
+                      echo "<dd>";
+                      echo $params[$index+1];
+                      echo "</dd>";
+                    }
+                  ?>
+                </dl>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <br/>
+
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div id="messages" class="alert alert-danger" style="display:none" role="alert">
