@@ -293,7 +293,7 @@
                   <span class="glyphicon glyphicon-zoom-out"></span> Zoom out
                 </button>
                 <button type="button" id="downSampleToFullRange" class="btn btn-default controlsMargin" onclick="plotDownSampleToFullRange();return false;" title="Show default plot view" >
-                  <span class="glyphicon glyphicon-zoom-out"></span> Zoom out to full range
+                  <span class="glyphicon glyphicon-home"></span> Zoom out to full range
                 </button>
               </div>
               <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
