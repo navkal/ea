@@ -306,7 +306,7 @@
           <dd>
             <ul>
               <li>
-                Use buttons to zoom in and out of selected range.
+                Use buttons to manage zoom level and range selection.
               </li>
               <li>
                 Use checkboxes to customize plot display.
