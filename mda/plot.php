@@ -87,24 +87,7 @@
       }
     }
 
-    if ( plotInit( samples ) )
-    {
-      // Set handlers to show plus and minus icons on collapse panel heads
-      $( ".collapse" ).on(
-        "shown.bs.collapse",
-        function()
-        {
-          $(this).parent().find( ".glyphicon-plus" ).removeClass( "glyphicon-plus" ).addClass( "glyphicon-minus" );
-        }
-      ).on(
-        "hidden.bs.collapse",
-        function()
-        {
-          $(this).parent().find( ".glyphicon-minus" ).removeClass( "glyphicon-minus" ).addClass( "glyphicon-plus" );
-        }
-      );
-    }
-    else
+    if ( ! plotInit( samples ) )
     {
       // Report error and hide everything
       $( "#messages" ).append( '<p>Could not decipher plot data</p>' );
