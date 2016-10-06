@@ -255,7 +255,7 @@
     <!-- Plot -->
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div name="plotview" id="plotview" style="width:90%; height:600px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
+        <div name="plotview" id="plotview" style="width:90%; height:450px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
         <br/>
         <div name="overview" id="overview" style="width:90%; height:100px; margin-left:auto; margin-right:auto; cursor: pointer;" ></div>
         <br/>
