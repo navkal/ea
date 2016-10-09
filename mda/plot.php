@@ -376,10 +376,6 @@
                         <input type="radio" name="downSampleMode" id="downSampleManual" value="manual" onchange="downSampleControlsEnable(event)" />
                         Pattern
                       </label>
-                      <label class="radio-inline" style="display:none" >
-                        <input type="radio" name="downSampleMode" id="downSampleByZoom" value="zoom" onchange="downSampleControlsEnable(event)" />
-                        Zoom
-                      </label>
                     </div>
                   </div>
                 </div>
