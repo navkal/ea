@@ -325,9 +325,6 @@
                     <button type="button" id="downSampleToFullRange" class="btn btn-default controlsMargin" onclick="plotDownSampleToFullRange();return false;" title="Show full range in overview plot" >
                       <span class="glyphicon glyphicon-home"></span> Zoom out to full range
                     </button>
-                    <button type="button" id="deselectRange" class="btn btn-default controlsMargin" onclick="plotZoomOut(event);return false;" title="Clear current range selection" >
-                      <span class="glyphicon glyphicon-arrow-up"></span> Deselect range
-                    </button>
                   </div>
                 </div>
               </div>
