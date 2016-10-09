@@ -293,10 +293,10 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <button type="button" id="plotCropIn" class="btn btn-default controlsMargin" onclick="plotCropIn();return false;" title="Crop plot to zoom range" >
-                      <span class="glyphicon glyphicon-resize-small"></span> Crop
+                      <img src="../mda/glyphicons-94-crop.png" style="height:15px" > Crop
                     </button>
                     <button type="button" id="plotCropOut" class="btn btn-default controlsMargin" onclick="plotCropOut();return false;" title="Show previous crop range" >
-                      <span class="glyphicon glyphicon-resize-full"></span> Uncrop
+                      <img src="../mda/glyphicons-436-undo.png" style="height:11px" > Uncrop
                     </button>
                     <button type="button" id="plotReset" class="btn btn-default controlsMargin" onclick="plotReset();return false;" title="Reset plot view" >
                       <span class="glyphicon glyphicon-home"></span> Reset
