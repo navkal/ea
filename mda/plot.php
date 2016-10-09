@@ -286,8 +286,28 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <p class="small text-muted controlsMargin" >
-                      Drag mouse across plot to select range.
+                      Drag mouse across plot to zoom in.
                     </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <button type="button" id="plotCropIn" class="btn btn-default controlsMargin" onclick="plotCropIn();return false;" title="Crop plot to zoom range" >
+                      <span class="glyphicon glyphicon-zoom-in"></span> Crop
+                    </button>
+                    <button type="button" id="plotCropOut" class="btn btn-default controlsMargin" onclick="plotCropOut();return false;" title="Show previous crop range" >
+                      <span class="glyphicon glyphicon-zoom-in"></span> Uncrop
+                    </button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <button type="button" id="plotReset" class="btn btn-default controlsMargin" onclick="plotReset();return false;" title="Reset plot view" >
+                      <span class="glyphicon glyphicon-home"></span> Reset
+                    </button>
+                    <button type="button" id="plotZoomOut" class="btn btn-default controlsMargin" onclick="plotZoomOut(event);return false;" title="Clear zoom range" >
+                      <span class="glyphicon glyphicon-arrow-up"></span> Zoom out
+                    </button>
                   </div>
                 </div>
                 <div class="row">
@@ -316,7 +336,7 @@
                   <div class="checkbox" >
                     <label>
                       <input type="checkbox" id="downSampleZoom" onchange="downSampleZoomChanged()" />
-                      Show all samples in selected range
+                      Show all samples in zoom range
                     </label>
                   </div>
                   <div class="checkbox" >
