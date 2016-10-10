@@ -21,7 +21,7 @@
     </div>
 
     <?php
-      include( "plot.php" );
+      include( "plot/plot.php" );
     ?>
 
     <div class="container" style="padding-top:10px;padding-bottom:80px">

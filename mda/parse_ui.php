@@ -907,7 +907,7 @@
     if ( file_exists( $resultsFilename ) )
     {
       $_SESSION["resultsFilename"] = $resultsFilename;
-      include "plot.php";
+      include "plot/plot.php";
     }
     // include "colortest.php";
   }

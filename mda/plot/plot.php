@@ -34,9 +34,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.min.js"></script>
 
 
-<script language="javascript" type="text/javascript" src="../lib/flotPlot/analyzer.js?version=<?=$timestamp?>"></script>
-<script language="javascript" type="text/javascript" src="../lib/flotPlot/scrollbar.js"></script>
-<link rel="stylesheet" href="../util/util.css">
+<script language="javascript" type="text/javascript" src="../../lib/flotPlot/analyzer.js?version=<?=$timestamp?>"></script>
+<script language="javascript" type="text/javascript" src="../../lib/flotPlot/scrollbar.js"></script>
+<link rel="stylesheet" href="../../util/util.css">
 
 <style>
   .controlsMargin
@@ -293,10 +293,10 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <button type="button" id="plotCropIn" class="btn btn-default controlsMargin" onclick="plotCropIn();return false;" title="Crop plot to zoom range" >
-                      <img src="../mda/glyphicons-94-crop.png" style="height:15px" > Crop
+                      <img src="../../mda/plot/glyphicons-94-crop.png" style="height:15px" > Crop
                     </button>
                     <button type="button" id="plotCropOut" class="btn btn-default controlsMargin" onclick="plotCropOut();return false;" title="Show previous crop range" >
-                      <img src="../mda/glyphicons-436-undo.png" style="height:11px" > Uncrop
+                      <img src="../../mda/plot/glyphicons-436-undo.png" style="height:11px" > Uncrop
                     </button>
                     <button type="button" id="plotReset" class="btn btn-default controlsMargin" onclick="plotReset();return false;" title="Reset plot view" >
                       <span class="glyphicon glyphicon-home"></span> Reset
