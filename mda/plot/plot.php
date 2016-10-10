@@ -296,7 +296,7 @@
                       <img src="../../mda/plot/glyphicons-94-crop.png" style="height:18px; padding-bottom:4px;" > Crop
                     </button>
                     <button type="button" id="plotCropOut" class="btn btn-default controlsMargin" onclick="plotCropOut();return false;" title="Show previous crop range" >
-                      <img src="../../mda/plot/glyphicons-436-undo.png" style="height:15px; padding-bottom:4px;" > Uncrop
+                      <img src="../../mda/plot/glyphicons-436-undo.png" style="height:15px; padding-bottom:3px;" > Uncrop
                     </button>
                     <button type="button" id="plotReset" class="btn btn-default controlsMargin" onclick="plotReset();return false;" title="Reset plot view" >
                       <span class="glyphicon glyphicon-home"></span> Reset
