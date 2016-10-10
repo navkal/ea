@@ -909,7 +909,7 @@
       $_SESSION["resultsFilename"] = $resultsFilename;
       include "plot/plot.php";
     }
-    // include "colortest.php";
+    include "colortest.php";
   }
 ?>
 

@@ -1,6 +1,6 @@
 <!-- Copyright 2016 Energize Apps.  All rights reserved. -->
 
-<script language="javascript" type="text/javascript" src="../lib/flotPlot/analyzer.js"></script>
+<script language="javascript" type="text/javascript" src="../../mda/plot/analyzer.js?version=<?=$timestamp?>"></script>
 
 <script>
   $( document ).ready( testColors );
