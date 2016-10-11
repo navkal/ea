@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
   // Copyright 2016 Energize Apps.  All rights reserved.
 
@@ -218,6 +217,7 @@
 function showMessage( $uploadFilename, $message )
 {
 ?>
+  <!DOCTYPE html>
   <html>
     <?php
       include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
