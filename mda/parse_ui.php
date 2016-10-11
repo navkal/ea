@@ -850,7 +850,6 @@
 
   function handlePollResponse( rsp, sStatus, tJqXhr )
   {
-    debugger;
     if ( rsp == "" )
     {
       // Try again
