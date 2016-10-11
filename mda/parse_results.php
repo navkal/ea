@@ -5,14 +5,15 @@
   <?php
     include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
     initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
-
     $timestamp = $_GET["timestamp"];
-
     require_once "labels.php";
-    require_once "parse_help.php";
   ?>
 
   <body>
+
+    <?php
+      require_once "parse_help.php";
+    ?>
 
     <div class="container">
       <div class="page-header">
@@ -41,30 +42,30 @@
       include $_SERVER["DOCUMENT_ROOT"]."/../common/footer.php";
     ?>
 
+    <script type="text/javascript" src="../util/util.js"></script>
+    <script>
+      $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
+      document.title = "<?=METASYS_DATA_ANALYSIS?>";
+
+      function startClose()
+      {
+        $.ajax(
+          "parse_cleanup.php?timestamp=<?=$timestamp?>",
+          {
+            type: "GET",
+            cache: false,
+            dataType: "json"
+          }
+        )
+        .done( finishClose )
+        .fail( ajaxError );
+      }
+
+      function finishClose()
+      {
+        document.location.href="/";
+      }
+    </script>
+
   </body>
 </html>
-
-<script type="text/javascript" src="../util/util.js"></script>
-<script>
-  $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
-  document.title = "<?=METASYS_DATA_ANALYSIS?>";
-
-  function startClose()
-  {
-    $.ajax(
-      "parse_cleanup.php?timestamp=<?=$timestamp?>",
-      {
-        type: "GET",
-        cache: false,
-        dataType: "json"
-      }
-    )
-    .done( finishClose )
-    .fail( ajaxError );
-  }
-
-  function finishClose()
-  {
-    document.location.href="/";
-  }
-</script>

@@ -46,6 +46,50 @@
 
 <script>
 
+
+if (!Array.prototype.fill) {
+  Array.prototype.fill = function(value) {
+
+    // Steps 1-2.
+    if (this == null) {
+      throw new TypeError('this is null or not defined');
+    }
+
+    var O = Object(this);
+
+    // Steps 3-5.
+    var len = O.length >>> 0;
+
+    // Steps 6-7.
+    var start = arguments[1];
+    var relativeStart = start >> 0;
+
+    // Step 8.
+    var k = relativeStart < 0 ?
+      Math.max(len + relativeStart, 0) :
+      Math.min(relativeStart, len);
+
+    // Steps 9-10.
+    var end = arguments[2];
+    var relativeEnd = end === undefined ?
+      len : end >> 0;
+
+    // Step 11.
+    var final = relativeEnd < 0 ?
+      Math.max(len + relativeEnd, 0) :
+      Math.min(relativeEnd, len);
+
+    // Step 12.
+    while (k < final) {
+      O[k] = value;
+      k++;
+    }
+
+    // Step 13.
+    return O;
+  };
+}
+
   $( document ).ready( loadPlot );
 
   function loadPlot()
@@ -162,7 +206,7 @@
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" href="#paramsCollapse" aria-expanded="true" aria-controls="paramsCollapse">
                 <span class="glyphicon glyphicon-stats">&nbsp;</span>Analysis Parameters
-                <span class="glyphicon glyphicon-plus pull-right">
+                <span class="glyphicon glyphicon-plus pull-right"></span>
               </a>
             </h4>
           </div>
@@ -205,7 +249,7 @@
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" href="#pointsCollapse" aria-expanded="true" aria-controls="pointsCollapse">
               <span class="glyphicon glyphicon-check">&nbsp;</span><?=POINTS_OF_INTEREST?>
-              <span class="glyphicon glyphicon-minus pull-right">
+              <span class="glyphicon glyphicon-minus pull-right"></span>
             </a>
           </h4>
         </div>
@@ -274,7 +318,7 @@
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" href="#controlsCollapse" aria-expanded="true" aria-controls="controlsCollapse">
               <span class="glyphicon glyphicon-cog">&nbsp;</span>Controls
-              <span class="glyphicon glyphicon-minus pull-right">
+              <span class="glyphicon glyphicon-minus pull-right"></span>
             </a>
           </h4>
         </div>
@@ -350,7 +394,7 @@
           <h4 class="panel-title">
             <a href="#advancedCollapse" class="collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="advancedCollapse">
               <span class="glyphicon glyphicon-wrench">&nbsp;</span>Advanced
-              <span class="glyphicon glyphicon-plus pull-right">
+              <span class="glyphicon glyphicon-plus pull-right"></span>
             </a>
           </h4>
         </div>
