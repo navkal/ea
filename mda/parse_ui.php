@@ -75,6 +75,17 @@
 
     // Hide Analysis Options form
     $( "#optionsForm" ).css( "display", "none" );
+
+    // Prohibit use of Internet Explorer browser
+    if ( navigator.userAgent.indexOf( ".NET" ) != -1 )
+    {
+      $( "#inputFileFields" ).prop( "disabled", true );
+      $( "#submitFileButton" ).prop( "disabled", true );
+      $( "#fileCancel" ).prop( "disabled", true );
+      $( "#fileHelp" ).prop( "disabled", true );
+
+      showMessages( [ "Internet Explorer not supported." ] );
+    }
   }
 
   function onChangeFileSource()
@@ -839,6 +850,7 @@
 
   function handlePollResponse( rsp, sStatus, tJqXhr )
   {
+    debugger;
     if ( rsp == "" )
     {
       // Try again
@@ -990,8 +1002,8 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
           <button id="submitFileButton" class="btn btn-primary" onclick="onSubmitFile()" >Submit</button>
-          <button type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpInputFile">Help</button>
+          <button id="fileCancel" type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+          <button id="fileHelp" type="button" class="btn btn-info" data-toggle="modal" data-target="#helpInputFile">Help</button>
         </div>
       </div>
     </div>
