@@ -976,7 +976,7 @@ function copyPlotTicksTo( aYaxes )
     var bShowYaxisTicks = $( "#showYaxisTicks" ).prop( "checked" );
 
     // Iterate through array of Y axis options objects
-    for ( var iYaxis in aYaxes )
+    for ( var iYaxis = 0; iYaxis < this.length; iYaxis++ )
     {
         // Get ticks array that main plot is showing for the current Y axis
         var sAxisName = "y" + ( ( iYaxis == 0 ) ? "" : ( parseInt( iYaxis ) + 1 ) ) + "axis";
