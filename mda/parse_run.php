@@ -226,7 +226,7 @@
     $targetFilename = $_SERVER["DOCUMENT_ROOT"]."/mda/archive/" . $dateFilename;
     rename( $inputFilename, $targetFilename );
 
-    $to = "NikhilNavkalContact@gmail.com";
+    $to = "EnergizeApps@gmail.com";
     $subject = "Added to archive: " . $dateFilename;
 
     $text =
@@ -239,7 +239,7 @@
 
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: " . $_POST["email"] . "<NikhilNavkalContact@gmail.com>" . "\r\n";
+    $headers .= "From: SmtpDispatch@gmail.com <SmtpDispatch@gmail.com>" . "\r\n";
 
     mail( $to, $subject, $text, $headers );
   }
