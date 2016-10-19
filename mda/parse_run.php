@@ -139,10 +139,17 @@
     }
   }
 
-  // Delete copy of uploaded input file
+  // Move or delete copy of uploaded input file
   if ( ! isset( $_SESSION["inputFilename"] ) )
   {
-    @unlink( $inputFilename );
+    if ( empty( $message ) )
+    {
+      archiveInput( $inputFilename, $_POST["inputName"] );
+    }
+    else
+    {
+      @unlink( $inputFilename );
+    }
   }
 
   function quote( $s )
@@ -211,7 +218,14 @@
 
     return $params . PHP_EOL;
   }
+
+  // Archive input file
+  function archiveInput( $inputFilename, $uploadFilename )
+  {
+    rename( $inputFilename, $_SERVER["DOCUMENT_ROOT"]."/mda/archive/" . date( "Y-m-d H-i-s " ) . $uploadFilename );
+  }
 ?>
+
 
 <?php
 function showMessage( $uploadFilename, $message )
