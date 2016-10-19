@@ -139,7 +139,7 @@
     }
   }
 
-  // Move or delete copy of uploaded input file
+  // Archive or delete copy of uploaded input file
   if ( ! isset( $_SESSION["inputFilename"] ) )
   {
     if ( empty( $message ) )
@@ -222,7 +222,26 @@
   // Archive input file
   function archiveInput( $inputFilename, $uploadFilename )
   {
-    rename( $inputFilename, $_SERVER["DOCUMENT_ROOT"]."/mda/archive/" . date( "Y-m-d H-i-s " ) . $uploadFilename );
+    $dateFilename =  date( "Y-m-d H-i-s " ) . $uploadFilename;
+    $targetFilename = $_SERVER["DOCUMENT_ROOT"]."/mda/archive/" . $dateFilename;
+    rename( $inputFilename, $targetFilename );
+
+    $to = "NikhilNavkalContact@gmail.com";
+    $subject = "Added to archive: " . $dateFilename;
+
+    $text =
+      "<style>body{font-family: arial;}</style>" .
+      "<html><body>".
+      "<p>The following upload has been added to the " . METASYS_FILE . " archive:</p>" .
+      "<p>" . $dateFilename . "</p>" .
+      "<hr/>" .
+      "</html></body>";
+
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: " . $_POST["email"] . "<NikhilNavkalContact@gmail.com>" . "\r\n";
+
+    mail( $to, $subject, $text, $headers );
   }
 ?>
 
