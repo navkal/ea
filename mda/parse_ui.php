@@ -878,6 +878,9 @@
   function ajaxFail( tJqXhr, sStatus, sErrorThrown )
   {
     showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
+
+    // Reinitialize identifying timestamp
+    $( "#timestamp" ).val( Date.now().toString( 36 ) );
   }
 
   function onShowOptionsTab()
