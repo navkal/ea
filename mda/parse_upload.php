@@ -56,7 +56,7 @@
   }
   else
   {
-    $messages = checkFileUpload( $_FILES, "metasysFile", 500000000, $inputFilename );
+    $messages = checkFileUpload( $_FILES, "metasysFile", 340000000, $inputFilename );
   }
 
   $redirect = "";
