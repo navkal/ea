@@ -2,7 +2,7 @@
   // Copyright 2016 Energize Apps.  All rights reserved.
 
   require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
-  include "labels.php";
+  require_once "labels.php";
 
   error_log( "====> post=" . print_r( $_POST, true ) );
 
@@ -80,7 +80,7 @@
       else
       {
         // Failure: Abort with error message
-        showMessage( $_POST["inputName"], $message );
+        showMessage( $_POST["inputName"], $message, $timestamp );
       }
     }
     fclose( $multiFile );
@@ -98,6 +98,9 @@
         "params" => $params,
         "resultsFilename" => basename( $zipFilename )
       ];
+
+    // Save information for archiving of input file
+    prepArchiveInput( $inputFilename, $_POST["inputName"] );
 
     // Put the results files into a zip archive
     $zipArchive = new ZipArchive();
@@ -130,27 +133,18 @@
           "resultsFilename" => basename( $resultsFilename )
         ];
 
+      // Save information for archiving of input file
+      prepArchiveInput( $inputFilename, $_POST["inputName"] );
+
       downloadFile( $resultsFilename );
     }
     else
     {
       // Failure: Report error
-      showMessage( $_POST["inputName"], $message );
+      showMessage( $_POST["inputName"], $message, $timestamp );
     }
   }
 
-  // Archive or delete copy of uploaded input file
-  if ( ! isset( $_SESSION["inputFilename"] ) )
-  {
-    if ( empty( $message ) )
-    {
-      archiveInput( $inputFilename, $_POST["inputName"] );
-    }
-    else
-    {
-      @unlink( $inputFilename );
-    }
-  }
 
   function quote( $s )
   {
@@ -219,35 +213,23 @@
     return $params . PHP_EOL;
   }
 
-  // Archive input file
-  function archiveInput( $inputFilename, $uploadFilename )
+  // Prepare to archive uploaded input file
+  function prepArchiveInput( $inputFilename, $uploadFilename )
   {
-    $dateFilename =  date( "Y-m-d H-i-s " ) . $uploadFilename;
-    $targetFilename = $_SERVER["DOCUMENT_ROOT"]."/mda/archive/" . $dateFilename;
-    rename( $inputFilename, $targetFilename );
-
-    $to = "EnergizeApps@gmail.com";
-    $subject = "Added to archive: " . $dateFilename;
-
-    $text =
-      "<style>body{font-family: arial;}</style>" .
-      "<html><body>".
-      "<p>The following upload has been added to the " . METASYS_FILE . " archive:</p>" .
-      "<p>" . $dateFilename . "</p>" .
-      "<hr/>" .
-      "</html></body>";
-
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: Energize Apps <SmtpDispatch@gmail.com>" . "\r\n";
-
-    mail( $to, $subject, $text, $headers );
+    if ( ! isset( $_SESSION["inputFilename"] ) )
+    {
+      $_SESSION["archiveInput"] =
+        [
+          "inputFilename" => $inputFilename,
+          "uploadFilename" => $_POST["inputName"]
+        ];
+    }
   }
 ?>
 
 
 <?php
-function showMessage( $uploadFilename, $message )
+function showMessage( $uploadFilename, $message, $timestamp )
 {
 ?>
   <!DOCTYPE html>
@@ -255,7 +237,7 @@ function showMessage( $uploadFilename, $message )
     <?php
       include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
       initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
-      include "labels.php";
+      require_once "labels.php";
     ?>
 
     <body>
@@ -269,7 +251,7 @@ function showMessage( $uploadFilename, $message )
       <!-- OK button -->
       <div class="container">
         <div style="text-align:center;" >
-         <a class="btn btn-default" href="/" role="button">OK</a>
+          <a class="btn btn-default" href="javascript:startClose()" role="button">OK</a>
         </div>
       </div>
 
@@ -278,12 +260,32 @@ function showMessage( $uploadFilename, $message )
         include $_SERVER["DOCUMENT_ROOT"]."/../common/footer.php";
       ?>
 
+      <script>
+        $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
+        document.title = "<?=METASYS_DATA_ANALYSIS?>";
+
+        function startClose()
+        {
+          $.ajax(
+            "parse_cleanup.php?timestamp=<?=$timestamp?>",
+            {
+              type: "GET",
+              cache: false,
+              dataType: "json"
+            }
+          )
+          .done( finishClose )
+          .fail( ajaxError );
+        }
+
+        function finishClose()
+        {
+          document.location.href="/";
+        }
+      </script>
+
     </body>
   </html>
-  <script>
-    $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
-    document.title = "<?=METASYS_DATA_ANALYSIS?>";
-  </script>
 <?php
   exit();
 }
