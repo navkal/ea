@@ -10,38 +10,6 @@
     require_once "filenames.php" ;
     require_once "labels.php";
 
-    // Optionally archive uploaded input file
-    if ( isset( $_SESSION["archiveInput"] ) )
-    {
-      // Format filenames
-      $dateFilename =  date( "Y-m-d H-i-s " ) . $_SESSION["archiveInput"]["uploadFilename"];
-      $zipFilename = $_SERVER["DOCUMENT_ROOT"]."/mda/archive/" . $dateFilename . ".zip";
-
-      // Put the uploaded input file into a zip archive
-      $zipArchive = new ZipArchive();
-      $zipArchive->open( $zipFilename, ZipArchive::CREATE );
-      $zipArchive->addFromString( $dateFilename, file_get_contents( $_SESSION["archiveInput"]["inputFilename"] ) );
-      $zipArchive->close();
-
-      // Send notification email
-      $to = "EnergizeApps@gmail.com";
-      $subject = "Added to archive: " . $dateFilename;
-
-      $text =
-        "<style>body{font-family: arial;}</style>" .
-        "<html><body>".
-        "<p>The following upload has been added to the " . METASYS_FILE . " archive:</p>" .
-        "<p>" . $dateFilename . "</p>" .
-        "<hr/>" .
-        "</html></body>";
-
-      $headers = "MIME-Version: 1.0" . "\r\n";
-      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-      $headers .= "From: Energize Apps <SmtpDispatch@gmail.com>" . "\r\n";
-
-      mail( $to, $subject, $text, $headers );
-    }
-
     // Save results filename with full path for use by Plot view
     $_SESSION["resultsFilename"] = $resultsFilename;
 
@@ -134,6 +102,29 @@
       $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
       document.title = "<?=METASYS_DATA_ANALYSIS?>";
 
+      $( document ).ready( startArchiveInput );
+
+      function startArchiveInput()
+      {
+        $( ".btn" ).prop( "disabled", true );
+
+        $.ajax(
+          "parse_archive.php?timestamp=<?=$timestamp?>",
+          {
+            type: "GET",
+            cache: false,
+            dataType: "json"
+          }
+        )
+        .done( finishArchiveInput )
+        .fail( finishArchiveInput );
+      }
+
+      function finishArchiveInput()
+      {
+        $( ".btn" ).prop( "disabled", false );
+      }
+
       function startClose()
       {
         $.ajax(
@@ -145,7 +136,7 @@
           }
         )
         .done( finishClose )
-        .fail( ajaxError );
+        .fail( finishClose );
       }
 
       function finishClose()

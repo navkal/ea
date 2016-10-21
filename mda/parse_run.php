@@ -274,7 +274,7 @@ function showMessage( $uploadFilename, $message, $timestamp )
             }
           )
           .done( finishClose )
-          .fail( ajaxError );
+          .fail( finishClose );
         }
 
         function finishClose()

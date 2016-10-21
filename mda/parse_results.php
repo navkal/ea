@@ -58,7 +58,7 @@
           }
         )
         .done( finishClose )
-        .fail( ajaxError );
+        .fail( finishClose );
       }
 
       function finishClose()
