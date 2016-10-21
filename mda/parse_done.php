@@ -10,7 +10,7 @@
     require_once "filenames.php" ;
     require_once "labels.php";
 
-    // Archive uploaded input file
+    // Optionally archive uploaded input file
     if ( isset( $_SESSION["archiveInput"] ) )
     {
       // Format filenames
@@ -56,7 +56,6 @@
       array_push( $columns, $line[0] );
     }
     fclose( $columnsFile );
-
   ?>
 
   <body>

@@ -85,22 +85,20 @@
     }
     fclose( $multiFile );
 
+    // Save information for archiving of input file
+    prepArchiveInput( $inputFilename, $_POST["inputName"] );
+
     // Format name of zip file to be downloaded
     $zipFilename = $split[0] . ".zip";
 
-    // Save script parameters in file
+    // Save information for Analysis completion report
     $params = METASYS_FILE . "," . $_POST["inputName"];
     $params .= "," . REPORT_FORMAT . "," . MULTIPLE;
-
-    // Save information for Analysis completion report
     $_SESSION["completion"] =
       [
         "params" => $params,
         "resultsFilename" => basename( $zipFilename )
       ];
-
-    // Save information for archiving of input file
-    prepArchiveInput( $inputFilename, $_POST["inputName"] );
 
     // Put the results files into a zip archive
     $zipArchive = new ZipArchive();
@@ -126,6 +124,9 @@
     {
       // Normal: Process results
 
+      // Save information for archiving of input file
+      prepArchiveInput( $inputFilename, $_POST["inputName"] );
+
       // Save information for Analysis completion report
       $_SESSION["completion"] =
         [
@@ -133,9 +134,7 @@
           "resultsFilename" => basename( $resultsFilename )
         ];
 
-      // Save information for archiving of input file
-      prepArchiveInput( $inputFilename, $_POST["inputName"] );
-
+      // Download the results file
       downloadFile( $resultsFilename );
     }
     else
