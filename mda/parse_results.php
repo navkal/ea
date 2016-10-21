@@ -30,7 +30,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <!-- Close button -->
           <div style="text-align:center;" >
-            <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
+            <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Close</a>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpPlot">Help</button>
           </div>
         </div>
@@ -46,25 +46,6 @@
     <script>
       $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
       document.title = "<?=METASYS_DATA_ANALYSIS?>";
-
-      function startClose()
-      {
-        $.ajax(
-          "parse_cleanup.php?timestamp=<?=$timestamp?>",
-          {
-            type: "GET",
-            cache: false,
-            dataType: "json"
-          }
-        )
-        .done( finishClose )
-        .fail( finishClose );
-      }
-
-      function finishClose()
-      {
-        document.location.href="/";
-      }
     </script>
 
   </body>

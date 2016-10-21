@@ -250,7 +250,7 @@ function showMessage( $uploadFilename, $message, $timestamp )
       <!-- OK button -->
       <div class="container">
         <div style="text-align:center;" >
-          <a class="btn btn-default" href="javascript:startClose()" role="button">OK</a>
+          <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">OK</a>
         </div>
       </div>
 
@@ -259,28 +259,10 @@ function showMessage( $uploadFilename, $message, $timestamp )
         include $_SERVER["DOCUMENT_ROOT"]."/../common/footer.php";
       ?>
 
+      <script type="text/javascript" src="../util/util.js"></script>
       <script>
         $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
         document.title = "<?=METASYS_DATA_ANALYSIS?>";
-
-        function startClose()
-        {
-          $.ajax(
-            "parse_cleanup.php?timestamp=<?=$timestamp?>",
-            {
-              type: "GET",
-              cache: false,
-              dataType: "json"
-            }
-          )
-          .done( finishClose )
-          .fail( finishClose );
-        }
-
-        function finishClose()
-        {
-          document.location.href="/";
-        }
       </script>
 
     </body>

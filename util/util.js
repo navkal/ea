@@ -12,3 +12,22 @@ function ajaxComplete( tJqXhr, sStatus )
 {
   console.log( "AJAX complete: Status=<" + sStatus + ">" );
 }
+
+function startCleanup( timestamp )
+{
+  $.ajax(
+    "parse_cleanup.php?timestamp=" + timestamp,
+    {
+      type: "GET",
+      cache: false,
+      dataType: "json"
+    }
+  )
+  .done( finishCleanup )
+  .fail( finishCleanup );
+}
+
+function finishCleanup()
+{
+  document.location.href="/";
+}

@@ -80,7 +80,7 @@
 
       <!-- Close and Plot buttons -->
       <div style="text-align:center;" >
-        <a class="btn btn-default" href="javascript:startClose()" role="button">Close</a>
+        <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Close</a>
         <?php
           // If single-run, display more
           $split = explode( ".", $resultsFilename );
@@ -123,25 +123,6 @@
       function finishArchiveInput()
       {
         $( ".btn" ).prop( "disabled", false );
-      }
-
-      function startClose()
-      {
-        $.ajax(
-          "parse_cleanup.php?timestamp=<?=$timestamp?>",
-          {
-            type: "GET",
-            cache: false,
-            dataType: "json"
-          }
-        )
-        .done( finishClose )
-        .fail( finishClose );
-      }
-
-      function finishClose()
-      {
-        document.location.href="/";
       }
     </script>
 
