@@ -27,7 +27,7 @@
 
   if ( count( $_POST ) == 0 )
   {
-    showControls();
+    showContactForm( "h3", "Energize Apps" );
   }
   else
   {
@@ -69,49 +69,6 @@
 
 </div>
 
-
-<?php
-  function showControls()
-  {
-?>
-    <form id="contactForm" role="form" onsubmit="return onSubmitContact();" method="post" enctype="multipart/form-data" >
-      <p class="h3"><b>Contact Energize Apps</b></p>
-
-      <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="firstName" maxlength="32" required >
-      </div>
-
-      <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" name="lastName" maxlength="32" required >
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" name="email" maxlength="256" required >
-      </div>
-
-      <div class="form-group">
-        <label for="subject">Subject</label>
-        <input type="text" class="form-control" id="subject" name="subject" maxlength="256" required >
-      </div>
-
-      <div class="form-group">
-        <label for="comment">Comment</label>
-        <textarea class="form-control" id="comment" name="comment" rows="5" maxlength="4096" required ></textarea>
-      </div>
-
-      <!-- Form buttons -->
-      <div style="text-align:center;" >
-        <button id="submitButton" type="submit" form="contactForm" class="btn btn-default" >Submit</button>
-        <button id="cancelButton" type="reset" onclick="$( "input, textarea").val('');" class="btn btn-default" >Clear</button>
-      </div>
-
-    </form>
-<?php
-  }
-?>
 
 <?php
   function sayThankYou()
