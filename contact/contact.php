@@ -57,30 +57,16 @@
 
     if ( mail( $to, $subject, $text, $headers ) )
     {
-      sayThankYou();
+      reportContactSuccess( "We", "The Energize Apps team" );
     }
     else
     {
       reportContactError();
     }
-
   }
 ?>
 
 </div>
-
-
-<?php
-  function sayThankYou()
-  {
-?>
-    <br/>
-    <p class="h3">Thank you for your interest.</p>
-    <p class="h3">The Energize Apps Team will be in touch!</p>
-<?php
-  }
-?>
-
 
 <script>
   function onSubmitContact()
