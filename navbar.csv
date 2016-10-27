@@ -1,7 +1,7 @@
 Energize Apps
 &copy; 2016 Energize Apps. All rights reserved.
-Metasys Data Analysis,mda/parse_ui.php
-About,about/about.php
-Contact,contact/contact.php
-Mothership,ms/ms.php
-PHP Information,pi/pi.php
+mda,Metasys Data Analysis,mda/parse_ui.php
+about,About,about/about.php
+contact,Contact,contact/contact.php
+mothership,Mothership,ms/ms.php
+php,PHP Information,pi/pi.php
