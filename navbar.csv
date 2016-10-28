@@ -3,5 +3,5 @@ Energize Apps
 mda,Metasys Data Analysis,mda/parse_ui.php
 about,About,about/about.php
 contact,Contact,contact/contact.php
-mothership,Mothership,ms/ms.php
+community,Community,community/community.php
 php,PHP Information,pi/pi.php
