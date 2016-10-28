@@ -13,7 +13,7 @@
       <h4 class="list-group-item-heading">
         <span class="text-info">Energize Andover<span>
       </h4>
-      <p class="list-group-item-text">A collaboration between municipal Plant and Facilities staff and area students, in Andover, MA</p>
+      <p class="list-group-item-text">A collaboration between municipal Plant and Facilities staff and local students, in Andover, MA</p>
     </a>
     <a href="http://www.VirajNavkal.com" target="_blank" class="list-group-item">
       <h4 class="list-group-item-heading">
