@@ -13,7 +13,7 @@
   <h4>Applications</h4>
   <dl class="dl-horizontal">
     <dt><?=METASYS_DATA_ANALYSIS?></dt>
-    <dd>Analyzes data exported from <a href="http://www.johnsoncontrols.com/buildings/building-management/building-automation-systems-bas" target="_blank" >Metasys Building Automation System</a></dd>
+    <dd>Analyzes data exported from <a href="http://www.johnsoncontrols.com/buildings/building-management/building-automation-systems-bas" target="_blank" >Metasys Building Automation System</a>.</dd>
   </dl>
 
   <br/>
