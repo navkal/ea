@@ -10,6 +10,6 @@
   </div>
 
   <h4><?=METASYS_DATA_ANALYSIS?></h4>
-  <p>Analyzes data exported from <a href="http://www.johnsoncontrols.com/buildings/building-management/building-automation-systems-bas" target="_blank" >Metasys&reg; Building Automation System</a>, a leading building management system from <a href="http://www.johnsoncontrols.com/" target="_blank" >Johnson Controls</a>.</p>
+  <p>Analyzes data exported from <a href="http://www.johnsoncontrols.com/buildings/building-management/building-automation-systems-bas" target="_blank" >Metasys Building Automation System</a>.</p>
 
 </div>

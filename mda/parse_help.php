@@ -11,7 +11,7 @@
       <div class="modal-body bg-info">
         <dl>
           <dd>
-            A <i><?=METASYS_FILE?></i> is a .csv file exported from Metasys&reg;.
+            A <i><?=METASYS_FILE?></i> is a .csv file exported from Metasys.
           </dd>
         </dl>
         <dl>
