@@ -45,7 +45,7 @@
     <script type="text/javascript" src="../util/util.js"></script>
     <script>
       $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
-      document.title = "<?=METASYS_DATA_ANALYSIS?>";
+      document.title = "<?=METASYS_DATA_ANALYSIS_RESULTS?>";
     </script>
 
   </body>
