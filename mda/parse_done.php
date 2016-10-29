@@ -29,7 +29,7 @@
   <body>
     <div class="container" style="padding-top:30px;padding-bottom:60px">
       <div class="page-header">
-        <p class="h3"><?=METASYS_DATA_ANALYSIS?> completion</p>
+        <p class="h3"><?=METASYS_DATA_ANALYSIS?> Completion</p>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
