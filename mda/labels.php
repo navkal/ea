@@ -1,8 +1,8 @@
 <?php
   // Copyright 2016 Energize Apps.  All rights reserved.
-  define( "METASYS_DATA_ANALYSIS", "Metasys Data Analysis" );
-  define( "METASYS_DATA_ANALYSIS_RESULTS", "Metasys Data Analysis Results" );
-  define( "METASYS_FILE", "Metasys File" );
+  define( "METASYS_DATA_ANALYSIS", "Metasys&reg; Data Analysis" );
+  define( "METASYS_DATA_ANALYSIS_RESULTS", "Metasys&reg; Data Analysis Results" );
+  define( "METASYS_FILE", "Metasys&reg; File" );
   define( "ANALYSIS_OPTIONS", "Analysis Options" );
   define( "REPORT_FORMAT", "Report Format" );
   define( "SUMMARY", "Summary" );
