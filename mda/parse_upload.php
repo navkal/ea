@@ -40,11 +40,14 @@
 
   $messages = [];
 
-  $gotResultsFile = isset( $_FILES["resultsFile"] );
-
-  if ( $gotResultsFile )
+  if ( isset( $_FILES["resultsFile"] ) )
   {
     $messages = checkFileUpload( $_FILES, "resultsFile", 50000000, $resultsFilename );
+  }
+  else if ( isset( $_POST["sampleFilename"] ) )
+  {
+    // Copy sample file to temp location
+    copy( "sample/" . $_POST["sampleFilename"], $resultsFilename );
   }
   else if ( isset( $_POST["metasysFilename"] ) )
   {
@@ -64,7 +67,7 @@
 
   if ( empty( $messages ) )
   {
-    if ( $gotResultsFile )
+    if ( isset( $_FILES["resultsFile"] ) || isset( $_POST["sampleFilename"] ) )
     {
       $messages = unmarkFile( $resultsFilename );
       if ( empty( $messages ) )

@@ -65,8 +65,9 @@
     $( "#preload" ).prop( "checked", true );
     onChangeFileSource();
 
-    // Initialize the file preload chooser
-    makePreloadPicker();
+    // Initialize dropdowns for preloaded input and sample results files
+    makeFilePicker( "preloadPicker", <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/input" ), 2 ) )?> );
+    makeFilePicker( "samplePicker", <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/sample" ), 2 ) )?> );
 
     // Initialize the file upload chooser
     $( "#metasysFile" ).val( "" );
@@ -92,21 +93,21 @@
   {
     $( "#uploadBlock" ).css( "display", $( "#upload" ).prop( "checked" ) ? "block" : "none" );
     $( "#preloadBlock" ).css( "display", $( "#preload" ).prop( "checked" ) ? "block" : "none" );
+    $( "#sampleBlock" ).css( "display", $( "#sample" ).prop( "checked" ) ? "block" : "none" );
     $( "#resultsBlock" ).css( "display", $( "#results" ).prop( "checked" ) ? "block" : "none" );
   }
 
-  function makePreloadPicker()
+  function makeFilePicker( pickerId, pickerFiles )
   {
-    var picker = $( "#preloadPicker" );
-    var preloadedFiles = <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/input" ), 2 ) )?>;
+    var picker = $( "#" + pickerId );
 
-    for ( var i = 0; i < preloadedFiles.length; i ++ )
+    for ( var i = 0; i < pickerFiles.length; i ++ )
     {
-      var preloadedFile = preloadedFiles[i];
+      var pickerFile = pickerFiles[i];
       var option =
-        '<option value="' + preloadedFile + '">'
+        '<option value="' + pickerFile + '">'
       +
-          preloadedFile
+          pickerFile
       +
         '</option>';
 
@@ -135,10 +136,15 @@
       {
         postData.append( "resultsFile", $( "#resultsFile" ).prop( "files" )[0] );
       }
+      else if ( $( "#sample" ).prop( "checked" ) )
+      {
+        postData.append( "sampleFilename", $( "#samplePicker" ).val() );
+      }
       else
       {
         postData.append( "metasysFilename", $( "#preloadPicker" ).val() );
       }
+
 
       $.ajax(
         "mda/parse_upload.php?timestamp=" + $( "#timestamp" ).val(),
@@ -947,19 +953,25 @@
                   <div class="radio">
                     <label>
                       <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
-                      Analyze <b>preloaded</b> <?=METASYS_FILE?>
+                      Analyze <b>sample</b> <?=METASYS_FILE?>
                     </label>
                   </div>
                   <div class="radio">
                     <label>
                       <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
-                      Analyze <b>uploaded</b> <?=METASYS_FILE?>
+                      Analyze <b>your</b> <?=METASYS_FILE?>
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="sample" name="fileSource" onchange="onChangeFileSource()" >
+                      Plot <b>sample</b> <?=METASYS_DATA_ANALYSIS_RESULTS?>
                     </label>
                   </div>
                   <div class="radio">
                     <label>
                       <input type="radio" id="results" name="fileSource" onchange="onChangeFileSource()" >
-                      Plot previous <?=METASYS_DATA_ANALYSIS_RESULTS?>
+                      Plot <b>your</b> <?=METASYS_DATA_ANALYSIS_RESULTS?>
                     </label>
                   </div>
                 </div>
@@ -980,6 +992,11 @@
                   </label>
                   <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
                 </div>
+              </div>
+
+              <div class="form-group" id="sampleBlock" >
+                <select id="samplePicker" class="form-control" >
+                </select>
               </div>
 
               <div class="form-group" id="resultsBlock" >
