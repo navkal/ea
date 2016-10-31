@@ -8,6 +8,7 @@
 
   if ( isset( $_SESSION["completion"] ) )
   {
+    sleep( 1 );
     $rsp = "ready";
   }
   else
