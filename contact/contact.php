@@ -3,6 +3,6 @@
 <div class="container">
   <?php
     require_once $_SERVER["DOCUMENT_ROOT"]."/../common/contact.php";
-    contact( "h3", "Energize Apps", "EnergizeApps@gmail.com", "We", "The Energize Apps team" );
+    contact( "h3", "Energize Apps", "We", "The Energize Apps team" );
   ?>
 </div>

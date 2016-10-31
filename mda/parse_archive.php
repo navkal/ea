@@ -2,6 +2,7 @@
   // Copyright 2016 Energize Apps.  All rights reserved.
 
   require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
+  initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
   require_once "labels.php";
 
   // Optionally archive uploaded input file
@@ -18,7 +19,6 @@
     $zipArchive->close();
 
     // Send notification email
-    $to = "EnergizeApps@gmail.com";
     $subject = "Added to archive: " . $dateFilename;
 
     $text =
@@ -33,7 +33,8 @@
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: Energize Apps <SmtpDispatch@gmail.com>" . "\r\n";
 
-    mail( $to, $subject, $text, $headers );
+    global $mailto;
+    mail( $mailto, $subject, $text, $headers );
   }
 
   echo( json_encode( "" ) );
