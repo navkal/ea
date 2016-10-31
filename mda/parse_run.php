@@ -215,12 +215,13 @@
   // Prepare to archive uploaded input file
   function prepArchiveInput( $inputFilename, $uploadFilename )
   {
-    if ( ! isset( $_SESSION["inputFilename"] ) )
+    if ( ( $archiveDeployment = getenv( "ARCHIVE_DEPLOYMENT" ) ) && ! isset( $_SESSION["inputFilename"] ) )
     {
       $_SESSION["archiveInput"] =
         [
           "inputFilename" => $inputFilename,
-          "uploadFilename" => $_POST["inputName"]
+          "uploadFilename" => $_POST["inputName"],
+          "deployment" => $archiveDeployment
         ];
     }
   }
