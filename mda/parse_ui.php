@@ -949,30 +949,36 @@
             <fieldset id="inputFileFields">
 
               <div class="form-group">
-                <div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
-                      Analyze <b>sample</b> <?=METASYS_FILE?>
-                    </label>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <h4>Analyze <?=METASYS_FILE?></h4>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" id="preload" name="fileSource" onchange="onChangeFileSource()" >
+                        Sample
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
+                        Your file
+                      </label>
+                    </div>
                   </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" id="upload" name="fileSource" onchange="onChangeFileSource()" >
-                      Analyze <b>your</b> <?=METASYS_FILE?>
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" id="sample" name="fileSource" onchange="onChangeFileSource()" >
-                      Plot <b>sample</b> <?=METASYS_DATA_ANALYSIS_RESULTS?>
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" id="results" name="fileSource" onchange="onChangeFileSource()" >
-                      Plot <b>your</b> <?=METASYS_DATA_ANALYSIS_RESULTS?>
-                    </label>
+                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <h4>Plot <?=METASYS_DATA_ANALYSIS_RESULTS?></h4>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" id="sample" name="fileSource" onchange="onChangeFileSource()" >
+                        Sample
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" id="results" name="fileSource" onchange="onChangeFileSource()" >
+                        Your file
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>

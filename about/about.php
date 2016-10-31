@@ -20,10 +20,9 @@
   <h4>Team</h4>
   <dl class="dl-horizontal">
     <dt>Anil Navkal</dt>
-    <dd>Director</dd>
+    <dd>Lead</dd>
     <dt><a href="http://www.VirajNavkal.com" target="_blank">Viraj Navkal</a></dt>
     <dd>Developer, data analysis algorithms</dd>
-
     <dt>Naomi Navkal</dt>
     <dd>Developer, user interface</dd>
   </dl>
