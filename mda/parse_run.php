@@ -111,8 +111,8 @@
         "downloadType" => "zip"
       ];
 
-    // Download the zip file
-    downloadFile( $zipFilename, "zip" );
+      // Redirect to completion page
+      showCompletion( $timestamp );
   }
   else
   {
@@ -138,8 +138,8 @@
           "downloadType" => "octet-stream"
         ];
 
-      // Download the results file
-      downloadFile( $resultsFilename );
+      // Redirect to completion page
+      showCompletion( $timestamp );
     }
     else
     {
@@ -148,6 +148,11 @@
     }
   }
 
+  function showCompletion( $timestamp )
+  {
+      echo '<script type="text/javascript">window.location.assign( "parse_done.php?timestamp='.$timestamp.'");</script>';
+      exit();
+  }
 
   function quote( $s )
   {

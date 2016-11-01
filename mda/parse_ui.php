@@ -189,7 +189,10 @@
     $( "#submitFileButton" ).prop( "disabled", false );
     $( "#inputFileFields" ).prop( "disabled", false );
 
-    ajaxFail( tJqXhr, sStatus, sErrorThrown );
+    showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
+
+    // Reinitialize identifying timestamp
+    $( "#timestamp" ).val( Date.now().toString( 36 ) );
   }
 
   function showOptionsView( columns )
@@ -694,7 +697,6 @@
     {
       $( "#analyzeButton" ).prop( "disabled", true );
       $( "body" ).css( "cursor", "progress" );
-      setTimeout( isItReadyYet, 1000 );
     }
 
     return valid;
@@ -838,55 +840,6 @@
       }
       $( "#messages" ).css( "display", "block" );
     }
-  }
-
-  function isItReadyYet()
-  {
-    $.ajax(
-      "mda/parse_ready.php?timestamp=" + $( "#timestamp" ).val(),
-      {
-        type: "GET",
-        cache: false,
-        dataType: "json"
-      }
-    )
-    .done( handlePollResponse )
-    .fail( handlePollError );
-  }
-
-  function handlePollResponse( rsp, sStatus, tJqXhr )
-  {
-    if ( rsp == "" )
-    {
-      // Try again
-      setTimeout( isItReadyYet, 1000 );
-    }
-    else
-    {
-      // Restore cursor and button states
-      $( "body" ).css( "cursor", "default" );
-      $( "#analyzeButton" ).prop( "disabled", false );
-
-      // Render results
-      window.location.assign( "mda/parse_done.php?timestamp=" + $( "#timestamp" ).val()  );
-    }
-  }
-
-  function handlePollError( tJqXhr, sStatus, sErrorThrown )
-  {
-    // Restore cursor and button states
-    $( "body" ).css( "cursor", "default" );
-    $( "#analyzeButton" ).prop( "disabled", false );
-
-    ajaxFail( tJqXhr, sStatus, sErrorThrown );
-  }
-
-  function ajaxFail( tJqXhr, sStatus, sErrorThrown )
-  {
-    showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
-
-    // Reinitialize identifying timestamp
-    $( "#timestamp" ).val( Date.now().toString( 36 ) );
   }
 
   function onShowOptionsTab()
