@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">
 <script type="text/javascript" src="lib/wickedpicker/dist/wickedpicker.unmin.js"></script>
 <link rel="stylesheet" href="../util/util.css?version=<?=$version?>">
+<script type="text/javascript" src="../util/util.js?version=<?=$version?>"></script>
 
 <style>
 @media( max-width: 767px )
@@ -1122,7 +1123,7 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
           <button id="analyzeButton" type="submit" form="optionsForm" class="btn btn-primary" >Analyze</button>
-          <button id="optionsCancel" type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+          <button id="optionsCancel" type="reset" onclick="startCleanup( $( '#timestamp' ).val(), 'mda/' );" class="btn btn-default" >Cancel</button>
           <button id="multiHelp" type="button" class="btn btn-info pull-right" data-toggle="modal">Help</button>
         </div>
       </div>

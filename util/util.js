@@ -13,10 +13,15 @@ function ajaxComplete( tJqXhr, sStatus )
   console.log( "AJAX complete: Status=<" + sStatus + ">" );
 }
 
-function startCleanup( timestamp )
+function startCleanup( timestamp, pathFragment )
 {
+  if ( ! pathFragment )
+  {
+    pathFragment = "";
+  }
+
   $.ajax(
-    "parse_cleanup.php?timestamp=" + timestamp,
+    pathFragment + "parse_cleanup.php?timestamp=" + timestamp,
     {
       type: "GET",
       cache: false,
