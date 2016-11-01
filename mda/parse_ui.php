@@ -77,17 +77,6 @@
 
     // Hide Analysis Options form
     $( "#optionsForm" ).css( "display", "none" );
-
-    // Prohibit use of Internet Explorer browser
-    if ( navigator.userAgent.indexOf( ".NET" ) != -1 )
-    {
-      $( "#inputFileFields" ).prop( "disabled", true );
-      $( "#submitFileButton" ).prop( "disabled", true );
-      $( "#fileCancel" ).prop( "disabled", true );
-      $( "#fileHelp" ).prop( "disabled", true );
-
-      showMessages( [ "Internet Explorer not supported." ] );
-    }
   }
 
   function onChangeFileSource()
