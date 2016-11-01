@@ -110,29 +110,6 @@
     <script>
       $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
       document.title = "<?=METASYS_DATA_ANALYSIS_COMPLETION?>";
-
-      $( document ).ready( startArchiveInput );
-
-      function startArchiveInput()
-      {
-        $( ".btn" ).prop( "disabled", true );
-
-        $.ajax(
-          "parse_archive.php?timestamp=<?=$timestamp?>",
-          {
-            type: "GET",
-            cache: false,
-            dataType: "json"
-          }
-        )
-        .done( finishArchiveInput )
-        .fail( finishArchiveInput );
-      }
-
-      function finishArchiveInput()
-      {
-        $( ".btn" ).prop( "disabled", false );
-      }
     </script>
 
   </body>
