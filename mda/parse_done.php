@@ -86,10 +86,18 @@
           $split = explode( ".", $resultsFilename );
           if ( $split[ count( $split ) - 1 ] == "csv" )
           {
-            echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a>';
+        ?>
+            <a class="btn btn-primary" href="parse_results.php?timestamp=<?=$timestamp?>" role="button">Plot</a>
+            <a class="btn btn-danger" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Quit</a>
+        <?php
+          }
+          else
+          {
+        ?>
+            <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Done</a>
+        <?php
           }
         ?>
-        <a class="btn btn-danger" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Done</a>
       </div>
     </div>
 

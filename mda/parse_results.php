@@ -31,14 +31,14 @@
           <!-- Done, Download, and Help buttons -->
           <div style="text-align:center;" >
             <?php
-            if( isset( $_SESSION["completion"] ) )
-            {
+              if( isset( $_SESSION["completion"] ) )
+              {
             ?>
-              <a class="btn btn-success" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
+                <a class="btn btn-success" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
             <?php
-            }
+              }
             ?>
-            <a class="btn btn-danger" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Done</a>
+            <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Done</a>
             <button type="button" class="btn btn-info helpButton" data-toggle="modal" data-target="#helpPlot">Help</button>
           </div>
         </div>
