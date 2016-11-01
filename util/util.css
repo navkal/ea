@@ -6,8 +6,3 @@
   -moz-column-width: 270px; /* Firefox */
   column-width: 270px;
 }
-
-.helpButton
-{
-  margin-left: 25px;
-}
