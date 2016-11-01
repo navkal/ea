@@ -91,6 +91,15 @@
     // Format name of zip file to be downloaded
     $zipFilename = $split[0] . ".zip";
 
+    // Put the results files into a zip archive
+    $zipArchive = new ZipArchive();
+    $zipArchive->open( $zipFilename, ZipArchive::CREATE );
+    foreach( $resultsFilenames as $filename )
+    {
+      $zipArchive->addFromString( basename( $filename ), file_get_contents( $filename ) );
+    }
+    $zipArchive->close();
+
     // Save information for Analysis completion report
     $params = METASYS_FILE . "," . $_POST["inputName"];
     $params .= "," . REPORT_FORMAT . "," . MULTIPLE;
@@ -101,15 +110,6 @@
         "downloadFilename" => $zipFilename,
         "downloadType" => "zip"
       ];
-
-    // Put the results files into a zip archive
-    $zipArchive = new ZipArchive();
-    $zipArchive->open( $zipFilename, ZipArchive::CREATE );
-    foreach( $resultsFilenames as $filename )
-    {
-      $zipArchive->addFromString( basename( $filename ), file_get_contents( $filename ) );
-    }
-    $zipArchive->close();
 
     // Download the zip file
     downloadFile( $zipFilename, "zip" );
