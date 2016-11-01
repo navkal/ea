@@ -106,7 +106,7 @@
       include $_SERVER["DOCUMENT_ROOT"]."/../common/footer.php";
     ?>
 
-    <script type="text/javascript" src="../util/util.js"></script>
+    <script type="text/javascript" src="../util/util.js?version=<?=$timestamp?>"></script>
     <script>
       $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
       document.title = "<?=METASYS_DATA_ANALYSIS_COMPLETION?>";

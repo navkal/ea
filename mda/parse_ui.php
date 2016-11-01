@@ -7,13 +7,14 @@
 
   // Reinitialize session variables
   session_unset();
+  $version = time();
 ?>
 
 
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">
 <script type="text/javascript" src="lib/wickedpicker/dist/wickedpicker.unmin.js"></script>
-<script type="text/javascript" src="../util/util.js"></script>
-<link rel="stylesheet" href="../util/util.css">
+<script type="text/javascript" src="../util/util.js?version=<?=$version?>"></script>
+<link rel="stylesheet" href="../util/util.css?version=<?=$version?>">
 
 <style>
 @media( max-width: 767px )

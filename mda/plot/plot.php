@@ -35,7 +35,7 @@
 
 <script language="javascript" type="text/javascript" src="../../mda/plot/analyzer.js?version=<?=$timestamp?>"></script>
 <script language="javascript" type="text/javascript" src="../../mda/plot/scrollbar.js"></script>
-<link rel="stylesheet" href="../../util/util.css">
+<link rel="stylesheet" href="../../util/util.css?version=<?=$timestamp?>">
 
 <style>
   .controlsMargin
