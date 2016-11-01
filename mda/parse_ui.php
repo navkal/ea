@@ -186,6 +186,9 @@
 
   function showOptionsView( columns )
   {
+    // Hide Help modal dialog
+    $( "#helpInputFile .modal-footer .btn" ).click();
+
     // Hide file chooser
     $( "#fileBlock" ).css( "display", "none" );
 
