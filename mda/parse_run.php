@@ -86,8 +86,8 @@
     }
     fclose( $multiFile );
 
-    // Save information for archiving of input file
-    prepArchiveInput( $inputFilename, $_POST["inputName"] );
+    // Archive input file
+    archiveInput( $inputFilename );
 
     // Format name of zip file to be downloaded
     $zipFilename = $split[0] . ".zip";
@@ -112,8 +112,8 @@
         "downloadType" => "zip"
       ];
 
-      // Redirect to completion page
-      showCompletion( $timestamp );
+    // Redirect to completion page
+    showCompletion( $timestamp );
   }
   else
   {
@@ -127,8 +127,8 @@
     {
       // Normal: Process results
 
-      // Save information for archiving of input file
-      prepArchiveInput( $inputFilename, $_POST["inputName"] );
+      // Archive input file
+      archiveInput( $inputFilename );
 
       // Save information for Analysis completion report
       $_SESSION["completion"] =
@@ -149,19 +149,20 @@
     }
   }
 
-  function showCompletion( $timestamp )
+  // Archive uploaded input file
+  function archiveInput( $inputFilename )
   {
     // Optionally archive uploaded input file
-    if ( isset( $_SESSION["archiveInput"] ) )
+    if ( ( $archiveDeployment = getenv( "ARCHIVE_DEPLOYMENT" ) ) && ! isset( $_SESSION["inputFilename"] ) )
     {
       // Format filenames
-      $dateFilename =  date( "Y-m-d H-i-s " ) . $_SESSION["archiveInput"]["uploadFilename"];
+      $dateFilename =  date( "Y-m-d H-i-s " ) . $_POST["inputName"];
       $zipFilename = $_SERVER["DOCUMENT_ROOT"]."/mda/archive/" . $dateFilename . ".zip";
 
       // Put the uploaded input file into a zip archive
       $zipArchive = new ZipArchive();
       $zipArchive->open( $zipFilename, ZipArchive::CREATE );
-      $zipArchive->addFromString( $dateFilename, file_get_contents( $_SESSION["archiveInput"]["inputFilename"] ) );
+      $zipArchive->addFromString( $dateFilename, file_get_contents( $inputFilename ) );
       $zipArchive->close();
 
 
@@ -178,7 +179,7 @@
           "</head>" .
 
           "<body>" .
-            "<p><b>" . $_SESSION["archiveInput"]["deployment"] . "</b> has archived a new " . METASYS_FILE . ":</p>" .
+            "<p><b>" . $archiveDeployment . "</b> has archived a new " . METASYS_FILE . ":</p>" .
             "<p>" . $dateFilename . "</p>" .
             "<br/>" .
 
@@ -209,10 +210,13 @@
       $headers .= "From: Energize Apps <SmtpDispatch@gmail.com>" . "\r\n";
 
       global $mailto;
-      $subject = "Archive notice: " . $_SESSION["archiveInput"]["deployment"];
+      $subject = "Archive notice: " . $archiveDeployment;
       mail( $mailto, $subject, $text, $headers );
     }
+  }
 
+  function showCompletion( $timestamp )
+  {
     echo '<script type="text/javascript">window.location.assign( "parse_done.php?timestamp='.$timestamp.'");</script>';
     exit();
   }
@@ -282,20 +286,6 @@
     }
 
     return $params . PHP_EOL;
-  }
-
-  // Prepare to archive uploaded input file
-  function prepArchiveInput( $inputFilename, $uploadFilename )
-  {
-    if ( ( $archiveDeployment = getenv( "ARCHIVE_DEPLOYMENT" ) ) && ! isset( $_SESSION["inputFilename"] ) )
-    {
-      $_SESSION["archiveInput"] =
-        [
-          "inputFilename" => $inputFilename,
-          "uploadFilename" => $_POST["inputName"],
-          "deployment" => $archiveDeployment
-        ];
-    }
   }
 ?>
 
