@@ -89,6 +89,7 @@
             echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a>';
           }
         ?>
+        <a class="btn btn-default" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
       </div>
     </div>
 

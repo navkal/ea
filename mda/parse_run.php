@@ -97,7 +97,9 @@
     $_SESSION["completion"] =
       [
         "params" => $params,
-        "resultsFilename" => basename( $zipFilename )
+        "resultsFilename" => basename( $zipFilename ),
+        "downloadFilename" => $zipFilename,
+        "downloadType" => "zip"
       ];
 
     // Put the results files into a zip archive
@@ -131,7 +133,9 @@
       $_SESSION["completion"] =
         [
           "params" => formatParams( $_POST ),
-          "resultsFilename" => basename( $resultsFilename )
+          "resultsFilename" => basename( $resultsFilename ),
+          "downloadFilename" => $resultsFilename,
+          "downloadType" => "octet-stream"
         ];
 
       // Download the results file

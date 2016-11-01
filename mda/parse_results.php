@@ -31,6 +31,7 @@
           <!-- Close button -->
           <div style="text-align:center;" >
             <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Close</a>
+            <a class="btn btn-default" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpPlot">Help</button>
           </div>
         </div>
