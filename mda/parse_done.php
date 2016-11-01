@@ -78,9 +78,9 @@
         </div>
       </div>
 
-      <!-- Close and Plot buttons -->
+      <!-- Done, Download, and Plot buttons -->
       <div style="text-align:center;" >
-        <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Close</a>
+        <a class="btn btn-success" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
         <?php
           // If single-run, display more
           $split = explode( ".", $resultsFilename );
@@ -89,7 +89,7 @@
             echo '<a class="btn btn-primary" href="parse_results.php?timestamp=' . $timestamp . '" role="button">Plot</a>';
           }
         ?>
-        <a class="btn btn-default" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
+        <a class="btn btn-danger" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Done</a>
       </div>
     </div>
 

@@ -28,10 +28,10 @@
     <div class="container" style="padding-top:10px;padding-bottom:80px">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <!-- Close button -->
+          <!-- Done, Download, and Help buttons -->
           <div style="text-align:center;" >
-            <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Close</a>
-            <a class="btn btn-default" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
+            <a class="btn btn-success" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
+            <a class="btn btn-danger" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Done</a>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpPlot">Help</button>
           </div>
         </div>
