@@ -161,6 +161,9 @@
     if ( rsp.messages.length )
     {
        showMessages( rsp.messages );
+
+      // Clean up temp files
+      startCleanup( $( "#timestamp" ).val(), "mda/", function(){} );
     }
     else if ( rsp.redirect )
     {
@@ -180,6 +183,9 @@
     $( "#inputFileFields" ).prop( "disabled", false );
 
     showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
+
+    // Clean up temp files
+    startCleanup( $( "#timestamp" ).val(), "mda/", function(){} );
   }
 
   function showOptionsView( columns )
@@ -829,9 +835,6 @@
         $( "#messageList" ).append( '<li>' + messages[index] + '</li>' );
       }
       $( "#messages" ).css( "display", "block" );
-
-      // Clean up temp files
-      startCleanup( $( "#timestamp" ).val(), "mda/", function(){} );
     }
   }
 

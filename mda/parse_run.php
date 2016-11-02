@@ -313,7 +313,7 @@ function showMessage( $uploadFilename, $message, $timestamp )
       <!-- OK button -->
       <div class="container">
         <div style="text-align:center;" >
-          <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">OK</a>
+          <a class="btn btn-default" href="/" role="button">OK</a>
         </div>
       </div>
 
@@ -326,6 +326,9 @@ function showMessage( $uploadFilename, $message, $timestamp )
       <script>
         $( 'head' ).append( '<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />' );
         document.title = "<?=METASYS_DATA_ANALYSIS?>";
+
+        // Clean up temp files
+        startCleanup( "<?=$timestamp?>", "", function(){} );
       </script>
 
     </body>
