@@ -977,6 +977,7 @@
         <div style="text-align:center;" >
           <button id="submitFileButton" class="btn btn-primary" onclick="onSubmitFile()" >Submit</button>
           <button id="fileCancel" type="reset" onclick="startCleanup( $( '#timestamp' ).val(), 'mda/' );" class="btn btn-default" >Cancel</button>
+          <svg class="helpButtonSpacer"></svg>
           <button id="fileHelp" type="button" class="btn btn-info" data-toggle="modal" data-target="#helpInputFile">Help</button>
         </div>
       </div>
@@ -1127,6 +1128,7 @@
         <div style="text-align:center;" >
           <button id="analyzeButton" type="submit" form="optionsForm" class="btn btn-primary" >Analyze</button>
           <button id="optionsCancel" type="reset" onclick="startCleanup( $( '#timestamp' ).val(), 'mda/' );" class="btn btn-default" >Cancel</button>
+          <svg class="helpButtonSpacer"></svg>
           <button id="multiHelp" type="button" class="btn btn-info" data-toggle="modal">Help</button>
         </div>
       </div>

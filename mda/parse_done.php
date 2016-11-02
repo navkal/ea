@@ -80,7 +80,7 @@
 
       <!-- Done, Download, and Plot buttons -->
       <div style="text-align:center;" >
-        <a class="btn btn-success" href="parse_download.php" role="button">Download <?=RESULTS_FILE?></a>
+        <a class="btn btn-success" href="parse_download.php" role="button">Download Results</a>
         <?php
           // If single-run, display more
           $split = explode( ".", $resultsFilename );

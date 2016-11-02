@@ -6,3 +6,19 @@
   -moz-column-width: 270px; /* Firefox */
   column-width: 270px;
 }
+
+@media( min-width: 400px )
+{
+  .helpButtonSpacer
+  {
+    width:5%;
+    height:1px;
+  }
+}
+@media( max-width: 399px )
+{
+  .helpButtonSpacer
+  {
+    display:none;
+  }
+}
