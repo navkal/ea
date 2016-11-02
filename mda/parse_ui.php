@@ -179,10 +179,10 @@
     $( "#submitFileButton" ).prop( "disabled", false );
     $( "#inputFileFields" ).prop( "disabled", false );
 
-    showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
+    // Clean up temp files
+    startCleanup( $( "#timestamp" ).val(), "mda/", function(){} );
 
-    // Reinitialize identifying timestamp
-    $( "#timestamp" ).val( Date.now().toString( 36 ) );
+    showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
   }
 
   function showOptionsView( columns )
@@ -973,7 +973,7 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center;" >
           <button id="submitFileButton" class="btn btn-primary" onclick="onSubmitFile()" >Submit</button>
-          <button id="fileCancel" type="reset" onclick="window.location.assign( window.location.href );" class="btn btn-default" >Cancel</button>
+          <button id="fileCancel" type="reset" onclick="startCleanup( $( '#timestamp' ).val(), 'mda/' );" class="btn btn-default" >Cancel</button>
           <button id="fileHelp" type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#helpInputFile">Help</button>
         </div>
       </div>

@@ -13,11 +13,16 @@ function ajaxComplete( tJqXhr, sStatus )
   console.log( "AJAX complete: Status=<" + sStatus + ">" );
 }
 
-function startCleanup( timestamp, pathFragment )
+function startCleanup( timestamp, pathFragment, completionHandler )
 {
-  if ( ! pathFragment )
+  if ( pathFragment == null )
   {
     pathFragment = "";
+  }
+
+  if ( completionHandler == null )
+  {
+    completionHandler = finishCleanup;
   }
 
   $.ajax(
@@ -28,8 +33,8 @@ function startCleanup( timestamp, pathFragment )
       dataType: "json"
     }
   )
-  .done( finishCleanup )
-  .fail( finishCleanup );
+  .done( completionHandler )
+  .fail( completionHandler );
 }
 
 function finishCleanup()
