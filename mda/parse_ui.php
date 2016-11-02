@@ -179,9 +179,6 @@
     $( "#submitFileButton" ).prop( "disabled", false );
     $( "#inputFileFields" ).prop( "disabled", false );
 
-    // Clean up temp files
-    startCleanup( $( "#timestamp" ).val(), "mda/", function(){} );
-
     showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
   }
 
@@ -832,6 +829,9 @@
         $( "#messageList" ).append( '<li>' + messages[index] + '</li>' );
       }
       $( "#messages" ).css( "display", "block" );
+
+      // Clean up temp files
+      startCleanup( $( "#timestamp" ).val(), "mda/", function(){} );
     }
   }
 
