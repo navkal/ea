@@ -39,7 +39,7 @@
               }
             ?>
             <a class="btn btn-default" href="javascript:startCleanup('<?=$timestamp?>')" role="button">Done</a>
-            <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#helpPlot">Help</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpPlot">Help</button>
           </div>
         </div>
       </div>
