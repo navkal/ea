@@ -164,27 +164,32 @@
             }
           }
         }
+
         fclose( $inputFile );
       }
 
       if ( empty( $messages ) )
       {
-        // Replace properties with format used by client
         define( "THRESHOLD", 0.0005 );  // 0.00037950664136623 is sufficiently small according to available sample input files
 
         foreach( $colMap as $key => $properties )
         {
+
+          // Replace properties with format used by client
           $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
 
           $volatility = THRESHOLD + 1;
           if ( $properties["first"] < $properties["last"] )
           {
+            error_log( "===> using lt" );
             $volatility = $properties["lt"] / $totalDeltas;
           }
           else if ( $properties["first"] > $properties["last"] )
           {
+            error_log( "===> using gt" );
             $volatility = $properties["gt"] / $totalDeltas;
           }
+          error_log( "=====> lt=" . $properties["lt"] . " eq=" . $properties["eq"] . " gt=" . $properties["gt"] . " vol=" . $volatility .  " --- poi=" . $key );
 
           $summarizable = $volatility < THRESHOLD;
           $colMap[$key] = [ "summarizable" => $summarizable ];
