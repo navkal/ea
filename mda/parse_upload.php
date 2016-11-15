@@ -141,7 +141,7 @@
               {
                 $colMap[$name]["first"] = $value;
               }
-              else if ( $time > $colMap[$name]["time"] )
+              else
               {
                 $colMap[$name]["last"] = $value;
               }
