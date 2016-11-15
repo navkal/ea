@@ -94,69 +94,81 @@
         fgetcsv( $inputFile );
 
         // Loop through the data
-        while( ( $line = fgetcsv( $inputFile ) ) !== false )
+        while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )
         {
           if ( isset( $line[0] ) && isset( $line[2] ) && isset( $line[3] ) )
           {
             $time = strtotime( $line[0] );
-            $name = $line[2];
-            $value = floatval( $line[3] );
 
-            if ( isset( $colMap[$name] ) )
+            if ( $time )
             {
-              // We've seen this column name before
+              $name = $line[2];
+              $value = floatval( $line[3] );
 
-              // Increment the appropriate counter
-              if ( $value < $colMap[$name]["value"] )
+              if ( isset( $colMap[$name] ) )
               {
-                if ( $time > $colMap[$name]["time"] )
+                // We've seen this column name before
+
+                // Increment the appropriate counter
+                if ( $value < $colMap[$name]["value"] )
                 {
-                  $colMap[$name]["lt"]++;
+                  if ( $time > $colMap[$name]["time"] )
+                  {
+                    $colMap[$name]["lt"]++;
+                  }
+                  else if ( $time < $colMap[$name]["time"] )
+                  {
+                    $colMap[$name]["gt"]++;
+                  }
+                }
+                else if ( $value > $colMap[$name]["value"] )
+                {
+                  if ( $time > $colMap[$name]["time"] )
+                  {
+                    $colMap[$name]["gt"]++;
+                  }
+                  else if ( $time < $colMap[$name]["time"] )
+                  {
+                    $colMap[$name]["lt"]++;
+                  }
                 }
                 else
                 {
-                  $colMap[$name]["gt"]++;
+                  $colMap[$name]["eq"]++;
                 }
-              }
-              else if ( $value > $colMap[$name]["value"] )
-              {
-                if ( $time > $colMap[$name]["time"] )
+
+                // Save data pertaining to this record
+                $colMap[$name]["value"] = $value;
+                $colMap[$name]["time"] = $time;
+
+                if ( $time < $colMap[$name]["t0"] )
                 {
-                  $colMap[$name]["gt"]++;
+                  $colMap[$name]["first"] = $value;
+                  $colMap[$name]["t0"] = $time;
                 }
-                else
+                else if ( $time > $colMap[$name]["tn"] )
                 {
-                  $colMap[$name]["lt"]++;
+                  $colMap[$name]["last"] = $value;
+                  $colMap[$name]["tn"] = $time;
                 }
               }
               else
               {
-                $colMap[$name]["eq"]++;
+                // First occurrence of this column name
+                $colMap[$name] = [ "first" => $value, "value" => $value, "last" => $value, "t0" => $time, "time" => $time, "tn" => $time, "lt" => 0, "gt" => 0, "eq" => 0 ];
               }
-
-              // Save data pertaining to this record
-              $colMap[$name]["value"] = $value;
-
-              if ( $time < $colMap[$name]["time"] )
-              {
-                $colMap[$name]["first"] = $value;
-              }
-              else
-              {
-                $colMap[$name]["last"] = $value;
-              }
-
-              $colMap[$name]["time"] = $time;
             }
             else
             {
-              // First occurrence of this column name
-              $colMap[$name] = [ "first" => $value, "value" => $value, "last" => $value, "time" => $time, "lt" => 0, "gt" => 0, "eq" => 0 ];
+              array_push( $messages, "Timestamp format not valid: " . $line[0] );
             }
           }
         }
         fclose( $inputFile );
+      }
 
+      if ( empty( $messages ) )
+      {
         // Replace properties with format used by client
         define( "THRESHOLD", 0.0005 );  // 0.00037950664136623 is sufficiently small according to available sample input files
 
@@ -175,7 +187,7 @@
           }
 
           $summarizable = $volatility < THRESHOLD;
-          $colMap[$key] = ["summarizable" => $summarizable ];
+          $colMap[$key] = [ "summarizable" => $summarizable ];
         }
 
         ksort( $colMap );
