@@ -181,15 +181,12 @@
           $volatility = THRESHOLD + 1;
           if ( $properties["first"] < $properties["last"] )
           {
-            error_log( "===> using lt" );
             $volatility = $properties["lt"] / $totalDeltas;
           }
           else if ( $properties["first"] > $properties["last"] )
           {
-            error_log( "===> using gt" );
             $volatility = $properties["gt"] / $totalDeltas;
           }
-          error_log( "=====> lt=" . $properties["lt"] . " eq=" . $properties["eq"] . " gt=" . $properties["gt"] . " vol=" . $volatility .  " --- poi=" . $key );
 
           $summarizable = $volatility < THRESHOLD;
           $colMap[$key] = [ "summarizable" => $summarizable ];
