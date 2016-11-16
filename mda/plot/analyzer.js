@@ -118,6 +118,7 @@ var g_iDownSampleHide = null;
 var g_aColors = null;
 var g_aDownSampleStack = [];
 var g_aCropStack = [];
+var g_aSeriesChooserItems = null;
 
 var g_tEventTimeStamps =
 {
@@ -600,6 +601,28 @@ function finishSeriesCheckAction()
   $( "#seriesChooser .bg-info" ).removeClass( "bg-info" );
   $( "#seriesChooser input[type=checkbox]:checked" ).parent().find( "span[columnName]" ).addClass( "bg-info" );
   plotDraw( { type: "plotFilter" } );
+}
+
+// Toggle sort of checkboxes between original and alphabetical
+function seriesSort()
+{
+  if ( g_aSeriesChooserItems )
+  {
+    $( "#seriesChooser" ).append( g_aSeriesChooserItems );
+    g_aSeriesChooserItems = null;
+  }
+  else
+  {
+    g_aSeriesChooserItems = $( "#seriesChooser li" );
+    $( "#seriesChooser" ).append( $( "#seriesChooser li" ).sort( seriesCheckboxCompare ) );
+  }
+}
+
+function seriesCheckboxCompare( a, b )
+{
+  var sA = $( a ).find( "span" ).text();
+  var sB = $( b ).find( "span" ).text();
+  return ( sA > sB ) ? 1 : ( ( sA < sB ) ? -1 : 0 );
 }
 
 // Show or hide y-axis ticks
@@ -1092,6 +1115,7 @@ function checkboxAcceleratorsInit()
   $( "#seriesCheckAll" ).click( seriesCheckAll );
   $( "#seriesCheckNone" ).click( seriesCheckNone );
   $( "#seriesCheckComplement" ).click( seriesCheckComplement );
+  $( "#seriesSort" ).change( seriesSort );
 }
 
 // Enable/disable down-sample pattern controls

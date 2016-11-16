@@ -236,6 +236,11 @@
                     <button type="button" id="seriesCheckNone" class="btn btn-default btn-xs" title="Deselect All" >None</button>
                     <button type="button" id="seriesCheckComplement" class="btn btn-default btn-xs" title="Select Complement" >Complement</button>
                   </span>
+                  <span class="btn-group pull-right" data-toggle="buttons">
+                    <label class="btn btn-default btn-xs">
+                      <input type="checkbox" id="seriesSort" autocomplete="off">Sort
+                    </label>  
+                  </span>
                 </div>
               </div>
             </div>
