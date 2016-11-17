@@ -55,7 +55,7 @@
 
 .marked
 {
-  text-decoration: underline;
+  border: solid 1px black;
 }
 </style>
 
