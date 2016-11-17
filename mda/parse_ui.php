@@ -424,26 +424,20 @@
   {
     if ( event.keyCode != "9" /* tab */ )
     {
-      markAllContaining( event, $( "#checkSearch" ).val() );
-    }
-  }
+      unmarkAll( event );
 
-  function markAllContaining( event, substring )
-  {
-    unmarkAll( event );
-
-    if ( substring.length > 0 )
-    {
-      var labels = $( "#columnPicker label" );
-
-      // Select all labels with the substring
-      for ( var lbl = 0; lbl < labels.length; lbl ++ )
+      var substring = $( "#checkSearch" ).val();
+      if ( substring.length > 0 )
       {
-        var label = $( labels[lbl] );
-        var span = label.find( "span[columnName]" );
-        if ( span.hasClass( "suitable" ) && span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+        // Mark all checkbox labels containing the substring
+        var spans = $( "#columnPicker label span[columnName].suitable" );
+        for ( var index = 0; index < spans.length; index ++ )
         {
-          span.addClass( "marked" );
+          var span = $( spans[index] );
+          if ( span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+          {
+            span.addClass( "marked" );
+          }
         }
       }
     }
