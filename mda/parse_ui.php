@@ -55,7 +55,7 @@
 
 .marked
 {
-  border: solid 1px black;
+  border: solid 1px darkgray;
 }
 </style>
 
@@ -393,8 +393,7 @@
 
   function uncheckAll( event )
   {
-    // Clear the search results
-    unmarkAll( event );
+    clearSearch();
 
     var all = $( "#columnPicker input[type=checkbox]" );
     all.prop( "checked", false );
@@ -424,8 +423,6 @@
   {
     if ( event.keyCode != "9" /* tab */ )
     {
-      unmarkAll( event );
-
       var substring = $( "#checkSearch" ).val();
       if ( substring.length > 0 )
       {
@@ -434,11 +431,21 @@
         for ( var index = 0; index < spans.length; index ++ )
         {
           var span = $( spans[index] );
-          if ( span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+          if ( span.text().toLowerCase().indexOf( substring.toLowerCase() ) != -1 )
           {
-            span.addClass( "marked" );
+            // Label contains substring
+            markSearchResult( span );
+          }
+          else
+          {
+            // Label does not contain substring
+            unmarkSearchResult( span );
           }
         }
+      }
+      else
+      {
+        clearSearch();
       }
     }
   }
@@ -462,7 +469,6 @@
     for ( var index = 0; index < marked.length; index ++ )
     {
       var checkbox = $( marked[index] ).parent().find( "input" );
-
       var checkboxIndex = checkbox.closest( "li" ).index();
 
       // If checkbox not already in desired state, toggle it
@@ -483,17 +489,47 @@
       }
     }
 
-    unmarkAll( event );
+    clearSearch();
   }
 
-  function unmarkAll( event )
+  function clearSearch()
   {
-    if ( event.target != $( "#checkSearch" )[0] )
-    {
-      $( "#checkSearch" ).val( "" );
-    }
+    $( "#checkSearch" ).val( "" );
 
-    $( "#columnPicker label span[columnName].marked" ).removeClass( "marked" );
+    var spans = $( "#columnPicker label span[columnName].suitable" );
+
+    for ( var index = 0; index < spans.length; index ++ )
+    {
+      var span = $( spans[index] );
+      unmarkSearchResult( span );
+    }
+  }
+
+  function markSearchResult( span )
+  {
+    span.addClass( "marked" );
+
+    if ( span.parent().find( "input" ).prop( "checked" ) )
+    {
+      span.removeClass( "bg-info" );
+      span.addClass( "bg-danger" );
+    }
+    else
+    {
+      span.addClass( "bg-success" );
+    }
+  }
+
+  function unmarkSearchResult( span )
+  {
+    span.removeClass( "marked" );
+    span.removeClass( "bg-danger" );
+    span.removeClass( "bg-success" );
+
+    if ( span.parent().find( "input" ).prop( "checked" ) )
+    {
+      span.addClass( "bg-info" );
+    }
   }
 
   function makeColumnPickerRow( colName, props )
@@ -526,7 +562,8 @@
 
   function onColumnSelChange( event )
   {
-    $( "#checkSearch" ).val( "" );
+    clearSearch();
+
     var checkbox = $( event.target );
     var checkboxIndex = checkbox.closest( "li" ).index();
 
@@ -701,8 +738,7 @@
 
   function uncheckColumn( event )
   {
-    // Clear the search box
-    $( "#checkSearch" ).val( "" );
+    clearSearch();
 
     // Find the corresponding column picker entry
     var editorColumn = $( $( event.target ).closest( "a" )[0] );
@@ -1169,8 +1205,8 @@
                     <div class="input-group" style="padding-bottom: 5px">
                       <input type="text" id="checkSearch" class="form-control" style="height:22px; padding-top:0px; padding-bottom:0px;" placeholder="Search..." autocomplete="off"  title="Find matching <?=POINTS_OF_INTEREST?>">
                       <div class="input-group-btn">
-                        <button type="button" id="checkAdd" class="btn btn-default btn-xs" title="Add Search Results" >Add</button>
-                        <button type="button" id="checkRemove" class="btn btn-default btn-xs" title="Remove Search Results" >Remove</button>
+                        <button type="button" id="checkAdd" class="btn btn-success btn-xs" title="Add Search Results" >Add</button>
+                        <button type="button" id="checkRemove" class="btn btn-danger btn-xs" title="Remove Search Results" >Remove</button>
                       </div>
                     </div>
                   </div>
