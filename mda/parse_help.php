@@ -201,7 +201,23 @@
                 Search...
               </dt>
               <dd>
-                Selects all <?=POINTS_OF_INTEREST?> containing a match.
+                Finds all <?=POINTS_OF_INTEREST?> containing a match.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                Add
+              </dt>
+              <dd>
+                Adds Search results to current selections.
+              </dd>
+            </dl>
+            <dl class="dl-horizontal" >
+              <dt>
+                Remove
+              </dt>
+              <dd>
+                Removes Search results from current selections.
               </dd>
             </dl>
           </dd>

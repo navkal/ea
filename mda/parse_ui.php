@@ -52,6 +52,11 @@
 {
   color: lightgray;
 }
+
+.marked
+{
+  text-decoration: underline;
+}
 </style>
 
 <script>
@@ -216,6 +221,8 @@
     $( "#checkComplement" ).click( checkComplement );
     $( "#checkSearch" ).keydown( preventDefault );
     $( "#checkSearch" ).keyup( checkSearch );
+    $( "#checkAdd" ).click( checkAdd );
+    $( "#checkRemove" ).click( checkRemove );
     for ( var colName in columns )
     {
       $( "#columnPicker" ).append( makeColumnPickerRow( colName, columns[colName] ) );
@@ -340,14 +347,6 @@
     }
   }
 
-  function checkSearch( event )
-  {
-    if ( event.keyCode != "9" /* tab */ )
-    {
-      checkAllContaining( event, $( "#checkSearch" ).val() );
-    }
-  }
-
   function checkAllContaining( event, substring )
   {
     uncheckAll( event );
@@ -394,11 +393,8 @@
 
   function uncheckAll( event )
   {
-    // Clear the search input
-    if ( event.target != $( "#checkSearch" )[0] )
-    {
-      $( "#checkSearch" ).val( "" );
-    }
+    // Clear the search results
+    unmarkAll( event );
 
     var all = $( "#columnPicker input[type=checkbox]" );
     all.prop( "checked", false );
@@ -422,6 +418,88 @@
       var checkboxIndex = checkbox.closest( "li" ).index();
       addEditorColumn( checkboxIndex );
     }
+  }
+
+  function checkSearch( event )
+  {
+    if ( event.keyCode != "9" /* tab */ )
+    {
+      markAllContaining( event, $( "#checkSearch" ).val() );
+    }
+  }
+
+  function markAllContaining( event, substring )
+  {
+    unmarkAll( event );
+
+    if ( substring.length > 0 )
+    {
+      var labels = $( "#columnPicker label" );
+
+      // Select all labels with the substring
+      for ( var lbl = 0; lbl < labels.length; lbl ++ )
+      {
+        var label = $( labels[lbl] );
+        var span = label.find( "span[columnName]" );
+        if ( span.hasClass( "suitable" ) && span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+        {
+          span.addClass( "marked" );
+        }
+      }
+    }
+  }
+
+  function checkAdd( event )
+  {
+    addMarked( event, true );
+  }
+
+  function checkRemove( event )
+  {
+    addMarked( event, false );
+  }
+
+  function addMarked( event, bAdd )
+  {
+    // Find all checkboxes marked as search results
+    var marked = $( "#columnPicker label span[columnName].marked" );
+
+    // Add (or remove) selected points of interest
+    for ( var index = 0; index < marked.length; index ++ )
+    {
+      var checkbox = $( marked[index] ).parent().find( "input" );
+
+      var checkboxIndex = checkbox.closest( "li" ).index();
+
+      // If checkbox not already in desired state, toggle it
+      if ( bAdd != checkbox.prop( "checked" ) )
+      {
+        // Toggle checkbox state
+        checkbox.prop( "checked", bAdd );
+
+        // Update column editor
+        if ( bAdd )
+        {
+          addEditorColumn( checkboxIndex );
+        }
+        else
+        {
+          removeEditorColumn( checkboxIndex );
+        }
+      }
+    }
+
+    unmarkAll( event );
+  }
+
+  function unmarkAll( event )
+  {
+    if ( event.target != $( "#checkSearch" )[0] )
+    {
+      $( "#checkSearch" ).val( "" );
+    }
+
+    $( "#columnPicker label span[columnName].marked" ).removeClass( "marked" );
   }
 
   function makeColumnPickerRow( colName, props )
@@ -1081,16 +1159,27 @@
               <div class="panel-body">
 
                 <!-- Checkbox accelerators -->
-                <div class="btn-toolbar" role="toolbar" >
-                  <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
-                    <button type="button" id="checkDefault" class="btn btn-default btn-xs" title="Select Default" >Default</button>
-                    <button type="button" id="checkAll" class="btn btn-default btn-xs" title="Select All" >All</button>
-                    <button type="button" id="uncheckAll" class="btn btn-default btn-xs" title="Deselect All" >None</button>
-                    <button type="button" id="checkComplement" class="btn btn-default btn-xs" title="Select Complement" >Complement</button>
-                  </span>
-                  <span class="btn-group btn-group-xs" role="group" >
-                    <input type="text" id="checkSearch" class="form-control" style="height:22px; padding-top:0px; padding-bottom:0px;" placeholder="Search..." autocomplete="off"  title="Select Matches">
-                  </span>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="btn-toolbar" role="toolbar" style="padding-bottom: 5px" >
+                      <span class="btn-group btn-group-xs" style="padding-right:10px" role="group" >
+                        <button type="button" id="checkDefault" class="btn btn-default btn-xs" title="Select Default" >Default</button>
+                        <button type="button" id="checkAll" class="btn btn-default btn-xs" title="Select All" >All</button>
+                        <button type="button" id="uncheckAll" class="btn btn-default btn-xs" title="Deselect All" >None</button>
+                        <button type="button" id="checkComplement" class="btn btn-default btn-xs" title="Select Complement" >Complement</button>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                    <div class="input-group" style="padding-bottom: 5px">
+                      <input type="text" id="checkSearch" class="form-control" style="height:22px; padding-top:0px; padding-bottom:0px;" placeholder="Search..." autocomplete="off"  title="Find matching <?=POINTS_OF_INTEREST?>">
+                      <div class="input-group-btn">
+                        <button type="button" id="checkAdd" class="btn btn-default btn-xs" title="Add Search Results" >Add</button>
+                        <button type="button" id="checkRemove" class="btn btn-default btn-xs" title="Remove Search Results" >Remove</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Checkboxes -->
