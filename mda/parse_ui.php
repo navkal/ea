@@ -291,6 +291,7 @@
 
   function updateColumnPicker()
   {
+    clearSearch();
     showSuitable();
     checkDefault( { target: "fake" } );
   }
