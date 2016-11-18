@@ -796,6 +796,7 @@
 
   function onSubmitOptions()
   {
+    clearSearch();
     var valid = validateFormInput( validateOptionsInput );
 
     if ( valid )
