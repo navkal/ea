@@ -384,9 +384,13 @@
   {
     uncheckAll( event );
 
+    // Prefer first suitable point of interest, if any; otherwise use first listed
+    var suitable = $( "#columnsTab span[columnName].suitable" );
+    var iFirst = suitable.length ? $( suitable[0] ).parent().parent().index() : 0;
+
     var labels = $( "#columnPicker label" );
-    $( labels[0] ).find( "input" ).prop( "checked", true );
-    addEditorColumn( 0 );
+    $( labels[iFirst] ).find( "input" ).prop( "checked", true );
+    addEditorColumn( iFirst );
   }
 
   function checkAll( event )
