@@ -174,7 +174,6 @@
 
         foreach( $colMap as $key => $properties )
         {
-
           // Replace properties with format used by client
           $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
 

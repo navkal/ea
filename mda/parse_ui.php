@@ -229,7 +229,17 @@
     }
 
     // Initialize Analysis Options
-    $( "#summary" ).prop( "checked", true );
+    if ( $( "#columnsTab *[summarizable=true]" ).length )
+    {
+      // Data contains summarizable points of interest
+      $( "#summary" ).prop( "checked", true );
+    }
+    else
+    {
+      // Data contains no summarizable points of interest
+      $( "#detailed" ).prop( "checked", true );
+      $( "#detailed" ).parent().parent().parent().hide();
+    }
     onChangeFormat();
 
     // Set column-related handlers
