@@ -17,16 +17,22 @@
     $inputFilename = $_SESSION["inputFilename"];
   }
 
-  // Save selected columns in columns file
+  // Save selected columns in columns file and nickname map
   $columnData = json_decode( $_POST["columnData"], true );
   $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
+  $nicknameMap = "";
   foreach ( $columnData as $columnPair )
   {
     $name = $columnPair["name"];
     $nickname = $columnPair["nickname"];
     $line = $name . "," . ( $nickname === "" ? $name : $nickname ) . PHP_EOL;
     fwrite( $columnsFile,  $line );
+    if ( $nickname != "" )
+    {
+      $nicknameMap .= $nickname . "," . $name . ",";
+    }
   }
+  $nicknameMap = rtrim( $nicknameMap, "," ) . PHP_EOL;
   fclose( $columnsFile );
 
 
@@ -70,7 +76,7 @@
       $resultsFilename = $split[0] . "_" . ( ++ $iteration ) . "_" . $tag . "." . $split[1];
 
       // Run the analysis
-      $message = runParseScript( $runArgs, $inputFilename, $columnsFilename, $resultsFilename );
+      $message = runParseScript( $runArgs, $inputFilename, $columnsFilename, $resultsFilename, $nicknameMap );
 
       // Handle completion
       if ( empty( $message ) )
@@ -120,7 +126,7 @@
     // Perform single analysis
 
     // Run the script
-    $message = runParseScript( $_POST, $inputFilename, $columnsFilename, $resultsFilename );
+    $message = runParseScript( $_POST, $inputFilename, $columnsFilename, $resultsFilename, $nicknameMap );
 
     // Handle completion
     if ( empty( $message ) )
@@ -231,7 +237,7 @@
     return $s;
   }
 
-  function runParseScript( $args, $inputFilename, $columnsFilename, $resultsFilename )
+  function runParseScript( $args, $inputFilename, $columnsFilename, $resultsFilename, $nicknameMap )
   {
     // Set up Python command
     $summarize = $args["format"] == SUMMARY ? "-s" : "";
@@ -250,6 +256,7 @@
     {
       $resultsFile = fopen( $resultsFilename, "a" );
       fwrite( $resultsFile, formatParams( $args ) );
+      fwrite( $resultsFile, $nicknameMap );
       fclose( $resultsFile );
       markFile( $resultsFilename );
     }

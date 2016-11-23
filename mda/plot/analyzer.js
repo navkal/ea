@@ -119,6 +119,7 @@ var g_aColors = null;
 var g_aDownSampleStack = [];
 var g_aCropStack = [];
 var g_aSeriesChooserItems = null;
+var g_aNicknameMap = null;
 
 var g_tEventTimeStamps =
 {
@@ -233,8 +234,15 @@ var g_tOptionsScrollbar =
 
 
 // Show initial plot, either empty, or initialized with data from opened plot file
-function plotInit( aPlotOpenData )
+function plotInit( aPlotOpenData, aNicknameMap )
 {
+    // Build the nickname map
+    g_aNicknameMap = [];
+    for ( var iName = 0; iName < aNicknameMap.length; iName += 2 )
+    {
+      g_aNicknameMap[aNicknameMap[iName]] = aNicknameMap[iName+1];
+    }
+
     // Initialize checkbox accelerator controls
     checkboxAcceleratorsInit();
 
@@ -949,11 +957,12 @@ function chooserAdd( aSamples, iSample )
 
     // Create the checkbox
     var sLabel = tSample.label;
+    var sName = g_aNicknameMap[sLabel] || "";
     var sId = "chk_" + sLabel;
     var sChooser =
       '<li>'
       +
-        '<label class="checkbox checkbox-inline" >'
+        '<label class="checkbox checkbox-inline" title="' + sName + '" >'
       +
           '<input type="checkbox" checked="checked" name="' + sId + '" id="' + sId + '" >'
       +

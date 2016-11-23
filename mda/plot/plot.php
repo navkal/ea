@@ -20,6 +20,7 @@
         }
       }
     }
+    $nicknameMap = json_encode( array_pop( $lines ) );
     $params = array_pop( $lines );
     fclose( $resultsFile );
   }
@@ -101,7 +102,7 @@
       }
     }
 
-    if ( ! plotInit( samples ) )
+    if ( ! plotInit( samples, JSON.parse( '<?=$nicknameMap?>' ) ) )
     {
       // Report error and hide everything
       $( "#messages" ).append( '<p>Could not decipher plot data</p>' );
@@ -239,7 +240,7 @@
                   <span class="btn-group pull-right" data-toggle="buttons">
                     <label class="btn btn-default btn-xs">
                       <input type="checkbox" id="seriesSort" autocomplete="off">Sort
-                    </label>  
+                    </label>
                   </span>
                 </div>
               </div>
