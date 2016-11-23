@@ -170,14 +170,15 @@
 
       if ( empty( $messages ) )
       {
-        define( "THRESHOLD", 0.0005 );  // 0.00037950664136623 is sufficiently small according to available sample input files
+        define( "THRESHOLD", 0.0005 );    // 0.00037950664136623 is sufficiently small according to available sample input files
+        define( "VARIABILITY_MINIMUM", 0.0003 );  // 0.00019267822736031 is sufficiently large according to available sample input files
 
         foreach( $colMap as $key => $properties )
         {
           // Replace properties with format used by client
 
           $volatility = THRESHOLD + 1;
-          if ( $properties["eq"] == 0 || ( ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) > THRESHOLD ) )
+          if ( $properties["eq"] == 0 || ( ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) > VARIABILITY_MINIMUM ) )
           {
             $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
             if ( $properties["first"] < $properties["last"] )
@@ -195,7 +196,7 @@
 
           if ( $summarizable != $oldSummarizable )
           {
-            error_log( "======> !!!!!!!!! BEHAVIOR CHANGED! key=" . $key . " props=" . print_r( $properties, true ) );
+            error_log( "===> !!! Change in summarizable result: key=" . $key . " variability=" . ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) . " volatility=" . $volatility . " props=" . print_r( $properties, true ) );
           }
 
           $colMap[$key] = [ "summarizable" => $summarizable ];
