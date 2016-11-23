@@ -175,19 +175,29 @@
         foreach( $colMap as $key => $properties )
         {
           // Replace properties with format used by client
-          $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
 
           $volatility = THRESHOLD + 1;
-          if ( $properties["first"] < $properties["last"] )
+          if ( $properties["eq"] == 0 || ( ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) > THRESHOLD ) )
           {
-            $volatility = $properties["lt"] / $totalDeltas;
-          }
-          else if ( $properties["first"] > $properties["last"] )
-          {
-            $volatility = $properties["gt"] / $totalDeltas;
+            $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
+            if ( $properties["first"] < $properties["last"] )
+            {
+              $volatility = $properties["lt"] / $totalDeltas;
+            }
+            else if ( $properties["first"] > $properties["last"] )
+            {
+              $volatility = $properties["gt"] / $totalDeltas;
+            }
           }
 
           $summarizable = $volatility < THRESHOLD;
+          $oldSummarizable = oldSummarizable( $properties );
+
+          if ( $summarizable != $oldSummarizable )
+          {
+            error_log( "======> !!!!!!!!! BEHAVIOR CHANGED! key=" . $key . " props=" . print_r( $properties, true ) );
+          }
+
           $colMap[$key] = [ "summarizable" => $summarizable ];
         }
 
@@ -214,4 +224,23 @@
   ];
 
   echo json_encode( $rsp );
+
+  // Delete this when no longer needed
+  function oldSummarizable( $properties )
+  {
+    $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
+
+    $volatility = THRESHOLD + 1;
+    if ( $properties["first"] < $properties["last"] )
+    {
+      $volatility = $properties["lt"] / $totalDeltas;
+    }
+    else if ( $properties["first"] > $properties["last"] )
+    {
+      $volatility = $properties["gt"] / $totalDeltas;
+    }
+
+    $summarizable = $volatility < THRESHOLD;
+    return $summarizable;
+  }
 ?>
