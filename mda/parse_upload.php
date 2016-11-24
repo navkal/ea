@@ -38,6 +38,35 @@
     return $messages;
   }
 
+  function convertNgridFile( $ngridFile, $convertFilename )
+  {
+    $convertFile = fopen( $convertFilename, "w" );
+    fwrite( $convertFile, '"Date / Time","Name Path Reference","Object Name","Object Value",' . PHP_EOL );
+
+    while( ( $inline = fgetcsv( $ngridFile ) ) !== false )
+    {
+      if ( ( $inline[0] != "" ) && ( $inline[1] != "" ) && ( $inline[3] != "" ) )
+      {
+        $colname = $inline[0] . "." . $inline[3];
+        for ( $index = 0; $index < 24; $index ++ )
+        {
+          if ( $inline[$index+4] != "" )
+          {
+            $outline = $inline[1] . " " . $index . ":00:00," . $colname . "," . $colname . "," . $inline[$index+4] . "," . PHP_EOL;
+            fwrite( $convertFile, $outline );
+          }
+        }
+      }
+    }
+    fclose( $convertFile );
+
+    // Re-open convert file for reading, and skip the column headings
+    $convertFile = fopen( $convertFilename, "r" );
+    fgetcsv( $convertFile );
+
+    return $convertFile;
+  }
+
   $messages = [];
 
   if ( isset( $_FILES["resultsFile"] ) )
@@ -90,8 +119,16 @@
       {
         $colMap = [];
 
-        // Skip the column headings
-        fgetcsv( $inputFile );
+        // Read the column headings
+        $headings = fgetcsv( $inputFile );
+        if ( count( $headings ) == 28 )
+        {
+          $inputFile = convertNgridFile( $inputFile, $convertFilename );
+
+          // Overwrite input filename with convert file
+          $inputFilename = $convertFilename;
+          $_SESSION["inputFilename"] = $inputFilename;
+        }
 
         // Loop through the data
         while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )

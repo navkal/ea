@@ -32,6 +32,10 @@
       $nicknameMap .= $nickname . "," . $name . ",";
     }
   }
+  if ( $nicknameMap == "" )
+  {
+    $nicknameMap = "fake,fake,";
+  }
   $nicknameMap = rtrim( $nicknameMap, "," ) . PHP_EOL;
   fclose( $columnsFile );
 
