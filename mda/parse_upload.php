@@ -43,17 +43,32 @@
     $convertFile = fopen( $convertFilename, "w" );
     fwrite( $convertFile, '"Date / Time","Name Path Reference","Object Name","Object Value",' . PHP_EOL );
 
+    $sum = [];
     while( ( $inline = fgetcsv( $ngridFile ) ) !== false )
     {
       if ( ( $inline[0] != "" ) && ( $inline[1] != "" ) && ( $inline[3] != "" ) )
       {
         $colname = $inline[0] . "." . $inline[3];
+        $sumname = $colname . ".sum";
         for ( $index = 0; $index < 24; $index ++ )
         {
           if ( $inline[$index+4] != "" )
           {
+            // Generate raw data sample
             $outline = $inline[1] . " " . $index . ":59:59," . $colname . "," . $colname . "," . $inline[$index+4] . "," . PHP_EOL;
             fwrite( $convertFile, $outline );
+
+            // Optionally generate cumulative data sample
+            if ( ( $inline[3] == "kWh" ) || ( $inline[3] == "kVAh" ) )
+            {
+              if ( ! isset( $sum[$sumname] ) )
+              {
+                $sum[$sumname] = 0;
+              }
+              $sum[$sumname] += $inline[$index+4];
+              $outline = $inline[1] . " " . $index . ":59:59," . $sumname . "," . $sumname . "," . $sum[$sumname] . "," . PHP_EOL;
+              fwrite( $convertFile, $outline );
+            }
           }
         }
       }
