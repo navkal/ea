@@ -97,7 +97,7 @@
     fclose( $multiFile );
 
     // Archive input file
-    archiveInput( $inputFilename );
+    archiveInput();
 
     // Format name of zip file to be downloaded
     $zipFilename = $split[0] . ".zip";
@@ -138,7 +138,7 @@
       // Normal: Process results
 
       // Archive input file
-      archiveInput( $inputFilename );
+      archiveInput();
 
       // Save information for Analysis completion report
       $_SESSION["completion"] =
@@ -160,10 +160,10 @@
   }
 
   // Archive uploaded input file
-  function archiveInput( $inputFilename )
+  function archiveInput()
   {
     // Optionally archive uploaded input file
-    if ( ( $archiveDeployment = getenv( "ARCHIVE_DEPLOYMENT" ) ) && ! isset( $_SESSION["inputFilename"] ) )
+    if ( ( $archiveDeployment = getenv( "ARCHIVE_DEPLOYMENT" ) ) && isset( $_SESSION["archiveFilename"] ) )
     {
       // Format filenames
       $dateFilename =  date( "Y-m-d H-i-s " ) . $_POST["inputName"];
@@ -172,7 +172,7 @@
       // Put the uploaded input file into a zip archive
       $zipArchive = new ZipArchive();
       $zipArchive->open( $zipFilename, ZipArchive::CREATE );
-      $zipArchive->addFromString( $dateFilename, file_get_contents( $inputFilename ) );
+      $zipArchive->addFromString( $dateFilename, file_get_contents( $_SESSION["archiveFilename"] ) );
       $zipArchive->close();
 
 

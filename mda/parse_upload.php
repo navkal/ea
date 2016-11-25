@@ -52,7 +52,7 @@
         {
           if ( $inline[$index+4] != "" )
           {
-            $outline = $inline[1] . " " . $index . ":00:00," . $colname . "," . $colname . "," . $inline[$index+4] . "," . PHP_EOL;
+            $outline = $inline[1] . " " . $index . ":59:59," . $colname . "," . $colname . "," . $inline[$index+4] . "," . PHP_EOL;
             fwrite( $convertFile, $outline );
           }
         }
@@ -89,6 +89,7 @@
   else
   {
     $messages = checkFileUpload( $_FILES, "metasysFile", 340000000, $inputFilename );
+    $_SESSION["archiveFilename"] = $inputFilename;
   }
 
   $redirect = "";
@@ -129,6 +130,7 @@
           $inputFilename = $convertFilename;
           $_SESSION["inputFilename"] = $inputFilename;
         }
+
 
         // Loop through the data
         while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )
