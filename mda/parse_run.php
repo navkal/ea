@@ -20,7 +20,7 @@
   // Save selected columns in columns file and nickname map
   $columnData = json_decode( $_POST["columnData"], true );
   $columnsFile = fopen( $columnsFilename, "w" ) or die( "Unable to open file: " . $columnsFilename );
-  $nicknameMap = "";
+  $nicknameMap = ".,.,";
   foreach ( $columnData as $columnPair )
   {
     $name = $columnPair["name"];
@@ -31,10 +31,6 @@
     {
       $nicknameMap .= $nickname . "," . $name . ",";
     }
-  }
-  if ( $nicknameMap == "" )
-  {
-    $nicknameMap = "fake,fake,";
   }
   $nicknameMap = rtrim( $nicknameMap, "," ) . PHP_EOL;
   fclose( $columnsFile );
