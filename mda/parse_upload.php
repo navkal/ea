@@ -271,10 +271,33 @@
     }
   }
 
+  $nicknames = [];
+  if ( empty( $messages ) )
+  {
+    if ( ( $nicknameFile = @fopen( "nicknames.csv", "r" ) ) !== false )
+    {
+      while( ( $pair = fgetcsv( $nicknameFile ) ) !== false )
+      {
+        $name = trim( $pair[0] );
+        $nickname = trim( $pair[1] );
+
+        if ( in_array( $nickname, $nicknames ) )
+        {
+          error_log( "==> !!! Ignoring duplicate nickname: name=<" . $name . "> nickname=<" . $nickname . ">" );
+        }
+        else
+        {
+          $nicknames[$name] = $nickname;
+        }
+      }
+    }
+  }
+
   $rsp =
   [
     "messages" => $messages,
     "columns" => $columns,
+    "nicknames" => $nicknames,
     "redirect" => $redirect
   ];
 

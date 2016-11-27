@@ -60,6 +60,8 @@
 </style>
 
 <script>
+  var SYSTEM_NICKNAMES = {};
+
   $( document ).ready( initFileView );
 
   function initFileView()
@@ -176,6 +178,7 @@
     }
     else
     {
+      SYSTEM_NICKNAMES = rsp.nicknames;
       showOptionsView( rsp.columns );
     }
   }
@@ -603,11 +606,8 @@
 
     var styleCursorMove = ( navigator.userAgent.indexOf( "Edge" ) == -1 ) ? ' style="cursor:move" ' : "" ;
 
-    var nickname = "";
-    if ( typeof Storage !== "undefined" )
-    {
-      nickname = localStorage.getItem( colName ) || "";
-    }
+    var nickname = SYSTEM_NICKNAMES[colName] || ( ( typeof Storage !== "undefined" ) ? localStorage.getItem( colName ) : "" ) || "";
+    var disabled = SYSTEM_NICKNAMES[colName] ? "disabled" : "";
 
     var column =
       '<a class="list-group-item" checkboxIndex="' + checkboxIndex + '" draggable="true" ondragstart="onDragStartColumn(event)" ondragover="onDragOverColumn(event)" ondrop="onDropColumn(event)" ondragend="onDragEndColumn(event)" ' + styleCursorMove + ' >'
@@ -628,7 +628,7 @@
       +
           '<div class="col-xs-7 col-sm-10 col-md-3 col-lg-3">'
       +
-            '<input type="text" class="form-control" maxlength="32" placeholder="Nickname" onblur="rememberNickname(event)" value="' + nickname + '" >'
+            '<input type="text" class="form-control" maxlength="32" title="Nickname" placeholder="Nickname" onblur="rememberNickname(event)" value="' + nickname + '" ' + disabled + ' >'
       +
           '</div>'
       +
