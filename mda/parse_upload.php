@@ -271,25 +271,45 @@
     }
   }
 
+  define( "NICKNAME_FILENAME", "nicknames.csv" );
+  $knownNames = [];
   $nicknames = [];
   if ( empty( $messages ) )
   {
-    if ( ( $nicknameFile = @fopen( "nicknames.csv", "r" ) ) !== false )
+    if ( ( $nicknameFile = @fopen( NICKNAME_FILENAME, "r" ) ) !== false )
     {
       while( ( $pair = fgetcsv( $nicknameFile ) ) !== false )
       {
         $name = trim( $pair[0] );
-        $nickname = trim( $pair[1] );
+        array_push( $knownNames, $name );
 
-        if ( in_array( $nickname, $nicknames ) )
+        $nickname = trim( $pair[1] );
+        if ( $nickname != "" )
         {
-          error_log( "==> !!! Ignoring duplicate nickname: name=<" . $name . "> nickname=<" . $nickname . ">" );
-        }
-        else
-        {
-          $nicknames[$name] = $nickname;
+          if ( in_array( $nickname, $nicknames ) )
+          {
+            error_log( "==> !!! Ignoring duplicate nickname: name=<" . $name . "> nickname=<" . $nickname . ">" );
+          }
+          else
+          {
+            $nicknames[$name] = $nickname;
+          }
         }
       }
+      fclose( $nicknameFile );
+    }
+
+    // Append previously unknown names to nickname file
+    if ( ( $nicknameFile = @fopen( NICKNAME_FILENAME, "a" ) ) !== false )
+    {
+      foreach ( $columns as $colName => $notUsed )
+      {
+        if ( ! in_array( $colName, $knownNames ) )
+        {
+          fwrite( $nicknameFile, $colName . "," . PHP_EOL );
+        }
+      }
+      fclose( $nicknameFile );
     }
   }
 
