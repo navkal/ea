@@ -271,19 +271,20 @@
     }
   }
 
-  define( "NICKNAME_FILENAME", "nicknames.csv" );
+  // Manage system-wide nickname definitions
   $knownNames = [];
   $nicknames = [];
   if ( empty( $messages ) )
   {
-    if ( ( $nicknameFile = @fopen( NICKNAME_FILENAME, "r" ) ) !== false )
+    // Retrieve current nickname definitions
+    if ( ( $nicknameFile = @fopen( "nicknames.csv", "r" ) ) !== false )
     {
-      while( ( $pair = fgetcsv( $nicknameFile ) ) !== false )
+      while( ( $line = fgetcsv( $nicknameFile ) ) !== false )
       {
-        $name = trim( $pair[0] );
-        array_push( $knownNames, $name );
+        $name = trim( $line[1] );
+        $knownNames[$name] = $name;
 
-        $nickname = trim( $pair[1] );
+        $nickname = trim( $line[2] );
         if ( $nickname != "" )
         {
           if ( in_array( $nickname, $nicknames ) )
@@ -299,17 +300,29 @@
       fclose( $nicknameFile );
     }
 
-    // Append previously unknown names to nickname file
-    if ( ( $nicknameFile = @fopen( NICKNAME_FILENAME, "a" ) ) !== false )
+    // Finish loading list of known names from no-nickname file
+    if ( ( $nonicknameFile = @fopen( "nonicknames.csv", "r" ) ) !== false )
+    {
+      // Read the names
+      while( ( $line = fgetcsv( $nonicknameFile ) ) !== false )
+      {
+        $name = trim( $line[1] );
+        $knownNames[$name] = $name;
+      }
+      fclose( $nonicknameFile );
+    }
+
+    $time = time();
+    if ( ( $nonicknameFile = @fopen( "nonicknames.csv", "a" ) ) !== false )
     {
       foreach ( $columns as $colName => $notUsed )
       {
-        if ( ! in_array( $colName, $knownNames ) )
+        if ( ! isset( $knownNames[$colName] ) )
         {
-          fwrite( $nicknameFile, $colName . "," . PHP_EOL );
+          fwrite( $nonicknameFile, $time . "," . $colName . "," . PHP_EOL );
         }
       }
-      fclose( $nicknameFile );
+      fclose( $nonicknameFile );
     }
   }
 
