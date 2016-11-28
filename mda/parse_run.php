@@ -144,7 +144,7 @@
           "resultsFilename" => basename( $resultsFilename ),
           "downloadFilename" => $resultsFilename,
           "downloadExt" => "",
-          "downloadType" => "octet-stream"
+          "downloadType" => "text/csv"
         ];
 
       // Redirect to completion page
