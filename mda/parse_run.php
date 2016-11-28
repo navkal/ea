@@ -115,6 +115,7 @@
         "params" => $params,
         "resultsFilename" => basename( $zipFilename ),
         "downloadFilename" => $zipFilename,
+        "downloadExt" => "",
         "downloadType" => "zip"
       ];
 
@@ -142,6 +143,7 @@
           "params" => formatParams( $_POST ),
           "resultsFilename" => basename( $resultsFilename ),
           "downloadFilename" => $resultsFilename,
+          "downloadExt" => "",
           "downloadType" => "octet-stream"
         ];
 

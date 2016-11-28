@@ -4,6 +4,7 @@
   require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
 
   $downloadFilename = $_SESSION["completion"]["downloadFilename"];
+  $downloadExt = $_SESSION["completion"]["downloadExt"];
   $downloadType = $_SESSION["completion"]["downloadType"];
-  downloadFile( $downloadFilename, $downloadType );
+  downloadFile( $downloadFilename, $downloadExt, $downloadType );
 ?>

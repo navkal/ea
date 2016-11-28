@@ -120,6 +120,17 @@
         // Save name of results file for use by plot
         $_SESSION["resultsFilename"] = $resultsFilename;
 
+        // Save information to download sample Results File
+        if ( isset( $_POST["sampleFilename"] ) )
+        {
+          $_SESSION["completion"] =
+            [
+              "downloadFilename" => "sample/" . $_POST["sampleFilename"],
+              "downloadExt" => ".csv",
+              "downloadType" => "text/csv"
+            ];
+        }
+
         // Set redirect URL
         $redirect = "mda/parse_results.php?timestamp=" . $timestamp;
       }
