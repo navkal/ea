@@ -192,6 +192,10 @@
                   echo "</dt>";
                   echo "<dd>";
                   echo $params[$index+1];
+                  if ( $params[$index] == REPORT_FORMAT )
+                  {
+                    $reportFormat = $params[$index+1];
+                  }
                   echo "</dd>";
                 }
               ?>
@@ -201,6 +205,8 @@
       </div>
     </div>
   </div>
+
+  <input type="hidden" id="reportFormat" value="<?=$reportFormat?>">
 
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

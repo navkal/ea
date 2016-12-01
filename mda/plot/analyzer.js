@@ -1441,12 +1441,15 @@ function formatTimestamp( timestamp )
   sFormat += ( ( iDate < 10 ) ? "0" : "" ) + iDate;
   sFormat += " ";
   sFormat += tDate.getFullYear();
-  sFormat += ", ";
-  var iHours = tDate.getHours();
-  sFormat += ( ( iHours < 10 ) ? "0" : "" ) + iHours;
-  sFormat += ":";
-  var iMinutes = tDate.getMinutes();
-  sFormat += ( ( iMinutes < 10 ) ? "0" : "" ) + iMinutes;
+  if ( $( "#reportFormat" ).val() == "Detailed" )
+  {
+    sFormat += ", ";
+    var iHours = tDate.getHours();
+    sFormat += ( ( iHours < 10 ) ? "0" : "" ) + iHours;
+    sFormat += ":";
+    var iMinutes = tDate.getMinutes();
+    sFormat += ( ( iMinutes < 10 ) ? "0" : "" ) + iMinutes;
+  }
 
   return sFormat;
 }
