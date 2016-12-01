@@ -937,10 +937,9 @@ function makeInterpolation( nY, nDecimals )
   var nCost = Number( sCost );
   var bUseCost = ( sCost != "" ) && ! isNaN( nCost );
 
-  var sDollar = bUseCost ? "$" : "";
-  var sValue = bUseCost ? ( nY * nCost ).toFixed( 2 ) : nY.toFixed( nDecimals );
-
-  return sDollar + sValue;
+  // Format and return string representing interpolated value
+  var sValue = nY.toFixed( nDecimals ) + ( bUseCost ? ( ", $" + ( nY * nCost ).toFixed( 2 ) ): "" );
+  return sValue;
 }
 
 // Clear the plot chooser
