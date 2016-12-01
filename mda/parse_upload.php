@@ -38,7 +38,7 @@
     return $messages;
   }
 
-  function convertNgridFile( $ngridFile, $convertFilename )
+  function convertNgridFile( $ngridFile, $convertFilename, $headings )
   {
     $convertFile = fopen( $convertFilename, "w" );
     fwrite( $convertFile, '"Date / Time","Name Path Reference","Object Name","Object Value",' . PHP_EOL );
@@ -50,12 +50,27 @@
       {
         $colname = $inline[0] . "." . $inline[3];
         $sumname = $colname . ".sum";
-        for ( $index = 0; $index < 24; $index ++ )
+        for ( $index = 4; $index < count( $inline ); $index ++ )
         {
-          if ( $inline[$index+4] != "" )
+          if ( $inline[$index] != "" )
           {
+            // Format time string, correcting for invalid use of "24:00:00" in final column
+            $timeFragments = explode( ":", $headings[$index] );
+            $hours = $timeFragments[0];
+            $minutes = $timeFragments[1];
+            if ( $minutes == 0 )
+            {
+              $hours --;
+              $minutes = 59;
+            }
+            else
+            {
+              $minutes --;
+            }
+            $time = $hours . ":" . $minutes . ":59";
+
             // Generate raw data sample
-            $outline = $inline[1] . " " . $index . ":59:59," . $colname . "," . $colname . "," . $inline[$index+4] . "," . PHP_EOL;
+            $outline = $inline[1] . " " . $time . "," . $colname . "," . $colname . "," . $inline[$index] . "," . PHP_EOL;
             fwrite( $convertFile, $outline );
 
             // Optionally generate cumulative data sample
@@ -65,8 +80,8 @@
               {
                 $sum[$sumname] = 0;
               }
-              $sum[$sumname] += $inline[$index+4];
-              $outline = $inline[1] . " " . $index . ":59:59," . $sumname . "," . $sumname . "," . $sum[$sumname] . "," . PHP_EOL;
+              $sum[$sumname] += $inline[$index];
+              $outline = $inline[1] . " " . $time . "," . $sumname . "," . $sumname . "," . $sum[$sumname] . "," . PHP_EOL;
               fwrite( $convertFile, $outline );
             }
           }
@@ -148,9 +163,9 @@
 
         // Read the column headings
         $headings = fgetcsv( $inputFile );
-        if ( count( $headings ) == 28 )
+        if ( count( $headings ) >= 28 )
         {
-          $inputFile = convertNgridFile( $inputFile, $convertFilename );
+          $inputFile = convertNgridFile( $inputFile, $convertFilename, $headings );
 
           // Overwrite input filename with convert file
           $inputFilename = $convertFilename;
