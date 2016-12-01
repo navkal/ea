@@ -58,14 +58,10 @@
             $timeFragments = explode( ":", $headings[$index] );
             $hours = $timeFragments[0];
             $minutes = $timeFragments[1];
-            if ( $minutes == 0 )
+            if ( $hours == 24 )
             {
-              $hours --;
+              $hours = 23;
               $minutes = 59;
-            }
-            else
-            {
-              $minutes --;
             }
             $time = $hours . ":" . $minutes . ":59";
 
