@@ -327,7 +327,7 @@
     }
 
     // Finish loading list of known names from no-nickname file
-    if ( ( $nonicknameFile = @fopen( "nonicknames.csv", "r" ) ) !== false )
+    if ( ( $nonicknameFile = @fopen( "archive/nonicknames.csv", "r" ) ) !== false )
     {
       // Read the names
       while( ( $line = fgetcsv( $nonicknameFile ) ) !== false )
@@ -339,7 +339,7 @@
     }
 
     $time = time();
-    if ( ( $nonicknameFile = @fopen( "nonicknames.csv", "a" ) ) !== false )
+    if ( ( $nonicknameFile = @fopen( "archive/nonicknames.csv", "a" ) ) !== false )
     {
       foreach ( $columns as $colName => $notUsed )
       {
