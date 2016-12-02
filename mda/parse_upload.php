@@ -41,7 +41,7 @@
   function convertNgridFile( $ngridFile, $convertFilename, $headings )
   {
     $convertFile = fopen( $convertFilename, "w" );
-    fwrite( $convertFile, '"Date / Time","Name Path Reference","Object Name","Object Value",' . PHP_EOL );
+    fwrite( $convertFile, 'Date / Time,Name Path Reference,Object Name,Object Value' . PHP_EOL );
 
     $sum = [];
     while( ( $inline = fgetcsv( $ngridFile ) ) !== false )
@@ -60,17 +60,17 @@
             $minutes = $timeFragments[1];
             if ( $hours == 24 )
             {
-              $date = new DateTime( $inline[1] );
-              $date->add( new DateInterval( "P1D" ) );
-              $datetime = $date->format( "n/j/Y H:i" );
+              $tDateTime = new DateTime( $inline[1] );
+              $tDateTime->add( new DateInterval( "P1D" ) );
             }
             else
             {
-              $datetime = $inline[1] . " " . $hours . ":" . $minutes;
+              $tDateTime = new DateTime( $inline[1] . " " . $hours . ":" . $minutes );
             }
+            $sDateTime = $tDateTime->format( "m/d/Y H:i" );
 
             // Generate raw data sample
-            $outline = $datetime . "," . $colname . "," . $colname . "," . $inline[$index] . PHP_EOL;
+            $outline = $sDateTime . "," . $colname . "," . $colname . "," . $inline[$index] . PHP_EOL;
             fwrite( $convertFile, $outline );
 
             // Optionally generate cumulative data sample
@@ -81,7 +81,7 @@
                 $sum[$sumname] = 0;
               }
               $sum[$sumname] += $inline[$index];
-              $outline = $datetime . "," . $sumname . "," . $sumname . "," . $sum[$sumname] . PHP_EOL;
+              $outline = $sDateTime . "," . $sumname . "," . $sumname . "," . $sum[$sumname] . PHP_EOL;
               fwrite( $convertFile, $outline );
             }
           }
