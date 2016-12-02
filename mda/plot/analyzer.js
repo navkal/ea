@@ -1445,17 +1445,9 @@ function formatTimestamp( timestamp )
   {
     sFormat += ", ";
     var iHours = tDate.getHours();
-    var iMinutes = tDate.getMinutes();
-
-    // Kludge to correct National Grid timestamp that was changed from 24:00 to 23:59
-    if ( ( iHours == 23 ) && ( iMinutes == 59 ) )
-    {
-      iHours = 0;
-      iMinutes = 0;
-    }
-
     sFormat += ( ( iHours < 10 ) ? "0" : "" ) + iHours;
     sFormat += ":";
+    var iMinutes = tDate.getMinutes();
     sFormat += ( ( iMinutes < 10 ) ? "0" : "" ) + iMinutes;
   }
 
