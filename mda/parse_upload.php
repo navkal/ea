@@ -63,10 +63,10 @@
               $hours = 23;
               $minutes = 59;
             }
-            $time = $hours . ":" . $minutes . ":59";
+            $time = $hours . ":" . $minutes;
 
             // Generate raw data sample
-            $outline = $inline[1] . " " . $time . "," . $colname . "," . $colname . "," . $inline[$index] . "," . PHP_EOL;
+            $outline = $inline[1] . " " . $time . "," . $colname . "," . $colname . "," . $inline[$index] . PHP_EOL;
             fwrite( $convertFile, $outline );
 
             // Optionally generate cumulative data sample
@@ -77,7 +77,7 @@
                 $sum[$sumname] = 0;
               }
               $sum[$sumname] += $inline[$index];
-              $outline = $inline[1] . " " . $time . "," . $sumname . "," . $sumname . "," . $sum[$sumname] . "," . PHP_EOL;
+              $outline = $inline[1] . " " . $time . "," . $sumname . "," . $sumname . "," . $sum[$sumname] . PHP_EOL;
               fwrite( $convertFile, $outline );
             }
           }
