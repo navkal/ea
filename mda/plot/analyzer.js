@@ -935,10 +935,17 @@ function makeInterpolation( nY, nDecimals )
   // Get optional cost factor
   var sCost = $( "#cost" ).val();
   var nCost = Number( sCost );
-  var bUseCost = ( sCost != "" ) && ! isNaN( nCost );
+
+  // Set up string representing dollar cost
+  var sDollars = "";
+  if ( ( sCost != "" ) && ! isNaN( nCost ) )
+  {
+    var nDollars = nY * nCost;
+    sDollars = ( ", $" + ( nDollars ).toFixed( ( nDollars < 10 ) ? 2 : 0 ) );
+  }
 
   // Format and return string representing interpolated value
-  var sValue = nY.toFixed( nDecimals ) + ( bUseCost ? ( ", $" + ( nY * nCost ).toFixed( 2 ) ): "" );
+  var sValue = nY.toFixed( nDecimals ) + sDollars;
   return sValue;
 }
 
