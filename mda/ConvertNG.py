@@ -72,7 +72,7 @@ if __name__ == "__main__":
     parser.add_argument('-i', dest='input_file',  help='name of input file')
     parser.add_argument('-o', dest='output_file', help='name of output file')
     args = parser.parse_args()
-    #getDates(args.input_file,args.output_file)
+    getDates(args.input_file,args.output_file)
 
-getDates('input/ngrid_3cad443c_046db54d_hourly.csv','archive/converted_1.csv')
+#getDates('input/ngrid_3cad443c_046db54d_hourly.csv','archive/converted_1.csv')
 #getDates('input/15-16 COMP.DATA-Sort.csv','archive/converted_2.csv')
