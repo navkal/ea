@@ -57,7 +57,6 @@
             // Format time string, correcting for invalid use of "24:00:00" in final column
             $timeFragments = explode( ":", $headings[$index] );
             $hours = $timeFragments[0];
-            $minutes = $timeFragments[1];
             if ( $hours == 24 )
             {
               $tDateTime = new DateTime( $inline[1] );
@@ -65,7 +64,7 @@
             }
             else
             {
-              $tDateTime = new DateTime( $inline[1] . " " . $hours . ":" . $minutes );
+              $tDateTime = new DateTime( $inline[1] . " " . $hours . ":" . $timeFragments[1] );
             }
             $sDateTime = $tDateTime->format( "m/d/Y H:i" );
 
