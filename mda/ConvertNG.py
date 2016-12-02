@@ -21,14 +21,14 @@ def getDates(filename,outputfile):
                         for z in range(len(TimeIndex)):
                             if TimeIndex[z] == "24:00:00":
                                 TimeIndex[z] = "00:00:00:01"
-                    print(row)
+                    #print(row)
                 elif(n > 0):
                     n += 1
                     account = row[0]
                     if row[1] == '':
                         continue
                     datesplit = row[1].split('/')
-                    print(int(datesplit[2]),int(datesplit[1]),int(datesplit[0]))
+                    #print(int(datesplit[2]),int(datesplit[1]),int(datesplit[0]))
                     d = date(int(datesplit[2]),int(datesplit[0]),int(datesplit[1]))
                     units = row[3]
                     SpotMeasures = row[4:]
@@ -45,20 +45,20 @@ def getDates(filename,outputfile):
                         if units == 'kWh':
                             KWhtotal += float(SpotMeasures[x])
                             dt = datetime.combine(d, t)
-                            print(dt)
+                            #print(dt)
                             NamePathRef = account + '.' + units
                             csvwriter.writerow([dt.strftime('%m/%d/%Y %H:%M'), NamePathRef, NamePathRef, SpotMeasures[x]])
                             csvwriter.writerow([dt.strftime('%m/%d/%Y %H:%M'), NamePathRef + '.sum', NamePathRef + '.sum', KWhtotal])
                         elif units == 'kVAh':
                             KVAhTotal += float(SpotMeasures[x])
                             dt = datetime.combine(d, t)
-                            print(dt)
+                            #print(dt)
                             NamePathRef = account + '.' + units
                             csvwriter.writerow([dt.strftime('%m/%d/%Y %H:%M'),NamePathRef,NamePathRef,SpotMeasures[x]])
                             csvwriter.writerow([dt.strftime('%m/%d/%Y %H:%M'),NamePathRef + '.sum',NamePathRef + '.sum',+ KVAhTotal])
                         elif units == 'Power Factor':
                             dt = datetime.combine(d, t)
-                            print(dt)
+                            #print(dt)
                             NamePathRef = account + '.' + units
                             csvwriter.writerow([dt.strftime('%m/%d/%Y %H:%M'), NamePathRef, NamePathRef, SpotMeasures[x]])
 
