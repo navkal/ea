@@ -60,7 +60,9 @@
             $minutes = $timeFragments[1];
             if ( $hours == 24 )
             {
-              $datetime = $inline[1] . " 23:59";
+              $date = new DateTime( $inline[1] );
+              $date->add( new DateInterval( "P1D" ) );
+              $datetime = $date->format( "n/j/Y H:i" );
             }
             else
             {
