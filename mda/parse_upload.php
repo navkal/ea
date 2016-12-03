@@ -38,14 +38,29 @@
     return $messages;
   }
 
-  function convertNgridFile( $ngridFile, $convertFilename, $headings )
+  function compareNgridLines( $line1, $line2 )
   {
+    $time1 = strtotime( str_getcsv( $line1 )[1] );
+    $time2 = strtotime( str_getcsv( $line2 )[1] );
+    return $time1 - $time2;
+  }
+
+  function convertNgridFile( $ngridFilename, $convertFilename )
+  {
+    $lines = file( $ngridFilename );
+    $headings = str_getcsv( $lines[0] );
+    $lines = array_slice( $lines, 1 );
+    usort( $lines, "compareNgridLines" );
+
     $convertFile = fopen( $convertFilename, "w" );
     fwrite( $convertFile, 'Date / Time,Name Path Reference,Object Name,Object Value' . PHP_EOL );
 
+    $endline = count( $lines );
     $sum = [];
-    while( ( $inline = fgetcsv( $ngridFile ) ) !== false )
+    for ( $nline = 0; $nline < $endline; $nline ++ )
     {
+      $inline = str_getcsv( $lines[$nline] );
+
       if ( ( $inline[0] != "" ) && ( $inline[1] != "" ) && ( $inline[3] != "" ) )
       {
         $colname = $inline[0] . "." . $inline[3];
@@ -162,9 +177,11 @@
 
         // Read the column headings
         $headings = fgetcsv( $inputFile );
+        fclose( $inputFile );
+
         if ( count( $headings ) >= 28 )
         {
-          $inputFile = convertNgridFile( $inputFile, $convertFilename, $headings );
+          $inputFile = convertNgridFile( $inputFilename, $convertFilename );
 
           // Overwrite input filename with convert file
           $inputFilename = $convertFilename;
@@ -243,8 +260,6 @@
             }
           }
         }
-
-        fclose( $inputFile );
       }
 
       if ( empty( $messages ) )
