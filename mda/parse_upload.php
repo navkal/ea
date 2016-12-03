@@ -137,7 +137,7 @@
   {
     if ( isset( $_FILES["resultsFile"] ) || isset( $_POST["sampleFilename"] ) )
     {
-      $messages = unmarkFile( $resultsFilename );
+      $messages = unmarkFile( $resultsFilename, RESULTS_FILE );
       if ( empty( $messages ) )
       {
         // Save name of results file for use by plot
