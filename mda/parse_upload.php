@@ -103,12 +103,6 @@
       }
     }
     fclose( $convertFile );
-
-    // Re-open convert file for reading, and skip the column headings
-    $convertFile = fopen( $convertFilename, "r" );
-    fgetcsv( $convertFile );
-
-    return $convertFile;
   }
 
   $messages = [];
@@ -177,17 +171,21 @@
 
         // Read the column headings
         $headings = fgetcsv( $inputFile );
-        fclose( $inputFile );
 
         if ( count( $headings ) >= 28 )
         {
-          $inputFile = convertNgridFile( $inputFilename, $convertFilename );
+          // Close and convert the input file
+          fclose( $inputFile );
+          convertNgridFile( $inputFilename, $convertFilename );
 
-          // Overwrite input filename with convert file
+          // Overwrite input filename with convert filename
           $inputFilename = $convertFilename;
           $_SESSION["inputFilename"] = $inputFilename;
-        }
 
+          // Open convert file for reading, and skip the column headings
+          $inputFile = fopen( $inputFilename, "r" );
+          fgetcsv( $inputFile );
+        }
 
         // Loop through the data
         while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )
@@ -260,6 +258,7 @@
             }
           }
         }
+        fclose( $inputFile );
       }
 
       if ( empty( $messages ) )
