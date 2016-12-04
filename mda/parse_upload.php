@@ -11,6 +11,173 @@
   $timestamp = $_REQUEST["timestamp"];
   require_once "filenames.php" ;
 
+  $messages = [];
+
+  if ( isset( $_FILES["resultsFile"] ) )
+  {
+    $messages = checkFileUpload( $_FILES, "resultsFile", 50000000, $resultsFilename );
+  }
+  else if ( isset( $_POST["sampleFilename"] ) )
+  {
+    // Copy sample file to temp location
+    copy( "sample/" . $_POST["sampleFilename"], $resultsFilename );
+  }
+  else if ( isset( $_POST["metasysFilename"] ) )
+  {
+    // Overwrite temp input filename with name of selected preload
+    $inputFilename = "input/" . $_POST["metasysFilename"];
+
+    // Save preload filename for future reference
+    $_SESSION["inputFilename"] = $inputFilename;
+  }
+  else
+  {
+    $messages = checkFileUpload( $_FILES, "metasysFile", 340000000, $inputFilename );
+    $_SESSION["archiveFilename"] = $inputFilename;
+  }
+
+  $redirect = "";
+  $columns = [];
+
+  if ( empty( $messages ) )
+  {
+    if ( isset( $_FILES["resultsFile"] ) || isset( $_POST["sampleFilename"] ) )
+    {
+      $messages = unmarkFile( $resultsFilename, RESULTS_FILE );
+      if ( empty( $messages ) )
+      {
+        // Save name of results file for use by plot
+        $_SESSION["resultsFilename"] = $resultsFilename;
+
+        // Save information to download sample Results File
+        if ( isset( $_POST["sampleFilename"] ) )
+        {
+          $_SESSION["completion"] =
+            [
+              "downloadFilename" => "sample/" . $_POST["sampleFilename"],
+              "downloadExt" => ".csv",
+              "downloadType" => "text/csv"
+            ];
+        }
+
+        // Set redirect URL
+        $redirect = "mda/parse_results.php?timestamp=" . $timestamp;
+      }
+    }
+    else
+    {
+      if ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
+      {
+        array_push( $messages, "Failed to open " . METASYS_FILE );
+      }
+
+      if ( empty( $messages ) )
+      {
+        if ( count( fgetcsv( $inputFile ) ) >= 28 )
+        {
+          // Close and convert the input file
+          fclose( $inputFile );
+          convertNgridFile( $inputFilename, $convertFilename );
+
+          // Overwrite input filename with convert filename
+          $inputFilename = $convertFilename;
+          $_SESSION["inputFilename"] = $inputFilename;
+
+          // Open convert file for reading, and skip the column headings
+          $inputFile = fopen( $inputFilename, "r" );
+          fgetcsv( $inputFile );
+        }
+
+        // Construct map characterizing each Point of Interest series
+        $colMap = [];
+        $messages = makeColMap( $colMap, $inputFile );
+        fclose( $inputFile );
+      }
+
+      if ( empty( $messages ) )
+      {
+        // Analyze map, replacing data characterization with summarizability flag
+        $colMap = analyzeColMap( $colMap );
+
+        if ( count( $colMap ) )
+        {
+          $columns = $colMap;
+        }
+        else
+        {
+          array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
+        }
+      }
+    }
+  }
+
+  // Manage system-wide nickname definitions
+  $knownNames = [];
+  $nicknames = [];
+  if ( empty( $messages ) )
+  {
+    // Retrieve current nickname definitions
+    if ( ( $nicknameFile = @fopen( "nicknames.csv", "r" ) ) !== false )
+    {
+      while( ( $line = fgetcsv( $nicknameFile ) ) !== false )
+      {
+        $name = trim( $line[1] );
+        $knownNames[$name] = $name;
+
+        $nickname = trim( $line[2] );
+        if ( $nickname != "" )
+        {
+          if ( in_array( $nickname, $nicknames ) )
+          {
+            error_log( "==> !!! Ignoring duplicate nickname: name=<" . $name . "> nickname=<" . $nickname . ">" );
+          }
+          else
+          {
+            $nicknames[$name] = $nickname;
+          }
+        }
+      }
+      fclose( $nicknameFile );
+    }
+
+    // Finish loading list of known names from no-nickname file
+    if ( ( $nonicknameFile = @fopen( "archive/nonicknames.csv", "r" ) ) !== false )
+    {
+      // Read the names
+      while( ( $line = fgetcsv( $nonicknameFile ) ) !== false )
+      {
+        $name = trim( $line[1] );
+        $knownNames[$name] = $name;
+      }
+      fclose( $nonicknameFile );
+    }
+
+    $time = time();
+    if ( ( $nonicknameFile = @fopen( "archive/nonicknames.csv", "a" ) ) !== false )
+    {
+      foreach ( $columns as $colName => $notUsed )
+      {
+        if ( ! isset( $knownNames[$colName] ) )
+        {
+          fwrite( $nonicknameFile, $time . "," . $colName . "," . PHP_EOL );
+        }
+      }
+      fclose( $nonicknameFile );
+    }
+  }
+
+  $rsp =
+  [
+    "messages" => $messages,
+    "columns" => $columns,
+    "nicknames" => $nicknames,
+    "redirect" => $redirect
+  ];
+
+  echo json_encode( $rsp );
+
+
+  //==================================================================
 
   function checkFileUpload( $files, $whichFile, $size, $moveFilename )
   {
@@ -105,292 +272,112 @@
     fclose( $convertFile );
   }
 
-  $messages = [];
-
-  if ( isset( $_FILES["resultsFile"] ) )
+  function makeColMap( &$colMap, $inputFile )
   {
-    $messages = checkFileUpload( $_FILES, "resultsFile", 50000000, $resultsFilename );
-  }
-  else if ( isset( $_POST["sampleFilename"] ) )
-  {
-    // Copy sample file to temp location
-    copy( "sample/" . $_POST["sampleFilename"], $resultsFilename );
-  }
-  else if ( isset( $_POST["metasysFilename"] ) )
-  {
-    // Overwrite temp input filename with name of selected preload
-    $inputFilename = "input/" . $_POST["metasysFilename"];
-
-    // Save preload filename for future reference
-    $_SESSION["inputFilename"] = $inputFilename;
-  }
-  else
-  {
-    $messages = checkFileUpload( $_FILES, "metasysFile", 340000000, $inputFilename );
-    $_SESSION["archiveFilename"] = $inputFilename;
-  }
-
-  $redirect = "";
-  $columns = [];
-
-  if ( empty( $messages ) )
-  {
-    if ( isset( $_FILES["resultsFile"] ) || isset( $_POST["sampleFilename"] ) )
+    $messages = [];
+    while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )
     {
-      $messages = unmarkFile( $resultsFilename, RESULTS_FILE );
-      if ( empty( $messages ) )
+      if ( isset( $line[0] ) && isset( $line[2] ) && isset( $line[3] ) )
       {
-        // Save name of results file for use by plot
-        $_SESSION["resultsFilename"] = $resultsFilename;
+        $time = strtotime( $line[0] );
 
-        // Save information to download sample Results File
-        if ( isset( $_POST["sampleFilename"] ) )
+        if ( $time )
         {
-          $_SESSION["completion"] =
-            [
-              "downloadFilename" => "sample/" . $_POST["sampleFilename"],
-              "downloadExt" => ".csv",
-              "downloadType" => "text/csv"
-            ];
-        }
+          $name = $line[2];
+          $value = floatval( $line[3] );
 
-        // Set redirect URL
-        $redirect = "mda/parse_results.php?timestamp=" . $timestamp;
-      }
-    }
-    else
-    {
-      if ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
-      {
-        array_push( $messages, "Failed to open " . METASYS_FILE );
-      }
-
-      if ( empty( $messages ) )
-      {
-        $colMap = [];
-
-        // Read the column headings
-        $headings = fgetcsv( $inputFile );
-
-        if ( count( $headings ) >= 28 )
-        {
-          // Close and convert the input file
-          fclose( $inputFile );
-          convertNgridFile( $inputFilename, $convertFilename );
-
-          // Overwrite input filename with convert filename
-          $inputFilename = $convertFilename;
-          $_SESSION["inputFilename"] = $inputFilename;
-
-          // Open convert file for reading, and skip the column headings
-          $inputFile = fopen( $inputFilename, "r" );
-          fgetcsv( $inputFile );
-        }
-
-        // Loop through the data
-        while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )
-        {
-          if ( isset( $line[0] ) && isset( $line[2] ) && isset( $line[3] ) )
+          if ( isset( $colMap[$name] ) )
           {
-            $time = strtotime( $line[0] );
+            // We've seen this column name before
 
-            if ( $time )
+            // Increment the appropriate counter
+            if ( $value < $colMap[$name]["value"] )
             {
-              $name = $line[2];
-              $value = floatval( $line[3] );
-
-              if ( isset( $colMap[$name] ) )
+              if ( $time > $colMap[$name]["time"] )
               {
-                // We've seen this column name before
-
-                // Increment the appropriate counter
-                if ( $value < $colMap[$name]["value"] )
-                {
-                  if ( $time > $colMap[$name]["time"] )
-                  {
-                    $colMap[$name]["lt"]++;
-                  }
-                  else if ( $time < $colMap[$name]["time"] )
-                  {
-                    $colMap[$name]["gt"]++;
-                  }
-                }
-                else if ( $value > $colMap[$name]["value"] )
-                {
-                  if ( $time > $colMap[$name]["time"] )
-                  {
-                    $colMap[$name]["gt"]++;
-                  }
-                  else if ( $time < $colMap[$name]["time"] )
-                  {
-                    $colMap[$name]["lt"]++;
-                  }
-                }
-                else
-                {
-                  $colMap[$name]["eq"]++;
-                }
-
-                // Save data pertaining to this record
-                $colMap[$name]["value"] = $value;
-                $colMap[$name]["time"] = $time;
-
-                if ( $time < $colMap[$name]["t0"] )
-                {
-                  $colMap[$name]["first"] = $value;
-                  $colMap[$name]["t0"] = $time;
-                }
-                else if ( $time > $colMap[$name]["tn"] )
-                {
-                  $colMap[$name]["last"] = $value;
-                  $colMap[$name]["tn"] = $time;
-                }
+                $colMap[$name]["lt"]++;
               }
-              else
+              else if ( $time < $colMap[$name]["time"] )
               {
-                // First occurrence of this column name
-                $colMap[$name] = [ "first" => $value, "value" => $value, "last" => $value, "t0" => $time, "time" => $time, "tn" => $time, "lt" => 0, "gt" => 0, "eq" => 0 ];
+                $colMap[$name]["gt"]++;
+              }
+            }
+            else if ( $value > $colMap[$name]["value"] )
+            {
+              if ( $time > $colMap[$name]["time"] )
+              {
+                $colMap[$name]["gt"]++;
+              }
+              else if ( $time < $colMap[$name]["time"] )
+              {
+                $colMap[$name]["lt"]++;
               }
             }
             else
             {
-              array_push( $messages, "Timestamp format not valid: " . $line[0] );
+              $colMap[$name]["eq"]++;
             }
-          }
-        }
-        fclose( $inputFile );
-      }
 
-      if ( empty( $messages ) )
-      {
-        define( "THRESHOLD", 0.0005 );    // 0.00037950664136623 is sufficiently small according to available sample input files
-        define( "VARIABILITY_MINIMUM", 0.0003 );  // 0.00019267822736031 is sufficiently large according to available sample input files
+            // Save data pertaining to this record
+            $colMap[$name]["value"] = $value;
+            $colMap[$name]["time"] = $time;
 
-        foreach( $colMap as $key => $properties )
-        {
-          // Replace properties with format used by client
-
-          $volatility = THRESHOLD + 1;
-          if ( $properties["eq"] == 0 || ( ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) > VARIABILITY_MINIMUM ) )
-          {
-            $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
-            if ( $properties["first"] < $properties["last"] )
+            if ( $time < $colMap[$name]["t0"] )
             {
-              $volatility = $properties["lt"] / $totalDeltas;
+              $colMap[$name]["first"] = $value;
+              $colMap[$name]["t0"] = $time;
             }
-            else if ( $properties["first"] > $properties["last"] )
+            else if ( $time > $colMap[$name]["tn"] )
             {
-              $volatility = $properties["gt"] / $totalDeltas;
+              $colMap[$name]["last"] = $value;
+              $colMap[$name]["tn"] = $time;
             }
-          }
-
-          $summarizable = $volatility < THRESHOLD;
-          $oldSummarizable = oldSummarizable( $properties );
-
-          if ( $summarizable != $oldSummarizable )
-          {
-            error_log( "===> !!! Change in summarizable result: key=" . $key . " variability=" . ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) . " volatility=" . $volatility . " props=" . print_r( $properties, true ) );
-          }
-
-          $colMap[$key] = [ "summarizable" => $summarizable ];
-        }
-
-        ksort( $colMap );
-        // error_log( "===> map=" . print_r( $colMap, true ) );
-
-        if ( count( $colMap ) )
-        {
-          $columns = $colMap;
-        }
-        else
-        {
-          array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
-        }
-      }
-    }
-  }
-
-  // Manage system-wide nickname definitions
-  $knownNames = [];
-  $nicknames = [];
-  if ( empty( $messages ) )
-  {
-    // Retrieve current nickname definitions
-    if ( ( $nicknameFile = @fopen( "nicknames.csv", "r" ) ) !== false )
-    {
-      while( ( $line = fgetcsv( $nicknameFile ) ) !== false )
-      {
-        $name = trim( $line[1] );
-        $knownNames[$name] = $name;
-
-        $nickname = trim( $line[2] );
-        if ( $nickname != "" )
-        {
-          if ( in_array( $nickname, $nicknames ) )
-          {
-            error_log( "==> !!! Ignoring duplicate nickname: name=<" . $name . "> nickname=<" . $nickname . ">" );
           }
           else
           {
-            $nicknames[$name] = $nickname;
+            // First occurrence of this column name
+            $colMap[$name] = [ "first" => $value, "value" => $value, "last" => $value, "t0" => $time, "time" => $time, "tn" => $time, "lt" => 0, "gt" => 0, "eq" => 0 ];
           }
         }
-      }
-      fclose( $nicknameFile );
-    }
-
-    // Finish loading list of known names from no-nickname file
-    if ( ( $nonicknameFile = @fopen( "archive/nonicknames.csv", "r" ) ) !== false )
-    {
-      // Read the names
-      while( ( $line = fgetcsv( $nonicknameFile ) ) !== false )
-      {
-        $name = trim( $line[1] );
-        $knownNames[$name] = $name;
-      }
-      fclose( $nonicknameFile );
-    }
-
-    $time = time();
-    if ( ( $nonicknameFile = @fopen( "archive/nonicknames.csv", "a" ) ) !== false )
-    {
-      foreach ( $columns as $colName => $notUsed )
-      {
-        if ( ! isset( $knownNames[$colName] ) )
+        else
         {
-          fwrite( $nonicknameFile, $time . "," . $colName . "," . PHP_EOL );
+          array_push( $messages, "Timestamp format not valid: " . $line[0] );
         }
       }
-      fclose( $nonicknameFile );
     }
+    return $messages;
   }
 
-  $rsp =
-  [
-    "messages" => $messages,
-    "columns" => $columns,
-    "nicknames" => $nicknames,
-    "redirect" => $redirect
-  ];
-
-  echo json_encode( $rsp );
-
-  // Delete this when no longer needed
-  function oldSummarizable( $properties )
+  function analyzeColMap( $colMap )
   {
-    $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
+    $THRESHOLD = 0.0005;  // 0.00038 is sufficiently small according to available sample input files
 
-    $volatility = THRESHOLD + 1;
-    if ( $properties["first"] < $properties["last"] )
+    foreach( $colMap as $key => $properties )
     {
-      $volatility = $properties["lt"] / $totalDeltas;
-    }
-    else if ( $properties["first"] > $properties["last"] )
-    {
-      $volatility = $properties["gt"] / $totalDeltas;
+      // Replace properties with format used by client
+
+      $volatility = $THRESHOLD + 1;
+      if ( $properties["eq"] == 0 || ( ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) > 0.0003 ) ) // 0.00019 is sufficiently large according to available sample input files
+      {
+        $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
+        if ( $properties["first"] < $properties["last"] )
+        {
+          $volatility = $properties["lt"] / $totalDeltas;
+        }
+        else if ( $properties["first"] > $properties["last"] )
+        {
+          $volatility = $properties["gt"] / $totalDeltas;
+        }
+      }
+
+      $summarizable = $volatility < $THRESHOLD;
+
+      $colMap[$key] = [ "summarizable" => $summarizable ];
     }
 
-    $summarizable = $volatility < THRESHOLD;
-    return $summarizable;
+    ksort( $colMap );
+    // error_log( "===> map=" . print_r( $colMap, true ) );
+
+    return $colMap;
   }
 ?>
