@@ -43,6 +43,8 @@
   {
     if ( isset( $_FILES["resultsFile"] ) || isset( $_POST["sampleFilename"] ) )
     {
+      // Processing a pre-existing Results File
+
       $messages = unmarkFile( $resultsFilename, RESULTS_FILE );
       if ( empty( $messages ) )
       {
@@ -66,6 +68,8 @@
     }
     else
     {
+      // Processing Metasys (or other) exported file
+
       if ( ( $inputFile = fopen( $inputFilename, "r" ) ) === false )
       {
         array_push( $messages, "Failed to open " . METASYS_FILE );
@@ -75,6 +79,8 @@
       {
         if ( count( fgetcsv( $inputFile ) ) >= 28 )
         {
+          // Looks like data exported from National Grid; convert to Metasys format
+
           // Close and convert the input file
           fclose( $inputFile );
           convertNgridFile( $inputFilename, $convertFilename );
@@ -89,8 +95,7 @@
         }
 
         // Construct map characterizing each Point of Interest series
-        $colMap = [];
-        $messages = makeColMap( $colMap, $inputFile );
+        $colMap = makeColMap( $inputFile, $messages );
         fclose( $inputFile );
       }
 
@@ -272,9 +277,9 @@
     fclose( $convertFile );
   }
 
-  function makeColMap( &$colMap, $inputFile )
+  function makeColMap( $inputFile, &$messages )
   {
-    $messages = [];
+    $colMap = [];
     while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )
     {
       if ( isset( $line[0] ) && isset( $line[2] ) && isset( $line[3] ) )
@@ -345,7 +350,7 @@
         }
       }
     }
-    return $messages;
+    return $colMap;
   }
 
   function analyzeColMap( $colMap )
