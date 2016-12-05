@@ -160,8 +160,14 @@
   // Archive uploaded input file
   function archiveInput()
   {
-    // Optionally archive uploaded input file
-    if ( ( $archiveDeployment = getenv( "ARCHIVE_DEPLOYMENT" ) ) && isset( $_SESSION["archiveFilename"] ) )
+    // Optionally archive uploaded input file and send notificaiton by email
+
+    // Archive/email logic based on environment variable ARCHIVE_DEPLOYMENT:
+    // - Not defined: Do nothing
+    // - Empty string: Archive only
+    // - Non-empty string: Archive and send email
+
+    if ( ( ( $archiveDeployment = getenv( "ARCHIVE_DEPLOYMENT" ) ) !== false ) && isset( $_SESSION["archiveFilename"] ) )
     {
       // Format filenames
       $dateFilename =  date( "Y-m-d H-i-s " ) . $_POST["inputName"];
@@ -174,52 +180,55 @@
       $zipArchive->close();
 
 
-      // Send notification email
-      $text =
-        "<style>body{font-family: arial;}</style>" .
-        "<html>" .
+      if ( $archiveDeployment != "" )
+      {
+        // Send notification email
+        $text =
+          "<style>body{font-family: arial;}</style>" .
+          "<html>" .
 
-          "<head>" .
-            "<style>" .
-            "table { border: 1px dotted black; }" .
-            "td { padding-right: 10px; }" .
-            "</style>" .
-          "</head>" .
+            "<head>" .
+              "<style>" .
+              "table { border: 1px dotted black; }" .
+              "td { padding-right: 10px; }" .
+              "</style>" .
+            "</head>" .
 
-          "<body>" .
-            "<p><b>" . $archiveDeployment . "</b> has archived a new " . METASYS_FILE . ":</p>" .
-            "<p>" . $dateFilename . "</p>" .
-            "<br/>" .
+            "<body>" .
+              "<p><b>" . $archiveDeployment . "</b> has archived a new " . METASYS_FILE . ":</p>" .
+              "<p>" . $dateFilename . "</p>" .
+              "<br/>" .
 
-            "<table>" .
-              "<tr>" .
-                "<td>Server Name:</td>" .
-                "<td>" . $_SERVER["SERVER_NAME"] . "</td>" .
-              "</tr>" .
-              "<tr>" .
-                "<td>Server Address:</td>" .
-                "<td>" . $_SERVER["SERVER_ADDR"] . "</td>" .
-              "</tr>" .
-              "<tr>" .
-                "<td>Server Port:</td>" .
-                "<td>" . $_SERVER["SERVER_PORT"] . "</td>" .
-              "</tr>" .
-              "<tr>" .
-                "<td>Remote Address:</td>" .
-                "<td>" . $_SERVER["REMOTE_ADDR"] . "</td>" .
-              "</tr>" .
-            "</table>" .
-          "</body>" .
+              "<table>" .
+                "<tr>" .
+                  "<td>Server Name:</td>" .
+                  "<td>" . $_SERVER["SERVER_NAME"] . "</td>" .
+                "</tr>" .
+                "<tr>" .
+                  "<td>Server Address:</td>" .
+                  "<td>" . $_SERVER["SERVER_ADDR"] . "</td>" .
+                "</tr>" .
+                "<tr>" .
+                  "<td>Server Port:</td>" .
+                  "<td>" . $_SERVER["SERVER_PORT"] . "</td>" .
+                "</tr>" .
+                "<tr>" .
+                  "<td>Remote Address:</td>" .
+                  "<td>" . $_SERVER["REMOTE_ADDR"] . "</td>" .
+                "</tr>" .
+              "</table>" .
+            "</body>" .
 
-        "</html>";
+          "</html>";
 
-      $headers = "MIME-Version: 1.0" . "\r\n";
-      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-      $headers .= "From: Energize Apps <SmtpDispatch@gmail.com>" . "\r\n";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: Energize Apps <SmtpDispatch@gmail.com>" . "\r\n";
 
-      global $mailto;
-      $subject = "Archive notice: " . $archiveDeployment;
-      mail( $mailto, $subject, $text, $headers );
+        global $mailto;
+        $subject = "Archive notice: " . $archiveDeployment;
+        mail( $mailto, $subject, $text, $headers );
+      }
     }
   }
 
