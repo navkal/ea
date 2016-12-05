@@ -994,15 +994,9 @@
 
 
 <?php
-  if ( $timestamp = getenv( "TIMESTAMP" ) )
+  if ( getenv( "COLORTEST" ) )
   {
-    include( "filenames.php" );
-    if ( file_exists( $resultsFilename ) )
-    {
-      $_SESSION["resultsFilename"] = $resultsFilename;
-      include "plot/plot.php";
-    }
-    //include "plot/colortest.php";
+    include "plot/colortest.php";
   }
 ?>
 
