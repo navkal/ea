@@ -114,7 +114,51 @@ $sec=time();
           array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
         }
       }
-error_log( "===> sec=" . (time()-$sec) );
+error_log( "===> OLD=" . (time()-$sec) );
+
+
+$sec=time();
+$meters = [];
+      if ( empty( $messages ) )
+      {
+        // Execute Python script to find summarizable columns (meters)
+        $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) ;
+        error_log( "===> command=" . $command );
+        exec( $command, $output, $status );
+
+        // If Python script generated an output file, append parameter information to it
+        if ( ( $metersFile = @fopen( $metersFilename, "r" ) ) !== false )
+        {
+           while( ( $meter = fgetcsv( $metersFile ) ) !== false )
+           {
+             array_push( $meters, $meter[0] );
+           }
+        }
+        else
+        {
+          $message = METASYS_DATA_ANALYSIS . " preprocessing failed.<br/>";
+          foreach ( $output as $line )
+          {
+            $message .= "<br/>" . $line;
+          }
+          array_push( $messages, $message );
+        }
+      }
+error_log( "===> NEW=" . (time()-$sec) );
+
+
+
+foreach ( $columns as $key => $val )
+{
+  $sum1 = $val["summarizable"];
+  $sum2 = in_array( $key, $meters );
+  if ( $sum1 !== $sum2 )
+  {
+    error_log( "===> PoI=<" . $key . ">" );
+    error_log( "===> <$sum1> != <$sum2> " );
+  }
+}
+
     }
   }
 
@@ -357,14 +401,14 @@ error_log( "===> sec=" . (time()-$sec) );
 
   function analyzeColMap( $colMap )
   {
-    $THRESHOLD = 0.0005;  // 0.00038 is sufficiently small according to available sample input files
+    $THRESHOLD = 0.01;
 
     foreach( $colMap as $key => $properties )
     {
       // Replace properties with format used by client
 
       $volatility = $THRESHOLD + 1;
-      if ( $properties["eq"] == 0 || ( ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) > 0.0003 ) ) // 0.00019 is sufficiently large according to available sample input files
+      if ( $properties["eq"] == 0 || ( ( ( $properties["lt"] + $properties["gt"] ) / $properties["eq"] ) > 0.0003 ) )
       {
         $totalDeltas = $properties["lt"] + $properties["gt"] + $properties["eq"];
         if ( $properties["first"] < $properties["last"] )

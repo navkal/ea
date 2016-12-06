@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import csv
 import datetime
 import re
 import argparse
@@ -20,6 +19,16 @@ def find_meters(input_file):
     return trendmeters
 
 
+def drop_units(value):
+    """Remove the units from a string, e.g. '309.2 kWh' -> 309.2"""
+    pattern = re.compile(r"\A(\d*\.?\d+) ?[a-zA-Z]*\Z")
+    match = pattern.match(value)
+    if match is None:
+        # value was not of the expected format
+        return np.nan
+    else:
+        return float(match.group(1))
+
 
 def check_summarizable(series):
     boolseriesrising = ((series[1:] - series[:-1]) > 0)
@@ -32,6 +41,7 @@ def check_summarizable(series):
     #print('rising', rising)
     #print('falling', falling)
     #print('total', broken + rising + falling)
+
     if broken > .9:
         return False
     elif rising / (rising + falling) > .9:
@@ -39,16 +49,6 @@ def check_summarizable(series):
     else:
         return False
 
-
-def drop_units(value):
-    """Remove the units from a string, e.g. '309.2 kWh' -> 309.2"""
-    pattern = re.compile(r"\A(\d*\.?\d+) ?[a-zA-Z]*\Z")
-    match = pattern.match(value)
-    if match is None:
-        # value was not of the expected format
-        return np.nan
-    else:
-        return float(match.group(1))
 
 def only_meters(array,output_file):
     with open(output_file, 'w') as f:
