@@ -3,6 +3,7 @@ import numpy as np
 import csv
 import datetime
 import re
+import argparse
 
 pd.set_option('display.max_row',10)
 pd.set_option('display.max_colwidth',225)
@@ -49,15 +50,23 @@ def drop_units(value):
     else:
         return float(match.group(1))
 
-def only_meters(array):
-    with open('meters.txt', 'w') as f:
+def only_meters(array,output_file):
+    with open(output_file, 'w') as f:
         for entry in array:
             if entry[1]:
                 print(entry[0])
                 f.write(str(entry[0]) + '\n')
 
 
-print(datetime.datetime.now())
-q = find_meters('input/2016 08 21 - AHS-Electric  & GasTrend-July 2015  - Aug 2016.csv')
-only_meters(q)
-print(datetime.datetime.now())
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='script to find meters in Metasys data files')
+    parser.add_argument('-i', dest='input_file',  help='name of input file')
+    parser.add_argument('-o', dest='output_file', help='name of output file')
+    args = parser.parse_args()
+
+    print(datetime.datetime.now())
+    q = find_meters(args.input_file)
+    only_meters(q,args.output_file)
+    print(datetime.datetime.now())
