@@ -75,6 +75,7 @@
         array_push( $messages, "Failed to open " . METASYS_FILE );
       }
 
+$sec=time();
       if ( empty( $messages ) )
       {
         if ( count( fgetcsv( $inputFile ) ) >= 28 )
@@ -113,6 +114,7 @@
           array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
         }
       }
+error_log( "===> sec=" . (time()-$sec) );
     }
   }
 

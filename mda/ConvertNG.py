@@ -1,9 +1,11 @@
 import csv
 from datetime import datetime, date, time, timedelta
 import argparse
+import pandas as pd
 
 AllDates = []
-def getDates(filename,outputfile):
+def NGtoMet(filename,outputfile):
+    sortNGdate(filename,'archive/temp.csv')
     with open(outputfile, mode='w', newline="", encoding='utf-8') as w:
         csvwriter = csv.writer(w)
         csvwriter.writerow(['Date / Time', 'Name Path Reference', 'Object Name', 'Object Value'])
@@ -11,7 +13,7 @@ def getDates(filename,outputfile):
         oneday = timedelta(days=1)
         KWhtotal = 0
         KVAhTotal = 0
-        with open(filename,mode='r') as f:
+        with open('archive/temp.csv',mode='r') as f:
             csvfile = csv.reader(f)
             for row in csvfile:
                 if(n == 0):
@@ -27,9 +29,9 @@ def getDates(filename,outputfile):
                     account = row[0]
                     if row[1] == '':
                         continue
-                    datesplit = row[1].split('/')
-                    #print(int(datesplit[2]),int(datesplit[1]),int(datesplit[0]))
-                    d = date(int(datesplit[2]),int(datesplit[0]),int(datesplit[1]))
+                    datesplit = row[1].split('-')
+                    print(int(datesplit[2]),int(datesplit[1]),int(datesplit[0]))
+                    d = date(int(datesplit[0]),int(datesplit[1]),int(datesplit[2]))
                     units = row[3]
                     SpotMeasures = row[4:]
                     #print(SpotMeasures)
@@ -66,13 +68,23 @@ def getDates(filename,outputfile):
                     break
                 #print(n)
 
+def sortNGdate(inputfile,outputfile):
+    df = pd.read_csv(inputfile)
+    print(df['Date'])
+    df['Date'] = pd.to_datetime(df['Date'],infer_datetime_format=True)
+    df.sort_values(by=['Date'],inplace=True,ascending=True)
+    print(df['Date'])
+    df.to_csv(outputfile,index=False,index_label=None)
+
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='converts NG output files to metasys filetype')
     parser.add_argument('-i', dest='input_file',  help='name of input file')
     parser.add_argument('-o', dest='output_file', help='name of output file')
     args = parser.parse_args()
-    getDates(args.input_file,args.output_file)
+    NGtoMet(args.input_file,args.output_file)
 
-#getDates('input/ngrid_3cad443c_046db54d_hourly.csv','archive/converted_1.csv')
-#getDates('input/15-16 COMP.DATA-Sort.csv','archive/converted_2.csv')
+#NGtoMet('input/ngrid_3cad443c_046db54d_hourly.csv','archive/converted_1.csv')
+#NGtoMet('12-16 DATA.csv','testfile.csv')
