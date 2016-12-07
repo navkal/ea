@@ -75,7 +75,6 @@
         array_push( $messages, "Failed to open " . METASYS_FILE );
       }
 
-$sec=time();
       if ( empty( $messages ) )
       {
         if ( count( fgetcsv( $inputFile ) ) >= 28 )
@@ -92,6 +91,7 @@ $sec=time();
         fclose( $inputFile );
       }
 
+$sec=time();
       if ( empty( $messages ) )
       {
         findMetersOldWay( $inputFilename, $messages, $columns );
