@@ -80,38 +80,36 @@ $sec=time();
       {
         if ( count( fgetcsv( $inputFile ) ) >= 28 )
         {
-          // Looks like data exported from National Grid; convert to Metasys format
+          // Data looks like National Grid format; convert to Metasys format
 
-          // Close and convert the input file
-          fclose( $inputFile );
+          // Convert the input file
           convertNgridFile( $inputFilename, $convertFilename );
 
           // Overwrite input filename with convert filename
           $inputFilename = $convertFilename;
           $_SESSION["inputFilename"] = $inputFilename;
-
-          // Open convert file for reading, and skip the column headings
-          $inputFile = fopen( $inputFilename, "r" );
-          fgetcsv( $inputFile );
         }
-
-        // Construct map characterizing each Point of Interest series
-        $colMap = makeColMap( $inputFile, $messages );
         fclose( $inputFile );
       }
 
       if ( empty( $messages ) )
       {
-        // Analyze map, replacing data characterization with summarizability flag
-        $colMap = analyzeColMap( $colMap );
+        // Construct map characterizing each Point of Interest series
+        $colMap = makeColMap( $inputFilename, $messages );
 
-        if ( count( $colMap ) )
+        if ( empty( $messages ) )
         {
-          $columns = $colMap;
-        }
-        else
-        {
-          array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
+          // Analyze map, replacing data characterization with summarizability flag
+          $colMap = analyzeColMap( $colMap );
+
+          if ( count( $colMap ) )
+          {
+            $columns = $colMap;
+          }
+          else
+          {
+            array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
+          }
         }
       }
 $oldsec=time()-$sec;
@@ -323,8 +321,12 @@ error_log( $msg );
     fclose( $convertFile );
   }
 
-  function makeColMap( $inputFile, &$messages )
+  function makeColMap( $inputFilename, &$messages )
   {
+    // Open convert file for reading, and skip the column headings
+    $inputFile = fopen( $inputFilename, "r" );
+    fgetcsv( $inputFile );
+
     $colMap = [];
     while( empty( $messages ) && ( ( $line = fgetcsv( $inputFile ) ) !== false ) )
     {
@@ -396,6 +398,7 @@ error_log( $msg );
         }
       }
     }
+    fclose( $inputFile );
     return $colMap;
   }
 
