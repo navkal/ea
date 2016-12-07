@@ -76,7 +76,44 @@
       }
 
 $sec=time();
-findMetersOldWay( $messages, $inputFile, $inputFilename, $convertFilename, $columns );
+      if ( empty( $messages ) )
+      {
+        if ( count( fgetcsv( $inputFile ) ) >= 28 )
+        {
+          // Looks like data exported from National Grid; convert to Metasys format
+
+          // Close and convert the input file
+          fclose( $inputFile );
+          convertNgridFile( $inputFilename, $convertFilename );
+
+          // Overwrite input filename with convert filename
+          $inputFilename = $convertFilename;
+          $_SESSION["inputFilename"] = $inputFilename;
+
+          // Open convert file for reading, and skip the column headings
+          $inputFile = fopen( $inputFilename, "r" );
+          fgetcsv( $inputFile );
+        }
+
+        // Construct map characterizing each Point of Interest series
+        $colMap = makeColMap( $inputFile, $messages );
+        fclose( $inputFile );
+      }
+
+      if ( empty( $messages ) )
+      {
+        // Analyze map, replacing data characterization with summarizability flag
+        $colMap = analyzeColMap( $colMap );
+
+        if ( count( $colMap ) )
+        {
+          $columns = $colMap;
+        }
+        else
+        {
+          array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
+        }
+      }
 $oldsec=time()-$sec;
 
 
@@ -394,47 +431,5 @@ error_log( $msg );
     // error_log( "===> map=" . print_r( $colMap, true ) );
 
     return $colMap;
-  }
-
-  function findMetersOldWay( &$messages, &$inputFile, &$inputFilename, &$convertFilename, &$columns )
-  {
-    if ( empty( $messages ) )
-    {
-      if ( count( fgetcsv( $inputFile ) ) >= 28 )
-      {
-        // Looks like data exported from National Grid; convert to Metasys format
-
-        // Close and convert the input file
-        fclose( $inputFile );
-        convertNgridFile( $inputFilename, $convertFilename );
-
-        // Overwrite input filename with convert filename
-        $inputFilename = $convertFilename;
-        $_SESSION["inputFilename"] = $inputFilename;
-
-        // Open convert file for reading, and skip the column headings
-        $inputFile = fopen( $inputFilename, "r" );
-        fgetcsv( $inputFile );
-      }
-
-      // Construct map characterizing each Point of Interest series
-      $colMap = makeColMap( $inputFile, $messages );
-      fclose( $inputFile );
-    }
-
-    if ( empty( $messages ) )
-    {
-      // Analyze map, replacing data characterization with summarizability flag
-      $colMap = analyzeColMap( $colMap );
-
-      if ( count( $colMap ) )
-      {
-        $columns = $colMap;
-      }
-      else
-      {
-        array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
-      }
-    }
   }
 ?>
