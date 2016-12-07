@@ -43,9 +43,9 @@ def check_summarizable(series):
     #print('falling', falling)
     #print('total', broken + rising + falling)
 
-    if broken > .9:
+    if broken > 0.9:
         return False
-    elif rising / (rising + falling) > .9:
+    elif rising / (rising + falling) > 0.95:
         return True
     else:
         return False
