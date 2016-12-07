@@ -111,7 +111,7 @@ $msg="<$inputFilename> OLD=$oldsec NEW=$newsec";
 foreach ( $columns as $key => $val )
 {
   $sum1 = $val["summarizable"];
-  $sum2 = in_array( $key, $meters );
+  $sum2 = $meters[$key]["summarizable"];
   if ( $sum1 !== $sum2 )
   {
     $msg.=" PoI=<$key> <$sum1> <$sum2>";
@@ -297,8 +297,9 @@ error_log( $msg );
     {
        while( ( $meter = fgetcsv( $metersFile ) ) !== false )
        {
-         array_push( $meters, $meter[0] );
+         $meters[$meter[0]]["summarizable"] = ( $meter[1] == "True" );
        }
+       fclose( $metersFile );
     }
     else
     {

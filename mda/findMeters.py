@@ -3,6 +3,7 @@ import numpy as np
 import datetime
 import re
 import argparse
+import csv
 
 pd.set_option('display.max_row',10)
 pd.set_option('display.max_colwidth',225)
@@ -51,13 +52,11 @@ def check_summarizable(series):
         return False
 
 
-def only_meters(array,output_file):
-    with open(output_file, 'w') as f:
+def write_meters(array,output_file):
+    with open(output_file, mode='w', newline="", encoding='utf-8') as w:
+        csvwriter = csv.writer(w)
         for entry in array:
-            if entry[1]:
-                print(entry[0])
-                f.write(str(entry[0]) + '\n')
-
+            csvwriter.writerow(entry)
 
 
 
@@ -67,7 +66,5 @@ if __name__ == '__main__':
     parser.add_argument('-o', dest='output_file', help='name of output file')
     args = parser.parse_args()
 
-    print(datetime.datetime.now())
     q = find_meters(args.input_file)
-    only_meters(q,args.output_file)
-    print(datetime.datetime.now())
+    write_meters(q,args.output_file)
