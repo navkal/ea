@@ -114,7 +114,7 @@ $sec=time();
           array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
         }
       }
-error_log( "===> OLD=" . (time()-$sec) );
+$oldsec=time()-$sec;
 
 
 $sec=time();
@@ -144,20 +144,20 @@ $meters = [];
           array_push( $messages, $message );
         }
       }
-error_log( "===> NEW=" . (time()-$sec) );
+$newsec=time()-$sec;
 
 
-
+$msg="<$inputFilename> OLD=$oldsec NEW=$newsec";
 foreach ( $columns as $key => $val )
 {
   $sum1 = $val["summarizable"];
   $sum2 = in_array( $key, $meters );
   if ( $sum1 !== $sum2 )
   {
-    error_log( "===> PoI=<" . $key . ">" );
-    error_log( "===> <$sum1> != <$sum2> " );
+    $msg.=" PoI=<$key> <$sum1> <$sum2>";
   }
 }
+error_log( $msg );
 
     }
   }
@@ -401,7 +401,7 @@ foreach ( $columns as $key => $val )
 
   function analyzeColMap( $colMap )
   {
-    $THRESHOLD = 0.01;
+    $THRESHOLD = 0.001284274064085;
 
     foreach( $colMap as $key => $properties )
     {
@@ -421,6 +421,7 @@ foreach ( $columns as $key => $val )
         }
       }
 
+      //error_log( "=======> $key $volatility" );
       $summarizable = $volatility < $THRESHOLD;
 
       $colMap[$key] = [ "summarizable" => $summarizable ];
