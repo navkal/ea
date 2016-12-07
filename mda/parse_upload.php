@@ -100,31 +100,9 @@ $oldsec=time()-$sec;
 
 
 $sec=time();
-$meters = [];
       if ( empty( $messages ) )
       {
-        // Execute Python script to find summarizable columns (meters)
-        $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) ;
-        error_log( "===> command=" . $command );
-        exec( $command, $output, $status );
-
-        // If Python script generated an output file, append parameter information to it
-        if ( ( $metersFile = @fopen( $metersFilename, "r" ) ) !== false )
-        {
-           while( ( $meter = fgetcsv( $metersFile ) ) !== false )
-           {
-             array_push( $meters, $meter[0] );
-           }
-        }
-        else
-        {
-          $message = METASYS_DATA_ANALYSIS . " preprocessing failed.<br/>";
-          foreach ( $output as $line )
-          {
-            $message .= "<br/>" . $line;
-          }
-          array_push( $messages, $message );
-        }
+        $meters = findMeters( $inputFilename, $metersFilename, $messages );
       }
 $newsec=time()-$sec;
 
@@ -303,6 +281,35 @@ error_log( $msg );
       }
     }
     fclose( $convertFile );
+  }
+
+  function findMeters( $inputFilename, $metersFilename, &$messages )
+  {
+    $meters = [];
+    // Execute Python script to find summarizable columns (meters)
+    $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) ;
+    error_log( "===> command=" . $command );
+    exec( $command, $output, $status );
+
+    // If Python script generated an output file, append parameter information to it
+    if ( ( $metersFile = @fopen( $metersFilename, "r" ) ) !== false )
+    {
+       while( ( $meter = fgetcsv( $metersFile ) ) !== false )
+       {
+         array_push( $meters, $meter[0] );
+       }
+    }
+    else
+    {
+      $message = METASYS_DATA_ANALYSIS . " preprocessing failed.<br/>";
+      foreach ( $output as $line )
+      {
+        $message .= "<br/>" . $line;
+      }
+      array_push( $messages, $message );
+    }
+
+    return $meters;
   }
 
   function findMetersOldWay( $inputFilename, &$messages, &$columns )
