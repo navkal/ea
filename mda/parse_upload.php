@@ -94,23 +94,7 @@ $sec=time();
 
       if ( empty( $messages ) )
       {
-        // Construct map characterizing each Point of Interest series
-        $colMap = makeColMap( $inputFilename, $messages );
-
-        if ( empty( $messages ) )
-        {
-          // Analyze map, replacing data characterization with summarizability flag
-          $colMap = analyzeColMap( $colMap );
-
-          if ( count( $colMap ) )
-          {
-            $columns = $colMap;
-          }
-          else
-          {
-            array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
-          }
-        }
+        findMetersOldWay( $inputFilename, $messages, $columns );
       }
 $oldsec=time()-$sec;
 
@@ -319,6 +303,27 @@ error_log( $msg );
       }
     }
     fclose( $convertFile );
+  }
+
+  function findMetersOldWay( $inputFilename, &$messages, &$columns )
+  {
+    // Construct map characterizing each Point of Interest series
+    $colMap = makeColMap( $inputFilename, $messages );
+
+    if ( empty( $messages ) )
+    {
+      // Analyze map, replacing data characterization with summarizability flag
+      $colMap = analyzeColMap( $colMap );
+
+      if ( count( $colMap ) )
+      {
+        $columns = $colMap;
+      }
+      else
+      {
+        array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
+      }
+    }
   }
 
   function makeColMap( $inputFilename, &$messages )
