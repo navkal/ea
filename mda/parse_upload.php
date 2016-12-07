@@ -286,6 +286,7 @@ error_log( $msg );
   function findMeters( $inputFilename, $metersFilename, &$messages )
   {
     $meters = [];
+
     // Execute Python script to find summarizable columns (meters)
     $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) ;
     error_log( "===> command=" . $command );
