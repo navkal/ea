@@ -34,17 +34,13 @@ def drop_units(value):
 
 def check_summarizable(series,args):
     boolseriesrising = ((series[1:] - series[:-1]) > 0)
-    boolseriesbroken = ((series[1:] - series[:-1]) == 0)
+    boolseriesconstant = ((series[1:] - series[:-1]) == 0)
     boolseriesfalling = ((series[1:] - series[:-1]) < 0)
     rising = boolseriesrising.mean()
-    broken = boolseriesbroken.mean()
+    constant = boolseriesconstant.mean()
     falling = boolseriesfalling.mean()
-    #print('broken', broken)
-    #print('rising', rising)
-    #print('falling', falling)
-    #print('total', broken + rising + falling)
 
-    if broken > args.broken_threshold:
+    if constant > args.constant_threshold:
         return False
     elif rising / (rising + falling) > args.rising_threshold:
         return True
@@ -64,7 +60,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to find meters in Metasys data files')
     parser.add_argument('-i', dest='input_file',  help='name of input file')
     parser.add_argument('-o', dest='output_file', help='name of output file')
-    parser.add_argument('-b', dest='broken_threshold', type=float, help='threshold for detection of broken meter')
+    parser.add_argument('-c', dest='constant_threshold', type=float, help='threshold for detection of constant trend')
     parser.add_argument('-r', dest='rising_threshold', type=float, help='threshold for detection of rising meter')
     args = parser.parse_args()
 
