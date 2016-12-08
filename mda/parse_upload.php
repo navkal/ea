@@ -94,12 +94,12 @@
 
       if ( empty( $messages ) )
       {
-        findMetersOldWay( $inputFilename, $messages, $oldColumns );
+        findSummarizableOldWay( $inputFilename, $messages, $oldColumns );
       }
 
       if ( empty( $messages ) )
       {
-        $columns = findMeters( $inputFilename, $metersFilename, $messages );
+        $columns = findSummarizable( $inputFilename, $metersFilename, $messages );
 
         // Log differences between old and new algorithms
         foreach ( $oldColumns as $key => $val )
@@ -276,7 +276,7 @@
     fclose( $convertFile );
   }
 
-  function findMeters( $inputFilename, $metersFilename, &$messages )
+  function findSummarizable( $inputFilename, $metersFilename, &$messages )
   {
     $meters = [];
 
@@ -307,7 +307,7 @@
     return $meters;
   }
 
-  function findMetersOldWay( $inputFilename, &$messages, &$columns )
+  function findSummarizableOldWay( $inputFilename, &$messages, &$columns )
   {
     // Construct map characterizing each Point of Interest series
     $colMap = makeColMap( $inputFilename, $messages );
