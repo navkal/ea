@@ -94,7 +94,7 @@
 $sec=time();
       if ( empty( $messages ) )
       {
-        findMetersOldWay( $inputFilename, $messages, $columns );
+        //findMetersOldWay( $inputFilename, $messages, $columns );
       }
 $oldsec=time()-$sec;
 
