@@ -3,7 +3,6 @@ from datetime import datetime, date, time, timedelta
 import argparse
 import pandas as pd
 
-AllDates = []
 def NGtoMet(filename,outputfile):
     sortNGdate(filename,'archive/temp.csv')
     with open(outputfile, mode='w', newline="", encoding='utf-8') as w:
