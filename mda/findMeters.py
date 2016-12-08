@@ -1,21 +1,21 @@
 import pandas as pd
 import numpy as np
-import datetime
 import re
 import argparse
 import csv
 
 pd.set_option('display.max_row',10)
 pd.set_option('display.max_colwidth',225)
-def find_meters(input_file):
+
+def find_meters(args):
     trendmeters = []
-    df = pd.read_csv(input_file,
+    df = pd.read_csv(args.input_file,
                      #nrows=400000,
                      converters={'Object Value': drop_units})
     df.sort_values(by=['Object Name', 'Date / Time'], inplace=True)
     for trend in (df['Object Name'].unique()):
         z = (df[df['Object Name'] == trend]['Object Value'])
-        summary = check_summarizable(np.array(z))
+        summary = check_summarizable(np.array(z),args)
         trendmeters.append((trend,summary))
     return trendmeters
 
@@ -32,7 +32,7 @@ def drop_units(value):
         return float(match.group(1))
 
 
-def check_summarizable(series):
+def check_summarizable(series,args):
     boolseriesrising = ((series[1:] - series[:-1]) > 0)
     boolseriesbroken = ((series[1:] - series[:-1]) == 0)
     boolseriesfalling = ((series[1:] - series[:-1]) < 0)
@@ -44,9 +44,9 @@ def check_summarizable(series):
     #print('falling', falling)
     #print('total', broken + rising + falling)
 
-    if broken > 0.9:
+    if broken > args.broken_threshold:
         return False
-    elif rising / (rising + falling) > 0.95:
+    elif rising / (rising + falling) > args.rising_threshold:
         return True
     else:
         return False
@@ -64,7 +64,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to find meters in Metasys data files')
     parser.add_argument('-i', dest='input_file',  help='name of input file')
     parser.add_argument('-o', dest='output_file', help='name of output file')
+    parser.add_argument('-b', dest='broken_threshold', type=float, help='threshold for detection of broken meter')
+    parser.add_argument('-r', dest='rising_threshold', type=float, help='threshold for detection of rising meter')
     args = parser.parse_args()
 
-    q = find_meters(args.input_file)
+    q = find_meters(args)
     write_meters(q,args.output_file)

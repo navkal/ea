@@ -107,17 +107,21 @@ $sec=time();
 $newsec=time()-$sec;
 
 
-$msg="<$inputFilename> OLD=$oldsec NEW=$newsec";
+$poi="";
 foreach ( $columns as $key => $val )
 {
   $sum1 = $val["summarizable"];
   $sum2 = $meters[$key]["summarizable"];
   if ( $sum1 !== $sum2 )
   {
-    $msg.=" PoI=<$key> <$sum1> <$sum2>";
+    $poi.=" PoI=<$key> <$sum1> <$sum2>";
   }
 }
-error_log( $msg );
+if ( $poi == "" )
+{
+  $poi = " PoI=SAME";
+}
+error_log( "<$inputFilename> OLD=$oldsec NEW=$newsec" . $poi );
 
     }
   }
@@ -288,7 +292,7 @@ error_log( $msg );
     $meters = [];
 
     // Execute Python script to find summarizable columns (meters)
-    $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) ;
+    $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) . " -b 0.9 -r 0.95";
     error_log( "===> command=" . $command );
     exec( $command, $output, $status );
 
