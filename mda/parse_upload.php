@@ -94,7 +94,7 @@
 
       if ( empty( $messages ) )
       {
-        findSummarizableOldWay( $inputFilename, $messages, $oldColumns );
+        // findSummarizableOldWay( $inputFilename, $messages, $oldColumns );
       }
 
       if ( empty( $messages ) )
