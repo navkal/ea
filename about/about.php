@@ -23,6 +23,8 @@
     <dd>Lead</dd>
     <dt><a href="http://www.VirajNavkal.com" target="_blank">Viraj Navkal</a></dt>
     <dd>Developer, data analysis algorithms</dd>
+    <dt><a href="http://www.NikhilNavkal.com" target="_blank">Nikhil Navkal</a></dt>
+    <dd>Developer, data cleansing utilities</dd>
     <dt>Naomi Navkal</dt>
     <dd>Developer, user interface</dd>
   </dl>
