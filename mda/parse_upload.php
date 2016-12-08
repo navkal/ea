@@ -100,15 +100,17 @@
       if ( empty( $messages ) )
       {
         $columns = findMeters( $inputFilename, $metersFilename, $messages );
-foreach ( $oldColumns as $key => $val )
-{
-  $sum1 = $val["summarizable"];
-  $sum2 = $columns[$key]["summarizable"];
-  if ( $sum1 !== $sum2 )
-  {
-    error_log( "<$inputFilename> <$key> <$sum1> <$sum2>" );
-  }
-}
+
+        // Log differences between old and new algorithms
+        foreach ( $oldColumns as $key => $val )
+        {
+          $sum1 = $val["summarizable"];
+          $sum2 = $columns[$key]["summarizable"];
+          if ( $sum1 !== $sum2 )
+          {
+            error_log( "<$inputFilename> <$key> <$sum1> <$sum2>" );
+          }
+        }
       }
     }
   }
