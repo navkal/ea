@@ -37,6 +37,7 @@
   }
 
   $redirect = "";
+  $oldColumns = [];
   $columns = [];
 
   if ( empty( $messages ) )
@@ -91,34 +92,23 @@
         fclose( $inputFile );
       }
 
-$sec=time();
       if ( empty( $messages ) )
       {
-        //findMetersOldWay( $inputFilename, $messages, $columns );
+        findMetersOldWay( $inputFilename, $messages, $oldColumns );
       }
-$oldsec=time()-$sec;
 
       if ( empty( $messages ) )
       {
-$sec=time();
-        $meters = findMeters( $inputFilename, $metersFilename, $messages );
-$newsec=time()-$sec;
-$poi="";
-foreach ( $columns as $key => $val )
+        $columns = findMeters( $inputFilename, $metersFilename, $messages );
+foreach ( $oldColumns as $key => $val )
 {
   $sum1 = $val["summarizable"];
-  $sum2 = $meters[$key]["summarizable"];
+  $sum2 = $columns[$key]["summarizable"];
   if ( $sum1 !== $sum2 )
   {
-    $poi.=" PoI=<$key> <$sum1> <$sum2>";
+    error_log( "<$inputFilename> <$key> <$sum1> <$sum2>" );
   }
 }
-if ( $poi == "" )
-{
-  $poi = " PoI=SAME";
-}
-error_log( "<$inputFilename> OLD=$oldsec NEW=$newsec" . $poi );
-        $columns = $meters;
       }
     }
   }
