@@ -98,15 +98,11 @@ $sec=time();
       }
 $oldsec=time()-$sec;
 
-
-$sec=time();
       if ( empty( $messages ) )
       {
+$sec=time();
         $meters = findMeters( $inputFilename, $metersFilename, $messages );
-      }
 $newsec=time()-$sec;
-
-
 $poi="";
 foreach ( $columns as $key => $val )
 {
@@ -123,6 +119,7 @@ if ( $poi == "" )
 }
 error_log( "<$inputFilename> OLD=$oldsec NEW=$newsec" . $poi );
 
+      }
     }
   }
 
