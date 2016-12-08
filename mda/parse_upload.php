@@ -118,7 +118,7 @@ if ( $poi == "" )
   $poi = " PoI=SAME";
 }
 error_log( "<$inputFilename> OLD=$oldsec NEW=$newsec" . $poi );
-
+        $columns = $meters;
       }
     }
   }
