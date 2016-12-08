@@ -23,7 +23,7 @@ def find_meters(args):
 def drop_units(value):
     """Remove the units from a string, e.g. '309.2 kWh' -> 309.2"""
     #pattern = re.compile(r"\A(\d*\.?\d+) ?[a-zA-Z]*\Z")
-    pattern = re.compile(r"\A([+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?)[% a-zA-Z]*\Z")
+    pattern = re.compile(r"\A([+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?).*\Z")
     match = pattern.match(value)
     if match is None:
         # value was not of the expected format
