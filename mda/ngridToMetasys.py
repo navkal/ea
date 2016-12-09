@@ -5,13 +5,10 @@ import pandas as pd
 
 def NGtoMet( ngridfile, metasysfile ):
   df = pd.read_csv( ngridfile, index_col=[1] )
-  print( "bf ", len(df.index) );
   df.dropna( how='all', inplace=True )
-  print( "af ", len(df.index) );
   df.index = pd.to_datetime( df.index, infer_datetime_format=True )
   df.sort_index( inplace=True )
   headings = df.columns.values
-  print( headings )
 
   with open( metasysfile, mode='w', newline="", encoding='utf-8' ) as w:
     csvwriter = csv.writer( w )
@@ -20,23 +17,18 @@ def NGtoMet( ngridfile, metasysfile ):
     sum = {}
 
     for ngridline in df.itertuples():
-      print( "bf ", ngridline )
       if ( not pd.isnull( ngridline[0] ) ) and ( not pd.isnull( ngridline[1] ) ) and ( not pd.isnull( ngridline[3] ) ):
         units = ngridline[3]
-        print( "af ", ngridline )
         colname = ngridline[1] + '.' + units
         sumname = colname + ".sum"
 
         for index in range( 3, len( ngridline ) - 1 ):
           cell = ngridline[index+1]
-          print( "bf ", cell )
 
           if not pd.isnull( cell ):
-            print( "af ", cell )
             timesplit = headings[index].split( ':' )
             datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
             dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
-            print( dt )
 
             if ( timesplit[0] == '24' ):
               dt += timedelta( days=1 )
