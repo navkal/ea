@@ -5,7 +5,9 @@ import pandas as pd
 
 def NGtoMet( ngridfile, metasysfile ):
   df = pd.read_csv( ngridfile )
-  df.dropna( inplace=True )
+  print( "bf ", len(df.index) );
+  df.dropna( how='all', inplace=True )
+  print( "af ", len(df.index) );
   df.sort_values( by=['Date'], inplace=True )
   headings = df.columns.values
   print( headings )
@@ -17,19 +19,23 @@ def NGtoMet( ngridfile, metasysfile ):
     sum = {}
 
     for ngridline in df.itertuples():
-      if ( ngridline[1] != "" ) and ( ngridline[2] != "" ) and ( ngridline[4] != "" ):
+      print( "bf ", ngridline )
+      if ( not pd.isnull( ngridline[1] ) ) and ( not pd.isnull( ngridline[2] ) ) and ( not pd.isnull( ngridline[4] ) ):
         units = ngridline[4]
-        print( ngridline )
+        print( "af ", ngridline )
         colname = ngridline[1] + '.' + units
         sumname = colname + ".sum"
 
         for index in range( 4, len( ngridline ) - 1 ):
           cell = ngridline[index+1]
+          print( "bf ", cell )
 
-          if cell != "":
+          if not pd.isnull( cell ):
+            print( "af ", cell )
             timesplit = headings[index].split( ':' )
             datesplit = ngridline[2].split( '/' )
             dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
+            print( dt )
 
             if ( timesplit[0] == '24' ):
               dt += timedelta( days=1 )

@@ -2,6 +2,8 @@
 
 <?php
   $lines = [];
+  $nicknameMap = [];
+  $params = [];
   if ( $resultsFile = @fopen( $_SESSION["resultsFilename"], "r" ) )
   {
     while( ! feof( $resultsFile ) )
