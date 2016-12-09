@@ -4,11 +4,12 @@ import argparse
 import pandas as pd
 
 def NGtoMet( ngridfile, metasysfile ):
-  df = pd.read_csv( ngridfile )
+  df = pd.read_csv( ngridfile, index_col=[1] )
   print( "bf ", len(df.index) );
   df.dropna( how='all', inplace=True )
   print( "af ", len(df.index) );
-  df.sort_values( by=['Date'], inplace=True )
+  df.index = pd.to_datetime( df.index, infer_datetime_format=True )
+  df.sort_index( inplace=True )
   headings = df.columns.values
   print( headings )
 
@@ -20,8 +21,8 @@ def NGtoMet( ngridfile, metasysfile ):
 
     for ngridline in df.itertuples():
       print( "bf ", ngridline )
-      if ( not pd.isnull( ngridline[1] ) ) and ( not pd.isnull( ngridline[2] ) ) and ( not pd.isnull( ngridline[4] ) ):
-        units = ngridline[4]
+      if ( not pd.isnull( ngridline[0] ) ) and ( not pd.isnull( ngridline[1] ) ) and ( not pd.isnull( ngridline[3] ) ):
+        units = ngridline[3]
         print( "af ", ngridline )
         colname = ngridline[1] + '.' + units
         sumname = colname + ".sum"
@@ -33,7 +34,7 @@ def NGtoMet( ngridfile, metasysfile ):
           if not pd.isnull( cell ):
             print( "af ", cell )
             timesplit = headings[index].split( ':' )
-            datesplit = ngridline[2].split( '/' )
+            datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
             dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
             print( dt )
 
