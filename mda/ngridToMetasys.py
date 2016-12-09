@@ -5,7 +5,7 @@ import pandas as pd
 
 def NGtoMet( ngridfile, metasysfile ):
   df = pd.read_csv( ngridfile )
-  df = df.dropna()
+  df.dropna( inplace=True )
   df.sort_values( by=['Date'], inplace=True )
   headings = df.columns.values
   print( headings )
