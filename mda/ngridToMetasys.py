@@ -27,7 +27,7 @@ def NGtoMet( ngridfile, metasysfile ):
         colname = ngridline[1] + '.' + units
         sumname = colname + ".sum"
 
-        for index in range( 4, len( ngridline ) - 1 ):
+        for index in range( 3, len( ngridline ) - 1 ):
           cell = ngridline[index+1]
           print( "bf ", cell )
 
