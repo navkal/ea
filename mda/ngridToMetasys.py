@@ -4,7 +4,7 @@ import argparse
 import pandas as pd
 
 def NGtoMet( ngridfile, metasysfile ):
-  df = pd.read_csv( ngridfile, nrows=10)
+  df = pd.read_csv( ngridfile, nrows=10 )
   df.sort_values( by=['Date'], inplace=True )
   headings = df.columns.values
   print( headings )
@@ -19,16 +19,20 @@ def NGtoMet( ngridfile, metasysfile ):
       if ( ngridline[1] != "" ) and ( ngridline[2] != "" ) and ( ngridline[4] != "" ):
         colname = ngridline[1] + '.' + ngridline[4]
         sumname = colname + ".sum"
+
         for index in range( 4, len( ngridline ) - 1 ):
           cell = ngridline[index+1]
+
           if cell != "":
             timesplit = headings[index].split( ':' )
             datesplit = ngridline[2].split( '/' )
             dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
+
             if ( timesplit[0] == '24' ):
               dt += timedelta( days=1 )
               timesplit[0] = '00'
-            dt += timedelta( hours=int(timesplit[0]), minutes=int(timesplit[1]) )
+
+            dt += timedelta( hours=int( timesplit[0] ), minutes=int( timesplit[1] ) )
             timestamp = dt.strftime( '%m/%d/%Y %H:%M' )
             print( index, timestamp, cell )
             csvwriter.writerow( [ timestamp, '', colname, cell ] )

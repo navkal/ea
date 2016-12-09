@@ -270,7 +270,7 @@
             $sDateTime = $tDateTime->format( "m/d/Y H:i" );
 
             // Generate raw data sample
-            $outline = $sDateTime . "," . $colname . "," . $colname . "," . $inline[$index] . PHP_EOL;
+            $outline = $sDateTime . ",," . $colname . "," . $inline[$index] . PHP_EOL;
             fwrite( $convertFile, $outline );
 
             // Optionally generate cumulative data sample
@@ -281,7 +281,7 @@
                 $sum[$sumname] = 0;
               }
               $sum[$sumname] += $inline[$index];
-              $outline = $sDateTime . "," . $sumname . "," . $sumname . "," . $sum[$sumname] . PHP_EOL;
+              $outline = $sDateTime . ",," . $sumname . "," . $sum[$sumname] . PHP_EOL;
               fwrite( $convertFile, $outline );
             }
           }
