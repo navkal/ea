@@ -30,10 +30,10 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
     # Iterate through rows of National Grid data
     for ngridline in df.itertuples():
 
-      # If we have identifying fields, process this row
+      # If this row has identifying fields, process it
       if ( not pd.isnull( ngridline[0] ) ) and ( not pd.isnull( ngridline[1] ) ) and ( not pd.isnull( ngridline[3] ) ):
 
-        # Initialize some variables used in subsequent loop
+        # Initialize names of series to which this row belongs
         units = ngridline[3]
         colname = ngridline[1] + '.' + units
         sumname = colname + ".sum"
@@ -51,7 +51,7 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
             datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
             dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
 
-            # Add the timestamp from the column heading to the datetime object
+            # Increment the datetime object by the timestamp shown in the column heading
             timesplit = headings[index].split( ':' )
             if ( timesplit[0] == '24' ):
               dt += timedelta( days=1 )
@@ -65,10 +65,10 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
             # Write the Metasys row
             csvwriter.writerow( [ timestamp, '', colname, cell ] )
 
-            # If applicable, generate artificial meter date
+            # If applicable, generate artificial meter reading
             if ( ( units == 'kWh' ) or ( units == 'kVAh' ) ):
 
-              # Optionally initialize series for this fake meter
+              # Optionally initialize series for artificial meter
               if ( sumname not in sum ):
                 sum[sumname] = 0
 
