@@ -262,12 +262,12 @@
             {
               $tDateTime = new DateTime( $inline[1] );
               $tDateTime->add( new DateInterval( "P1D" ) );
+              $sDateTime = $tDateTime->format( "n/j/Y G:i" );
             }
             else
             {
-              $tDateTime = new DateTime( $inline[1] . " " . $hours . ":" . $timeFragments[1] );
+              $sDateTime = $inline[1] . " " . $hours . ":" . $timeFragments[1];
             }
-            $sDateTime = $tDateTime->format( "m/d/Y H:i" );
 
             // Generate raw data sample
             $outline = $sDateTime . ",," . $colname . "," . $inline[$index] . PHP_EOL;
