@@ -83,13 +83,13 @@
           // Data looks like National Grid format; convert to Metasys format
 
           // Convert the input file
-          $testFilename = sys_get_temp_dir() . "/mdaConvert_" . $_REQUEST["timestamp"] . "_1.csv";
-          $start=time();
-          ngridToMetasys( $inputFilename, $testFilename );
-          error_log( "===> Python elapsed seconds=" . ( time() - $start ) );
-          $start=time();
-          convertNgridFile( $inputFilename, $convertFilename );
-          error_log( "===> PHP elapsed seconds=" . ( time() - $start ) );
+          // $testFilename = sys_get_temp_dir() . "/mdaConvert_" . $_REQUEST["timestamp"] . "_1.csv";
+          // $start=time();
+          ngridToMetasys( $inputFilename, $convertFilename );
+          // error_log( "===> Python elapsed seconds=" . ( time() - $start ) );
+          // $start=time();
+          // convertNgridFile( $inputFilename, $testFilename );
+          // error_log( "===> PHP elapsed seconds=" . ( time() - $start ) );
 
           // Overwrite input filename with convert filename
           $inputFilename = $convertFilename;
