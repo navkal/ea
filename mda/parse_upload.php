@@ -83,13 +83,7 @@
           // Data looks like National Grid format; convert to Metasys format
 
           // Convert the input file
-          // $testFilename = sys_get_temp_dir() . "/mdaConvert_" . $_REQUEST["timestamp"] . "_1.csv";
-          // $start=time();
           ngridToMetasys( $inputFilename, $convertFilename );
-          // error_log( "===> Python elapsed seconds=" . ( time() - $start ) );
-          // $start=time();
-          // convertNgridFile( $inputFilename, $testFilename );
-          // error_log( "===> PHP elapsed seconds=" . ( time() - $start ) );
 
           // Overwrite input filename with convert filename
           $inputFilename = $convertFilename;
@@ -229,66 +223,6 @@
     $time1 = strtotime( str_getcsv( $line1 )[1] );
     $time2 = strtotime( str_getcsv( $line2 )[1] );
     return $time1 - $time2;
-  }
-
-  function convertNgridFile( $ngridFilename, $convertFilename )
-  {
-    $lines = file( $ngridFilename );
-    $headings = str_getcsv( $lines[0] );
-    $lines = array_slice( $lines, 1 );
-    usort( $lines, "compareNgridLines" );
-
-    $convertFile = fopen( $convertFilename, "w" );
-    fwrite( $convertFile, 'Date / Time,Name Path Reference,Object Name,Object Value' . PHP_EOL );
-
-    $endline = count( $lines );
-    $sum = [];
-    for ( $nline = 0; $nline < $endline; $nline ++ )
-    {
-      $inline = str_getcsv( $lines[$nline] );
-
-      if ( ( $inline[0] != "" ) && ( $inline[1] != "" ) && ( $inline[3] != "" ) )
-      {
-        $colname = $inline[0] . "." . $inline[3];
-        $sumname = $colname . ".sum";
-        for ( $index = 4; $index < count( $inline ); $index ++ )
-        {
-          if ( $inline[$index] != "" )
-          {
-            // Format time string, correcting for invalid use of "24:00:00" in final column
-            $timeFragments = explode( ":", $headings[$index] );
-            $hours = $timeFragments[0];
-            if ( $hours == 24 )
-            {
-              $tDateTime = new DateTime( $inline[1] );
-              $tDateTime->add( new DateInterval( "P1D" ) );
-              $sDateTime = $tDateTime->format( "n/j/Y G:i" );
-            }
-            else
-            {
-              $sDateTime = $inline[1] . " " . $hours . ":" . $timeFragments[1];
-            }
-
-            // Generate raw data sample
-            $outline = $sDateTime . ",," . $colname . "," . $inline[$index] . PHP_EOL;
-            fwrite( $convertFile, $outline );
-
-            // Optionally generate cumulative data sample
-            if ( ( $inline[3] == "kWh" ) || ( $inline[3] == "kVAh" ) )
-            {
-              if ( ! isset( $sum[$sumname] ) )
-              {
-                $sum[$sumname] = 0;
-              }
-              $sum[$sumname] += $inline[$index];
-              $outline = $sDateTime . ",," . $sumname . "," . $sum[$sumname] . PHP_EOL;
-              fwrite( $convertFile, $outline );
-            }
-          }
-        }
-      }
-    }
-    fclose( $convertFile );
   }
 
   function findSummarizable( $inputFilename, $metersFilename, &$messages )
