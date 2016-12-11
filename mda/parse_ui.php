@@ -69,27 +69,51 @@
     // Initialize identifying timestamp
     $( "#timestamp" ).val( Date.now().toString( 36 ) );
 
-    // Initialize file source radio buttons
-    $( "#preload" ).prop( "checked", true );
-    onChangeFileSource();
+    // Show Analyze tab
+    $( "#inputFileTabs a[href='#analyzeTab']" ).tab( "show" );
+
+    // Set handlers to initialize file chooser views
+    $( "#inputFileTabs a[href='#analyzeTab']" ).on( "shown.bs.tab", onShowAnalyzeTab );
+    $( "#inputFileTabs a[href='#plotTab']" ).on( "shown.bs.tab", onShowPlotTab );
+    onShowAnalyzeTab();
 
     // Initialize dropdowns for preloaded input and sample results files
     makeFilePicker( "preloadPicker", <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/input" ), 2 ) )?> );
     makeFilePicker( "samplePicker", <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/sample" ), 2 ) )?> );
 
-    // Initialize the file upload chooser
-    $( "#metasysFile" ).val( "" );
-    $( "#resultsFile" ).val( "" );
-    $( "#uploadFilename" ).val( "" );
-
     // Hide Analysis Options form
     $( "#optionsForm" ).css( "display", "none" );
   }
 
+  function onShowAnalyzeTab()
+  {
+    $( "#preload" ).prop( "checked", true );
+    onChangeFileSource();
+  }
+
+  function onShowPlotTab()
+  {
+    $( "#sample" ).prop( "checked", true );
+    onChangeFileSource();
+  }
+
   function onChangeFileSource()
   {
-    $( "#uploadBlock" ).css( "display", $( "#upload" ).prop( "checked" ) ? "block" : "none" );
+    clearMessages();
+
+    // Initialize dropdown selections
+    $( "#preloadPicker" ).val( $( "#preloadPicker option:first" ).val() );
+    $( "#samplePicker" ).val( $( "#samplePicker option:first" ).val() );
+
+    // Initialize file upload choosers
+    $( "#metasysFile" ).val( "" );
+    $( "#resultsFile" ).val( "" );
+    $( "#uploadFilename" ).val( "" );
+    $( "#resultsFilename" ).val( "" );
+
+    // Show appropriate file chooser block
     $( "#preloadBlock" ).css( "display", $( "#preload" ).prop( "checked" ) ? "block" : "none" );
+    $( "#uploadBlock" ).css( "display", $( "#upload" ).prop( "checked" ) ? "block" : "none" );
     $( "#sampleBlock" ).css( "display", $( "#sample" ).prop( "checked" ) ? "block" : "none" );
     $( "#resultsBlock" ).css( "display", $( "#results" ).prop( "checked" ) ? "block" : "none" );
   }
@@ -119,6 +143,7 @@
       // Disable submit button
       $( "#submitFileButton" ).prop( "disabled", true );
       $( "#inputFileFields" ).prop( "disabled", true );
+      $( "#inputFileTabs a" ).prop( "disabled", true );
 
       // Set wait cursor
       $( "body" ).css( "cursor", "progress" );
@@ -164,6 +189,7 @@
     $( "body" ).css( "cursor", "default" );
     $( "#submitFileButton" ).prop( "disabled", false );
     $( "#inputFileFields" ).prop( "disabled", false );
+    $( "#inputFileTabs a" ).prop( "disabled", false );
 
     if ( rsp.messages.length )
     {
@@ -189,6 +215,7 @@
     $( "body" ).css( "cursor", "default" );
     $( "#submitFileButton" ).prop( "disabled", false );
     $( "#inputFileFields" ).prop( "disabled", false );
+    $( "#inputFileTabs a" ).prop( "disabled", false );
 
     showMessages( ["AJAX error: Status=<" + sStatus +"> Error=<" + sErrorThrown + ">"] );
 
@@ -1009,16 +1036,22 @@
 
   <div id="fileBlock" >
 
-    <!-- File chooser -->
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <fieldset id="inputFileFields">
+    <!-- Input file tabs -->
+    <ul id="inputFileTabs" class="nav nav-tabs">
+      <li><a data-toggle="tab" href="#analyzeTab">Analyze</a></li>
+      <li id="plotTabItem" ><a id="plotTabLink" data-toggle="tab" href="#plotTab">Plot</a></li>
+    </ul>
 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <fieldset id="inputFileFields">
+      <div class="tab-content">
+
+        <!-- Analyze -->
+        <div id="analyzeTab" class="tab-pane fade">
+          <div class="row" >
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="form-group">
                     <h4>Analyze <?=METASYS_FILE?></h4>
                     <div class="radio">
                       <label>
@@ -1033,7 +1066,34 @@
                       </label>
                     </div>
                   </div>
-                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <div class="form-group" id="preloadBlock" >
+                    <select id="preloadPicker" class="form-control" >
+                    </select>
+                  </div>
+                  <div class="form-group" id="uploadBlock" >
+                    <div class="input-group">
+                      <label class="input-group-btn">
+                        <span class="btn btn-default">
+                          Browse…
+                          <input type="file" name="metasysFile" id="metasysFile" style="display:none" onchange="showFilename( 'uploadFilename', 'metasysFile' )" >
+                        </span>
+                      </label>
+                      <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plot -->
+        <div id="plotTab" class="tab-pane fade">
+          <div class="row" >
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="form-group">
                     <h4>Plot <?=METASYS_DATA_ANALYSIS_RESULTS?></h4>
                     <div class="radio">
                       <label>
@@ -1048,48 +1108,29 @@
                       </label>
                     </div>
                   </div>
+                  <div class="form-group" id="sampleBlock" >
+                    <select id="samplePicker" class="form-control" >
+                    </select>
+                  </div>
+                  <div class="form-group" id="resultsBlock" >
+                    <div class="input-group">
+                      <label class="input-group-btn">
+                        <span class="btn btn-default">
+                          Browse…
+                          <input type="file" name="resultsFile" id="resultsFile" style="display:none" onchange="showFilename( 'resultsFilename', 'resultsFile' )" >
+                        </span>
+                      </label>
+                      <input id="resultsFilename" type="text" class="form-control" onclick="$('#resultsFile').click();" readonly >
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div class="form-group" id="preloadBlock" >
-                <select id="preloadPicker" class="form-control" >
-                </select>
-              </div>
-
-              <div class="form-group" id="uploadBlock" >
-                <div class="input-group">
-                  <label class="input-group-btn">
-                    <span class="btn btn-default">
-                      Browse…
-                      <input type="file" name="metasysFile" id="metasysFile" style="display:none" onchange="showFilename( 'uploadFilename', 'metasysFile' )" >
-                    </span>
-                  </label>
-                  <input id="uploadFilename" type="text" class="form-control" onclick="$('#metasysFile').click();" readonly >
-                </div>
-              </div>
-
-              <div class="form-group" id="sampleBlock" >
-                <select id="samplePicker" class="form-control" >
-                </select>
-              </div>
-
-              <div class="form-group" id="resultsBlock" >
-                <div class="input-group">
-                  <label class="input-group-btn">
-                    <span class="btn btn-default">
-                      Browse…
-                      <input type="file" name="resultsFile" id="resultsFile" style="display:none" onchange="showFilename( 'resultsFilename', 'resultsFile' )" >
-                    </span>
-                  </label>
-                  <input id="resultsFilename" type="text" class="form-control" onclick="$('#resultsFile').click();" readonly >
-                </div>
-              </div>
-
-            </fieldset>
+            </div>
           </div>
         </div>
+
       </div>
-    </div>
+    </fieldset>
 
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
