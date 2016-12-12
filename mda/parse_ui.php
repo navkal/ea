@@ -50,7 +50,7 @@
 
 .notSuitable
 {
-  color: lightgray;
+  color: #A8A8A8;
 }
 
 .marked
