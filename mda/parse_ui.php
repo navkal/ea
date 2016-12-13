@@ -298,7 +298,11 @@
     onChangePeriod();
 
     $( "#includeNotSuitable" ).prop( "checked", false );
-    updateColumnPicker();
+
+    // Update column picker
+    clearSearch();
+    showSuitable();
+    checkDefault( { target: "fake" } );
   }
 
   // Handle change of Period radio buttons
@@ -328,13 +332,6 @@
   {
     var sFilename = $( '#' + sFileId ).val().split('\\').pop().split('/').pop();
     $( '#' + sFilenameId ).val( sFilename );
-  }
-
-  function updateColumnPicker()
-  {
-    clearSearch();
-    showSuitable();
-    checkDefault( { target: "fake" } );
   }
 
   function checkDefault( event )
@@ -999,8 +996,6 @@
 
   function onShowColumnsTab()
   {
-    showSuitable();
-
     // Attach corresponding Help dialog
     $( "#multiHelp" ).attr( "data-target", "#helpColumns" );
   }
@@ -1010,19 +1005,48 @@
     var detailed = $( "#detailed" ).prop( "checked" );
 
     // Highlight suitable Points of Interest
-    $( "#columnsTab *[summarizable=" + detailed + "] span[columnName]" ).addClass( "notSuitable" ).removeClass( "suitable" );
+    var notSuitableClass = $( "#includeNotSuitable" ).prop( "checked" ) ? "notNotSuitable" : "notSuitable";
+    $( "#columnsTab *[summarizable=" + detailed + "] span[columnName]" ).addClass( notSuitableClass ).removeClass( "suitable" );
     $( "#columnsTab *[summarizable=" + detailed + "] span[columnAsterisk]" ).css( "display", "inline" );
-    $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnName]" ).addClass( "suitable" ).removeClass( "notSuitable" );
+    $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnName]" ).addClass( "suitable" ).removeClass( notSuitableClass );
     $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnAsterisk]" ).css( "display", "none" );
 
     // Show suitability footnote
-    var showFootnote = $( "#columnsTab .notSuitable" ).length > 0;
+    var showFootnote = $( "#columnsTab .notSuitable,.notNotSuitable" ).length > 0;
     $( "#notSuitableFootnote" ).css( "display", showFootnote ? "block" : "none" );
   }
 
+  // Handle change of include-not-suitable checkbox
   function includeNotSuitableChanged()
   {
-    console.log( "=========> includeNotSuitableChanged()" );
+    if ( $( "#includeNotSuitable" ).prop( "checked" ) )
+    {
+      // Checked
+
+      // Show names in normal color
+      $( "#columnsTab *[summarizable] span[columnName].notSuitable" ).addClass( "notNotSuitable" ).removeClass( "notSuitable" );
+    }
+    else
+    {
+      // Unchecked
+
+      // Clear selection of any non-suitable items
+      var aUncheck = $( "#columnsTab *[summarizable] span[columnName].notNotSuitable" ).parent().find( "input[type=checkbox]:checked" ).closest( "li" );
+      for ( var iUncheck = 0; iUncheck < aUncheck.length; iUncheck ++ )
+      {
+        // Get next list item to clear
+        var liUncheck = $( aUncheck[iUncheck] );
+
+        // Uncheck the checkbox
+        liUncheck.find( "input[type=checkbox]:checked" ).prop( "checked", false );
+
+        // Remove item from Column Editor
+        removeEditorColumn( liUncheck.index() );
+      }
+
+      // Gray the names
+      $( "#columnsTab *[summarizable] span[columnName].notNotSuitable" ).addClass( "notSuitable" ).removeClass( "notNotSuitable" );
+    }
   }
 </script>
 
