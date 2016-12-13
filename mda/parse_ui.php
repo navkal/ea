@@ -471,7 +471,7 @@
       if ( substring.length > 0 )
       {
         // Mark all checkbox labels containing the substring
-        var spans = $( "#columnPicker label span[columnName].suitable,.notNotSuitable" );
+        var spans = $( "#columnPicker label span[columnName].suitable, #columnPicker label span[columnName].notNotSuitable" );
         for ( var index = 0; index < spans.length; index ++ )
         {
           var span = $( spans[index] );
@@ -540,7 +540,7 @@
   {
     $( "#checkSearch" ).val( "" );
 
-    var spans = $( "#columnPicker label span[columnName].suitable,.notNotSuitable" );
+    var spans = $( "#columnPicker label span[columnName]" );
 
     for ( var index = 0; index < spans.length; index ++ )
     {
@@ -1046,6 +1046,15 @@
 
       // Gray the names
       $( "#columnsTab *[summarizable] span[columnName].notNotSuitable" ).addClass( "notSuitable" ).removeClass( "notNotSuitable" );
+    }
+
+    // Update search highlighting
+    var sSearch = $( "#checkSearch" ).val();
+    if ( sSearch )
+    {
+      clearSearch();
+      $( "#checkSearch" ).val( sSearch );
+      checkSearch();
     }
   }
 </script>
