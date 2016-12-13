@@ -297,6 +297,7 @@
 
     onChangePeriod();
 
+    $( "#includeNotSuitable" ).prop( "checked", false );
     updateColumnPicker();
   }
 
@@ -402,7 +403,7 @@
       {
         var label = $( labels[lbl] );
         var span = label.find( "span[columnName]" );
-        if ( span.hasClass( "suitable" ) && span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+        if ( span.is( ".suitable,.notNotSuitable" ) && span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
         {
           label.find( "input" ).prop( "checked", true );
           addEditorColumn( lbl );
@@ -416,7 +417,7 @@
     uncheckAll( event );
 
     // Prefer first suitable point of interest, if any; otherwise use first listed
-    var suitable = $( "#columnsTab span[columnName].suitable" );
+    var suitable = $( "#columnsTab span[columnName].suitable,.notNotSuitable" );
     var iFirst = suitable.length ? $( suitable[0] ).parent().parent().index() : 0;
 
     var labels = $( "#columnPicker label" );
@@ -428,7 +429,7 @@
   {
     uncheckAll( event );
 
-    var all = $( "#columnPicker .suitable" ).parent().find( "input[type=checkbox]" );
+    var all = $( "#columnPicker .suitable,.notNotSuitable" ).parent().find( "input[type=checkbox]" );
     all.prop( "checked", true );
 
     for ( var allIndex = 0; allIndex < all.length; allIndex ++ )
@@ -452,7 +453,7 @@
   function checkComplement( event )
   {
     // Reverse checkbox settings
-    var unchecked =  $( "#columnPicker .suitable" ).parent().find( "input[type=checkbox]:not(:checked)" );
+    var unchecked =  $( "#columnPicker .suitable,.notNotSuitable" ).parent().find( "input[type=checkbox]:not(:checked)" );
     uncheckAll( event );
     unchecked.prop( "checked", true );
 
@@ -467,13 +468,13 @@
 
   function checkSearch( event )
   {
-    if ( event.keyCode != "9" /* tab */ )
+    if ( ! event || ( event.keyCode != "9" /* tab */ ) )
     {
       var substring = $( "#checkSearch" ).val();
       if ( substring.length > 0 )
       {
         // Mark all checkbox labels containing the substring
-        var spans = $( "#columnPicker label span[columnName].suitable" );
+        var spans = $( "#columnPicker label span[columnName].suitable,.notNotSuitable" );
         for ( var index = 0; index < spans.length; index ++ )
         {
           var span = $( spans[index] );
@@ -542,7 +543,7 @@
   {
     $( "#checkSearch" ).val( "" );
 
-    var spans = $( "#columnPicker label span[columnName].suitable" );
+    var spans = $( "#columnPicker label span[columnName].suitable,.notNotSuitable" );
 
     for ( var index = 0; index < spans.length; index ++ )
     {
@@ -1016,7 +1017,12 @@
 
     // Show suitability footnote
     var showFootnote = $( "#columnsTab .notSuitable" ).length > 0;
-    $( "#summarizableFootnote" ).css( "display", showFootnote ? "block" : "none" );
+    $( "#notSuitableFootnote" ).css( "display", showFootnote ? "block" : "none" );
+  }
+
+  function includeNotSuitableChanged()
+  {
+    console.log( "=========> includeNotSuitableChanged()" );
   }
 </script>
 
@@ -1267,10 +1273,15 @@
                 <!-- Checkboxes -->
                 <ul id="columnPicker" class="list-unstyled checkboxList" >
                 </ul>
-                <small id="summarizableFootnote" class="text-center" style="padding-top:10px" >
+                <small id="notSuitableFootnote" class="text-center" style="padding-top:10px" >
                   * <?=POINT_OF_INTEREST?> not suitable for selected <?=REPORT_FORMAT?>
+                  <div class="checkbox" >
+                    <label>
+                      <input type="checkbox" id="includeNotSuitable" onchange="includeNotSuitableChanged()" />
+                      Include unsuitable <?=POINTS_OF_INTEREST?>
+                    </label>
+                  </div>
                 </small>
-
               </div>
             </div>
             <div class="row">
