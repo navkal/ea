@@ -400,7 +400,7 @@
       {
         var label = $( labels[lbl] );
         var span = label.find( "span[columnName]" );
-        if ( span.is( ".suitable,.notNotSuitable" ) && span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
+        if ( span.is( ".suitable, .notNotSuitable" ) && span.text().toLowerCase().indexOf( substring.toLowerCase() )  != -1 )
         {
           label.find( "input" ).prop( "checked", true );
           addEditorColumn( lbl );
@@ -414,7 +414,7 @@
     uncheckAll( event );
 
     // Prefer first suitable point of interest, if any; otherwise use first listed
-    var suitable = $( "#columnsTab span[columnName].suitable,.notNotSuitable" );
+    var suitable = $( "#columnsTab span[columnName].suitable, #columnsTab span[columnName].notNotSuitable" );
     var iFirst = suitable.length ? $( suitable[0] ).parent().parent().index() : 0;
 
     var labels = $( "#columnPicker label" );
@@ -426,7 +426,7 @@
   {
     uncheckAll( event );
 
-    var all = $( "#columnPicker .suitable,.notNotSuitable" ).parent().find( "input[type=checkbox]" );
+    var all = $( "#columnPicker .suitable, #columnPicker .notNotSuitable" ).parent().find( "input[type=checkbox]" );
     all.prop( "checked", true );
 
     for ( var allIndex = 0; allIndex < all.length; allIndex ++ )
@@ -450,7 +450,7 @@
   function checkComplement( event )
   {
     // Reverse checkbox settings
-    var unchecked =  $( "#columnPicker .suitable,.notNotSuitable" ).parent().find( "input[type=checkbox]:not(:checked)" );
+    var unchecked =  $( "#columnPicker .suitable, #columnPicker .notNotSuitable" ).parent().find( "input[type=checkbox]:not(:checked)" );
     uncheckAll( event );
     unchecked.prop( "checked", true );
 
@@ -1012,7 +1012,7 @@
     $( "#columnsTab *[summarizable=" + ! detailed + "] span[columnAsterisk]" ).css( "display", "none" );
 
     // Show suitability footnote
-    var showFootnote = $( "#columnsTab .notSuitable,.notNotSuitable" ).length > 0;
+    var showFootnote = $( "#columnsTab .notSuitable, #columnsTab .notNotSuitable" ).length > 0;
     $( "#notSuitableFootnote" ).css( "display", showFootnote ? "block" : "none" );
   }
 
