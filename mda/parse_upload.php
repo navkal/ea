@@ -112,6 +112,14 @@
           }
         }
       }
+
+      if ( empty( $messages ) )
+      {
+        if ( count( $columns ) == 0 )
+        {
+          array_push( $messages, "No " . POINTS_OF_INTEREST . " found" );
+        }
+      }
     }
   }
 
