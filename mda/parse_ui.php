@@ -1021,30 +1021,12 @@
   {
     if ( $( "#includeNotSuitable" ).prop( "checked" ) )
     {
-      // Checked
-
-      // Show names in normal color
+      // Checked: Show names in normal color
       $( "#columnsTab *[summarizable] span[columnName].notSuitable" ).addClass( "notNotSuitable" ).removeClass( "notSuitable" );
     }
     else
     {
-      // Unchecked
-
-      // Clear selection of any non-suitable items
-      var aUncheck = $( "#columnsTab *[summarizable] span[columnName].notNotSuitable" ).parent().find( "input[type=checkbox]:checked" ).closest( "li" );
-      for ( var iUncheck = 0; iUncheck < aUncheck.length; iUncheck ++ )
-      {
-        // Get next list item to clear
-        var liUncheck = $( aUncheck[iUncheck] );
-
-        // Uncheck the checkbox
-        liUncheck.find( "input[type=checkbox]:checked" ).prop( "checked", false );
-
-        // Remove item from Column Editor
-        removeEditorColumn( liUncheck.index() );
-      }
-
-      // Gray the names
+      // Unchecked: Show names in gray color
       $( "#columnsTab *[summarizable] span[columnName].notNotSuitable" ).addClass( "notSuitable" ).removeClass( "notNotSuitable" );
     }
 
