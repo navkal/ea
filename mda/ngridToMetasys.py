@@ -60,7 +60,7 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
             dt += timedelta( hours=int( timesplit[0] ), minutes=int( timesplit[1] ) )
 
             # Format the timestamp for the Metasys row
-            timestamp = dt.strftime( '%m/%d/%Y %H:%M' )
+            timestamp = dt.strftime( '%m/%d/%Y %H:%M:%S' )
 
             # Write the Metasys row
             csvwriter.writerow( [ timestamp, '', colname, cell ] )

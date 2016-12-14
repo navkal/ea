@@ -3,6 +3,7 @@ import numpy as np
 import re
 import argparse
 import csv
+import datetime
 
 pd.set_option('display.max_row',10)
 pd.set_option('display.max_colwidth',225)
@@ -11,7 +12,7 @@ def find_meters(args):
     trendmeters = []
     df = pd.read_csv(args.input_file,
                      #nrows=400000,
-                     converters={'Object Value': drop_units})
+                     converters={'Object Value': drop_units,'Date / Time': sortable_time})
     df.sort_values(by=['Object Name', 'Date / Time'], inplace=True)
     for trend in (df['Object Name'].unique()):
         z = (df[df['Object Name'] == trend]['Object Value'])
@@ -31,6 +32,9 @@ def drop_units(value):
     else:
         return float(match.group(1))
 
+def sortable_time(value):
+    sortable = datetime.datetime.strptime( value, '%m/%d/%Y %H:%M:%S' )
+    return sortable
 
 def check_summarizable(series,args):
     boolseriesrising = ((series[1:] - series[:-1]) > 0)
