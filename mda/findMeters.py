@@ -13,6 +13,10 @@ def find_meters(args):
     df = pd.read_csv(args.input_file,
                      #nrows=400000,
                      converters={'Object Value': drop_units,'Date / Time': sortable_time})
+
+    # Remove non-numeric data values
+    df.dropna( subset=['Object Value'], inplace=True )
+
     df.sort_values(by=['Object Name', 'Date / Time'], inplace=True)
     for trend in (df['Object Name'].unique()):
         z = (df[df['Object Name'] == trend]['Object Value'])
@@ -37,6 +41,9 @@ def sortable_time(value):
     return sortable
 
 def check_summarizable(series,args):
+    if len( series ) < 2:
+        return False
+
     boolseriesrising = ((series[1:] - series[:-1]) > 0)
     boolseriesconstant = ((series[1:] - series[:-1]) == 0)
     boolseriesfalling = ((series[1:] - series[:-1]) < 0)
