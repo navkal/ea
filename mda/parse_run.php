@@ -95,9 +95,6 @@
     // Archive input file
     archiveInput();
 
-    // Format name of workbook file
-    $workbookFilename = $split[0] . ".xlsx";
-
     // Generate workbook from results files
     $csvFilenames = implode( ",", $resultsFilenames );
     $workbookFilename = $split[0] . ".xlsx";
