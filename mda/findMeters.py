@@ -10,9 +10,14 @@ pd.set_option('display.max_colwidth',225)
 
 def find_meters(args):
     trendmeters = []
+
+    dateparse = lambda x: pd.datetime.strptime(x, '%m/%d/%Y %H:%M:%S')
+
     df = pd.read_csv(args.input_file,
                      #nrows=400000,
-                     converters={'Object Value': drop_units,'Date / Time': sortable_time})
+                     parse_dates=['Date / Time'],
+                     date_parser=dateparse,
+                     converters={'Object Value': drop_units})
 
     # Remove non-numeric data values
     df.dropna( subset=['Object Value'], inplace=True )
@@ -36,9 +41,6 @@ def drop_units(value):
     else:
         return float(match.group(1))
 
-def sortable_time(value):
-    sortable = datetime.datetime.strptime( value, '%m/%d/%Y %H:%M:%S' )
-    return sortable
 
 def check_summarizable(series,args):
     if len( series ) < 2:
