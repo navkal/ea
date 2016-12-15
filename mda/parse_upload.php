@@ -224,6 +224,7 @@
     $command = quote( getenv( "PYTHON" ) ) . " ngridToMetasys.py -i " . quote( $ngridFilename ) . " -o " . quote( $convertFilename );
     error_log( "===> command=" . $command );
     exec( $command, $output, $status );
+    error_log( "===> output=" . print_r( $output, true ) );
   }
 
   function compareNgridLines( $line1, $line2 )
@@ -241,6 +242,7 @@
     $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) . " -c 0.9 -r 0.95";
     error_log( "===> command=" . $command );
     exec( $command, $output, $status );
+    error_log( "===> output=" . print_r( $output, true ) );
 
     // If Python script generated an output file, append parameter information to it
     if ( ( $metersFile = @fopen( $metersFilename, "r" ) ) !== false )

@@ -20,6 +20,9 @@ def parse(input_file):
                      index_col=[0, 2],
                      converters={'Object Value': drop_units})['Object Value']
 
+    # Remove non-numeric data values
+    df = df.dropna()
+
     # Drop duplicate measurements
     df = df.groupby(df.index).last()
     df.index = pd.MultiIndex.from_tuples(df.index)

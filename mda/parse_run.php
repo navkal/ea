@@ -250,6 +250,7 @@
 
     // Execute Python script
     exec( $command, $output, $status );
+    error_log( "===> output=" . print_r( $output, true ) );
 
     // If Python script generated an output file, append parameter information to it
     $message = "";
