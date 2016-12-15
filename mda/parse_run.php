@@ -95,16 +95,29 @@
     // Archive input file
     archiveInput();
 
+    // Format name of workbook file
+    $workbookFilename = $split[0] . ".xlsx";
+
+    // Generate workbook from results files
+    $csvFilenames = implode( ",", $resultsFilenames );
+    $workbookFilename = $split[0] . ".xlsx";
+    $command = quote( getenv( "PYTHON" ) ) . " csvToWorkbook.py -c " . quote( $csvFilenames ) . " -w " . quote( $workbookFilename );
+    error_log( "===> command=" . $command );
+    exec( $command, $output, $status );
+    error_log( "===> output=" . print_r( $output, true ) );
+
+
     // Format name of zip file to be downloaded
     $zipFilename = $split[0] . ".zip";
 
-    // Put the results files into a zip archive
+    // Put the results and workbook files into a zip archive
     $zipArchive = new ZipArchive();
     $zipArchive->open( $zipFilename, ZipArchive::CREATE );
     foreach( $resultsFilenames as $filename )
     {
       $zipArchive->addFromString( basename( $filename ), file_get_contents( $filename ) );
     }
+    $zipArchive->addFromString( basename( $workbookFilename ), file_get_contents( $workbookFilename ) );
     $zipArchive->close();
 
     // Save information for Analysis completion report
