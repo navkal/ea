@@ -75,11 +75,12 @@
     // Set handlers to initialize file chooser views
     $( "#inputFileTabs a[href='#analyzeTab']" ).on( "shown.bs.tab", onShowAnalyzeTab );
     $( "#inputFileTabs a[href='#plotTab']" ).on( "shown.bs.tab", onShowPlotTab );
-    onShowAnalyzeTab();
 
     // Initialize dropdowns for preloaded input and sample results files
     makeFilePicker( "preloadPicker", <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/input" ), 2 ) )?> );
     makeFilePicker( "samplePicker", <?=json_encode( array_slice( scandir( $_SERVER["DOCUMENT_ROOT"]."/mda/sample" ), 2 ) )?> );
+
+    onShowAnalyzeTab();
 
     // Hide Analysis Options form
     $( "#optionsForm" ).css( "display", "none" );
@@ -102,8 +103,9 @@
     clearMessages();
 
     // Initialize dropdown selections
-    $( "#preloadPicker" ).val( $( "#preloadPicker option:first" ).val() );
-    $( "#samplePicker" ).val( $( "#samplePicker option:first" ).val() );
+    var filePickers = JSON.parse( ( typeof Storage === "undefined" ) ? "{}" : ( localStorage.getItem( "filePickers" ) || "{}" ) );
+    $( "#preloadPicker" ).val( filePickers["preloadPicker"] || $( "#preloadPicker option:first" ).val() );
+    $( "#samplePicker" ).val( filePickers["samplePicker"] || $( "#samplePicker option:first" ).val() );
 
     // Initialize file upload choosers
     $( "#metasysFile" ).val( "" );
@@ -133,6 +135,19 @@
         '</option>';
 
       picker.append( option );
+    }
+
+    $( "#" + pickerId ).on( "change", onChangeFilePicker );
+  }
+
+  function onChangeFilePicker( event )
+  {
+    if ( typeof Storage !== "undefined" )
+    {
+      var filePickers = JSON.parse( localStorage.getItem( "filePickers" ) || "{}" );
+      var picker = $( event.target );
+      filePickers[picker.attr( "id" )] = picker.val();
+      localStorage.setItem( "filePickers", JSON.stringify( filePickers ) );
     }
   }
 
@@ -632,7 +647,8 @@
 
     var styleCursorMove = ( navigator.userAgent.indexOf( "Edge" ) == -1 ) ? ' style="cursor:move" ' : "" ;
 
-    var nickname = SYSTEM_NICKNAMES[colName] || ( ( typeof Storage !== "undefined" ) ? localStorage.getItem( colName ) : "" ) || "";
+    var nicknames = JSON.parse( ( typeof Storage === "undefined" ) ? "{}" : ( localStorage.getItem( "nicknames" ) || "{}" ) );
+    var nickname = SYSTEM_NICKNAMES[colName] || nicknames[colName] || "";
     var disabled = SYSTEM_NICKNAMES[colName] ? "disabled" : "";
 
     var column =
@@ -711,7 +727,9 @@
       var target = $( event.target );
       var fullname = target.closest( "a" ).find( "span[columnName]" ).text();
       var nickname = target.val();
-      localStorage.setItem( fullname, nickname );
+      var nicknames = JSON.parse( localStorage.getItem( "nicknames" ) || "{}" );
+      nicknames[fullname] = nickname;
+      localStorage.setItem( "nicknames", JSON.stringify( nicknames ) );
     }
   }
 
