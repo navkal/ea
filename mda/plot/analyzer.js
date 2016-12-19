@@ -1111,6 +1111,8 @@ function plotRead( aPlotOpenData )
             plotSample( aSampleSets[iSet] );
         }
 
+        $( "#totalPoints" ).text( aPlotOpenData.length.toLocaleString() );
+
         // Draw the plot
         plotDraw( { type: "plotRead" } );
 
@@ -1403,8 +1405,8 @@ function downSampleAutoConfig( iSampleTotal )
 // Update plot status display
 function downsampleStatusUpdate( iShowing, iOf )
 {
-  $( "#downSampleShowing" ).text( iShowing );
-  $( "#downSampleOf" ).text( iOf );
+  $( "#downSampleShowing" ).text( iShowing.toLocaleString() );
+  $( "#downSampleOf" ).text( iOf.toLocaleString() );
 
   $( "#downSampleDensity_current" ).text( g_iDownSampleDensity );
   $( "#downSampleShow_current" ).text( g_iDownSampleShow );

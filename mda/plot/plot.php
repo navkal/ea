@@ -271,13 +271,20 @@
 
     <!-- Timestamp bounds -->
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div style="width:82%; margin-left:auto; margin-right:auto;" class="text-right" >
-          <small>
-            <span id="timestampFrom"></span> - <span id="timestampTo"></span>
-          </small>
+      <div style="width:82%;margin-left:auto; margin-right:auto;">
+        <small>
+          <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6">
+            <div class="text-left" >
+              <span id="timestampFrom"></span> - <span id="timestampTo"></span>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+            <div class="text-right" >
+              Total points: <span id="totalPoints"></span>
+            </div>
+          </div>
         </div>
-      </div>
+      </small>
     </div>
 
     <!-- Plot -->
