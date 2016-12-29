@@ -7,12 +7,13 @@ import pandas as pd
 def nationalGridToMetasys( ngridfile, metasysfile ):
 
   # Read National Grid file into a DataFrame object
-  df = pd.read_csv( ngridfile, index_col=[1] )
+  df = pd.read_csv( ngridfile )
 
-  # Remove empty rows
-  df.dropna( how='all', inplace=True )
+  # Remove rows missing crucial identifying fields
+  df.dropna( how='any', subset=['Account','Date','Units'], inplace=True )
 
   # Index and sort on date
+  df.set_index( 'Date', inplace=True )
   df.index = pd.to_datetime( df.index, infer_datetime_format=True )
   df.sort_index( inplace=True )
 
@@ -30,51 +31,48 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
     # Iterate through rows of National Grid data
     for ngridline in df.itertuples():
 
-      # If this row has identifying fields, process it
-      if ( not pd.isnull( ngridline[0] ) ) and ( not pd.isnull( ngridline[1] ) ) and ( not pd.isnull( ngridline[3] ) ):
+      # Initialize names of series to which this row belongs
+      units = ngridline[3]
+      colname = ngridline[1] + '.' + units
+      sumname = colname + ".sum"
 
-        # Initialize names of series to which this row belongs
-        units = ngridline[3]
-        colname = ngridline[1] + '.' + units
-        sumname = colname + ".sum"
+      # Loop through cells of current row
+      for index in range( 3, len( ngridline ) - 1 ):
 
-        # Loop through cells of current row
-        for index in range( 3, len( ngridline ) - 1 ):
+        # Get current cell
+        cell = ngridline[index+1]
 
-          # Get current cell
-          cell = ngridline[index+1]
+        # If cell is not empty, generate a Metasys row for it
+        if not pd.isnull( cell ):
 
-          # If cell is not empty, generate a Metasys row for it
-          if not pd.isnull( cell ):
+          # Construct a datetime object from the row index
+          datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
+          dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
 
-            # Construct a datetime object from the row index
-            datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
-            dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
+          # Increment the datetime object by the timestamp shown in the column heading
+          timesplit = headings[index].split( ':' )
+          if ( timesplit[0] == '24' ):
+            dt += timedelta( days=1 )
+            timesplit[0] = '00'
 
-            # Increment the datetime object by the timestamp shown in the column heading
-            timesplit = headings[index].split( ':' )
-            if ( timesplit[0] == '24' ):
-              dt += timedelta( days=1 )
-              timesplit[0] = '00'
+          dt += timedelta( hours=int( timesplit[0] ), minutes=int( timesplit[1] ) )
 
-            dt += timedelta( hours=int( timesplit[0] ), minutes=int( timesplit[1] ) )
+          # Format the timestamp for the Metasys row
+          timestamp = dt.strftime( '%m/%d/%Y %H:%M:%S' )
 
-            # Format the timestamp for the Metasys row
-            timestamp = dt.strftime( '%m/%d/%Y %H:%M:%S' )
+          # Write the Metasys row
+          csvwriter.writerow( [ timestamp, '', colname, cell ] )
 
-            # Write the Metasys row
-            csvwriter.writerow( [ timestamp, '', colname, cell ] )
+          # If applicable, generate artificial meter reading
+          if ( ( units == 'kWh' ) or ( units == 'kVAh' ) ):
 
-            # If applicable, generate artificial meter reading
-            if ( ( units == 'kWh' ) or ( units == 'kVAh' ) ):
+            # Optionally initialize series for artificial meter
+            if ( sumname not in sum ):
+              sum[sumname] = 0
 
-              # Optionally initialize series for artificial meter
-              if ( sumname not in sum ):
-                sum[sumname] = 0
-
-              # Increment series and write to Metasys file
-              sum[sumname] += cell
-              csvwriter.writerow( [ timestamp, '', sumname, sum[sumname] ] )
+            # Increment series and write to Metasys file
+            sum[sumname] += cell
+            csvwriter.writerow( [ timestamp, '', sumname, sum[sumname] ] )
 
   return
 
