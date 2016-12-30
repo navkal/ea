@@ -29,50 +29,48 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
     sum = {}
 
     # Iterate through rows of National Grid data
-    for ngridline in df.itertuples():
+    for ngriddate, ngridline in df.iterrows():
 
-      # Initialize names of series to which this row belongs
-      datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
-      units = ngridline[3]
-      colname = ngridline[1] + '.' + units
+      # Initialize base date of current National Grid row
+      datesplit = ngriddate.strftime( '%m/%d/%Y' ).split( '/' )
+      basedate = datetime(int(datesplit[2]), int(datesplit[0]), int(datesplit[1]))
+
+      # Initialize values pertaining to current National Grid row
+      units = ngridline['Units']
+      colname = ngridline['Account'] + '.' + units
       sumname = colname + ".sum"
 
-      # Loop through cells of current row
-      for index in range( 3, len( ngridline ) - 1 ):
+      # Get series of cells from current National Grid row
+      cells = ngridline[3:]
+      cells.dropna( inplace=True )
 
-        # Get current cell
-        cell = ngridline[index+1]
+      # Iterate over series of cells
+      for ngridtime, cell in cells.iteritems():
 
-        # If cell is not empty, generate a Metasys row for it
-        if not pd.isnull( cell ):
+        # Increment the datetime object by the timestamp shown in the column heading
+        dt = basedate
+        timesplit = ngridtime.split( ':' )
+        if ( timesplit[0] == '24' ):
+          dt += timedelta( days=1 )
+          timesplit[0] = '0'
+        dt += timedelta( hours=int( timesplit[0] ), minutes=int( timesplit[1] ) )
 
-          # Construct a datetime object from the row index
-          dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
+        # Format the timestamp for the Metasys row
+        timestamp = dt.strftime( '%m/%d/%Y %H:%M:%S' )
 
-          # Increment the datetime object by the timestamp shown in the column heading
-          timesplit = headings[index].split( ':' )
-          if ( timesplit[0] == '24' ):
-            dt += timedelta( days=1 )
-            timesplit[0] = '00'
+        # Write the Metasys row
+        csvwriter.writerow( [ timestamp, '', colname, cell ] )
 
-          dt += timedelta( hours=int( timesplit[0] ), minutes=int( timesplit[1] ) )
+        # If applicable, generate artificial meter reading
+        if ( ( units == 'kWh' ) or ( units == 'kVAh' ) ):
 
-          # Format the timestamp for the Metasys row
-          timestamp = dt.strftime( '%m/%d/%Y %H:%M:%S' )
+          # Optionally initialize series for artificial meter
+          if ( sumname not in sum ):
+            sum[sumname] = 0
 
-          # Write the Metasys row
-          csvwriter.writerow( [ timestamp, '', colname, cell ] )
-
-          # If applicable, generate artificial meter reading
-          if ( ( units == 'kWh' ) or ( units == 'kVAh' ) ):
-
-            # Optionally initialize series for artificial meter
-            if ( sumname not in sum ):
-              sum[sumname] = 0
-
-            # Increment series and write to Metasys file
-            sum[sumname] += cell
-            csvwriter.writerow( [ timestamp, '', sumname, sum[sumname] ] )
+          # Increment series and write to Metasys file
+          sum[sumname] += cell
+          csvwriter.writerow( [ timestamp, '', sumname, sum[sumname] ] )
 
   return
 
