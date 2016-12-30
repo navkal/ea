@@ -38,6 +38,10 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
         colname = ngridline[1] + '.' + units
         sumname = colname + ".sum"
 
+        # Get base datetime for current row
+        datesplit = ngridline[0].strftime('%m/%d/%Y').split('/')
+        basedt = datetime(int(datesplit[2]), int(datesplit[0]), int(datesplit[1]))
+
         # Loop through cells of current row
         for index in range( 3, len( ngridline ) - 1 ):
 
@@ -47,11 +51,8 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
           # If cell is not empty, generate a Metasys row for it
           if not pd.isnull( cell ):
 
-            # Construct a datetime object from the row index
-            datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
-            dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
-
             # Increment the datetime object by the timestamp shown in the column heading
+            dt = basedt
             timesplit = headings[index].split( ':' )
             if ( timesplit[0] == '24' ):
               dt += timedelta( days=1 )
@@ -89,4 +90,7 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   # Do the conversion
+  import time
+  start_time = time.time()
   nationalGridToMetasys( args.input_file,args.output_file )
+  print( time.time() - start_time )
