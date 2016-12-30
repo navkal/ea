@@ -32,6 +32,7 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
     for ngridline in df.itertuples():
 
       # Initialize names of series to which this row belongs
+      datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
       units = ngridline[3]
       colname = ngridline[1] + '.' + units
       sumname = colname + ".sum"
@@ -46,7 +47,6 @@ def nationalGridToMetasys( ngridfile, metasysfile ):
         if not pd.isnull( cell ):
 
           # Construct a datetime object from the row index
-          datesplit = ngridline[0].strftime( '%m/%d/%Y' ).split( '/' )
           dt = datetime( int( datesplit[2] ), int( datesplit[0] ), int( datesplit[1] ) )
 
           # Increment the datetime object by the timestamp shown in the column heading
