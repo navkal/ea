@@ -89,7 +89,4 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   # Do the conversion
-  import time
-  start_time = time.time()
   nationalGridToMetasys( args.input_file,args.output_file )
-  print( time.time() - start_time )
