@@ -23,10 +23,11 @@ def find_meters(args):
     df.dropna( subset=['Object Value'], inplace=True )
 
     df.sort_values(by=['Object Name', 'Date / Time'], inplace=True)
-    for trend in (df['Object Name'].unique()):
-        z = (df[df['Object Name'] == trend]['Object Value'])
-        summary = check_summarizable(np.array(z),args)
+
+    for trend, frame in df.groupby('Object Name'):
+        summary = check_summarizable(frame['Object Value'].values,args)
         trendmeters.append((trend,summary))
+
     return trendmeters
 
 
@@ -77,5 +78,9 @@ if __name__ == '__main__':
     parser.add_argument('-r', dest='rising_threshold', type=float, help='threshold for detection of rising meter')
     args = parser.parse_args()
 
+
+    import time
+    start_time = time.time()
     q = find_meters(args)
+    print( time.time() - start_time )
     write_meters(q,args.output_file)
