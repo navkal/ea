@@ -44,11 +44,11 @@ def subset_to_time_range(df, start_time, end_time):
     return df.iloc[df.index.indexer_between_time(start_time, end_time),:]
 
 
+drop_units_pattern = re.compile( r"\A([+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?).*\Z" )
+
 def drop_units(value):
     """Remove the units from a string, e.g. '309.2 kWh' -> 309.2"""
-    #pattern = re.compile(r"\A(\d*\.?\d+) ?[a-zA-Z]*\Z")
-    pattern = re.compile(r"\A([+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?).*\Z")
-    match = pattern.match(value)
+    match = drop_units_pattern.match(value)
     if match is None:
         # value was not of the expected format
         return np.nan
