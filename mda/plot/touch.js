@@ -8,7 +8,7 @@
 
 (function ($) {
     function init(plot) {
-        var selection = {
+        var touch = {
                 first: { x: -1, y: -1}, second: { x: -1, y: -1},
                 show: false,
                 active: false
@@ -24,7 +24,7 @@
         var mouseUpHandler = null;
 
         function onMouseMove(e) {
-            if (selection.active) {
+            if (touch.active) {
                 updateSelection(e);
 
                 plot.getPlaceholder().trigger("plotselecting", [ getSelection() ]);
@@ -48,9 +48,9 @@
                 document.ondrag = function () { return false; };
             }
 
-            setSelectionPos(selection.first, e);
+            setSelectionPos(touch.first, e);
 
-            selection.active = true;
+            touch.active = true;
 
             // this is a bit silly, but we have to use a closure to be
             // able to whack the same handler again
@@ -69,7 +69,7 @@
                 document.ondrag = savedhandlers.ondrag;
 
             // no more dragging
-            selection.active = false;
+            touch.active = false;
             updateSelection(e);
 
             if (selectionIsSane())
@@ -87,9 +87,9 @@
             if (!selectionIsSane())
                 return null;
 
-            if (!selection.show) return null;
+            if (!touch.show) return null;
 
-            var r = {}, c1 = selection.first, c2 = selection.second;
+            var r = {}, c1 = touch.first, c2 = touch.second;
             $.each(plot.getAxes(), function (name, axis) {
                 if (axis.used) {
                     var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]);
@@ -120,20 +120,20 @@
             pos.x = clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
             pos.y = clamp(0, e.pageY - offset.top - plotOffset.top, plot.height());
 
-            if (o.selection.mode == "y")
-                pos.x = pos == selection.first ? 0 : plot.width();
+            if (o.touch.mode == "y")
+                pos.x = pos == touch.first ? 0 : plot.width();
 
-            if (o.selection.mode == "x")
-                pos.y = pos == selection.first ? 0 : plot.height();
+            if (o.touch.mode == "x")
+                pos.y = pos == touch.first ? 0 : plot.height();
         }
 
         function updateSelection(pos) {
             if (pos.pageX == null)
                 return;
 
-            setSelectionPos(selection.second, pos);
+            setSelectionPos(touch.second, pos);
             if (selectionIsSane()) {
-                selection.show = true;
+                touch.show = true;
                 plot.triggerRedrawOverlay();
             }
             else
@@ -141,8 +141,8 @@
         }
 
         function clearSelection(preventEvent) {
-            if (selection.show) {
-                selection.show = false;
+            if (touch.show) {
+                touch.show = false;
                 plot.triggerRedrawOverlay();
                 if (!preventEvent)
                     plot.getPlaceholder().trigger("plotunselected", [ ]);
@@ -187,38 +187,38 @@
         function setSelection(ranges, preventEvent) {
             var axis, range, o = plot.getOptions();
 
-            if (o.selection.mode == "y") {
-                selection.first.x = 0;
-                selection.second.x = plot.width();
+            if (o.touch.mode == "y") {
+                touch.first.x = 0;
+                touch.second.x = plot.width();
             }
             else {
                 range = extractRange(ranges, "x");
 
-                selection.first.x = range.axis.p2c(range.from);
-                selection.second.x = range.axis.p2c(range.to);
+                touch.first.x = range.axis.p2c(range.from);
+                touch.second.x = range.axis.p2c(range.to);
             }
 
-            if (o.selection.mode == "x") {
-                selection.first.y = 0;
-                selection.second.y = plot.height();
+            if (o.touch.mode == "x") {
+                touch.first.y = 0;
+                touch.second.y = plot.height();
             }
             else {
                 range = extractRange(ranges, "y");
 
-                selection.first.y = range.axis.p2c(range.from);
-                selection.second.y = range.axis.p2c(range.to);
+                touch.first.y = range.axis.p2c(range.from);
+                touch.second.y = range.axis.p2c(range.to);
             }
 
-            selection.show = true;
+            touch.show = true;
             plot.triggerRedrawOverlay();
             if (!preventEvent && selectionIsSane())
                 triggerSelectedEvent();
         }
 
         function selectionIsSane() {
-            var minSize = plot.getOptions().selection.minSize;
-            return Math.abs(selection.second.x - selection.first.x) >= minSize &&
-                Math.abs(selection.second.y - selection.first.y) >= minSize;
+            var minSize = plot.getOptions().touch.minSize;
+            return Math.abs(touch.second.x - touch.first.x) >= minSize &&
+                Math.abs(touch.second.y - touch.first.y) >= minSize;
         }
 
         plot.clearSelection = clearSelection;
@@ -227,7 +227,7 @@
 
         plot.hooks.bindEvents.push(function(plot, eventHolder) {
             var o = plot.getOptions();
-            if (o.selection.mode != null) {
+            if (o.touch.mode != null) {
                 eventHolder.mousemove(onMouseMove);
                 eventHolder.mousedown(onMouseDown);
             }
@@ -236,24 +236,24 @@
 
         plot.hooks.drawOverlay.push(function (plot, ctx) {
             // draw selection
-            if (selection.show && selectionIsSane()) {
+            if (touch.show && selectionIsSane()) {
                 var plotOffset = plot.getPlotOffset();
                 var o = plot.getOptions();
 
                 ctx.save();
                 ctx.translate(plotOffset.left, plotOffset.top);
 
-                var c = $.color.parse(o.selection.color);
+                var c = $.color.parse(o.touch.color);
 
                 ctx.strokeStyle = c.scale('a', 0.8).toString();
                 ctx.lineWidth = 1;
-                ctx.lineJoin = o.selection.shape;
+                ctx.lineJoin = o.touch.shape;
                 ctx.fillStyle = c.scale('a', 0.4).toString();
 
-                var x = Math.min(selection.first.x, selection.second.x) + 0.5,
-                    y = Math.min(selection.first.y, selection.second.y) + 0.5,
-                    w = Math.abs(selection.second.x - selection.first.x) - 1,
-                    h = Math.abs(selection.second.y - selection.first.y) - 1;
+                var x = Math.min(touch.first.x, touch.second.x) + 0.5,
+                    y = Math.min(touch.first.y, touch.second.y) + 0.5,
+                    w = Math.abs(touch.second.x - touch.first.x) - 1,
+                    h = Math.abs(touch.second.y - touch.first.y) - 1;
 
                 ctx.fillRect(x, y, w, h);
                 ctx.strokeRect(x, y, w, h);
@@ -275,14 +275,14 @@
     $.plot.plugins.push({
         init: init,
         options: {
-            selection: {
+            touch: {
                 mode: null, // one of null, "x", "y" or "xy"
                 color: "#e8cfac",
                 shape: "round", // one of "round", "miter", or "bevel"
                 minSize: 5 // minimum number of pixels
             }
         },
-        name: 'selection',
+        name: 'touch',
         version: '1.1'
     });
 })(jQuery);
