@@ -1,7 +1,7 @@
-// Copyright 2016 Energize Apps.  All rights reserved.
+// Copyright 2017 Energize Apps.  All rights reserved.
 
 //
-// Flot plugin representing scrollbar in Spectrum Analyzer view
+// Flot plugin representing scrollbar in Plot view
 //
 
 (function ($)
