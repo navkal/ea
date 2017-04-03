@@ -38,6 +38,7 @@
 
 <script language="javascript" type="text/javascript" src="../../mda/plot/analyzer.js?version=<?=$timestamp?>"></script>
 <script language="javascript" type="text/javascript" src="../../mda/plot/scrollbar.js"></script>
+<script language="javascript" type="text/javascript" src="../../mda/plot/touch.js"></script>
 <link rel="stylesheet" href="../../util/util.css?version=<?=$timestamp?>">
 
 <style>
