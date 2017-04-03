@@ -56,7 +56,7 @@
             // able to whack the same handler again
             mouseUpHandler = function (e) { onMouseUp(e); };
 
-            $(document).one("mouseup", mouseUpHandler);
+            $(document).one("touchend", mouseUpHandler);
         }
 
         function onMouseUp(e) {
@@ -228,8 +228,8 @@
         plot.hooks.bindEvents.push(function(plot, eventHolder) {
             var o = plot.getOptions();
             if (o.touch.mode != null) {
-                eventHolder.mousemove(onMouseMove);
-                eventHolder.mousedown(onMouseDown);
+                eventHolder.touchmove(onMouseMove);
+                eventHolder.touchstart(onMouseDown);
             }
         });
 
@@ -263,11 +263,11 @@
         });
 
         plot.hooks.shutdown.push(function (plot, eventHolder) {
-            eventHolder.unbind("mousemove", onMouseMove);
-            eventHolder.unbind("mousedown", onMouseDown);
+            eventHolder.unbind("touchmove", onMouseMove);
+            eventHolder.unbind("touchstart", onMouseDown);
 
             if (mouseUpHandler)
-                $(document).unbind("mouseup", mouseUpHandler);
+                $(document).unbind("touchend", mouseUpHandler);
         });
 
     }
