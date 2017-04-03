@@ -164,11 +164,6 @@ var g_tOptionsPlot =
         mode: "x",
         color: "#8888FF"
     },
-    touch:
-    {
-        mode: "x",
-        color: "#8888FF"
-    },
     hooks:
     {
         bindEvents: [ plotBindEvents ]

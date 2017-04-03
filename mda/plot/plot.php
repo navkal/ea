@@ -33,12 +33,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.crosshair.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.navigate.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.resize.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.selection.min.js"></script>
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.selection.min.js"></script>-->
+<script language="javascript" type="text/javascript" src="../../mda/plot/sel.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.min.js"></script>
 
 <script language="javascript" type="text/javascript" src="../../mda/plot/analyzer.js?version=<?=$timestamp?>"></script>
 <script language="javascript" type="text/javascript" src="../../mda/plot/scrollbar.js"></script>
-<script language="javascript" type="text/javascript" src="../../mda/plot/touch.js"></script>
 <link rel="stylesheet" href="../../util/util.css?version=<?=$timestamp?>">
 
 <style>
