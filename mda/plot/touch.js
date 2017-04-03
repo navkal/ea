@@ -228,8 +228,8 @@
         plot.hooks.bindEvents.push(function(plot, eventHolder) {
             var o = plot.getOptions();
             if (o.touch.mode != null) {
-                eventHolder.touchmove(onMouseMove);
-                eventHolder.touchstart(onMouseDown);
+                eventHolder.mousemove(onMouseMove);
+                eventHolder.mousedown(onMouseDown);
             }
         });
 
