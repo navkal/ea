@@ -162,7 +162,8 @@ var g_tOptionsPlot =
     selection:
     {
         mode: "x",
-        color: "#8888FF"
+        color: "#8888FF",
+        touch: 'ontouchstart' in window
     },
     hooks:
     {
@@ -194,7 +195,8 @@ var g_tOptionsOverview =
     selection:
     {
         mode: "x",
-        color: "#8888FF"
+        color: "#8888FF",
+        touch: 'ontouchstart' in window
     }
 };
 
