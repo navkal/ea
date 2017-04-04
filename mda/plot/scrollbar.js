@@ -147,6 +147,46 @@
             return false;
         }
 
+
+        // Touch interface handling
+        function buildTouchEvent(e, touchEnd) {
+            var touches = null;
+            if (e.originalEvent && e.originalEvent.touches.length) {
+                // Ignore all fingers but first
+                touches = e.originalEvent.touches;
+                e.pageX = touches[0].pageX;
+                e.pageY = touches[0].pageY;
+                e.which = 1;
+                pageX = e.pageX;
+                pageY = e.pageY;
+            } else {
+                // Touch end
+                e.pageX = pageX;
+                e.pageY = pageY;
+            }
+            return e;
+        }
+
+        function onTouchStart(e) {
+            e = buildTouchEvent(e);
+            return onMouseDown(e);
+        }
+
+        function onTouchEnd(e) {
+            e = buildTouchEvent(e, true);
+            return onMouseUp(e);
+        }
+
+        function onTouchMove(e) {
+            e.preventDefault(); // To prevent panning
+            e = buildTouchEvent(e);
+            return onMouseMove(e);
+        }
+        // End of touch event handlers
+
+
+
+
         // Start the scroll stroke
         function scrollStart( tEvent )
         {
@@ -282,6 +322,10 @@
                 {
                     eventHolder.mousemove( onMouseMove );
                     eventHolder.mousedown( onMouseDown );
+                    // Touch
+                    eventHolder.bind("touchstart", onTouchStart);
+                    eventHolder.bind("touchmove", onTouchMove);
+                    eventHolder.bind("touchend", onTouchEnd);
                 }
             }
         );
@@ -375,6 +419,9 @@
             {
                 tEventHolder.unbind( "mousemove", onMouseMove );
                 tEventHolder.unbind( "mousedown", onMouseDown );
+                tEventHolder.unbind("touchstart", onTouchStart);
+                tEventHolder.unbind("touchmove", onTouchMove);
+                tEventHolder.unbind("touchend", onTouchEnd);
 
                 if ( fnMouseUpHandler )
                 {
