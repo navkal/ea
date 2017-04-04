@@ -36,9 +36,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.selection.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.min.js"></script>
 
+<!-- Flot add-on to support touch events -->
+<script language="javascript" type="text/javascript" src="../../mda/plot/jquery.flot.touch.js"></script>
+
 <script language="javascript" type="text/javascript" src="../../mda/plot/analyzer.js?version=<?=$timestamp?>"></script>
 <script language="javascript" type="text/javascript" src="../../mda/plot/scrollbar.js"></script>
-<script language="javascript" type="text/javascript" src="../../mda/plot/jquery.flot.touch.js"></script><link rel="stylesheet" href="../../util/util.css?version=<?=$timestamp?>">
+<link rel="stylesheet" href="../../util/util.css?version=<?=$timestamp?>">
 
 <style>
   .controlsMargin
