@@ -1,5 +1,8 @@
-/* Flot plugin for selecting regions of a plot.
-*/
+//
+// Flot plugin for selecting region of plot
+// Adapted from Flot 0.8.3 'selection' plugin
+// Customized to support touch screen events
+//
 
 (function ($) {
     function init(plot) {
@@ -17,11 +20,11 @@
         var savedhandlers = {};
 
         var mouseUpHandler = null;
-        
+
         function onMouseMove(e) {
             if (selection.active) {
                 updateSelection(e);
-                
+
                 plot.getPlaceholder().trigger("plotselecting", [ getSelection() ]);
             }
         }
@@ -29,7 +32,7 @@
         function onMouseDown(e) {
             if (e.which != 1)  // only accept left-click
                 return;
-            
+
             // cancel out any text selections
             document.body.focus();
 
@@ -50,13 +53,13 @@
             // this is a bit silly, but we have to use a closure to be
             // able to whack the same handler again
             mouseUpHandler = function (e) { onMouseUp(e); };
-            
+
             $(document).one("mouseup", mouseUpHandler);
         }
 
         function onMouseUp(e) {
             mouseUpHandler = null;
-            
+
             // revert drag stuff for old-school browsers
             if (document.onselectstart !== undefined)
                 document.onselectstart = savedhandlers.onselectstart;
@@ -117,13 +120,13 @@
         function getSelection() {
             if (!selectionIsSane())
                 return null;
-              
+
             if (!selection.show) return null;
 
             var r = {}, c1 = selection.first, c2 = selection.second;
             $.each(plot.getAxes(), function (name, axis) {
                 if (axis.used) {
-                    var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]); 
+                    var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]);
                     r[name] = { from: Math.min(p1, p2), to: Math.max(p1, p2) };
                 }
             });
@@ -211,10 +214,10 @@
                 from = to;
                 to = tmp;
             }
-            
+
             return { from: from, to: to, axis: axis };
         }
-        
+
         function setSelection(ranges, preventEvent) {
             var axis, range, o = plot.getOptions();
 
@@ -296,7 +299,7 @@
                 ctx.restore();
             }
         });
-        
+
         plot.hooks.shutdown.push(function (plot, eventHolder) {
             eventHolder.unbind("mousemove", onMouseMove);
             eventHolder.unbind("mousedown", onMouseDown);
@@ -304,7 +307,7 @@
             eventHolder.unbind("touchstart", onTouchStart);
             eventHolder.unbind("touchmove", onTouchMove);
             eventHolder.unbind("touchend", onTouchEnd);
-            
+
             if (mouseUpHandler)
                 $(document).unbind("mouseup", mouseUpHandler);
         });
