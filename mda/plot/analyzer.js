@@ -531,15 +531,13 @@ function plotBindDragHandlers()
     $("#plotview").off( 'plotselected' );
     $("#plotview").off( 'plotunselected' );
 
-    // Bind pan handlers
+    // Bind pan handler
     $("#plotview").on( 'plotpan', plotPan );
-    $("#plotview").on( 'dragend', plotClearPanCursor );
   }
   else
   {
-    // Unbind pan handlers
+    // Unbind pan handler
     $("#plotview").off( 'plotpan' );
-    $("#plotview").off( 'dragend' );
 
     // Bind zoom handlers
     $("#plotview").on( 'plotselected', plotZoomIn );
@@ -551,6 +549,7 @@ function plotBindDragHandlers()
 function plotBindEvents( tPlot, tEventHolder )
 {
   // Handle native JS events here
+  tEventHolder.on( 'dragend', plotClearPanCursor );
 }
 
 function initEventHandlers()
