@@ -148,7 +148,7 @@
         }
 
 
-        // Touch interface handling
+        // --> Touch interface handling -->
         function buildTouchEvent(e, touchEnd) {
             var touches = null;
             if (e.originalEvent && e.originalEvent.touches.length) {
@@ -182,7 +182,7 @@
             e = buildTouchEvent(e);
             return onMouseMove(e);
         }
-        // End of touch event handlers
+        // <-- Touch interface handling <--
 
 
 
