@@ -86,9 +86,9 @@ function debugEnable( bEnable )
 /////////////////////////////
 
 
-//////////////////////////////////////////////////////////////////////
-// ---> Global variables used by the Plot display ---> //
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+// ---> Global variables used by Plot display ---> //
+/////////////////////////////////////////////////////
 
 var DOWNSAMPLEMODE_AUTO = "auto";
 var DOWNSAMPLEMODE_MANUAL = "manual";
@@ -120,7 +120,7 @@ var g_aDownSampleStack = [];
 var g_aCropStack = [];
 var g_aSeriesChooserItems = null;
 var g_aNicknameMap = null;
-var g_bPan = true;
+var g_bPan = null;
 
 var g_tEventTimeStamps =
 {
@@ -165,20 +165,6 @@ var g_tOptionsPlot =
         bindEvents: [ plotBindEvents ]
     }
 };
-
-if ( g_bPan )
-{
-  g_tOptionsPlot.pan = {};
-}
-else
-{
-  g_tOptionsPlot.xaxis.panRange = false;
-  g_tOptionsPlot.selection =
-  {
-      mode: "x",
-      color: "#8888FF"
-  }
-}
 
 // Overview plot options
 var g_tOptionsOverview =
@@ -238,9 +224,9 @@ var g_tOptionsScrollbar =
     }
 };
 
-//////////////////////////////////////////////////////////////////////
-// <--- Global variables used by the Spectrum Analyzer display <--- //
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+// <--- Global variables used by Plot display <--- //
+/////////////////////////////////////////////////////
 
 
 // Show initial plot, either empty, or initialized with data from opened plot file
@@ -255,6 +241,9 @@ function plotInit( aPlotOpenData, aNicknameMap )
 
     // Initialize checkbox accelerator controls
     checkboxAcceleratorsInit();
+
+    // Initialize plot drag action
+    plotSetDragOptions();
 
     // Initialize with data from opened plot file
     var bShowPlotOpenData = plotRead( aPlotOpenData );
@@ -333,7 +322,7 @@ function plotSample( aSamples )
 // Draw plot with selected series
 function plotDraw( tEvent )
 {
-   debugAddLine( "==>plotDraw( " + tEvent.type + " )" );
+    debugAddLine( "==>plotDraw( " + tEvent.type + " )" );
 
     // Save previous Hide setting
     var iHidePrev = g_iDownSampleHide;
@@ -503,19 +492,8 @@ function plotBindHandlers()
         // Bind crosshair to plot legend update
         $("#plotview").on( "plothover", plotHover );
 
-        if ( g_bPan )
-        {
-          // Bind pan of main plot pan to pan of overview zoom range
-          $("#plotview").on( 'plotpan', plotPan );
-        }
-        else
-        {
-          // Bind plot selection to zoom in
-          $("#plotview").on( 'plotselected', plotZoomIn );
-
-          // Bind plot deselection to zoom out
-          $("#plotview").on( "plotunselected", plotZoomOut );
-        }
+        // Bind drag action handlers
+        plotBindDragHandlers();
 
         ///////////////////
         // Overview plot //
@@ -542,14 +520,37 @@ function plotBindHandlers()
     }
 }
 
+// Bind drag action handlers
+function plotBindDragHandlers()
+{
+  console.log( "===> plotBindDragHandlers(), pan=" + g_bPan );
+
+  if ( g_bPan )
+  {
+    // Unbind zoom handlers
+    $("#plotview").off( 'plotselected' );
+    $("#plotview").off( 'plotunselected' );
+
+    // Bind pan handlers
+    $("#plotview").on( 'plotpan', plotPan );
+    $("#plotview").on( 'dragend', plotClearPanCursor );
+  }
+  else
+  {
+    // Unbind pan handlers
+    $("#plotview").off( 'plotpan' );
+    $("#plotview").off( 'dragend' );
+
+    // Bind zoom handlers
+    $("#plotview").on( 'plotselected', plotZoomIn );
+    $("#plotview").on( "plotunselected", plotZoomOut );
+  }
+}
+
 // Flot hook function to bind custom handlers to main plot events
 function plotBindEvents( tPlot, tEventHolder )
 {
   // Handle native JS events here
-  if ( g_bPan )
-  {
-    tEventHolder.bind( "dragend", plotClearPanCursor );
-  }
 }
 
 function initEventHandlers()
@@ -683,10 +684,40 @@ function plotScaleIndependent( tEvent )
 // Set plot drag action to pan or select
 function plotChangeDragAction( tEvent )
 {
+  // Set plot options for drag
+  plotSetDragOptions();
+
+  // Bind drag event handlers
+  plotBindDragHandlers();
+
+  zoomRangeSet( null );
+  plotDraw( { type: "plotChangeDragAction" } );
+}
+
+// Set plot drag action to pan or select
+function plotSetDragOptions()
+{
   var sAction = $( "input[name='dragAction']:checked" ).val();
   console.log( sAction );
+  g_bPan = ( sAction == "pan" );
+  console.log( "===> plotSetDragOptions(), g_bPan=" + g_bPan );
 
-//  plotDraw( { type: "plotChangeDragAction" } );
+  // Set plot drag behavior
+  if ( g_bPan )
+  {
+    delete g_tOptionsPlot.selection;
+    g_tOptionsPlot.pan = {};
+  }
+  else
+  {
+    delete g_tOptionsPlot.pan;
+    g_tOptionsPlot.xaxis.panRange = false;
+    g_tOptionsPlot.selection =
+    {
+        mode: "x",
+        color: "#8888FF"
+    }
+  }
 }
 
 function plotZoomIn( tEvent, tRanges )
