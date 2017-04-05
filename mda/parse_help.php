@@ -297,13 +297,13 @@
           <dd>
             <ul>
               <li>
-                Drag mouse across plot to zoom in.
+                Drag or swipe across overview to zoom in.
               </li>
               <li>
-                Use scrollbar to pan zoom range.
+                Slide scrollbar to pan zoom range.
               </li>
               <li>
-                Click plot to zoom out.
+                Click or tap overview to zoom out.
               </li>
               <li>
                 Hover mouse over plot to view interpolated values in legend.
@@ -325,7 +325,7 @@
                 Use buttons to crop and zoom.
               </li>
               <li>
-                Use checkboxes to customize display.
+                Use radio buttons and checkboxes to customize display.
               </li>
               <li>
                 Enter dollars per unit to show cost in tooltips and legend.

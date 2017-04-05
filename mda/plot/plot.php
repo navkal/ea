@@ -328,7 +328,7 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <p class="small text-muted controlsMargin" >
-                      Drag across Overview to zoom in.
+                      Drag or swipe across overview to zoom in.
                     </p>
                   </div>
                 </div>
