@@ -523,8 +523,6 @@ function plotBindHandlers()
 // Bind drag action handlers
 function plotBindDragHandlers()
 {
-  console.log( "===> plotBindDragHandlers(), pan=" + g_bPan );
-
   if ( g_bPan )
   {
     // Unbind zoom handlers
@@ -697,9 +695,7 @@ function plotChangeDragAction( tEvent )
 function plotSetDragOptions()
 {
   var sAction = $( "input[name='dragAction']:checked" ).val();
-  console.log( sAction );
   g_bPan = ( sAction == "pan" );
-  console.log( "===> plotSetDragOptions(), g_bPan=" + g_bPan );
 
   // Set plot drag behavior
   if ( g_bPan )
