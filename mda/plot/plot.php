@@ -328,7 +328,7 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <p class="small text-muted controlsMargin" >
-                      Drag mouse across plot to zoom in.
+                      Drag across Overview to zoom in.
                     </p>
                   </div>
                 </div>
@@ -346,6 +346,21 @@
                     <button type="button" id="plotZoomOut" class="btn btn-default controlsMargin" onclick="plotZoomOut(event);return false;" title="Clear zoom range" >
                       <span class="glyphicon glyphicon-zoom-out"></span> Zoom out
                     </button>
+                  </div>
+                </div>
+                <div class="form-inline controlsMargin">
+                  <div class="form-group">
+                    <label class="control-label" >Drag Action in Plot</label>
+                    <div>
+                      <label class="radio-inline" >
+                        <input type="radio" name="dragAction" value="pan" checked onchange="plotChangeDragAction()" >
+                        Pan
+                      </label>
+                      <label class="radio-inline" >
+                        <input type="radio" name="dragAction" value="zoom" onchange="plotChangeDragAction()" >
+                        Zoom
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>

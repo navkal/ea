@@ -680,6 +680,15 @@ function plotScaleIndependent( tEvent )
   plotDraw( { type: "plotScaleIndependent" } );
 }
 
+// Set plot drag action to pan or select
+function plotChangeDragAction( tEvent )
+{
+  var sAction = $( "input[name='dragAction']:checked" ).val();
+  console.log( sAction );
+
+//  plotDraw( { type: "plotChangeDragAction" } );
+}
+
 function plotZoomIn( tEvent, tRanges )
 {
     debugAddLine( "==>plotZoomIn()", true );
