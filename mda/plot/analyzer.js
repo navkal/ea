@@ -690,7 +690,7 @@ function plotChangeDragAction( tEvent )
   // Bind drag event handlers
   plotBindDragHandlers();
 
-  zoomRangeSet( null );
+  // Redraw the plot
   plotDraw( { type: "plotChangeDragAction" } );
 }
 
