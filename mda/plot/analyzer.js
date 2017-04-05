@@ -87,7 +87,7 @@ function debugEnable( bEnable )
 
 
 //////////////////////////////////////////////////////////////////////
-// ---> Global variables used by the Spectrum Analyzer display ---> //
+// ---> Global variables used by the Plot display ---> //
 //////////////////////////////////////////////////////////////////////
 
 var DOWNSAMPLEMODE_AUTO = "auto";
@@ -120,9 +120,11 @@ var g_aDownSampleStack = [];
 var g_aCropStack = [];
 var g_aSeriesChooserItems = null;
 var g_aNicknameMap = null;
+var g_bPan = true;
 
 var g_tEventTimeStamps =
 {
+    plotPan: 0,
     plotHover: 0,
     plotZoomIn: 0,
     zoomRangeHighlight: 0,
@@ -135,8 +137,7 @@ var g_tOptionsPlot =
     xaxis:
     {
         mode: 'time',
-        timezone: "browser",
-        panRange: false
+        timezone: "browser"
     },
     series:
     {
@@ -159,16 +160,25 @@ var g_tOptionsPlot =
     {
         hoverable: true
     },
-    selection:
-    {
-        mode: "x",
-        color: "#8888FF"
-    },
     hooks:
     {
         bindEvents: [ plotBindEvents ]
     }
 };
+
+if ( g_bPan )
+{
+  g_tOptionsPlot.pan = {};
+}
+else
+{
+  g_tOptionsPlot.xaxis.panRange = false;
+  g_tOptionsPlot.selection =
+  {
+      mode: "x",
+      color: "#8888FF"
+  }
+}
 
 // Overview plot options
 var g_tOptionsOverview =
@@ -404,6 +414,12 @@ function plotDraw( tEvent )
     if ( zoomRangeIsNull() || ( g_aData.length == 0 ) )
     {
         // Draw full plot
+        if ( g_bPan )
+        {
+          g_tOptionsPlot.pan.interactive = false;
+          g_tOptionsPlot.xaxis.panRange = false;
+        }
+
         g_tPlot = $.plot( $("#plotview"), g_aData, g_tOptionsPlot );
 
         // Draw scrollbar plot
@@ -418,7 +434,14 @@ function plotDraw( tEvent )
     }
     else
     {
-        // Draw zoomed plot
+        // Draw zoomed plot with optional panning
+        if ( g_bPan )
+        {
+          g_tOptionsPlot.pan.interactive = true;
+          var aPoints = g_aData[0].data;
+          g_tOptionsPlot.xaxis.panRange = [ aPoints[0][0], aPoints[aPoints.length-1][0] ];
+        }
+
         var aDataZoom = bZoomFull ? aDataFull : g_aData;
         var tZoomRange = bZoomFull ? tZoomRangeFull : g_tZoomRange;
         g_tPlot = $.plot( $("#plotview"), aDataZoom, $.extend( true, {}, g_tOptionsPlot, tZoomRange ) );
@@ -480,11 +503,19 @@ function plotBindHandlers()
         // Bind crosshair to plot legend update
         $("#plotview").on( "plothover", plotHover );
 
-        // Bind plot selection to zoom in
-        $("#plotview").on( 'plotselected', plotZoomIn );
+        if ( g_bPan )
+        {
+          // Bind pan of main plot pan to pan of overview zoom range
+          $("#plotview").on( 'plotpan', plotPan );
+        }
+        else
+        {
+          // Bind plot selection to zoom in
+          $("#plotview").on( 'plotselected', plotZoomIn );
 
-        // Bind plot deselection to zoom out
-        $("#plotview").on( "plotunselected", plotZoomOut );
+          // Bind plot deselection to zoom out
+          $("#plotview").on( "plotunselected", plotZoomOut );
+        }
 
         ///////////////////
         // Overview plot //
@@ -515,6 +546,10 @@ function plotBindHandlers()
 function plotBindEvents( tPlot, tEventHolder )
 {
   // Handle native JS events here
+  if ( g_bPan )
+  {
+    tEventHolder.bind( "dragend", plotClearPanCursor );
+  }
 }
 
 function initEventHandlers()
@@ -677,6 +712,25 @@ function plotZoomOut( tEvent )
     }
 }
 
+// Redraw zoom range to reflect new panned position of main plot
+function plotPan( tEvent, tPlot )
+{
+    // If we have not already processed this event...
+    if ( tEvent.timeStamp != g_tEventTimeStamps.plotPan )
+    {
+        debugAddLine( "pan at time " + tEvent.timeStamp );
+        // Save timestamp for next time
+        g_tEventTimeStamps.plotPan = tEvent.timeStamp;
+
+        // Save new zoom range
+        var tXaxis = tPlot.getAxes().xaxis;
+        zoomRangeSet( tXaxis.min, tXaxis.max );
+
+        // Update zoom range display
+        zoomRangeHighlight( tEvent );
+    }
+}
+
 // Start plot scroll stroke
 function plotScrollStart( tEvent )
 {
@@ -713,6 +767,12 @@ function plotScroll( tEvent, tRanges )
             plotDraw( tEvent );
         }
     }
+}
+
+// Clear pan cursor at end of pan stroke
+function plotClearPanCursor( tEvent )
+{
+    $("#plotview").css( "cursor", "pointer" )
 }
 
 // Update zoom range in overview plot
