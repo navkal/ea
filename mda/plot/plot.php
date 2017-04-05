@@ -1,4 +1,4 @@
-<!-- Copyright 2016 Energize Apps.  All rights reserved. -->
+<!-- Copyright 2017 Energize Apps.  All rights reserved. -->
 
 <?php
   $lines = [];
@@ -28,6 +28,7 @@
   }
 ?>
 
+<!-- Flot library from CDN -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.colorhelpers.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.crosshair.min.js"></script>
@@ -35,13 +36,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.resize.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.min.js"></script>
 
-<!-- Flot selection plugin, customized to support touch screen events -->
+<!-- Flot plugins customized to support touch screen events -->
 <script language="javascript" type="text/javascript" src="../../mda/plot/selection.js?version=<?=$timestamp?>"></script>
+<script language="javascript" type="text/javascript" src="../../mda/plot/navigate.js?version=<?=$timestamp?>"></script>
 
-
+<!-- Plot modules -->
 <script language="javascript" type="text/javascript" src="../../mda/plot/analyzer.js?version=<?=$timestamp?>"></script>
 <script language="javascript" type="text/javascript" src="../../mda/plot/scrollbar.js?version=<?=$timestamp?>"></script>
 
+<!-- Style -->
 <link rel="stylesheet" href="../../util/util.css?version=<?=$timestamp?>">
 
 <style>

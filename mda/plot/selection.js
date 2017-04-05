@@ -300,6 +300,7 @@
         plot.hooks.shutdown.push(function (plot, eventHolder) {
             eventHolder.unbind("mousemove", onMouseMove);
             eventHolder.unbind("mousedown", onMouseDown);
+            // Touch
             eventHolder.unbind("touchstart", onTouchStart);
             eventHolder.unbind("touchmove", onTouchMove);
             eventHolder.unbind("touchend", onTouchEnd);
