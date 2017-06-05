@@ -2,7 +2,7 @@
   // Copyright 2016 Energize Apps.  All rights reserved.
 
   require_once $_SERVER["DOCUMENT_ROOT"]."/../common/util.php";
-  initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
+  initUi();
   require_once "labels.php";
 
   error_log( "====> post=" . print_r( $_POST, true ) );
@@ -317,7 +317,7 @@ function showMessage( $uploadFilename, $message, $timestamp )
   <html>
     <?php
       include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
-      initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
+      initUi();
       require_once "labels.php";
     ?>
 

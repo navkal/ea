@@ -4,7 +4,7 @@
 <html>
   <?php
     include $_SERVER["DOCUMENT_ROOT"]."/../common/head.php";
-    initUi( $_SERVER["DOCUMENT_ROOT"]."/" );
+    initUi();
     $timestamp = $_GET["timestamp"];
     require_once "labels.php";
   ?>
