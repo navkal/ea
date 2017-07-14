@@ -32,7 +32,7 @@
   }
   else
   {
-    $messages = checkFileUpload( $_FILES, "metasysFile", 340000000, $inputFilename );
+    $messages = checkFileUpload( $_FILES, "metasysFile", 600000000, $inputFilename );
     $_SESSION["archiveFilename"] = $inputFilename;
   }
 
