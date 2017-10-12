@@ -222,7 +222,7 @@
     }
     elseif ( $uploadFile["size"] > $size )
     {
-      array_push( $messages, "File too large: " . $uploadFile["size"] . " bytes" );
+      array_push( $messages, "File too large: " . number_format( $uploadFile["size"] ) . " bytes" );
     }
     elseif( ! move_uploaded_file ( $uploadFile["tmp_name"], $moveFilename ) )
     {
