@@ -206,7 +206,7 @@
       $size = min( $postMaxSize, $uploadMaxSize );
     }
 
-    error_log( '============> Limiting file size to ' . $size . ' bytes' );
+    error_log( "===> Limiting '" . $whichFile . "' upload to " . number_format( $size ) . ' bytes' );
 
     $messages = [];
 
