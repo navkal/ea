@@ -15,7 +15,7 @@
 
   if ( isset( $_FILES["resultsFile"] ) )
   {
-    $messages = checkFileUpload( $_FILES, "resultsFile", 50000000, $resultsFilename );
+    $messages = checkFileUpload( $_FILES, "resultsFile", $resultsFilename );
   }
   else if ( isset( $_POST["sampleFilename"] ) )
   {
@@ -32,7 +32,7 @@
   }
   else
   {
-    $messages = checkFileUpload( $_FILES, "metasysFile", 600000000, $inputFilename );
+    $messages = checkFileUpload( $_FILES, "metasysFile", $inputFilename );
     $_SESSION["archiveFilename"] = $inputFilename;
   }
 
@@ -191,8 +191,23 @@
 
   //==================================================================
 
-  function checkFileUpload( $files, $whichFile, $size, $moveFilename )
+  function checkFileUpload( $files, $whichFile, $moveFilename )
   {
+    // Determine upload size limit
+    $envSize = getenv( $whichFile . '_MAX_SIZE' );
+    if ( $envSize !== false )
+    {
+      $size = abbrToBytes( $envSize );
+    }
+    else
+    {
+      $postMaxSize = abbrToBytes( ini_get( 'post_max_size' ) );
+      $uploadMaxSize = abbrToBytes( ini_get( 'upload_max_filesize' ) );
+      $size = min( $postMaxSize, $uploadMaxSize );
+    }
+
+    error_log( '============> Limiting file size to ' . $size . ' bytes' );
+
     $messages = [];
 
     $uploadFile = isset( $files[$whichFile] ) ? $files[$whichFile] : NULL ;
@@ -217,6 +232,24 @@
     return $messages;
   }
 
+  function abbrToBytes( $val )
+  {
+    $val = trim($val);
+
+    $last = strtolower( $val[strlen($val)-1] );
+
+    switch( $last )
+    {
+      case 'g':
+        $val *= 1024;
+      case 'm':
+        $val *= 1024;
+      case 'k':
+        $val *= 1024;
+    }
+
+    return $val;
+  }
 
   function ngridToMetasys( $ngridFilename, $convertFilename )
   {
