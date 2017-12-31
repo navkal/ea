@@ -11,7 +11,7 @@
       $line = fgetcsv( $resultsFile );
 
       // Save lines that have commas and contain non-empty values
-      if ( count( $line ) > 1 )
+      if ( ( $line !== false ) && ( count( $line ) > 1 ) )
       {
         $lineVals = $line;
         array_shift( $lineVals );
