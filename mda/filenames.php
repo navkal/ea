@@ -1,5 +1,5 @@
 <?php
-  // Copyright 2016 Energize Apps.  All rights reserved.
+  // Copyright 2018 Energize Apps.  All rights reserved.
   $dir = sys_get_temp_dir();
   $inputFilename = $dir . "/mdaInput_" . $timestamp . ".csv";
   $metersFilename = $dir . "/mdaMeters_" . $timestamp . ".csv";
