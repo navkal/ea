@@ -124,7 +124,7 @@
   }
 
   // Manage system-wide nickname definitions
-  $knownNames = [];
+  $knownNames = []; // Names that are either mapped to nicknames in nicknames.csv, or already present in nonicknames.csv
   $nicknames = [];
   if ( empty( $messages ) )
   {
@@ -133,19 +133,26 @@
     {
       while( ( $line = fgetcsv( $nicknameFile ) ) !== false )
       {
-        $name = trim( $line[1] );
-        $knownNames[$name] = $name;
-
-        $nickname = trim( $line[2] );
-        if ( $nickname != "" )
+        if ( count( $line ) >= 2 )
         {
-          if ( in_array( $nickname, $nicknames ) )
+          $name = trim( $line[0] );
+          if ( $name != "" )
           {
-            error_log( "==> !!! Ignoring duplicate nickname: name=<" . $name . "> nickname=<" . $nickname . ">" );
-          }
-          else
-          {
-            $nicknames[$name] = $nickname;
+            $nickname = trim( $line[1] );
+            if ( $nickname != "" )
+            {
+              // Name is mapped to nickname; save it as a known name
+              $knownNames[$name] = $name;
+
+              if ( in_array( $nickname, $nicknames ) )
+              {
+                error_log( "==> !!! Ignoring duplicate nickname: name=<" . $name . "> nickname=<" . $nickname . ">" );
+              }
+              else
+              {
+                $nicknames[$name] = $nickname;
+              }
+            }
           }
         }
       }
