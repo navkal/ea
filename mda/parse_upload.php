@@ -238,6 +238,8 @@
 
     $last = strtolower( $val[strlen($val)-1] );
 
+    $val = substr( $val, 0, -1 );
+
     switch( $last )
     {
       case 'g':
