@@ -39,6 +39,11 @@ def parse(input_file):
     return df
 
 
+def subset_to_date_range(df, from_date, to_date):
+    """Return subset in specified date range"""
+    return df.loc[from_date:to_date]
+
+
 def subset_to_time_range(df, start_time, end_time):
     """Return subset consisting of measurements between start_time and end_time"""
     return df.iloc[df.index.indexer_between_time(start_time, end_time),:]
@@ -154,6 +159,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script for parsing Metasys data files')
     parser.add_argument('-s', '--summarize', dest='summarize', action='store_true',
                         help='option indicating whether output file should be a summary')
+    parser.add_argument('--from', dest='from_date', nargs='?',help='start date')
+    parser.add_argument('--to', dest='to_date', nargs='?', help='end date')
     parser.add_argument('--start', dest='start_time', nargs='?',
                         help='start of time range')
     parser.add_argument('--end', dest='end_time', nargs='?', help='end of time range')
@@ -166,6 +173,9 @@ if __name__ == '__main__':
     if args.columns_file:
         columns, new_column_names = _parse_columns_file(args.columns_file)
         transformed = simplify_columns(transformed, columns, new_column_names)
+
+    if args.from_date is not None and args.to_date is not None:
+        transformed = subset_to_date_range(transformed, args.from_date, args.to_date)
 
     start_time = _string_to_time(args.start_time)
     end_time = _string_to_time(args.end_time)
