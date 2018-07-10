@@ -81,6 +81,18 @@
         </dl>
         <dl>
           <dt>
+            <?=DATE_RANGE?>
+          </dt>
+          <dd>
+            <ul>
+              <li>
+                Click dates to open Date Editor.
+              </li>
+            </ul>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
             <?=TIME_PERIOD?>
           </dt>
         </dl>
