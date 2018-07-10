@@ -122,6 +122,7 @@
     // Save information for Analysis completion report
     $params = METASYS_FILE . "," . $_POST["inputName"];
     $params .= "," . REPORT_FORMAT . "," . MULTIPLE;
+    $params .= "," . DATE_RANGE . "," . $_POST["fromDate"] . ' to ' . $_POST["toDate"];
     $_SESSION["completion"] =
       [
         "params" => $params,
