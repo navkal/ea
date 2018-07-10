@@ -257,17 +257,15 @@
     $( "#optionsTabs a[href='#analysisOptionsTab']" ).tab( "show" );
 
     // Create date pickers
-      console.log( '==========> ' + JSON.stringify( dates ) );
-      $( '#fromDate' ).val( dates.fromDate );
-      $( '#toDate' ).val( dates.toDate );
-$('.input-daterange').datepicker({
-                startDate: dates.fromDate,
-                endDate: dates.toDate,
-                autoclose: true,
-                orientation: "top left",
-                todayHighlight: true
-            });
-
+    $( '#fromDate' ).val( dates.fromDate );
+    $( '#toDate' ).val( dates.toDate );
+    $( '#dateRange' ).datepicker(
+      {
+        startDate: dates.fromDate,
+        endDate: dates.toDate,
+        autoclose: true
+      }
+    );
 
     // Create time pickers
     $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
@@ -1254,10 +1252,10 @@ $('.input-daterange').datepicker({
                 <br/>
                 <div class="form-group" >
                   <label class="control-label" for="fromDate" ><?=DATE_RANGE?></label>
-                  <div class="input-group input-daterange">
-                      <input id="fromDate" type="text" class="form-control" >
+                  <div id="dateRange" class="input-group input-daterange">
+                      <input id="fromDate" type="text" class="form-control" readonly >
                       <div class="input-group-addon">to</div>
-                      <input id="toDate" type="text" class="form-control" >
+                      <input id="toDate" type="text" class="form-control" readonly >
                   </div>
                 </div>
 
