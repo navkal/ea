@@ -51,6 +51,8 @@
       // Build the argument list
       $runArgs = [];
       $runArgs["inputName"] = $_POST["inputName"];
+      $runArgs["fromDate"] = $_POST["fromDate"];
+      $runArgs["toDate"] = $_POST["toDate"];
       for ( $index = 0; $index < count( $arglist ); $index += 2 )
       {
         $runArgs[$arglist[$index]] = $arglist[$index+1];
