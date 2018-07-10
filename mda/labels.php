@@ -9,6 +9,7 @@
   define( "SUMMARY", "Summary" );
   define( "DETAILED", "Detailed" );
   define( "MULTIPLE", "Multiple" );
+  define( "DATE_RANGE", "Date Range" );
   define( "START_TIME", "Start Time" );
   define( "TIME_PERIOD", "Time Period" );
   define( "FULL_DAY", "Full Day" );

@@ -7,8 +7,8 @@ import csv
 pd.set_option('display.max_row',10)
 pd.set_option('display.max_colwidth',225)
 
-def find_meters(args):
-    trendmeters = []
+def find_dates_and_meters(args):
+    dates_and_meters = []
 
     dateparse = lambda x: pd.datetime.strptime(x, '%m/%d/%Y %H:%M:%S')
 
@@ -21,13 +21,20 @@ def find_meters(args):
     # Remove non-numeric data values
     df.dropna( subset=['Object Value'], inplace=True )
 
+    # Save date range
+    min_date = df['Date / Time'].min().strftime( '%m/%d/%Y' )
+    max_date = df['Date / Time'].max().strftime( '%m/%d/%Y' )
+    dates_and_meters.append((min_date,max_date))
+
+    # Organize data for meter analysis
     df.sort_values(by=['Object Name', 'Date / Time'], inplace=True)
 
+    # Save meters
     for trend, frame in df.groupby('Object Name'):
         summary = check_summarizable(frame['Object Value'].values,args)
-        trendmeters.append((trend,summary))
+        dates_and_meters.append((trend,summary))
 
-    return trendmeters
+    return dates_and_meters
 
 
 drop_units_pattern = re.compile( r"\A([+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?).*\Z" )
@@ -61,7 +68,7 @@ def check_summarizable(series,args):
         return False
 
 
-def write_meters(array,output_file):
+def write_dates_and_meters(array,output_file):
     with open(output_file, mode='w', newline="", encoding='utf-8') as w:
         csvwriter = csv.writer(w)
         for entry in array:
@@ -80,6 +87,6 @@ if __name__ == '__main__':
 
     import time
     start_time = time.time()
-    q = find_meters(args)
+    q = find_dates_and_meters(args)
     print( time.time() - start_time )
-    write_meters(q,args.output_file)
+    write_dates_and_meters(q,args.output_file)

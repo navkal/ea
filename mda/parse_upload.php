@@ -37,7 +37,7 @@
   }
 
   $redirect = "";
-  $oldColumns = [];
+  $dates = [];
   $columns = [];
 
   if ( empty( $messages ) )
@@ -94,23 +94,9 @@
 
       if ( empty( $messages ) )
       {
-        // findSummarizableOldWay( $inputFilename, $messages, $oldColumns );
-      }
-
-      if ( empty( $messages ) )
-      {
-        $columns = findSummarizable( $inputFilename, $metersFilename, $messages );
-
-        // Log differences between old and new algorithms
-        foreach ( $oldColumns as $key => $val )
-        {
-          $sum1 = $val["summarizable"];
-          $sum2 = $columns[$key]["summarizable"];
-          if ( $sum1 !== $sum2 )
-          {
-            error_log( "<$inputFilename> <$key> <$sum1> <$sum2>" );
-          }
-        }
+        $datesAndMeters = findDatesAndMeters( $inputFilename, $metersFilename, $messages );
+        $dates = $datesAndMeters['dates'];
+        $columns = $datesAndMeters['meters'];
       }
 
       if ( empty( $messages ) )
@@ -188,6 +174,7 @@
   $rsp =
   [
     "messages" => $messages,
+    "dates" => $dates,
     "columns" => $columns,
     "nicknames" => $nicknames,
     "redirect" => $redirect
@@ -276,8 +263,9 @@
     return $time1 - $time2;
   }
 
-  function findSummarizable( $inputFilename, $metersFilename, &$messages )
+  function findDatesAndMeters( $inputFilename, $metersFilename, &$messages )
   {
+    $dates = [];
     $meters = [];
 
     // Execute Python script to find summarizable columns (meters)
@@ -289,11 +277,17 @@
     // If Python script generated an output file, append parameter information to it
     if ( ( $metersFile = @fopen( $metersFilename, "r" ) ) !== false )
     {
-       while( ( $meter = fgetcsv( $metersFile ) ) !== false )
-       {
-         $meters[$meter[0]]["summarizable"] = ( $meter[1] == "True" );
-       }
-       fclose( $metersFile );
+      if( ( $range = fgetcsv( $metersFile ) ) !== false )
+      {
+        $dates = [ 'fromDate' => $range[0], 'toDate' => $range[1] ];
+
+        while( ( $meter = fgetcsv( $metersFile ) ) !== false )
+        {
+          $meters[$meter[0]]["summarizable"] = ( $meter[1] == "True" );
+        }
+      }
+
+      fclose( $metersFile );
     }
     else
     {
@@ -305,28 +299,7 @@
       array_push( $messages, $message );
     }
 
-    return $meters;
-  }
-
-  function findSummarizableOldWay( $inputFilename, &$messages, &$columns )
-  {
-    // Construct map characterizing each Point of Interest series
-    $colMap = makeColMap( $inputFilename, $messages );
-
-    if ( empty( $messages ) )
-    {
-      // Analyze map, replacing data characterization with summarizability flag
-      $colMap = analyzeColMap( $colMap );
-
-      if ( count( $colMap ) )
-      {
-        $columns = $colMap;
-      }
-      else
-      {
-        array_push( $messages, "Uploaded file does not contain any " . POINTS_OF_INTEREST );
-      }
-    }
+    return [ 'dates' => $dates, 'meters' => $meters ];
   }
 
   function makeColMap( $inputFilename, &$messages )

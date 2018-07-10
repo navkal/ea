@@ -10,7 +10,8 @@
   $version = time();
 ?>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" integrity="sha256-JDBcnYeV19J14isGd3EtnsCQK05d8PczJ5+fvEvBJvI=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js" integrity="sha256-tW5LzEC7QjhG0CiAvxlseMTs2qJS7u3DRPauDjFJ3zo=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="lib/wickedpicker/dist/wickedpicker.min.css">
 <script type="text/javascript" src="lib/wickedpicker/dist/wickedpicker.unmin.js"></script>
 <link rel="stylesheet" href="../util/util.css?version=<?=$version?>">
@@ -220,7 +221,7 @@
     else
     {
       SYSTEM_NICKNAMES = rsp.nicknames;
-      showOptionsView( rsp.columns );
+      showOptionsView( rsp.dates, rsp.columns );
     }
   }
 
@@ -238,7 +239,7 @@
     startCleanup( $( "#timestamp" ).val(), "mda/", function(){} );
   }
 
-  function showOptionsView( columns )
+  function showOptionsView( dates, columns )
   {
     // Hide Help modal dialog
     $( "#helpInputFile" ).modal( "hide" );
@@ -254,6 +255,19 @@
 
     // Show first Options tab
     $( "#optionsTabs a[href='#analysisOptionsTab']" ).tab( "show" );
+
+    // Create date pickers
+      console.log( '==========> ' + JSON.stringify( dates ) );
+      $( '#fromDate' ).val( dates.fromDate );
+      $( '#toDate' ).val( dates.toDate );
+$('.input-daterange').datepicker({
+                startDate: dates.fromDate,
+                endDate: dates.toDate,
+                autoclose: true,
+                orientation: "top left",
+                todayHighlight: true
+            });
+
 
     // Create time pickers
     $( '#startTime' ).wickedpicker( { now: "05:00", twentyFour: true, minutesInterval: 15, title: 'Time Editor' } );
@@ -1234,6 +1248,16 @@
                       <input type="radio" name="format" id="multiple" value="<?=MULTIPLE?>" onchange="onChangeFormat()" >
                       <?=MULTIPLE?>
                     </label>
+                  </div>
+                </div>
+
+                <br/>
+                <div class="form-group" >
+                  <label class="control-label" for="fromDate" ><?=DATE_RANGE?></label>
+                  <div class="input-group input-daterange">
+                      <input id="fromDate" type="text" class="form-control" >
+                      <div class="input-group-addon">to</div>
+                      <input id="toDate" type="text" class="form-control" >
                   </div>
                 </div>
 
