@@ -251,11 +251,13 @@
   function runParseScript( $args, $inputFilename, $columnsFilename, $resultsFilename, $nicknameMap )
   {
     // Set up Python command
+    $from = "--from " . $args["fromDate"];
+    $to = "--to " . $args["toDate"];
     $summarize = $args["format"] == SUMMARY ? "-s" : "";
     $start = isset( $args["startTime"] ) ? "--start " . str_replace( ' ', '', $args["startTime"] ) : "";
     $end = isset( $args["endTime"] ) ? "--end " . str_replace( ' ', '', $args["endTime"] ) : "";
     $columns = "-c " . quote( $columnsFilename );
-    $command = quote( getenv( "PYTHON" ) ) . " parse.py -i " . quote( $inputFilename ) . " -o " . quote( $resultsFilename ) . " " . $summarize . " " . $start . " " . $end . " " . $columns;
+    $command = quote( getenv( "PYTHON" ) ) . " parse.py -i " . quote( $inputFilename ) . " -o " . quote( $resultsFilename ) . " " . $from . " " . $to . " " . $summarize . " " . $start . " " . $end . " " . $columns;
     error_log( "===> command=" . $command );
 
     // Execute Python script

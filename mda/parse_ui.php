@@ -1253,9 +1253,9 @@
                 <div class="form-group" >
                   <label class="control-label" for="fromDate" ><?=DATE_RANGE?></label>
                   <div id="dateRange" class="input-group input-daterange">
-                      <input id="fromDate" type="text" class="form-control" readonly >
-                      <div class="input-group-addon">to</div>
-                      <input id="toDate" type="text" class="form-control" readonly >
+                    <input id="fromDate" name="fromDate" type="text" class="form-control" readonly >
+                    <div class="input-group-addon">to</div>
+                    <input id="toDate" name="toDate" type="text" class="form-control" readonly >
                   </div>
                 </div>
 
