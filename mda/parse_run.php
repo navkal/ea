@@ -293,6 +293,8 @@
   {
     $params = METASYS_FILE . "," . $args["inputName"];
     $params .= "," . REPORT_FORMAT . "," . $args["format"];
+    $params .= "," . DATE_RANGE . "," . $args["fromDate"] . ' to ' . $args["toDate"];
+
     if ( isset ( $args["period"] ) )
     {
       $params .= "," . TIME_PERIOD . "," . $args["period"];
