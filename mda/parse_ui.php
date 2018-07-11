@@ -297,7 +297,7 @@
       $( "#detailed" ).prop( "checked", true );
       $( "#detailed" ).parent().parent().parent().hide();
     }
-    onChangeFormat();
+    onChangeFormat( true );
 
     // Set column-related handlers
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
@@ -310,7 +310,7 @@
   }
 
   // Handle change of Report Format radio buttons
-  function onChangeFormat()
+  function onChangeFormat( bInitial )
   {
     var bDisable = $( "#multiple" ).prop( "checked" );
 
@@ -329,7 +329,14 @@
     // Update column picker
     clearSearch();
     showSuitable();
-    checkDefault( { target: "fake" } );
+    if ( bInitial )
+    {
+      checkPrevious();
+    }
+    else
+    {
+      checkDefault();
+    }
   }
 
   // Handle change of Period radio buttons
@@ -361,7 +368,21 @@
     $( '#' + sFilenameId ).val( sFilename );
   }
 
-  function checkDefault( event )
+  function checkPrevious()
+  {
+    console.log( 'checkPrevious()' );
+    var tColumns = JSON.parse( ( typeof Storage === "undefined" ) ? "{}" : ( localStorage.getItem( "columns" ) || "{}" ) );
+    if ( Object.keys( tColumns ).length == 0 )
+    {
+      checkDefault();
+    }
+    else
+    {
+    }
+
+  }
+
+  function checkDefault()
   {
     // List of substrings identifying default checkbox selection, in order of preference
     var substrings =
@@ -398,11 +419,11 @@
     // Check the checkboxes that comprise the default selection
     if ( found )
     {
-      checkAllContaining( event, substrings[index-1] );
+      checkAllContaining( substrings[index-1] );
     }
     else
     {
-      checkFirst( event );
+      checkFirst();
     }
   }
 
@@ -414,9 +435,9 @@
     }
   }
 
-  function checkAllContaining( event, substring )
+  function checkAllContaining( substring )
   {
-    uncheckAll( event );
+    uncheckAll();
 
     if ( substring.length > 0 )
     {
@@ -436,9 +457,9 @@
     }
   }
 
-  function checkFirst( event )
+  function checkFirst()
   {
-    uncheckAll( event );
+    uncheckAll();
 
     // Prefer first suitable point of interest, if any; otherwise use first listed
     var suitable = $( "#columnsTab span[columnName].suitable, #columnsTab span[columnName].notNotSuitable" );
@@ -449,9 +470,9 @@
     addEditorColumn( iFirst );
   }
 
-  function checkAll( event )
+  function checkAll()
   {
-    uncheckAll( event );
+    uncheckAll();
 
     var all = $( "#columnPicker .suitable, #columnPicker .notNotSuitable" ).parent().find( "input[type=checkbox]" );
     all.prop( "checked", true );
@@ -462,7 +483,7 @@
     }
   }
 
-  function uncheckAll( event )
+  function uncheckAll()
   {
     clearSearch();
 
@@ -474,11 +495,11 @@
     }
   }
 
-  function checkComplement( event )
+  function checkComplement()
   {
     // Reverse checkbox settings
     var unchecked =  $( "#columnPicker .suitable, #columnPicker .notNotSuitable" ).parent().find( "input[type=checkbox]:not(:checked)" );
-    uncheckAll( event );
+    uncheckAll();
     unchecked.prop( "checked", true );
 
     // Add newly checked items to editor
