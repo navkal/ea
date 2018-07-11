@@ -370,11 +370,16 @@
 
   function checkPrevious()
   {
-    // Attempt to restore previous checkbox selections
+    // Retrieve list of previous column selections
     var aColumns = JSON.parse( ( typeof Storage === "undefined" ) ? "[]" : ( localStorage.getItem( "columns" ) || "[]" ) );
+
+    // Attempt to restore previous column selections
     for ( var iCol = 0; iCol < aColumns.length; iCol ++ )
     {
+      // Look for span with matching column name
       var tSpan = $( '#columnPicker span[columnName]' ).filter( function() { return ( $(this).text() === aColumns[iCol] ) } );
+
+      // If matching span exists, restore the column selection
       if ( tSpan.length )
       {
         var tCheckbox = tSpan.parent().find( 'input' );
@@ -763,10 +768,13 @@
 
   function rememberColumns()
   {
+    // Save column selections for future use
     if ( typeof Storage !== "undefined" )
     {
+      // Find column selections
       var aChecked = $( '#columnPicker input:checked' );
 
+      // Create list of selected column names
       var aColumns = [];
       for ( var iChk = 0; iChk < aChecked.length; iChk ++ )
       {
@@ -775,7 +783,7 @@
         aColumns.push( sLabel );
       }
 
-      console.log( 'saving ' + JSON.stringify( aColumns ) );
+      // Save selected column names in local storage
       localStorage.setItem( "columns", JSON.stringify( aColumns ) );
     }
   }
