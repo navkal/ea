@@ -367,7 +367,7 @@
     uncheckAll();
 
     // Retrieve list of previous column selections
-    var aColumns = JSON.parse( ( typeof Storage === "undefined" ) ? "[]" : ( localStorage.getItem( "columns_" + getColumnStorageName() ) || "[]" ) );
+    var aColumns = JSON.parse( ( typeof Storage === "undefined" ) ? "[]" : ( localStorage.getItem( getColumnStorageName() ) || "[]" ) );
 
     // Attempt to restore previous column selections
     for ( var iCol = 0; iCol < aColumns.length; iCol ++ )
@@ -780,7 +780,7 @@
       }
 
       // Save selected column names in local storage
-      localStorage.setItem( "columns_" + getColumnStorageName(), JSON.stringify( aColumns ) );
+      localStorage.setItem( getColumnStorageName(), JSON.stringify( aColumns ) );
     }
   }
 
@@ -788,7 +788,7 @@
   {
     var sName = $( "input:radio[name='format']:checked" ).val();
     sName = ( sName == '<?=MULTIPLE?>' ) ? '<?=SUMMARY?>' : sName;
-    return sName;
+    return 'columns_' + sName;
   }
 
   function rememberNickname( event )
