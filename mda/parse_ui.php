@@ -370,16 +370,24 @@
 
   function checkPrevious()
   {
-    console.log( 'checkPrevious()' );
-    var tColumns = JSON.parse( ( typeof Storage === "undefined" ) ? "{}" : ( localStorage.getItem( "columns" ) || "{}" ) );
-    if ( Object.keys( tColumns ).length == 0 )
+    // Attempt to restore previous checkbox selections
+    var aColumns = JSON.parse( ( typeof Storage === "undefined" ) ? "[]" : ( localStorage.getItem( "columns" ) || "[]" ) );
+    for ( var iCol = 0; iCol < aColumns.length; iCol ++ )
+    {
+      var tSpan = $( '#columnPicker span[columnName]' ).filter( function() { return ( $(this).text() === aColumns[iCol] ) } );
+      if ( tSpan.length )
+      {
+        var tCheckbox = tSpan.parent().find( 'input' );
+        tCheckbox.prop( 'checked', true );
+        addEditorColumn( tCheckbox.closest( "li" ).index() );
+      }
+    }
+
+    // If no columns are checked, resort to the default settings
+    if ( ! $( '#columnPicker input:checked' ).length )
     {
       checkDefault();
     }
-    else
-    {
-    }
-
   }
 
   function checkDefault()
@@ -753,6 +761,25 @@
     showSuitable();
   }
 
+  function rememberColumns()
+  {
+    if ( typeof Storage !== "undefined" )
+    {
+      var aChecked = $( '#columnPicker input:checked' );
+
+      var aColumns = [];
+      for ( var iChk = 0; iChk < aChecked.length; iChk ++ )
+      {
+        var tCheckbox = $( aChecked[iChk] );
+        var sLabel = tCheckbox.parent().find( 'span[columnname]' ).text();
+        aColumns.push( sLabel );
+      }
+
+      console.log( 'saving ' + JSON.stringify( aColumns ) );
+      localStorage.setItem( "columns", JSON.stringify( aColumns ) );
+    }
+  }
+
   function rememberNickname( event )
   {
     if ( typeof Storage !== "undefined" )
@@ -892,6 +919,7 @@
 
     if ( valid )
     {
+      rememberColumns();
       $( "#analyzeButton" ).prop( "disabled", true );
       $( "body" ).css( "cursor", "progress" );
     }
