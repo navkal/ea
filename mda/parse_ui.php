@@ -297,7 +297,7 @@
       $( "#detailed" ).prop( "checked", true );
       $( "#detailed" ).parent().parent().parent().hide();
     }
-    onChangeFormat( true );
+    onChangeFormat();
 
     // Set column-related handlers
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
@@ -310,7 +310,7 @@
   }
 
   // Handle change of Report Format radio buttons
-  function onChangeFormat( bInitial )
+  function onChangeFormat()
   {
     var bDisable = $( "#multiple" ).prop( "checked" );
 
@@ -329,14 +329,7 @@
     // Update column picker
     clearSearch();
     showSuitable();
-    if ( bInitial )
-    {
-      checkPrevious();
-    }
-    else
-    {
-      checkDefault();
-    }
+    checkPrevious();
   }
 
   // Handle change of Period radio buttons
@@ -370,6 +363,9 @@
 
   function checkPrevious()
   {
+    // Clear selections
+    uncheckAll();
+
     // Retrieve list of previous column selections
     var aColumns = JSON.parse( ( typeof Storage === "undefined" ) ? "[]" : ( localStorage.getItem( "columns" ) || "[]" ) );
 
