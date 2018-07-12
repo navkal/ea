@@ -61,7 +61,7 @@
 
 .columnPickerMultiSelectStart
 {
-  border: 1px solid lightgray;
+  border: 1px solid silver;
 }
 </style>
 
@@ -719,7 +719,7 @@
         addEditorColumn( checkboxIndex );
 
         // Multi-select part 1
-        checkbox.closest( 'label' ).addClass( 'columnPickerMultiSelectStart' );
+        checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'columnPickerMultiSelectStart' );
       }
       else
       {
