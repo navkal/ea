@@ -590,6 +590,8 @@
 
   function addMarked( event, bAdd )
   {
+    clearMultipleSelectStart();
+
     // Find all checkboxes marked as search results
     var marked = $( "#columnPicker label span[columnName].marked" );
 
@@ -728,7 +730,7 @@
     // Clear multi-select flag
     g_bColumnPickerShiftKey = false;
   }
-  
+
   function clearMultipleSelectStart()
   {
     $( '.columnPickerMultiSelectStart' ).removeClass( 'columnPickerMultiSelectStart' );
