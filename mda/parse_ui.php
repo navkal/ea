@@ -533,7 +533,7 @@
     // Set checkboxes to checked state
     var iChkFirst = Math.min( iSelectStart, iSelectEnd );
     var iChkLast = Math.max( iSelectStart, iSelectEnd );
-    $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', true ).closest('li').css( 'background-color', 'pink' );
+    $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', true );
 
     // Add editor columns
     for ( var iChk = iChkFirst; iChk <= iChkLast; iChk ++ )
@@ -707,7 +707,6 @@
     if ( bMultiSelectPart2 )
     {
       // Multi-select part 2
-      console.log( '===============> Part 2' );
       checkMultiple( iSelectStart, checkboxIndex )
     }
     else
@@ -717,12 +716,10 @@
         addEditorColumn( checkboxIndex );
 
         // Multi-select part 1
-        console.log( '===============> Part 1' );
         checkbox.closest( 'li' ).addClass( 'columnPickerMultiSelectStart' );
       }
       else
       {
-        console.log( '===============> Nothing' );
         removeEditorColumn( checkboxIndex );
       }
     }
