@@ -59,12 +59,12 @@
   border: 1px solid darkgray;
 }
 
-.columnPickerStartUncheck
+.startMultiUncheck
 {
   border: 1px solid red;
 }
 
-.columnPickerStartCheck
+.startMultiCheck
 {
   border: 1px solid silver;
 }
@@ -534,11 +534,11 @@
     }
   }
 
-  function checkMultiple( iSelectStart, iSelectEnd )
+  function checkMultiple( iStartCheck, iSelectEnd )
   {
     // Set checkboxes to checked state
-    var iChkFirst = Math.min( iSelectStart, iSelectEnd );
-    var iChkLast = Math.max( iSelectStart, iSelectEnd );
+    var iChkFirst = Math.min( iStartCheck, iSelectEnd );
+    var iChkLast = Math.max( iStartCheck, iSelectEnd );
     $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', true );
 
     // Add editor columns
@@ -705,8 +705,8 @@
     clearSearch();
 
     // Determine whether we are in a multi-select sequence
-    var iSelectStart = $( '.columnPickerStartCheck' ).closest('li').index();
-    var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.columnPickerStartCheck' ).length;
+    var iStartCheck = $( '.startMultiCheck' ).closest('li').index();
+    var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.startMultiCheck' ).length;
     clearMultipleSelectStart();
 
     var checkbox = $( event.target );
@@ -715,7 +715,7 @@
     if ( bMultiSelectPart2 )
     {
       // Multi-select part 2
-      checkMultiple( iSelectStart, checkboxIndex )
+      checkMultiple( iStartCheck, checkboxIndex )
     }
     else
     {
@@ -724,7 +724,7 @@
         addEditorColumn( checkboxIndex );
 
         // Multi-select part 1
-        checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'columnPickerStartCheck' );
+        checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'startMultiCheck' );
       }
       else
       {
@@ -738,7 +738,7 @@
 
   function clearMultipleSelectStart()
   {
-    $( '.columnPickerStartCheck' ).removeClass( 'columnPickerStartCheck' );
+    $( '.startMultiCheck' ).removeClass( 'startMultiCheck' );
   }
 
   function addEditorColumn( checkboxIndex )
