@@ -534,21 +534,22 @@
     }
   }
 
-  function checkMultiple( iStartCheck, iSelectEnd )
+  function checkMultiple( iStartCheck, iSelectEnd, bCheck )
   {
     // Set checkboxes to checked state
     var iChkFirst = Math.min( iStartCheck, iSelectEnd );
     var iChkLast = Math.max( iStartCheck, iSelectEnd );
-    $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', true );
+    $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', bCheck );
 
     // Add editor columns
     for ( var iChk = iChkFirst; iChk <= iChkLast; iChk ++ )
     {
-      // Remove in case already there
       removeEditorColumn( iChk );
 
-      // Add
-      addEditorColumn( iChk );
+      if ( bCheck )
+      {
+        addEditorColumn( iChk );
+      }
     }
   }
 
@@ -704,18 +705,25 @@
   {
     clearSearch();
 
-    // Determine whether we are in a multi-select sequence
+    // Determine whether we are in a multi sequence
+    var bPart2MultiCheck = g_bColumnPickerShiftKey && $( '.startMultiCheck' ).length;
+    var bPart2MultiUncheck = g_bColumnPickerShiftKey && $( '.startMultiUncheck' ).length;
     var iStartCheck = $( '.startMultiCheck' ).closest('li').index();
-    var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.startMultiCheck' ).length;
+    var iStartUncheck = $( '.startMultiUncheck' ).closest('li').index();
     clearStartMulti();
 
     var checkbox = $( event.target );
     var checkboxIndex = checkbox.closest( "li" ).index();
 
-    if ( bMultiSelectPart2 )
+    if ( bPart2MultiCheck )
     {
-      // Multi-select part 2
-      checkMultiple( iStartCheck, checkboxIndex )
+      // Multi-check part 2
+      checkMultiple( iStartCheck, checkboxIndex, true )
+    }
+    else if ( bPart2MultiUncheck )
+    {
+      // Multi-uncheck part 2
+      checkMultiple( iStartUncheck, checkboxIndex, false )
     }
     else
     {
