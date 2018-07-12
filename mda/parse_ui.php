@@ -58,10 +58,16 @@
 {
   border: solid 1px darkgray;
 }
+
+.columnPickerMultiSelectStart
+{
+  border: 1px solid red;
+}
 </style>
 
 <script>
   var SYSTEM_NICKNAMES = {};
+  var g_bColumnPickerShiftKey = false;
 
   $( document ).ready( initFileView );
 
@@ -300,6 +306,8 @@
     onChangeFormat();
 
     // Set column-related handlers
+    $( "#columnPicker" ).disableTextSelect();
+    $( "#columnPicker input[type=checkbox]" ).click( onColumnClick );
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
     $( window ).on( "resize", setColumnButtonSize );
 
@@ -520,6 +528,24 @@
     }
   }
 
+  function checkMultiple( iSelectStart, iSelectEnd )
+  {
+    // Set checkboxes to checked state
+    var iChkFirst = Math.min( iSelectStart, iSelectEnd );
+    var iChkLast = Math.max( iSelectStart, iSelectEnd );
+    $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', true ).closest('li').css( 'background-color', 'pink' );
+
+    // Add editor columns
+    for ( var iChk = iChkFirst; iChk <= iChkLast; iChk ++ )
+    {
+      // Remove in case already there
+      removeEditorColumn( iChk );
+
+      // Add
+      addEditorColumn( iChk );
+    }
+  }
+
   function checkSearch( event )
   {
     if ( ! event || ( event.keyCode != "9" /* tab */ ) )
@@ -661,21 +687,48 @@
     return row;
   }
 
+  function onColumnClick( tEvent )
+  {
+    g_bColumnPickerShiftKey = tEvent.shiftKey;
+  }
+
   function onColumnSelChange( event )
   {
     clearSearch();
 
+    // Determine whether we are in a multi-select sequence
+    var iSelectStart = $( '.columnPickerMultiSelectStart' ).index();
+    var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.columnPickerMultiSelectStart' ).length;
+    $( '.columnPickerMultiSelectStart' ).removeClass( 'columnPickerMultiSelectStart' );
+
     var checkbox = $( event.target );
     var checkboxIndex = checkbox.closest( "li" ).index();
 
-    if ( checkbox.prop( "checked" ) )
+    if ( bMultiSelectPart2 )
     {
-      addEditorColumn( checkboxIndex );
+      // Multi-select part 2
+      console.log( '===============> Part 2' );
+      checkMultiple( iSelectStart, checkboxIndex )
     }
     else
     {
-      removeEditorColumn( checkboxIndex );
+      if ( checkbox.prop( "checked" ) )
+      {
+        addEditorColumn( checkboxIndex );
+
+        // Multi-select part 1
+        console.log( '===============> Part 1' );
+        checkbox.closest( 'li' ).addClass( 'columnPickerMultiSelectStart' );
+      }
+      else
+      {
+        console.log( '===============> Nothing' );
+        removeEditorColumn( checkboxIndex );
+      }
     }
+
+    // Clear multi-select flag
+    g_bColumnPickerShiftKey = false;
   }
 
   function addEditorColumn( checkboxIndex )
@@ -1129,6 +1182,29 @@
       checkSearch();
     }
   }
+
+  jQuery.fn.disableTextSelect = function()
+  {
+    return this.each(
+      function()
+      {
+        $( this ).css(
+          {
+            'MozUserSelect':'none',
+            'webkitUserSelect':'none'
+          }
+        )
+        .attr( 'unselectable', 'on' )
+        .bind(
+          'selectstart',
+          function()
+          {
+            return false;
+          }
+        );
+      }
+    );
+  };
 </script>
 
 
