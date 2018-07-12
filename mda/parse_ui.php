@@ -56,12 +56,12 @@
 
 .marked
 {
-  border: solid 1px darkgray;
+  border: 1px solid darkgray;
 }
 
 .columnPickerMultiSelectStart
 {
-  border: 1px solid red;
+  border: 1px solid lightgray;
 }
 </style>
 
@@ -503,6 +503,7 @@
   function uncheckAll()
   {
     clearSearch();
+    clearMultipleSelectStart();
 
     var all = $( "#columnPicker input[type=checkbox]" );
     all.prop( "checked", false );
@@ -697,9 +698,9 @@
     clearSearch();
 
     // Determine whether we are in a multi-select sequence
-    var iSelectStart = $( '.columnPickerMultiSelectStart' ).index();
+    var iSelectStart = $( '.columnPickerMultiSelectStart' ).closest('li').index();
     var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.columnPickerMultiSelectStart' ).length;
-    $( '.columnPickerMultiSelectStart' ).removeClass( 'columnPickerMultiSelectStart' );
+    clearMultipleSelectStart();
 
     var checkbox = $( event.target );
     var checkboxIndex = checkbox.closest( "li" ).index();
@@ -716,7 +717,7 @@
         addEditorColumn( checkboxIndex );
 
         // Multi-select part 1
-        checkbox.closest( 'li' ).addClass( 'columnPickerMultiSelectStart' );
+        checkbox.closest( 'label' ).addClass( 'columnPickerMultiSelectStart' );
       }
       else
       {
@@ -726,6 +727,11 @@
 
     // Clear multi-select flag
     g_bColumnPickerShiftKey = false;
+  }
+  
+  function clearMultipleSelectStart()
+  {
+    $( '.columnPickerMultiSelectStart' ).removeClass( 'columnPickerMultiSelectStart' );
   }
 
   function addEditorColumn( checkboxIndex )
