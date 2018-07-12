@@ -59,12 +59,7 @@
   border: 1px solid darkgray;
 }
 
-.startMultiUncheck
-{
-  border: 1px solid red;
-}
-
-.startMultiCheck
+.startMultiCheck, .startMultiUncheck
 {
   border: 1px solid silver;
 }
