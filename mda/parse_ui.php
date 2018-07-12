@@ -59,7 +59,12 @@
   border: 1px solid darkgray;
 }
 
-.columnPickerMultiSelectStart
+.columnPickerStartUncheck
+{
+  border: 1px solid red;
+}
+
+.columnPickerStartCheck
 {
   border: 1px solid silver;
 }
@@ -700,8 +705,8 @@
     clearSearch();
 
     // Determine whether we are in a multi-select sequence
-    var iSelectStart = $( '.columnPickerMultiSelectStart' ).closest('li').index();
-    var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.columnPickerMultiSelectStart' ).length;
+    var iSelectStart = $( '.columnPickerStartCheck' ).closest('li').index();
+    var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.columnPickerStartCheck' ).length;
     clearMultipleSelectStart();
 
     var checkbox = $( event.target );
@@ -719,7 +724,7 @@
         addEditorColumn( checkboxIndex );
 
         // Multi-select part 1
-        checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'columnPickerMultiSelectStart' );
+        checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'columnPickerStartCheck' );
       }
       else
       {
@@ -733,7 +738,7 @@
 
   function clearMultipleSelectStart()
   {
-    $( '.columnPickerMultiSelectStart' ).removeClass( 'columnPickerMultiSelectStart' );
+    $( '.columnPickerStartCheck' ).removeClass( 'columnPickerStartCheck' );
   }
 
   function addEditorColumn( checkboxIndex )
