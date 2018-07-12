@@ -508,7 +508,7 @@
   function uncheckAll()
   {
     clearSearch();
-    clearMultipleSelectStart();
+    clearStartMulti();
 
     var all = $( "#columnPicker input[type=checkbox]" );
     all.prop( "checked", false );
@@ -595,7 +595,7 @@
 
   function addMarked( event, bAdd )
   {
-    clearMultipleSelectStart();
+    clearStartMulti();
 
     // Find all checkboxes marked as search results
     var marked = $( "#columnPicker label span[columnName].marked" );
@@ -707,7 +707,7 @@
     // Determine whether we are in a multi-select sequence
     var iStartCheck = $( '.startMultiCheck' ).closest('li').index();
     var bMultiSelectPart2 = g_bColumnPickerShiftKey && $( '.startMultiCheck' ).length;
-    clearMultipleSelectStart();
+    clearStartMulti();
 
     var checkbox = $( event.target );
     var checkboxIndex = checkbox.closest( "li" ).index();
@@ -723,12 +723,15 @@
       {
         addEditorColumn( checkboxIndex );
 
-        // Multi-select part 1
+        // Multi-check part 1
         checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'startMultiCheck' );
       }
       else
       {
         removeEditorColumn( checkboxIndex );
+
+        // Multi-uncheck part 1
+        checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'startMultiUncheck' );
       }
     }
 
@@ -736,9 +739,10 @@
     g_bColumnPickerShiftKey = false;
   }
 
-  function clearMultipleSelectStart()
+  function clearStartMulti()
   {
     $( '.startMultiCheck' ).removeClass( 'startMultiCheck' );
+    $( '.startMultiUncheck' ).removeClass( 'startMultiUncheck' );
   }
 
   function addEditorColumn( checkboxIndex )
