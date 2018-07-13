@@ -632,8 +632,13 @@ function seriesCheckComplement()
 }
 
 // Filter plot based on selections made in plot chooser
-function plotFilter()
+function plotFilter( tEvent )
 {
+  if ( g_bMultiCheckShiftKey )
+  {
+    console.log( 'SHIFT' );
+  }
+
   finishSeriesCheckAction();
 }
 
@@ -1086,8 +1091,10 @@ function chooserAdd( aSamples, iSample )
     $("#seriesChooser").append( sChooser );
 
     // Save attributes needed to plot the associated series
+    $( "#seriesChooser" ).disableTextSelect();
     var tCheckBox = document.getElementById( sId );
-    tCheckBox.onclick = plotFilter;
+    tCheckBox.onclick = onCheckboxClick;
+    tCheckBox.onchange = plotFilter;
     tCheckBox.series = iSample;
     tCheckBox.yaxis = iSample + 1;
     tCheckBox.color = iSample;

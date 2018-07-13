@@ -58,16 +58,10 @@
 {
   border: 1px solid darkgray;
 }
-
-.startMultiCheck, .startMultiUncheck
-{
-  border: 1px solid silver;
-}
 </style>
 
 <script>
   var SYSTEM_NICKNAMES = {};
-  var g_bColumnPickerShiftKey = false;
 
   $( document ).ready( initFileView );
 
@@ -307,7 +301,7 @@
 
     // Set column-related handlers
     $( "#columnPicker" ).disableTextSelect();
-    $( "#columnPicker input[type=checkbox]" ).click( onColumnClick );
+    $( "#columnPicker input[type=checkbox]" ).click( onCheckboxClick );
     $( "#columnPicker input[type=checkbox]" ).change( onColumnSelChange );
     $( window ).on( "resize", setColumnButtonSize );
 
@@ -691,18 +685,13 @@
     return row;
   }
 
-  function onColumnClick( tEvent )
-  {
-    g_bColumnPickerShiftKey = tEvent.shiftKey;
-  }
-
   function onColumnSelChange( event )
   {
     clearSearch();
 
     // Determine whether we are in a multi sequence
-    var bPart2MultiCheck = g_bColumnPickerShiftKey && $( '.startMultiCheck' ).length;
-    var bPart2MultiUncheck = g_bColumnPickerShiftKey && $( '.startMultiUncheck' ).length;
+    var bPart2MultiCheck = g_bMultiCheckShiftKey && $( '.startMultiCheck' ).length;
+    var bPart2MultiUncheck = g_bMultiCheckShiftKey && $( '.startMultiUncheck' ).length;
     var iStartCheck = $( '.startMultiCheck' ).closest('li').index();
     var iStartUncheck = $( '.startMultiUncheck' ).closest('li').index();
     clearStartMulti();
@@ -739,13 +728,7 @@
     }
 
     // Clear multi-select flag
-    g_bColumnPickerShiftKey = false;
-  }
-
-  function clearStartMulti()
-  {
-    $( '.startMultiCheck' ).removeClass( 'startMultiCheck' );
-    $( '.startMultiUncheck' ).removeClass( 'startMultiUncheck' );
+    g_bMultiCheckShiftKey = false;
   }
 
   function addEditorColumn( checkboxIndex )
@@ -1199,29 +1182,6 @@
       checkSearch();
     }
   }
-
-  jQuery.fn.disableTextSelect = function()
-  {
-    return this.each(
-      function()
-      {
-        $( this ).css(
-          {
-            'MozUserSelect':'none',
-            'webkitUserSelect':'none'
-          }
-        )
-        .attr( 'unselectable', 'on' )
-        .bind(
-          'selectstart',
-          function()
-          {
-            return false;
-          }
-        );
-      }
-    );
-  };
 </script>
 
 

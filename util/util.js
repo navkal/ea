@@ -1,5 +1,48 @@
 // Copyright 2018 Energize Apps.  All rights reserved.
 
+//
+// --> Multi-check accelerator for checkbox list -->
+//
+var g_bMultiCheckShiftKey = false;
+
+function onCheckboxClick( tEvent )
+{
+  g_bMultiCheckShiftKey = tEvent.shiftKey;
+}
+
+function clearStartMulti()
+{
+  $( '.startMultiCheck' ).removeClass( 'startMultiCheck' );
+  $( '.startMultiUncheck' ).removeClass( 'startMultiUncheck' );
+}
+
+jQuery.fn.disableTextSelect = function()
+{
+  return this.each(
+    function()
+    {
+      $( this ).css(
+        {
+          'MozUserSelect':'none',
+          'webkitUserSelect':'none'
+        }
+      )
+      .attr( 'unselectable', 'on' )
+      .bind(
+        'selectstart',
+        function()
+        {
+          return false;
+        }
+      );
+    }
+  );
+};
+
+//
+// <-- Multi-check accelerator for checkbox list <--
+//
+
 function ajaxSuccess( rsp, sStatus, tJqXhr )
 {
   // Do nothing
