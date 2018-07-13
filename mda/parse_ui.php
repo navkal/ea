@@ -525,7 +525,7 @@
 
   function checkMultiple( iStartCheck, iEndCheck, bCheck )
   {
-    // Set checkboxes to checked state
+    // Check or uncheck contiguous series of checkboxes
     var iChkFirst = Math.min( iStartCheck, iEndCheck );
     var iChkLast = Math.max( iStartCheck, iEndCheck );
     $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', bCheck );

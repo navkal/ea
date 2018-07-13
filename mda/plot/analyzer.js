@@ -613,22 +613,33 @@ function plotHover( tEvent, tPos, tItem )
 
 function seriesCheckAll()
 {
+  clearStartMulti();
   $( "#seriesChooser input[type=checkbox]" ).prop( "checked", true );
   finishSeriesCheckAction();
 }
 
 function seriesCheckNone()
 {
+  clearStartMulti();
   $( "#seriesChooser input[type=checkbox]" ).prop( "checked", false );
   finishSeriesCheckAction();
 }
 
 function seriesCheckComplement()
 {
+  clearStartMulti();
   var unchecked = $( "#seriesChooser input[type=checkbox]:not(:checked)" );
   $( "#seriesChooser input[type=checkbox]" ).prop( "checked", false );
   unchecked.prop( "checked", true );
   finishSeriesCheckAction();
+}
+
+function seriesCheckMultiple( iStartCheck, iEndCheck, bCheck )
+{
+  // Check or uncheck contiguous series of checkboxes
+  var iChkFirst = Math.min( iStartCheck, iEndCheck );
+  var iChkLast = Math.max( iStartCheck, iEndCheck );
+  $( '#seriesChooser li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', bCheck );
 }
 
 // Filter plot based on selections made in plot chooser
@@ -647,12 +658,12 @@ function plotFilter( tEvent )
   if ( bPart2MultiCheck )
   {
     // Multi-check part 2
-    checkMultiple( iStartCheck, checkboxIndex, true )
+    seriesCheckMultiple( iStartCheck, checkboxIndex, true )
   }
   else if ( bPart2MultiUncheck )
   {
     // Multi-uncheck part 2
-    checkMultiple( iStartUncheck, checkboxIndex, false )
+    seriesCheckMultiple( iStartUncheck, checkboxIndex, false )
   }
   else
   {
@@ -673,14 +684,6 @@ function plotFilter( tEvent )
 
   // Finish
   finishSeriesCheckAction();
-}
-
-function checkMultiple( iStartCheck, iEndCheck, bCheck )
-{
-  // Set checkboxes to checked state
-  var iChkFirst = Math.min( iStartCheck, iEndCheck );
-  var iChkLast = Math.max( iStartCheck, iEndCheck );
-  $( '#seriesChooser li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', bCheck );
 }
 
 function finishSeriesCheckAction()
