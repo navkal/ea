@@ -523,11 +523,11 @@
     }
   }
 
-  function checkMultiple( iStartCheck, iSelectEnd, bCheck )
+  function checkMultiple( iStartCheck, iEndCheck, bCheck )
   {
     // Set checkboxes to checked state
-    var iChkFirst = Math.min( iStartCheck, iSelectEnd );
-    var iChkLast = Math.max( iStartCheck, iSelectEnd );
+    var iChkFirst = Math.min( iStartCheck, iEndCheck );
+    var iChkLast = Math.max( iStartCheck, iEndCheck );
     $( '#columnPicker li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', bCheck );
 
     // Add editor columns

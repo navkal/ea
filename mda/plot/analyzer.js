@@ -634,12 +634,53 @@ function seriesCheckComplement()
 // Filter plot based on selections made in plot chooser
 function plotFilter( tEvent )
 {
-  if ( g_bMultiCheckShiftKey )
+  // Determine whether we are in a multi sequence
+  var bPart2MultiCheck = g_bMultiCheckShiftKey && $( '.startMultiCheck' ).length;
+  var bPart2MultiUncheck = g_bMultiCheckShiftKey && $( '.startMultiUncheck' ).length;
+  var iStartCheck = $( '.startMultiCheck' ).closest('li').index();
+  var iStartUncheck = $( '.startMultiUncheck' ).closest('li').index();
+  clearStartMulti();
+
+  var checkbox = $( event.target );
+  var checkboxIndex = checkbox.closest( "li" ).index();
+
+  if ( bPart2MultiCheck )
   {
-    console.log( 'SHIFT' );
+    // Multi-check part 2
+    checkMultiple( iStartCheck, checkboxIndex, true )
+  }
+  else if ( bPart2MultiUncheck )
+  {
+    // Multi-uncheck part 2
+    checkMultiple( iStartUncheck, checkboxIndex, false )
+  }
+  else
+  {
+    if ( checkbox.prop( "checked" ) )
+    {
+      // Multi-check part 1
+      checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'startMultiCheck' );
+    }
+    else
+    {
+      // Multi-uncheck part 1
+      checkbox.closest( 'label' ).find( 'span[columnName]' ).addClass( 'startMultiUncheck' );
+    }
   }
 
+  // Clear multi-select flag
+  g_bMultiCheckShiftKey = false;
+
+  // Finish
   finishSeriesCheckAction();
+}
+
+function checkMultiple( iStartCheck, iEndCheck, bCheck )
+{
+  // Set checkboxes to checked state
+  var iChkFirst = Math.min( iStartCheck, iEndCheck );
+  var iChkLast = Math.max( iStartCheck, iEndCheck );
+  $( '#seriesChooser li input:checkbox' ).slice( iChkFirst, iChkLast + 1 ).prop( 'checked', bCheck );
 }
 
 function finishSeriesCheckAction()
