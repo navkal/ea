@@ -15,15 +15,18 @@
 
   if ( isset( $_FILES["resultsFile"] ) )
   {
+    // User has uploaded a results file. Check it.
     $messages = checkFileUpload( $_FILES, "resultsFile", $resultsFilename );
   }
   else if ( isset( $_POST["sampleFilename"] ) )
   {
-    // Copy sample file to temp location
+    // User has selected a preloaded results file.  Copy it to temp location.
     copy( "sample/" . $_POST["sampleFilename"], $resultsFilename );
   }
   else if ( isset( $_POST["metasysFilename"] ) )
   {
+    // User has selected a preloaded input file
+
     // Overwrite temp input filename with name of selected preload
     $inputFilename = "input/" . $_POST["metasysFilename"];
 
@@ -32,6 +35,7 @@
   }
   else
   {
+    // User has uploaded an input file
     $messages = checkFileUpload( $_FILES, "metasysFile", $inputFilename );
     $_SESSION["archiveFilename"] = $inputFilename;
   }
@@ -268,13 +272,33 @@
     $dates = [];
     $meters = [];
 
-    // Execute Python script to find summarizable columns (meters)
-    $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) . " -c 0.9 -r 0.95";
-    error_log( "===> command=" . $command );
-    exec( $command, $output, $status );
-    error_log( "===> output=" . print_r( $output, true ) );
+    // Determine status with respect to preloaded meters file
+    $bWantPreload = isset( $_POST["metasysFilename"] );
+    $preloadFilename = $bWantPreload ? 'meters/' . $_POST["metasysFilename"] : '';
+    $bHavePreload = file_exists( $preloadFilename ) && ( filemtime( $inputFilename ) < filemtime( $preloadFilename ) );
 
-    // If Python script generated an output file, append parameter information to it
+    if ( $bHavePreload )
+    {
+      // We have a preloaded meters filename corresponding to the selected preloaded input file.  Copy it to temp location.
+      copy( $preloadFilename, $metersFilename );
+    }
+    else
+    {
+      // Execute Python script to find date range and summarizable columns (meters)
+      $command = quote( getenv( "PYTHON" ) ) . " findMeters.py -i " . quote( $inputFilename ) . " -o " . quote( $metersFilename ) . " -c 0.9 -r 0.95";
+      error_log( "===> command=" . $command );
+      exec( $command, $output, $status );
+      error_log( "===> output=" . print_r( $output, true ) );
+
+      if ( $bWantPreload )
+      {
+        // We want a preloaded meters file, but it doesn't exist yet.  Copy the one we just generated, for future use.
+        error_log( '============> Trying to copy ' . $metersFilename . ' to ' . $preloadFilename );
+        copy( $metersFilename, $preloadFilename );
+      }
+    }
+
+    // Retrieve information from meters file
     if ( ( $metersFile = @fopen( $metersFilename, "r" ) ) !== false )
     {
       if( ( $range = fgetcsv( $metersFile ) ) !== false )
