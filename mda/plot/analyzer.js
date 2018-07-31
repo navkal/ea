@@ -652,7 +652,7 @@ function plotFilter( tEvent )
   var iStartUncheck = $( '.startMultiUncheck' ).closest('li').index();
   clearStartMulti();
 
-  var checkbox = $( event.target );
+  var checkbox = $( tEvent.target );
   var checkboxIndex = checkbox.closest( "li" ).index();
 
   if ( bPart2MultiCheck )
