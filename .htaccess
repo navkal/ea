@@ -1,6 +1,5 @@
 AddType application/x-httpd-php .htm .html
 Options -Indexes
-Header set Access-Control-Allow-Origin "*"
 
 RewriteEngine on
 
