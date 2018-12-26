@@ -1,0 +1,8 @@
+AddType application/x-httpd-php .htm .html
+Options -Indexes
+Header set Access-Control-Allow-Origin "*"
+
+RewriteEngine on
+
+# Deny access to specific file types
+RewriteRule "^(.+)\.(txt|csv|cdr|json|svg|py|sqlite)$" "-" [F]
