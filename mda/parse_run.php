@@ -173,7 +173,7 @@
   // Archive uploaded input file
   function archiveInput()
   {
-    // Optionally archive uploaded input file and send notificaiton by email
+    // Optionally archive uploaded input file and send notification by email
 
     // Archive/email logic based on environment variable ARCHIVE_DEPLOYMENT:
     // - Not defined: Do nothing
