@@ -3,6 +3,7 @@ import numpy as np
 import re
 import argparse
 import csv
+import datetime
 
 pd.set_option('display.max_row',10)
 pd.set_option('display.max_colwidth',225)
@@ -10,7 +11,7 @@ pd.set_option('display.max_colwidth',225)
 def find_dates_and_meters(args):
     dates_and_meters = []
 
-    dateparse = lambda x: pd.datetime.strptime(x, '%m/%d/%Y %H:%M:%S')
+    dateparse = lambda x: datetime.datetime.strptime(x, '%m/%d/%Y %H:%M:%S')
 
     df = pd.read_csv(args.input_file,
                      #nrows=400000,
